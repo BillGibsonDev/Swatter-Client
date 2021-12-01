@@ -45,6 +45,7 @@ export default function Bug({user, role, confirmRole}) {
             priority: priority,
             tag: tag,
             lastUpdate: lastUpdate,
+            role: role,
         })
         .then(function(response) {
             if(response.data !== "Bug Created"){

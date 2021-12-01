@@ -18,7 +18,9 @@ export default function Comment({
 }) {
 
     function deleteComment(){
-        axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+        axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`, {
+            role: role,
+        })
         .then(function(response) {
             if(response.data !== "Comment Deleted"){
                 alert("Server Error - Comment not deleted")

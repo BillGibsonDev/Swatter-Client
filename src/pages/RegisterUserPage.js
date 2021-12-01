@@ -9,11 +9,13 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 	const [ username, setUsername ] = useState("");
 	const [ password, setPassword ] = useState("");
 	const [ confirm, setConfirm ] = useState("");
+	const [ userRole, setUserRole ] = useState("");
 
 	useEffect(() => {
 		confirmAdmin(role);
+		setUserRole(process.env.REACT_APP_GUEST_SECRET);
 		// eslint-disable-next-line
-	}, [role])
+	}, [role, userRole])
 
     function registerUser() {
 			if (password !== confirm ) {
@@ -22,14 +24,15 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 				axios.post(`${process.env.REACT_APP_REGISTER_URL}`, {
 					username: username,
 					password: password,
-					role: `${process.env.REACT_APP_GUEST_SECRET}`,
+					role: role,
+					userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
 				})
 				.then(function(response) {
-				if(response.data !== "USER REGISTERED"){
-					alert("Server Error - User was not created")
-				} else {
-					alert('User Created!');
-				}
+					if(response.data !== "USER REGISTERED"){
+						alert("Server Error - User was not created")
+					} else {
+						alert('User Created!');
+					}
 				})
 			}
 		}
@@ -65,7 +68,7 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 					/>
 					{
                         role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <button type="submit" onClick={registerUser}>Create User</button>
+                            <button type="submit" onClick={()=>{registerUser();}}>Create User</button>
                         ) : (    
                             <button onClick={unauthorized}>Create User</button>
                         )

@@ -53,6 +53,7 @@ export default function BugPage({user, role}) {
             projectId: projectId,
             bugId: bug._id,
             lastUpdate: lastUpdate,
+            role: role,
         })
         .then(function(response) {
             if(response.data !== "Bug Updated"){
@@ -67,6 +68,7 @@ export default function BugPage({user, role}) {
         axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {
             projectId: projectId,
             bugId: bug._id,
+            role: role,
         })
         .then(function(response) {
                 if(response.data !== "Bug Deleted"){

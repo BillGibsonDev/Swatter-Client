@@ -48,6 +48,7 @@ export default function ProjectsPage({user, role}) {
             comment: addComment,
             date: addDate,
             author: addAuthor,
+            role: role,
         })
         .then(function(response) {
             if(response.data !== "Comment Created"){

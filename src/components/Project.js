@@ -21,7 +21,9 @@ export default function Project({
 
 
     function deleteProject(){
-        axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+        axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`, {
+            role: role,
+        })
         .then(function(response){
             if(response.data !== "Project Deleted"){
                 alert("Server Error - Project not updated")

@@ -17,14 +17,11 @@ export default function Bug({
 	projectId,
 	bugId, 
 	title, 
-	date,
 	priority,
 	author,
 	status,
-	role,
 	tag,
 	lastUpdate,
-	lastLogin,
 	user
 }) {
 

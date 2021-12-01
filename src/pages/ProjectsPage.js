@@ -131,7 +131,6 @@ export default function ProjectsPage({user, role, lastLogin}) {
                                                 projectId = {projectId}
                                                 bugId={bug._id}
                                                 title={bug.title}
-                                                date={bug.date}
                                                 thumbnail = {bug.thumbnail}
                                                 description = {bug.description}
                                                 priority={bug.priority}
@@ -139,9 +138,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
                                                 status={bug.status}
                                                 tag={bug.tag}
                                                 lastUpdate={bug.lastUpdate}
-                                                lastLogin={lastLogin}
                                                 key={key}
-                                                role={role}
                                                 user={user}
                                             />
                                         )

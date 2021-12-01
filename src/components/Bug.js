@@ -66,30 +66,12 @@ export default function Bug({
 				})()}
 				<h2 id="title">{title}</h2>
 				<h2 id="date"><span>Updated: </span>{lastUpdate}</h2>
-				{(() => {
-					switch (status) {
-					case "Open": return (
-						<h2 id="open">{status}</h2>
-					)
-					case "Underway": return (
-						<h2 id="inProgress">{status}</h2>
-					)
-					case "Reviewing": return (
-						<h2 id="InReview">{status}</h2>
-					)
-					case "Completed": return (
-						<h2 id="completed">{status}</h2>
-					)
-					default: return (
-						<h2>{status}</h2>
-					)
-					}
-				})()}
+				<h2 id={status}>{status}</h2>
 				{
 					user === author ? (
-						<h2 id="date"><span>Created by: </span>You</h2>
+						<h2 id="author" className={author}><span>Created by: </span>You</h2>
 					) : (
-						<h2 id="date"><span>Created by: </span>{author}</h2>
+						<h2 id="author" className={author}><span>Created by: </span>{author}</h2>
 					)
 				}
 			</Link>
@@ -135,33 +117,29 @@ cursor: pointer;
 		#title {
 			color: black;
 		}
-		#date {
+		#date, #author {
 			display: flex;
 			flex-direction: column;
-			color: #333333;
 			span {
 				color: #5f5f5f;
 			}
 		}
 		/* author colors */
-		#Gibby {
+		.Gibby {
 			color: #008ee0;;
 		}
-		#Moose {
+		.Moose {
 			color: #0dbe7a;
 		}
 		/* status  styles*/
-		#open {
+		#Open {
 			color: green;
 		}
-		#InReview {
+		#Reviewing {
 			color: #d40000;
 		}
-		#inProgress {
+		#Underway {
 			color: #0066ff;
-		}
-		#completed {
-			color: #000000;;
 		}
 	}
 `;

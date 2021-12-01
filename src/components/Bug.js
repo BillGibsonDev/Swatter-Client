@@ -24,7 +24,8 @@ export default function Bug({
 	role,
 	tag,
 	lastUpdate,
-	lastLogin
+	lastLogin,
+	user
 }) {
 
 
@@ -84,7 +85,13 @@ export default function Bug({
 					)
 					}
 				})()}
-				<h2 id={author}>{author}</h2>
+				{
+					user === author ? (
+						<h2 id="date"><span>Created by: </span>You</h2>
+					) : (
+						<h2 id="date"><span>Created by: </span>{author}</h2>
+					)
+				}
 			</Link>
 		</StyledBug>
 	)

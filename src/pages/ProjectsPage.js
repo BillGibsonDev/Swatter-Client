@@ -142,6 +142,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
                                                 lastLogin={lastLogin}
                                                 key={key}
                                                 role={role}
+                                                user={user}
                                             />
                                         )
                                     })

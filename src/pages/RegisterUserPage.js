@@ -19,12 +19,18 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 			if (password !== confirm ) {
 				alert("Passwords don't match");
 			} else {
-			axios.post(`${process.env.REACT_APP_REGISTER_URL}`, {
-				username: username,
-				password: password,
-				role: `${process.env.REACT_APP_GUEST_SECRET}`,
-			})
-			alert('User Created!');
+				axios.post(`${process.env.REACT_APP_REGISTER_URL}`, {
+					username: username,
+					password: password,
+					role: `${process.env.REACT_APP_GUEST_SECRET}`,
+				})
+				.then(function(response) {
+				if(response.data !== "USER REGISTERED"){
+					alert("Server Error - User was not created")
+				} else {
+					alert('User Created!');
+				}
+				})
 			}
 		}
 
@@ -77,7 +83,7 @@ flex-direction: column;
 background: white;
 height: 80vh;
 width: 90%;
-margin: 5% auto;
+margin: auto;
 border-radius: 12px;
 	h1 {
 		font-size: 3em;

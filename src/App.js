@@ -79,10 +79,12 @@ function App() {
 				.then((response) => {
 					setRole(response.data)
 				})
-			}
+			} else (
+				alert(response)
+			)
 		})
 		.catch(function (error) {
-		throw error;
+			alert("Wrong Username or Password")
 		});
 	}
 

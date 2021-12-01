@@ -32,7 +32,7 @@ export default function HomePage({user, role, confirmRole}) {
     return (
         <StyledHomePage>
             <header>
-                <h1>Let's start Swatting!</h1>
+                <h1>What can we achieve today?</h1>
                 <Link to={'/AddProjectPage'}>New Project</Link>
             </header>
             <div className="projects-container">

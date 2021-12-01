@@ -47,7 +47,6 @@ export default function Bug({user, role, confirmRole}) {
             lastUpdate: lastUpdate,
         })
         .then(function(response) {
-            console.log(response.data)
             if(response.data !== "Bug Created"){
                 alert("Server Error - Bug not updated")
             } else {

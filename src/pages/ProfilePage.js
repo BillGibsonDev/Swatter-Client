@@ -31,6 +31,8 @@ export default function ProfilePage({user, role, confirmRole}) {
         }
     }
 
+    console.log(updateUser) // remove error for production :)
+
     function unauthorized() {
         alert("You do not have permissions to do that!")
     }

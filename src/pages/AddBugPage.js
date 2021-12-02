@@ -49,7 +49,7 @@ export default function Bug({user, role, confirmRole}) {
         })
         .then(function(response) {
             if(response.data !== "Bug Created"){
-                alert("Server Error - Bug not updated")
+                alert("Server Error - Bug not created")
             } else {
                 alert('Bug Created!');
             }

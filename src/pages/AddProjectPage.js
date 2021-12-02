@@ -32,7 +32,6 @@ export default function ProjectPage({user, role, confirmRole}) {
             projectTitle: projectTitle,
             startDate: startDate,
             author: author,
-            role: role,
         })
         .then(function(response) {
             if(response.data !== "Project Created"){

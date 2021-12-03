@@ -76,10 +76,9 @@ border-radius: 12px;
 		align-items: center;
 		position: relative;
 		.loader {
-			opacity: 40%;
+			opacity: 80%;
 			border: 16px solid #f3f3f3;
-			border-top: 16px solid #0f4d92;
-			border-bottom: 16px solid #0f4d92;
+			border: 16px dashed #0f4d92;
 			border-radius: 50%;
 			width: 150px;
 			height: 150px;
@@ -89,7 +88,6 @@ border-radius: 12px;
 			align-items: center;
 			img {
 				width: 100px;
-				rotate: 90deg;
 			}
 		}
 	}

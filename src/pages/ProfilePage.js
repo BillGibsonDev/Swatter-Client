@@ -83,7 +83,7 @@ export default function ProfilePage({user, role, confirmRole}) {
                                 />
                                 {
                                     role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                        <button type="submit" onClick={()=>{unauthorized();}}>Update Password</button>
+                                        <button type="submit" onClick={()=>{confirmRole(role); updateUser();}}>Update Password</button>
                                     ) : (    
                                         <button onClick={unauthorized}>Update Password</button>
                                     )

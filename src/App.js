@@ -12,7 +12,6 @@ import TopNav from "./components/TopNav";
 // pages
 import HomePage from './pages/HomePage.js';
 import ProjectsPage from './pages/ProjectsPage';
-import ChatPage from './pages/ChatPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
@@ -64,9 +63,9 @@ function App() {
 	function login () {
 		setLoading(true)
 		axios.post(`${process.env.REACT_APP_LOGIN_URL}`, {
-		username: username,
-		password: password,
-		lastLogin: lastLogin,
+			username: username,
+			password: password,
+			lastLogin: lastLogin,
 		})
 		.then(function(response){
 			setUser(username)
@@ -83,7 +82,7 @@ function App() {
 					setRole(response.data)
 				})
 			} else {
-				alert(response);
+				alert("Wrong Username or Password")
 			}
 		})
 		.catch(function (error) {
@@ -216,12 +215,6 @@ function App() {
 							user={user}
 							role={role}
 							confirmRole={confirmRole}
-						/>
-					</Route>
-					<Route path={'/ChatPage'} exact>
-						<ChatPage
-							user={user}
-							role={role}
 						/>
 					</Route>
 					<Route path={'/SettingsPage'} exact>

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // images
 import Home from '../images/homeYaleBlue.png';
-import Contact from '../images/emailYaleBlue.png';
 import Hamburger from '../images/hamburgerYaleBlue.png';
 import Cog from '../images/cog.png';
 import Profile from '../images/profileYaleBlue.png';
@@ -29,7 +28,6 @@ function closeNav() {
             <nav>
                 <div className="top-wrapper">
                     <Link to="/"><img src={Home} alt="" /><span>Home</span></Link>
-                    <Link to="/ChatPage"><img src={Contact} alt="" /><span>Chat</span></Link>
                     <Link to="/SettingsPage"><img src={Cog} alt="" /><span>Settings</span></Link>
                     <Link to="/ProfilePage"><img src={Profile} alt="" /><span>Profile</span></Link>
                     {
@@ -45,7 +43,6 @@ function closeNav() {
                 <button onClick={closeNav}>&times;</button>
                 <div className="overlayContent" onClick={closeNav}>
                     <Link to="/"><img src={Home} alt="" /><span>Home</span></Link>
-                    <Link to="/ChatPage"><img src={Contact} alt="" /><span>Chat</span></Link>
                     <Link to="/SettingsPage"><img src={Cog} alt="" /><span>Settings</span></Link>
                     <Link to="/ProfilePage"><img src={Profile} alt="" /><span>Profile</span></Link>
                     {

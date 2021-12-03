@@ -42,8 +42,7 @@ position: relative;
     .loader {
         opacity: 80%;
         border: 16px solid #f3f3f3;
-        border-top: 16px solid #0f4d92;
-        border-bottom: 16px solid #0f4d92;
+        border: 16px dashed #0f4d92;
         border-radius: 50%;
         width: 250px;
         height: 250px;
@@ -56,7 +55,6 @@ position: relative;
         align-items: center;
         img {
             width: 100px;
-            rotate: 90deg;
         }
     }
 

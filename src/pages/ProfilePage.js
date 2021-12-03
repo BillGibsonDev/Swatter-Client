@@ -10,7 +10,6 @@ export default function ProfilePage({user, role, confirmRole}) {
     const [ newpassword, setNewpassword ] = useState("");
 	const [ confirm, setConfirm ] = useState("");
 
-
     function updateUser() {
         setUsername(user)
         if (newpassword !== confirm ) {

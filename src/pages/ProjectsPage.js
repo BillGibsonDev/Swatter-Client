@@ -7,6 +7,7 @@ import styled from 'styled-components';
 // components
 import Bug from '../components/Bug.js';
 import CommentSection from '../components/CommentSection';
+import ProjectsPageLoader from '../components/ProjectsPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';
@@ -24,7 +25,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
     const [ underwayBugs, setUnderwayBugs ] = useState(0);
     const [ reviewBugs, setReviewBugs ] = useState(0);
     const [ completedBugs, setCompletedBugs ] = useState(0);
-
+    const [ isLoading, setLoading ] = useState(true);
    
     useEffect(() =>{
         getProject();
@@ -36,6 +37,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
         .then(function (response){
             setProject(response.data)
             setBugs(response.data.bugs)
+            setLoading(false)
             setTotalBugs(response.data.bugs.length)
             setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open").length)
             setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway").length)
@@ -63,93 +65,101 @@ export default function ProjectsPage({user, role, lastLogin}) {
 
     return (
         <StyledProjectsPage>
-            <header>
-                <div className="project-title-container">
-                    <h2>Project: <span>{project.projectTitle}</span></h2>
-                    <h2>Started: <span>{project.startDate}</span></h2>
-                    <Link to={`/${projectId}/AddBugPage`}>Add Bug</Link>
-                </div>
-                <div className="data-container">
-                    <h5>Total: <span>{totalBugs}</span></h5>
-                    <h5>Open: <span>{openBugs}</span></h5>
-                    <h5>Underway: <span>{underwayBugs}</span></h5>
-                    <h5>Reviewing: <span>{reviewBugs}</span></h5>
-                    <h5>Completed: <span>{completedBugs}</span></h5>
-                </div>
-            </header>
-            { 
-                bugs === undefined ? (
-                    <div className="undefined">
-                        <h1>You've havent entered any bugs</h1>
-                    </div>
-                    ) : (
-                    <>
-                        <div className="active-wrapper">
-                            <div className="status-filter-container">
-                                <h3>Show:</h3>
-                                <label>Open
-                                    <input 
-                                        type="checkbox" 
-                                        id="Open"
-                                        value="Open"
-                                        defaultChecked 
-                                        onClick={handleFilter} />
-                                </label>
-                                <label>Underway
-                                    <input 
-                                        type="checkbox" 
-                                        id="Open" 
-                                        value="Underway"
-                                        defaultChecked 
-                                        onClick={handleFilter}
-                                        />
-                                </label>
-                                <label>Reviewing
-                                    <input 
-                                        type="checkbox" 
-                                        id="inReview" 
-                                        value="Reviewing"
-                                        defaultChecked 
-                                        onClick={handleFilter}
-                                        />
-                                </label>
-                                <label>Completed
-                                    <input 
-                                        type="checkbox" 
-                                        id="completed" 
-                                        value="Completed"
-                                        defaultChecked
-                                        onClick={handleFilter}
-                                        />
-                                </label>
-                            </div>
-                            <div className="bugs-container">
-                                {
-                                    bugs.slice().reverse().map((bug, key) => {
-                                        return (
-                                            <Bug
-                                                projectId = {projectId}
-                                                bugId={bug._id}
-                                                title={bug.title}
-                                                thumbnail = {bug.thumbnail}
-                                                description = {bug.description}
-                                                priority={bug.priority}
-                                                author={bug.author}
-                                                status={bug.status}
-                                                tag={bug.tag}
-                                                lastUpdate={bug.lastUpdate}
-                                                key={key}
-                                                user={user}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
+            {
+                isLoading === true ? (
+                    <ProjectsPageLoader />
+                ) : (
+                <>
+                    <header>
+                        <div className="project-title-container">
+                            <h2>Project: <span>{project.projectTitle}</span></h2>
+                            <h2>Started: <span>{project.startDate}</span></h2>
+                            <Link to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
-                    <CommentSection
-                        role={role}
-                        user={user}
-                    />
+                        <div className="data-container">
+                            <h5>Total: <span>{totalBugs}</span></h5>
+                            <h5>Open: <span>{openBugs}</span></h5>
+                            <h5>Underway: <span>{underwayBugs}</span></h5>
+                            <h5>Reviewing: <span>{reviewBugs}</span></h5>
+                            <h5>Completed: <span>{completedBugs}</span></h5>
+                        </div>
+                    </header>
+                    { 
+                        bugs === undefined ? (
+                            <div className="undefined">
+                                <h1>You've havent entered any bugs</h1>
+                            </div>
+                            ) : (
+                            <>
+                                <div className="active-wrapper">
+                                    <div className="status-filter-container">
+                                        <h3>Show:</h3>
+                                        <label>Open
+                                            <input 
+                                                type="checkbox" 
+                                                id="Open"
+                                                value="Open"
+                                                defaultChecked 
+                                                onClick={handleFilter} />
+                                        </label>
+                                        <label>Underway
+                                            <input 
+                                                type="checkbox" 
+                                                id="Open" 
+                                                value="Underway"
+                                                defaultChecked 
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
+                                        <label>Reviewing
+                                            <input 
+                                                type="checkbox" 
+                                                id="inReview" 
+                                                value="Reviewing"
+                                                defaultChecked 
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
+                                        <label>Completed
+                                            <input 
+                                                type="checkbox" 
+                                                id="completed" 
+                                                value="Completed"
+                                                defaultChecked
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
+                                    </div>
+                                    <div className="bugs-container">
+                                        {
+                                            bugs.slice().reverse().map((bug, key) => {
+                                                return (
+                                                    <Bug
+                                                        projectId = {projectId}
+                                                        bugId={bug._id}
+                                                        title={bug.title}
+                                                        thumbnail = {bug.thumbnail}
+                                                        description = {bug.description}
+                                                        priority={bug.priority}
+                                                        author={bug.author}
+                                                        status={bug.status}
+                                                        tag={bug.tag}
+                                                        lastUpdate={bug.lastUpdate}
+                                                        key={key}
+                                                        user={user}
+                                                    />
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            <CommentSection
+                                role={role}
+                                user={user}
+                            />
+                        </>
+                        )
+                    }
                 </>
                 )
             }

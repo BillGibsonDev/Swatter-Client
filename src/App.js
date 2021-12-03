@@ -31,6 +31,7 @@ function App() {
 	const [ isLoggedIn, setLoggedIn ] = useState(false);
 	const [ role, setRole ] = useState("");
 	const [ lastLogin, setLastLogin ] = useState("");
+	const [ isLoading, setLoading ] = useState(false);
 
 	const history = useHistory();
 
@@ -61,6 +62,7 @@ function App() {
 	},[])
 
 	function login () {
+		setLoading(true)
 		axios.post(`${process.env.REACT_APP_LOGIN_URL}`, {
 		username: username,
 		password: password,
@@ -69,6 +71,7 @@ function App() {
 		.then(function(response){
 			setUser(username)
 			setLoggedIn(true)
+			setLoading(false)
 			handleTokens()
 			history.push("/");
 			if (response.data === "LOGGED IN"){
@@ -79,12 +82,13 @@ function App() {
 				.then((response) => {
 					setRole(response.data)
 				})
-			} else (
-				alert(response)
-			)
+			} else {
+				alert(response);
+			}
 		})
 		.catch(function (error) {
 			alert("Wrong Username or Password")
+			setLoading(false);
 		});
 	}
 
@@ -175,6 +179,7 @@ function App() {
 						setUsername={setUsername}
 						setPassword={setPassword}
 						handleTokens={handleTokens}
+						isLoading={isLoading}
 					/>
 				</>
 		) : (

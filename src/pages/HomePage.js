@@ -6,13 +6,16 @@ import styled from 'styled-components';
 
 // components
 import Project from '../components/Project.js';
+import HomePageLoader from '../components/HomePageLoader';
 
 // link
 import { Link } from 'react-router-dom';
 
+
 export default function HomePage({user, role, confirmRole}) {
 
     const [ projects, setProjects ] = useState([]);
+    const [ isLoading, setLoading ] = useState(true)
 
     useEffect(() =>{
         getProjects();
@@ -23,6 +26,7 @@ export default function HomePage({user, role, confirmRole}) {
         axios.get(`${process.env.REACT_APP_GET_PROJECTS_URL}`)
         .then(function (response){
             setProjects(response.data)
+            setLoading(false)
         })
         .catch(function (error) {
             throw error;
@@ -31,31 +35,39 @@ export default function HomePage({user, role, confirmRole}) {
 
     return (
         <StyledHomePage>
-            <header>
-                <h1>What can we achieve today?</h1>
-                <Link to={'/AddProjectPage'}>New Project</Link>
-            </header>
-            <div className="projects-container">
-                {
-                    projects.slice().reverse().map((project, key) => {
-                        return (
-                            <Project
-                                projects={projects}
-                                projectId={project._id}
-                                title={project.projectTitle}
-                                date={project.startDate}
-                                author={project.author}
-                                fontColor={project.fontColor}
-                                background={project.backgroundColor}
-                                key={key}
-                                user={user}
-                                role={role}
-                                confirmRole={confirmRole}
-                            />
-                        )
-                    })
-                }
-            </div>
+            {
+                isLoading === true ? (
+                    <HomePageLoader />
+                ) : (
+                    <>
+                        <header>
+                            <h1>What can we achieve today?</h1>
+                            <Link to={'/AddProjectPage'}>New Project</Link>
+                        </header>
+                        <div className="projects-container">
+                            {
+                                projects.slice().reverse().map((project, key) => {
+                                    return (
+                                        <Project
+                                            projects={projects}
+                                            projectId={project._id}
+                                            title={project.projectTitle}
+                                            date={project.startDate}
+                                            author={project.author}
+                                            fontColor={project.fontColor}
+                                            background={project.backgroundColor}
+                                            key={key}
+                                            user={user}
+                                            role={role}
+                                            confirmRole={confirmRole}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    </>
+                )
+            }
         </StyledHomePage>
     )
 }
@@ -69,10 +81,10 @@ border-radius: 20px;
 display: flex;
 flex-direction: column;
     header {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
         h1, a {
             font-size: 1.2em;
             margin: 1% auto;

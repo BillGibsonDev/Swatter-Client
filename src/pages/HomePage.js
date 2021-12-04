@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 // components
 import Project from '../components/Project.js';
-import HomePageLoader from '../components/HomePageLoader';
+import HomePageLoader from '../loaders/HomePageLoader';
 
 // link
 import { Link } from 'react-router-dom';

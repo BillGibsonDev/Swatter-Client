@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // components
 import Bug from '../components/Bug.js';
 import CommentSection from '../components/CommentSection';
-import ProjectsPageLoader from '../components/ProjectsPageLoader';
+import ProjectsPageLoader from '../loaders/ProjectsPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';

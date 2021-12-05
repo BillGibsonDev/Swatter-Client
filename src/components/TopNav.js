@@ -5,8 +5,21 @@ import { Link } from 'react-router-dom';
 
 // images
 import Logo from '../images/bugMicroYaleBlue.png';
+import Home from '../images/homeYaleBlue.png';
+import Hamburger from '../images/hamburgerYaleBlue.png';
+import Cog from '../images/cog.png';
+import Profile from '../images/profileYaleBlue.png';
+import Register from '../images/registerYaleBlue.png';
 
-export default function TopNav({logout, isLoggedIn, user, role}) {
+export default function TopNav({logout, user, role, confirmAdmin}) {
+
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+}
 
     return (
         <StyledTopNav>
@@ -34,10 +47,29 @@ export default function TopNav({logout, isLoggedIn, user, role}) {
                                     }
                                 </h2>
                             </div>
-                            <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
+                            <Link  id="signOut" to="/LoginPage" onClick={logout}>Sign Out</Link>
                         </div>       
                     )
                 }
+
+                <div id="myNav" className="overlay">
+                    <button onClick={closeNav}>&times;</button>
+                    <div className="overlayContent" onClick={closeNav}>
+                        <Link to="/">Home</Link>
+                        <Link to={'/AddProjectPage'}>New Project</Link>
+                        <Link to="/SettingsPage">Settings</Link>
+                        <Link to="/ProfilePage">Profile</Link>
+                        {
+                            role === process.env.REACT_APP_ADMIN_SECRET ? (
+                                <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
+                            ) : (
+                                <></>     
+                            )
+                        }
+                        <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
+                    </div>
+                </div>
+                <img id='hamburger' src={Hamburger} onClick={openNav} alt="hamburger menu"/>
         </StyledTopNav>
     )
 }
@@ -52,13 +84,19 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 background: #f1f1f1;
+z-index: 1000;
+    @media (max-width: 750px){
+        width: 98%;
+    }
     .logo-wrapper {
         display: flex;
         align-items: center;
-        width: 33%;
         h1 {
             font-size: 3em;
             color: #0f4d92;
+            @media (max-width: 750px){
+                display: none;
+            }
         }
         img {
             width: 50px;
@@ -69,12 +107,11 @@ background: #f1f1f1;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 60%;
             .text-wrapper{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 h2 {
                     font-size: 16px;
                     color: #000000;
@@ -98,5 +135,72 @@ background: #f1f1f1;
                 transform: scale(1.01);
             }
         }
+        #signOut {
+            @media (max-width: 1050px){
+                    display: none;
+            }
+        }
     }
+    .overlay {
+        height: 100%;
+        width: 0;
+        position: fixed; 
+        left: 0;
+        top: 0;
+        background-color: rgb(0,0,0); 
+        overflow-x: hidden; 
+        transition: 0.5s;
+        z-index: 99; 
+            button {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+                color: #818181;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                &:hover, &:focus {
+                    transition: 0.3s;
+                    transform: scale(1.1);
+                }
+            }
+            .overlayContent {
+                position: relative;
+                top: 15%; 
+                width: 50%;
+                margin: auto;
+                margin-top: 30px;
+                z-index: 99;
+                a {
+                    display: flex;
+                    justify-content: center;
+                    font-size: 2em;
+                    color: white;
+                    margin: 2em 0;
+                    transition: 0.3s; 
+                        &:hover, &:focus {
+                        color: #f1f1f1;
+                        transition: 0.3s;
+                        transform: scale(1.1);
+                    }
+                    img{
+                        width: 30px;
+                        margin-right: 10px;
+                    }
+                }
+            } 
+        }
+        #hamburger {
+            cursor: pointer;
+            display: none;
+            width: 30px;
+            &:hover, &:focus {
+                transition: 0.3s;
+                transform: rotateZ(30deg);
+            }
+            @media (max-width: 1050px){
+                display: block;
+            }
+        }
 `;

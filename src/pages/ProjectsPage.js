@@ -77,11 +77,11 @@ export default function ProjectsPage({user, role, lastLogin}) {
                             <Link to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
                         <div className="data-container">
-                            <h5>Total: <span>{totalBugs}</span></h5>
                             <h5>Open: <span>{openBugs}</span></h5>
                             <h5>Underway: <span>{underwayBugs}</span></h5>
                             <h5>Reviewing: <span>{reviewBugs}</span></h5>
                             <h5>Completed: <span>{completedBugs}</span></h5>
+                            <h5>Total: <span>{totalBugs}</span></h5>
                         </div>
                     </header>
                     { 
@@ -175,6 +175,9 @@ margin: auto;
 display: flex;
 flex-direction: column;
 background: #cbdff7;
+    @media (max-width: 750px){
+        width: 98%;
+    }
     .undefined {
         background: white;
         width: 100%;
@@ -203,6 +206,13 @@ background: #cbdff7;
         justify-content: space-around;
         display: flex;
         align-items: center;
+            @media (max-width: 750px){
+                width: 90%;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                margin: 10px auto;
+            }
             h2 {
                 color: #444444;
                 font-size: 1.2em;
@@ -210,38 +220,49 @@ background: #cbdff7;
                     color: black;
                     font-size: 1.5em;
                 }
+                @media (max-width: 750px){
+                    font-size: 1em;
+                }
             }
             a {
-            background: #ffffff;
-            padding: 0 6px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #0f4d92;
-            &:hover{
-                color: #ffffff;
-                cursor: pointer;
-                background: #0f4d92;
-                transition: 0.2s;
-                transform: scale(1.01);
+                background: #ffffff;
+                padding: 0 6px;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #0f4d92;
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+            }
+    }
+    .data-container {
+        margin: 20px auto;
+        display: flex;
+        width: 80%;
+        justify-content: space-between;
+            @media (max-width: 750px){
+                width: 90%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        h5 {
+            color: #444444;
+            font-size: 14px;
+            @media (max-width: 750px){
+                font-size: 11px;
+            }
+            span {
+                color: black;
+                font-size: 16px;
+                color: #0f4d92;
             }
         }
     }
-        .data-container {
-            margin: 20px auto;
-            display: flex;
-            width: 80%;
-            justify-content: space-between;
-            h5 {
-                color: #444444;
-                font-size: 14px;
-                span {
-                    color: black;
-                    font-size: 16px;
-                    color: #0f4d92;
-                }
-            }
-        }
     .active-wrapper {
         height: 100%;
         display: flex;
@@ -254,11 +275,19 @@ background: #cbdff7;
             align-items: center;
             justify-content: space-between;
             margin: 10px auto 16px auto;
+            @media (max-width: 750px){
+                width: 90%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
         }
         h3 {
             color: #0f4d92;
             font-size: 1em;
             margin-right: 16px;
+            @media (max-width: 750px){
+                display: none;
+            }
         }
         label {
             display: flex;
@@ -267,6 +296,7 @@ background: #cbdff7;
             align-items: center;
             height: 100%;
             font-weight: bold;
+            margin: 6px;
             input {
                 border-radius: 4px;
                 border: none;
@@ -294,21 +324,6 @@ background: #cbdff7;
                 &:hover {
                     background: #eed994;
                 }
-            }
-        }
-        .guide-container {
-            display: flex;
-            width: 95%;
-            margin: auto;
-            justify-content: space-between;
-            h2 {
-                width: 15%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 16px;
-                text-decoration: underline;
-                color: #0f4d92;
             }
         }
     } 

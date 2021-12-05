@@ -103,7 +103,7 @@ border-radius: 12px;
         position: absolute;
         top: 2%;
         right: 5%;
-        z-index: 99;
+        z-index: 3;
         cursor: pointer;
         &:hover {
             transform: scale(1.2);

@@ -9,6 +9,7 @@ export default function BugPageLoader() {
     return (
         <StyledLoader>
             <div className="loader"><img src={BugImage} alt="" /></div>
+            <h2>Loading...</h2>
         </StyledLoader>
     )
 }
@@ -21,6 +22,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
+flex-direction: column;
     .loader {
         opacity: 80%;
         border: 16px solid #f3f3f3;
@@ -29,15 +31,17 @@ position: relative;
         width: 250px;
         height: 250px;
         animation: spin 2s linear infinite;
-        position: absolute;
-        top: 25%;
-        right: 35%;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         img {
             width: 100px;
         }
+    }
+    h2 {
+        position: relative;
+        margin-top: 50px;
     }
 
     @keyframes spin {

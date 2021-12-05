@@ -105,6 +105,9 @@ flex-direction: column;
                 transition: 0.2s;
                 transform: scale(1.01);
             }
+            @media (max-width: 750px){
+                display: none;
+            }
         }
     }
     .projects-container {
@@ -113,6 +116,12 @@ flex-direction: column;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-column-gap: 2%;
-        grid-row-gap: 2%;
+        grid-row-gap: 2em;
+        @media (max-width: 1050px){
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 750px){
+            grid-template-columns: 1fr;
+        }
     }
 `;

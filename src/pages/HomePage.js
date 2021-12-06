@@ -80,6 +80,9 @@ min-height: 80vh;
 border-radius: 20px;
 display: flex;
 flex-direction: column;
+    @media (max-width: 750px){
+        width: 98%;
+    }
     header {
     display: flex;
     width: 100%;

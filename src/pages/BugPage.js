@@ -195,6 +195,9 @@ border-radius: 12px;
 margin: auto;
 margin-bottom: 5%;
 background: #9dc3ee;
+    @media (max-width: 1050px){
+        width: 98%;
+    }
     .bug-container {
         display: flex;
         flex-direction: column;
@@ -209,6 +212,10 @@ background: #9dc3ee;
             align-items: center;
             width: 80%;
             margin: 20px 0 10px 0;
+            @media (max-width: 1050px){
+                flex-direction: column;
+                align-items: flex-start;
+            }
             h2 {
                 color: #353535;
                 font-size: 1.5em;
@@ -237,12 +244,20 @@ background: #9dc3ee;
             align-items: center;
             justify-content: space-between;
             margin: 2% 0;
+             @media (max-width: 750px){
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
             button {
                 width: 100px;
                 cursor: pointer;
                 border: none;
                 border-radius: 6px;
                 font-weight: 700;
+                @media (max-width: 1050px){
+                    margin: 10px 0;
+                    width: 150px;
+                }
                     &:hover {
                         color: #ffffff;
                         background: #326be6;
@@ -264,6 +279,7 @@ background: #9dc3ee;
                 cursor: pointer;
                 color: black;
                 font-weight: 700;
+                margin: 20px 0;
                 &:hover {
                     color: #2828a0;
                     transform: scale(1.05);

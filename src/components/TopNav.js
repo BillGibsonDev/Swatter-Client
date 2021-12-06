@@ -5,11 +5,7 @@ import { Link } from 'react-router-dom';
 
 // images
 import Logo from '../images/bugMicroYaleBlue.png';
-import Home from '../images/homeYaleBlue.png';
 import Hamburger from '../images/hamburgerYaleBlue.png';
-import Cog from '../images/cog.png';
-import Profile from '../images/profileYaleBlue.png';
-import Register from '../images/registerYaleBlue.png';
 
 export default function TopNav({logout, user, role, confirmAdmin}) {
 
@@ -47,11 +43,10 @@ function closeNav() {
                                     }
                                 </h2>
                             </div>
-                            <Link  id="signOut" to="/LoginPage" onClick={logout}>Sign Out</Link>
                         </div>       
                     )
                 }
-
+                <Link id="signOut" to="/LoginPage" onClick={logout}>Sign Out</Link>
                 <div id="myNav" className="overlay">
                     <button onClick={closeNav}>&times;</button>
                     <div className="overlayContent" onClick={closeNav}>
@@ -91,6 +86,7 @@ z-index: 1000;
     .logo-wrapper {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         h1 {
             font-size: 3em;
             color: #0f4d92;
@@ -121,24 +117,22 @@ z-index: 1000;
                     color: #383838;
                 }
             }
-        a {
-            background: #ffffff;
-            color: #0f4d92;;
-            padding: 0 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            &:hover{
-                color: #ffffff;
-                cursor: pointer;
-                background: #0f4d92;
-                transition: 0.2s;
-                transform: scale(1.01);
-            }
+    }
+    #signOut {
+        background: #ffffff;
+        color: #0f4d92;;
+        padding: 0 6px;
+        border-radius: 4px;
+        font-weight: bold;
+        &:hover{
+            color: #ffffff;
+            cursor: pointer;
+            background: #0f4d92;
+            transition: 0.2s;
+            transform: scale(1.01);
         }
-        #signOut {
-            @media (max-width: 1050px){
-                    display: none;
-            }
+        @media (max-width: 1050px){
+                display: none;
         }
     }
     .overlay {

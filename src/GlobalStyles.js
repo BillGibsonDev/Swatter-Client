@@ -16,8 +16,10 @@ letter-spacing: 1px;
 line-height: 1.5;
     @media (max-width: 1450px){
         font-size: 90%;
-        
-    } 
+    }
+    @media (max-width: 1450px){
+        font-size: 80%;
+    }
     @media (max-width: 750px){
         font-size: 70%;
     } 

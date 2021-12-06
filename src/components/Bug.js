@@ -117,6 +117,7 @@ cursor: pointer;
 			width: 20%;
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
 			img {
 				width: 25px;
 			}
@@ -126,14 +127,14 @@ cursor: pointer;
 			}
 		}
 		h2 {
-			width: 15%;
 			font-size: 14px;
 			color: black;
 			display: flex;
 			justify-content: center;
 			text-align: center;
 			@media (max-width: 750px){
-				font-size: 12px;
+				font-size: 14px;
+				width: 100%;
 			}
 		}
 		#title {
@@ -142,10 +143,11 @@ cursor: pointer;
 		.bottom-wrapper, .center-wrapper {
 			display: flex;
 			justify-content: space-around;
+			align-items: center;
 			width: 98%;
 			margin: 10px 0;
 			@media (max-width: 750px){
-				font-size: 12px;
+				font-size: 14px;
 			}
 			#date, #author {
 				display: flex;
@@ -154,7 +156,7 @@ cursor: pointer;
 					color: #5f5f5f;
 				}
 				@media (max-width: 750px){
-					font-size: 10px;
+					font-size: 12px;
 				}
 			}
 		}

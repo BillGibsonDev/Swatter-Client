@@ -45,16 +45,13 @@ z-index: 99;
         left: 8%;
     }
     @media (max-width: 1550px){
-        left: 5%;
+        left: 2%;
     }
     @media (max-width: 1450px){
-        left: 3%;
+        left: 1%;
     }
-    @media (max-width: 1250px){
-        left: 8%;
-    }
-    @media (max-width: 750px){
-        display: none
+    @media (max-width: 1050px){
+        display: none;
     }
     nav {
         display: flex;
@@ -87,8 +84,5 @@ z-index: 99;
                 border: 2px solid #0f4d92;
             }
         }
-            @media (max-width: 1050px){
-                display: none;
-            }
-        }
+    }
 `;

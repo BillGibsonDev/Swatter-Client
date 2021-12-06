@@ -1,13 +1,17 @@
+import { useState } from 'react';
+import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import axios from 'axios';
 
 // router
 import { Link } from 'react-router-dom';
 
 // images
-import X from "../images/whiteX.png"
+import X from "../images/whiteX.png";
+
+// components
+import Loader from '../loaders/Loader';
 
 export default function Project({
     projectId, 
@@ -19,17 +23,25 @@ export default function Project({
     confirmRole
 }) {
 
+    const [ isLoading, setLoading ] = useState(false);
+
 
     function deleteProject(){
-        axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
-        .then(function(response){
-            if(response.data !== "Project Deleted"){
-                alert("Server Error - Project not updated")
-            } else {
-                alert('Project Deleted!');
-                window.location.reload();
-            }
-        })
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            setLoading(true);
+            axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+            .then(function(response){
+                if(response.data !== "Project Deleted"){
+                    setLoading(false);
+                    alert("Server Error - Project not updated")
+                } else {
+                    setLoading(false);
+                    alert('Project Deleted!');
+                    window.location.reload();
+                }
+            })
+        }
     }
 
     function unauthorized(){
@@ -38,6 +50,11 @@ export default function Project({
 
     return (
         <StyledProject>
+            {
+                isLoading === true ? (
+                    <Loader />
+            ) : (
+                <>
             <Link to={`/projects/${projectId}`} id="background-color">
                 <div className="info-container">
                     <h2 id="title">{title}<span>{date}</span></h2>
@@ -50,6 +67,8 @@ export default function Project({
                     <img src={X} onClick={()=>{unauthorized();}} alt="" />
                 )
             }
+            </>
+            )}
         </StyledProject>
     )
 }
@@ -91,6 +110,9 @@ border-radius: 12px;
                 span {
                     margin-top: 10px;
                 }
+                @media (max-width: 750px){
+                    font-size : 2em;
+                }
             }
         }
         .data-container {
@@ -103,7 +125,7 @@ border-radius: 12px;
         position: absolute;
         top: 2%;
         right: 5%;
-        z-index: 99;
+        z-index: 3;
         cursor: pointer;
         &:hover {
             transform: scale(1.2);

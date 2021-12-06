@@ -11,6 +11,7 @@ export default function ProjectsPageLoader() {
         <StyledLoader>
             <div className="skelton-header"></div>
             <div className="loader"><img src={BugImage} alt="" /></div>
+            <h2>Loading...</h2>
             <div className="skelton-bug"></div>
             <div className="skelton-bug"></div>
             <div className="skelton-bug"></div>
@@ -61,15 +62,22 @@ position: relative;
         border-radius: 50%;
         width: 250px;
         height: 250px;
-        animation: spin 2s linear infinite;
         position: absolute;
         top: 20%;
         display: flex;
         justify-content: center;
         align-items: center;
+        animation: spin 2s linear infinite;
         img {
             width: 100px;
         }
+    }
+    h2 {
+        position: absolute;
+        top: 55%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     @keyframes spin {

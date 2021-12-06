@@ -7,12 +7,12 @@ import styled from 'styled-components';
 // components
 import Bug from '../components/Bug.js';
 import CommentSection from '../components/CommentSection';
-import ProjectsPageLoader from '../loaders/ProjectsPageLoader';
+import ProjectPageLoader from '../loaders/ProjectPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';
 
-export default function ProjectsPage({user, role, lastLogin}) {
+export default function ProjectPage({user, role, lastLogin}) {
 
     const { projectId, bugId } = useParams();
 
@@ -45,7 +45,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
             setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed").length)
         })
         .catch(function (error) {
-            throw error;
+            console.log(error)
         });
     }
 
@@ -64,10 +64,10 @@ export default function ProjectsPage({user, role, lastLogin}) {
       };
 
     return (
-        <StyledProjectsPage>
+        <StyledProjectPage>
             {
                 isLoading === true ? (
-                    <ProjectsPageLoader />
+                    <ProjectPageLoader />
                 ) : (
                 <>
                     <header>
@@ -77,11 +77,11 @@ export default function ProjectsPage({user, role, lastLogin}) {
                             <Link to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
                         <div className="data-container">
-                            <h5>Total: <span>{totalBugs}</span></h5>
                             <h5>Open: <span>{openBugs}</span></h5>
                             <h5>Underway: <span>{underwayBugs}</span></h5>
                             <h5>Reviewing: <span>{reviewBugs}</span></h5>
                             <h5>Completed: <span>{completedBugs}</span></h5>
+                            <h5 id="total">Total: <span>{totalBugs}</span></h5>
                         </div>
                     </header>
                     { 
@@ -92,8 +92,8 @@ export default function ProjectsPage({user, role, lastLogin}) {
                             ) : (
                             <>
                                 <div className="active-wrapper">
+                                    <h3>Show:</h3>
                                     <div className="status-filter-container">
-                                        <h3>Show:</h3>
                                         <label>Open
                                             <input 
                                                 type="checkbox" 
@@ -163,11 +163,11 @@ export default function ProjectsPage({user, role, lastLogin}) {
                 </>
                 )
             }
-        </StyledProjectsPage>
+        </StyledProjectPage>
     )
 }
 
-const StyledProjectsPage = styled.div`
+const StyledProjectPage = styled.div`
 min-height: 80vh;
 border-radius: 20px;
 width: 90%;
@@ -175,6 +175,9 @@ margin: auto;
 display: flex;
 flex-direction: column;
 background: #cbdff7;
+    @media (max-width: 1050px){
+        width: 98%;
+    }
     .undefined {
         background: white;
         width: 100%;
@@ -203,6 +206,13 @@ background: #cbdff7;
         justify-content: space-around;
         display: flex;
         align-items: center;
+            @media (max-width: 750px){
+                width: 90%;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                margin: 10px auto;
+            }
             h2 {
                 color: #444444;
                 font-size: 1.2em;
@@ -210,55 +220,81 @@ background: #cbdff7;
                     color: black;
                     font-size: 1.5em;
                 }
+                @media (max-width: 750px){
+                    font-size: 1em;
+                    margin: 6px 0;
+                }
             }
             a {
-            background: #ffffff;
-            padding: 0 6px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #0f4d92;
-            &:hover{
-                color: #ffffff;
-                cursor: pointer;
-                background: #0f4d92;
-                transition: 0.2s;
-                transform: scale(1.01);
+                background: #ffffff;
+                padding: 0 6px;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #0f4d92;
+                @media (max-width: 750px){
+                    margin: 10px 0;
+                }
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+            }
+    }
+    .data-container {
+        margin: 20px auto;
+        display: flex;
+        width: 80%;
+        justify-content: space-between;
+            @media (max-width: 750px){
+                width: 90%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        h5 {
+            color: #444444;
+            font-size: 14px;
+            @media (max-width: 750px){
+                font-size: 11px;
+                margin: 4px 0;
+            }
+            span {
+                color: black;
+                font-size: 16px;
+                color: #0f4d92;
+            }
+        }
+        #total {
+            @media (max-width: 750px){
+                border-top: 1px solid black;
             }
         }
     }
-        .data-container {
-            margin: 20px auto;
-            display: flex;
-            width: 80%;
-            justify-content: space-between;
-            h5 {
-                color: #444444;
-                font-size: 14px;
-                span {
-                    color: black;
-                    font-size: 16px;
-                    color: #0f4d92;
-                }
-            }
-        }
     .active-wrapper {
         height: 100%;
         display: flex;
         margin-top: 2%;
         flex-direction: column;
         align-items: center;
+        h3 {
+            color: #0f4d92;
+            font-size: 1.5em;
+            margin-right: 16px;
+        }
         .status-filter-container {
             display: flex;
             width: 70%;
             align-items: center;
             justify-content: space-between;
             margin: 10px auto 16px auto;
-        }
-        h3 {
-            color: #0f4d92;
-            font-size: 1em;
-            margin-right: 16px;
+            @media (max-width: 750px){
+                width: 90%;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
         }
         label {
             display: flex;
@@ -267,6 +303,7 @@ background: #cbdff7;
             align-items: center;
             height: 100%;
             font-weight: bold;
+            margin: 6px;
             input {
                 border-radius: 4px;
                 border: none;
@@ -277,38 +314,12 @@ background: #cbdff7;
         .bugs-container {
             width: 98%;
             margin: auto;
-            .Open {
-                background: #ffffff;
-            }
-            .Underway {
-                background: #d8ebfc;
-            }
-            .Reviewing {
-                background: #a8cbec;
-            }
-            .Completed {
-                background: #c3d4e6;
-            }
             .Open, .Underway, .Reviewing, .Completed {
                 display: flex;
                 &:hover {
-                    background: #eed994;
+                    background: #87befc;
+                    border: 1px black solid;
                 }
-            }
-        }
-        .guide-container {
-            display: flex;
-            width: 95%;
-            margin: auto;
-            justify-content: space-between;
-            h2 {
-                width: 15%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 16px;
-                text-decoration: underline;
-                color: #0f4d92;
             }
         }
     } 

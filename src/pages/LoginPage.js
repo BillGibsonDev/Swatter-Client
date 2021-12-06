@@ -16,6 +16,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 					<div className="loading-container">
 						<div className="loader">
 							<img src={BugImage} alt="" /></div>
+							<h2>Signing In...</h2>
 					</div>
 				) : (
 					<div className="form-wrapper">
@@ -89,6 +90,11 @@ border-radius: 12px;
 			img {
 				width: 100px;
 			}
+		}
+		h2 {
+			margin-top: 10px;
+			font-size: 1em;
+			color: black;
 		}
 	}
  	@keyframes spin {

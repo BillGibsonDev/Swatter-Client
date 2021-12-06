@@ -7,6 +7,9 @@ import styled from 'styled-components';
 // router
 import { useParams, Link } from 'react-router-dom';
 
+// components
+import Loader from '../loaders/Loader';
+
 
 export default function Bug({user, role, confirmRole}) {
 
@@ -21,6 +24,7 @@ export default function Bug({user, role, confirmRole}) {
     const [ priority, setPriority ] = useState("");
     const [ tag, setTag ] = useState("");
     const [ lastUpdate, setLastUpdate ] = useState("");
+    const [ isLoading, setLoading ] = useState(false);
 
     function handleDate(){
         const current = new Date();
@@ -34,6 +38,7 @@ export default function Bug({user, role, confirmRole}) {
     }, []);
 
     function addBug() {
+        setLoading(true)
         axios.post(`${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`, {
             projectId: projectId,
             title: title,
@@ -49,9 +54,12 @@ export default function Bug({user, role, confirmRole}) {
         })
         .then(function(response) {
             if(response.data !== "Bug Created"){
-                alert("Server Error - Bug not created")
+                setLoading(false);
+                alert("Server Error - Bug not created");
             } else {
+                setLoading(false);
                 alert('Bug Created!');
+
             }
         })
         
@@ -73,6 +81,8 @@ export default function Bug({user, role, confirmRole}) {
             {
                 user === null ? (
                     <h1>You are signed out</h1>
+                ) :isLoading === true ? (
+                    <Loader />
                 ) : (    
                 <div className="form-wrapper">
                     <label>Title
@@ -173,7 +183,7 @@ export default function Bug({user, role, confirmRole}) {
                         }
                             <button id="clear" onClick={clearForm}>Clear Form</button>
                         </div>
-                        <Link to={`/projects/${projectId}`}>Back to Project</Link>
+                        <Link to={`/projects/${projectId}`}>Go Back</Link>
                     </div>
                 </div>
             )}
@@ -188,6 +198,9 @@ width: 90%;
 background: #fff;
 border-radius: 12px;
 margin: auto;
+    @media (max-width: 750px){
+        width: 98%
+    }
     .form-wrapper {
         width: 95%;
         margin: 2% auto;
@@ -212,6 +225,10 @@ margin: auto;
                     border: none;
                     border-radius: 10px;
                     font-weight: 700;
+                    @media (max-width: 420px){
+                        width: 80px;
+                        font-size: 1em;
+                    }
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
@@ -222,16 +239,24 @@ margin: auto;
                 }
                 #clear{
                     background: lightcoral;
+                    &:hover{
+                        color: #000000;
+                        cursor: pointer;
+                        background: #ff0000;
+                        transition: 0.2s;
+                        transform: scale(1.01);
+                    }
                 }
                 a {
-                    color: black;
-                    padding: 0 3px;
+                    color: #ffffff;
+                    padding: 0 6px;
                     border-radius: 4px;
                     font-weight: 700;
+                    background: #0f4d92;
                     &:hover{
-                        color: #ffffff;
+                        color: #000000;
                         cursor: pointer;
-                        background: #0f4d92;
+                        background: lightgray;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }

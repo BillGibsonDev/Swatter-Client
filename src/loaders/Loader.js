@@ -1,28 +1,28 @@
-// images
-import BugImage from '../images/bugYaleBlue.png'
 
 // styled
 import styled from 'styled-components';
 
-export default function BugPageLoader() {
+export default function Loader() {
 
     return (
         <StyledLoader>
-            <div className="loader"><img src={BugImage} alt="" /></div>
-            <h2>Loading...</h2>
+            <div className="loader"></div>
+            <h2>Standby...</h2>
         </StyledLoader>
     )
 }
 
 const StyledLoader = styled.div`
-width: 90%;
-height: 70vh;
+width: 100%;
+max-height: 70vh;
 margin: 1% auto;
 display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
 flex-direction: column;
+z-index: 99;
+background: white;
     .loader {
         opacity: 80%;
         border: 16px solid #f3f3f3;
@@ -35,9 +35,6 @@ flex-direction: column;
         display: flex;
         justify-content: center;
         align-items: center;
-        img {
-            width: 100px;
-        }
     }
     h2 {
         position: relative;

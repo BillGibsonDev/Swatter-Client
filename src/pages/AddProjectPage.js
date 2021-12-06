@@ -7,13 +7,15 @@ import styled from 'styled-components';
 // router
 import { Link } from 'react-router-dom';
 
-export default function ProjectPage({user, role, confirmRole}) {
+// components
+import Loader from '../loaders/Loader';
 
-
+export default function AddProjectPage({user, role, confirmRole}) {
 
     const [ projectTitle, setProjectTitle] = useState("");
     const [ startDate, setStartDate] = useState("");
     const [ author, setAuthor ] = useState(user);
+    const [ isLoading, setLoading ] = useState(false);
 
     function makeDate(){
         const current = new Date();
@@ -28,6 +30,7 @@ export default function ProjectPage({user, role, confirmRole}) {
 
     function addProject() {
         confirmRole(role);
+        setLoading(true);
         axios.post(`${process.env.REACT_APP_ADD_PROJECT_URL}`, {
             projectTitle: projectTitle,
             startDate: startDate,
@@ -35,8 +38,10 @@ export default function ProjectPage({user, role, confirmRole}) {
         })
         .then(function(response) {
             if(response.data !== "Project Created"){
+                setLoading(false);
                 alert("Server Error - Project not created")
             } else {
+                setLoading(false);
                 alert('Project Started!');
             }
         })
@@ -52,7 +57,9 @@ export default function ProjectPage({user, role, confirmRole}) {
             {
                 user === null ? (
                     <h1>You are signed out</h1>
-                ) : (    
+                ) :isLoading === true ? (    
+                    <Loader/>
+                ) : (
                 <div className="form-wrapper">
                     <label>Title
                         <input 
@@ -76,12 +83,12 @@ export default function ProjectPage({user, role, confirmRole}) {
                     <div className="button-container">
                     {
                         role === process.env.REACT_APP_GUEST_SECRET ? (
-                            <button onClick={unauthorized}>Save</button>
+                            <button onClick={unauthorized}>Start</button>
                         ) : (    
-                            <button onClick={addProject}>Save</button>
+                            <button onClick={addProject}>Start</button>
                         )
                     }
-                    <Link to={`/`}>Back to Home Page</Link>
+                    <Link to={`/`}>Go Back</Link>
                     </div>
                 </div>
             )}
@@ -96,6 +103,10 @@ width: 90%;
 background: #fff;
 border-radius: 12px;
 margin: auto;
+    @media (max-width: 750px){
+        width: 98%;
+        height: 40vh;
+    }
     h1 {
         width: 95%;
         margin: 2% auto;
@@ -110,6 +121,9 @@ margin: auto;
             margin: 10px 0;
                 input, select {
                     width: 50%;
+                    @media (max-width: 750px){
+                        width: 90%;
+                    }
                 }
             }
         .button-container{
@@ -117,9 +131,40 @@ margin: auto;
             align-items: center;
             justify-content: space-between;
             margin-top: 2%;
-            button {
+            @media (max-width: 750px){
+                margin-top: 10%;
+            }
+            button, a {
                 width: 100px;
                 cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                font-size: 1.2em;
+                font-weight: 700;
+                background: lightgray;
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+            }
+            a {
+                color: #ffffff;
+                padding: 0 6px;
+                border-radius: 4px;
+                background: #0f4d92;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover{
+                    color: #000000;
+                    cursor: pointer;
+                    background: lightgray;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
             }
         }
     }

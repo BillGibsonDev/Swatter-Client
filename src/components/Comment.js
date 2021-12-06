@@ -1,10 +1,15 @@
+
+import { useState } from 'react';
 import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
 
 // images
-import X from "../images/XyaleBlue.png"
+import X from "../images/XyaleBlue.png";
+
+// components
+import Loader from '../loaders/Loader';
 
 
 export default function Comment({
@@ -17,15 +22,24 @@ export default function Comment({
     role
 }) {
 
+    const [ isLoading, setLoading ] = useState(false);
+
     function deleteComment(){
-        axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
-        .then(function(response) {
-            if(response.data !== "Comment Deleted"){
-                alert("Server Error - Comment not deleted")
-            } else {
-                alert('Comment Deleted!');
-            }
-        })
+        setLoading(true);
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+            .then(function(response) {
+                if(response.data !== "Comment Deleted"){
+                    setLoading(false);
+                    alert("Server Error - Comment not deleted");
+                } else {
+                    setLoading(false);
+                    alert('Comment Deleted!');
+                    window.location.reload();
+                }
+            })
+        }
     }
 
     function unauthorized(){
@@ -34,17 +48,24 @@ export default function Comment({
 
     return (
         <StyledComment>
-            <div className="comment-wrapper">
-                <h3 id={author}>{author}<span>{date}</span></h3>
-                <p>{comments}</p>
-            </div>
             {
-                author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                    <img src={X} onClick={deleteComment} alt="" />
-                ) : (
-                    <img src={X} onClick={unauthorized} alt="" />
-                )
-            }
+            isLoading === true ? (
+                <Loader />
+            ):(
+                <>
+                    <div className="comment-wrapper">
+                        <h3 id={author}>{author}<span>{date}</span></h3>
+                        <p>{comments}</p>
+                    </div>
+                    {
+                        author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
+                            <img src={X} onClick={deleteComment} alt="" />
+                        ) : (
+                            <img src={X} onClick={unauthorized} alt="" />
+                        )
+                    }
+                </>
+            )}
         </StyledComment>
     )
 }
@@ -90,6 +111,9 @@ justify-content: space-around;
         top: 2%;
         right: 1%;
         cursor: pointer;
+        @media (max-width: 750px){
+            top: 5%;
+        }
         &:hover {
             transform: scale(1.1);
             transition: 0.3s;

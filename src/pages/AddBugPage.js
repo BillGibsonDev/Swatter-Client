@@ -211,6 +211,9 @@ margin: auto;
                 input, select {
                     width: 50%;
                 }
+                textarea {
+                    padding: 2px;
+                }
             }
             .button-container {
                 display: flex;
@@ -221,7 +224,7 @@ margin: auto;
                     width: 100px;
                     cursor: pointer;
                     margin: 0 20px;
-                    background: lightgray;
+                    background: #d1d1d1;
                     border: none;
                     border-radius: 10px;
                     font-weight: 700;
@@ -256,7 +259,7 @@ margin: auto;
                     &:hover{
                         color: #000000;
                         cursor: pointer;
-                        background: lightgray;
+                        background: #d1d1d1;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }

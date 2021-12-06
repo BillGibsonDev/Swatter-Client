@@ -33,6 +33,7 @@ a {
 button, label, input, textarea {
     font-family: 'Poppins', sans-serif;
     letter-spacing: 1px;
+    padding: 2px;
 }
 `;
 

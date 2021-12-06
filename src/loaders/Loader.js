@@ -25,7 +25,6 @@ z-index: 99;
 background: white;
     .loader {
         opacity: 80%;
-        border: 16px solid #f3f3f3;
         border: 16px dashed #0f4d92;
         border-radius: 50%;
         width: 250px;

@@ -294,6 +294,8 @@ background: #cbdff7;
                 width: 90%;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
+                margin: 10px auto;
+                justify-content: center;
             }
         }
         label {
@@ -308,8 +310,8 @@ background: #cbdff7;
                 border-radius: 4px;
                 border: none;
                 margin: 0 6px;
+                color: #0f4d92;
             }
-
         }
         .bugs-container {
             width: 98%;

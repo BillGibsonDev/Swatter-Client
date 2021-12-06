@@ -68,7 +68,6 @@ export default function BugPage({user, role}) {
             } else {
                 setLoading(false);
                 alert('Bug Updated!');
-
             }
         })
     }
@@ -88,7 +87,6 @@ export default function BugPage({user, role}) {
                     } else {
                         setLoading(false);
                         alert('Bug Deleted');
-
                     }
                 })
         }
@@ -301,7 +299,7 @@ background: #9dc3ee;
                 &:hover{
                     color: #000000;
                     cursor: pointer;
-                    background: lightgray;
+                    background: #d1d1d1;
                     transition: 0.2s;
                     transform: scale(1.01);
                 }

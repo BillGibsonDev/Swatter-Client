@@ -178,5 +178,8 @@ border: 1px solid white;
 		#Underway {
 			color: #0066ff;
 		}
+		#Completed {
+			color: #717171;
+		}
 	}
 `;

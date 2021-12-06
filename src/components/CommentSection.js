@@ -149,6 +149,7 @@ overflow-y: scroll;
         textarea {
             border-radius: 6px;
             background: #d6d6d6;
+            padding: 2px;
         }
         button {
             margin: 1% auto;
@@ -158,12 +159,15 @@ overflow-y: scroll;
             background: #0f4d92;
             border: none;
             border-radius: 6px;
-            font-size: 1em;
+            font-size: 1.2em;
             font-weight: 700;
+            @media (max-width: 750px){
+                font-size: 1.5em;
+            }
             &:hover {
                 transform: scale(1.05);
                 transition: 0.2s;
-                background: lightgray;
+                background: #d1d1d1;
                 color: black;
             }
         }

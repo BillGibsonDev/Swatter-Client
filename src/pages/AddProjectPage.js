@@ -121,6 +121,7 @@ margin: auto;
             margin: 10px 0;
                 input, select {
                     width: 50%;
+                    padding: 2px;
                     @media (max-width: 750px){
                         width: 90%;
                     }
@@ -141,7 +142,7 @@ margin: auto;
                 border-radius: 4px;
                 font-size: 1.2em;
                 font-weight: 700;
-                background: lightgray;
+                background: #d1d1d1;
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
@@ -161,7 +162,7 @@ margin: auto;
                 &:hover{
                     color: #000000;
                     cursor: pointer;
-                    background: lightgray;
+                    background: #d1d1d1;
                     transition: 0.2s;
                     transform: scale(1.01);
                 }

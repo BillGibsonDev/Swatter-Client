@@ -128,7 +128,7 @@ border-radius: 12px;
                 width: 200px;
                 cursor: pointer;
                 margin: 0 20px;
-                background: lightgray;
+                background: #d1d1d1;
                 border: none;
                 border-radius: 4px;
                 font-weight: 700;

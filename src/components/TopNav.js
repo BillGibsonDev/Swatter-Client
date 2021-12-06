@@ -150,13 +150,14 @@ z-index: 1000;
                 top: 20px;
                 right: 45px;
                 font-size: 60px;
-                color: #818181;
+                color: #3a63d1;
                 background: transparent;
                 border: none;
                 cursor: pointer;
                 &:hover, &:focus {
                     transition: 0.3s;
                     transform: scale(1.1);
+                    color: #ffffff;
                 }
             }
             .overlayContent {
@@ -170,17 +171,13 @@ z-index: 1000;
                     display: flex;
                     justify-content: center;
                     font-size: 2em;
-                    color: white;
+                    color: #3a63d1;
                     margin: 2em 0;
                     transition: 0.3s; 
                         &:hover, &:focus {
                         color: #f1f1f1;
                         transition: 0.3s;
                         transform: scale(1.1);
-                    }
-                    img{
-                        width: 30px;
-                        margin-right: 10px;
                     }
                 }
             } 

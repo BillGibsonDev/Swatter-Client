@@ -9,6 +9,7 @@ import Comment from '../components/Comment';
 
 // router
 import { useParams } from 'react-router-dom';
+import Loader from '../loaders/Loader';
 
 export default function ProjectsPage({user, role}) {
 
@@ -18,6 +19,7 @@ export default function ProjectsPage({user, role}) {
     const [ addComment, setAddComment] = useState('');
     const [ addAuthor, setAuthor] = useState(user);
     const [ addDate, setAddDate] = useState('');
+    const [ isLoading, setLoading ] = useState(false);
 
     function getProject(){
         axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
@@ -43,6 +45,7 @@ export default function ProjectsPage({user, role}) {
     }, [ projectId, bugId, user ]);
 
     function sendComment() {
+        setLoading(true);
         axios.post(`${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`, {
             projectId: projectId,
             comment: addComment,
@@ -51,7 +54,10 @@ export default function ProjectsPage({user, role}) {
         })
         .then(function(response) {
             if(response.data !== "Comment Created"){
-                alert("Server Error - Comment not created")
+                setLoading(false);
+                alert("Server Error - Comment not created!");
+            } else {
+                setLoading(false);
             }
         })
     }
@@ -63,25 +69,31 @@ export default function ProjectsPage({user, role}) {
     return (
         <StyledCommentSection>
             <h1>Comments</h1>
-            <div className="comment-maker">
-                <textarea 
-                    name="comment" 
-                    id="comment" 
-                    cols="30" 
-                    rows="2"
-                    required
-                    onChange={(event) => {
-                        setAddComment(event.target.value);
-                    }}  
-                />
-                {
-                    role === process.env.REACT_APP_GUEST_SECRET ? (
-                        <button onClick={()=> { unauthorized();}}>Send</button>
-                    ) : (
-                        <button onClick={()=> { handleDate(); sendComment();}}>Send</button>
-                    )
-                }
-            </div>
+            {
+                isLoading === true ? (
+                    <Loader />
+                ) : (
+                    <div className="comment-maker">
+                        <textarea 
+                            name="comment" 
+                            id="comment" 
+                            cols="30" 
+                            rows="2"
+                            required
+                            onChange={(event) => {
+                                setAddComment(event.target.value);
+                            }}  
+                        />
+                        {
+                            role === process.env.REACT_APP_GUEST_SECRET ? (
+                                <button onClick={()=> { unauthorized();}}>Send</button>
+                            ) : (
+                                <button onClick={()=> { handleDate(); sendComment();}}>Send</button>
+                            )
+                        }
+                    </div>
+                )
+            }
             { 
                 comments === undefined ? (
                     <div className="undefined">

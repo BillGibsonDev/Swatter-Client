@@ -11,7 +11,7 @@ import TopNav from "./components/TopNav";
 
 // pages
 import HomePage from './pages/HomePage.js';
-import ProjectsPage from './pages/ProjectsPage';
+import ProjectPage from './pages/ProjectPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
@@ -202,15 +202,15 @@ function App() {
 							reloadLogin={reloadLogin}
 						/>
 					</Route>
-					<Route path={"/projects/:projectId"}>
-						<ProjectsPage
+					<Route path={"/projects/:projectId"} exact>
+						<ProjectPage
 							user={user}
 							role={role}
 							confirmRole={confirmRole}
 							lastLogin={lastLogin}
 						/>
 					</Route>
-					<Route path={"/AddProjectPage"}>
+					<Route path={"/AddProjectPage"} exact>
 						<AddProjectPage
 							user={user}
 							role={role}
@@ -237,14 +237,14 @@ function App() {
 							confirmAdmin={confirmAdmin}
 						/>
 					</Route>
-					<Route path={'/:projectId/AddBugPage'}>
+					<Route path={'/:projectId/AddBugPage'} exact>
 						<AddBugPage
 							user={user}
 							role={role}
 							confirmRole={confirmRole}
 						/>
 					</Route> 
-					<Route path={"/:projectId/:bugId"}>
+					<Route path={"/:projectId/:bugId"} exact>
 						<BugPage
 							user={user}
 							role={role}

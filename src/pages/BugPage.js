@@ -16,7 +16,7 @@ export default function BugPage({user, role}) {
 
     const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
-    const [ isLoading, SetLoading ] = useState(true)
+    const [ isLoading, setLoading ] = useState(true)
 
 
     function getBug(){
@@ -24,10 +24,10 @@ export default function BugPage({user, role}) {
         .then(function (response){
             setBug(response.data[0].bugs)
             setAuthor(response.data[0].bugs[0].author)
-            SetLoading(false)
+            setLoading(false)
         })
         .catch(function (error) {
-            throw error;
+            console.log(error);
         });
     }
 
@@ -51,6 +51,7 @@ export default function BugPage({user, role}) {
     const [ tag, setTag ] = useState(bug.tag);
 
     function updateBug() {
+        setLoading(true);
         axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`, {
             description: description,
             status: status,
@@ -62,9 +63,12 @@ export default function BugPage({user, role}) {
         })
         .then(function(response) {
             if(response.data !== "Bug Updated"){
+                setLoading(false);
                 alert("Server Error - Bug not updated")
             } else {
+                setLoading(false);
                 alert('Bug Updated!');
+
             }
         })
     }
@@ -72,15 +76,19 @@ export default function BugPage({user, role}) {
     function deleteBug(){
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
+            setLoading(true);
             axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {
                 projectId: projectId,
                 bugId: bug._id,
             })
             .then(function(response) {
                     if(response.data !== "Bug Deleted"){
+                        setLoading(false);
                         alert("Server Error - Bug not deleted")
                     } else {
+                        setLoading(false);
                         alert('Bug Deleted');
+
                     }
                 })
         }

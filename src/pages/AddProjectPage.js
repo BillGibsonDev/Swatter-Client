@@ -7,13 +7,15 @@ import styled from 'styled-components';
 // router
 import { Link } from 'react-router-dom';
 
-export default function ProjectPage({user, role, confirmRole}) {
+// components
+import Loader from '../loaders/Loader';
 
-
+export default function AddProjectPage({user, role, confirmRole}) {
 
     const [ projectTitle, setProjectTitle] = useState("");
     const [ startDate, setStartDate] = useState("");
     const [ author, setAuthor ] = useState(user);
+    const [ isLoading, setLoading ] = useState(false);
 
     function makeDate(){
         const current = new Date();
@@ -28,6 +30,7 @@ export default function ProjectPage({user, role, confirmRole}) {
 
     function addProject() {
         confirmRole(role);
+        setLoading(true);
         axios.post(`${process.env.REACT_APP_ADD_PROJECT_URL}`, {
             projectTitle: projectTitle,
             startDate: startDate,
@@ -35,8 +38,10 @@ export default function ProjectPage({user, role, confirmRole}) {
         })
         .then(function(response) {
             if(response.data !== "Project Created"){
+                setLoading(false);
                 alert("Server Error - Project not created")
             } else {
+                setLoading(false);
                 alert('Project Started!');
             }
         })
@@ -52,7 +57,9 @@ export default function ProjectPage({user, role, confirmRole}) {
             {
                 user === null ? (
                     <h1>You are signed out</h1>
-                ) : (    
+                ) :isLoading === true ? (    
+                    <Loader/>
+                ) : (
                 <div className="form-wrapper">
                     <label>Title
                         <input 
@@ -76,9 +83,9 @@ export default function ProjectPage({user, role, confirmRole}) {
                     <div className="button-container">
                     {
                         role === process.env.REACT_APP_GUEST_SECRET ? (
-                            <button onClick={unauthorized}>Save</button>
+                            <button onClick={unauthorized}>Start</button>
                         ) : (    
-                            <button onClick={addProject}>Save</button>
+                            <button onClick={addProject}>Start</button>
                         )
                     }
                     <Link to={`/`}>Go Back</Link>

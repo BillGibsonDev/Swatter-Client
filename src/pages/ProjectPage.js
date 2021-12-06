@@ -7,12 +7,12 @@ import styled from 'styled-components';
 // components
 import Bug from '../components/Bug.js';
 import CommentSection from '../components/CommentSection';
-import ProjectsPageLoader from '../loaders/ProjectsPageLoader';
+import ProjectPageLoader from '../loaders/ProjectPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';
 
-export default function ProjectsPage({user, role, lastLogin}) {
+export default function ProjectPage({user, role, lastLogin}) {
 
     const { projectId, bugId } = useParams();
 
@@ -45,7 +45,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
             setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed").length)
         })
         .catch(function (error) {
-            throw error;
+            console.log(error)
         });
     }
 
@@ -64,10 +64,10 @@ export default function ProjectsPage({user, role, lastLogin}) {
       };
 
     return (
-        <StyledProjectsPage>
+        <StyledProjectPage>
             {
                 isLoading === true ? (
-                    <ProjectsPageLoader />
+                    <ProjectPageLoader />
                 ) : (
                 <>
                     <header>
@@ -163,11 +163,11 @@ export default function ProjectsPage({user, role, lastLogin}) {
                 </>
                 )
             }
-        </StyledProjectsPage>
+        </StyledProjectPage>
     )
 }
 
-const StyledProjectsPage = styled.div`
+const StyledProjectPage = styled.div`
 min-height: 80vh;
 border-radius: 20px;
 width: 90%;
@@ -175,7 +175,7 @@ margin: auto;
 display: flex;
 flex-direction: column;
 background: #cbdff7;
-    @media (max-width: 750px){
+    @media (max-width: 1050px){
         width: 98%;
     }
     .undefined {

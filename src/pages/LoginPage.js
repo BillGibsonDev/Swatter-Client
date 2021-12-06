@@ -62,7 +62,7 @@ border-radius: 12px;
 		color: #0f4d92;
 	}
 	h2 {
-		font-size: 1.5em;
+		font-size: 1em;
 		margin-bottom: 40px;
 		color: #0f4c92bc;
 	}

@@ -77,8 +77,6 @@ export default function ProjectsPage({user, role}) {
                         <textarea 
                             name="comment" 
                             id="comment" 
-                            cols="30" 
-                            rows="2"
                             required
                             onChange={(event) => {
                                 setAddComment(event.target.value);
@@ -150,6 +148,7 @@ overflow-y: scroll;
             border-radius: 6px;
             background: #d6d6d6;
             padding: 2px;
+            min-height: 10vh;
         }
         button {
             margin: 1% auto;

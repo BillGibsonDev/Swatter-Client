@@ -88,7 +88,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                             <button onClick={addProject}>Start</button>
                         )
                     }
-                    <Link to={`/`}>Go Back</Link>
+                    <Link id="back-button" to={`/`}>Go Back</Link>
                     </div>
                 </div>
             )}
@@ -100,6 +100,7 @@ const StyledProjectPage = styled.div`
 display: flex;
 flex-direction: column;
 width: 90%;
+height: 50vh;
 background: #fff;
 border-radius: 12px;
 margin: auto;
@@ -147,22 +148,6 @@ margin: auto;
                     color: #ffffff;
                     cursor: pointer;
                     background: #0f4d92;
-                    transition: 0.2s;
-                    transform: scale(1.01);
-                }
-            }
-            a {
-                color: #ffffff;
-                padding: 0 6px;
-                border-radius: 4px;
-                background: #0f4d92;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                &:hover{
-                    color: #000000;
-                    cursor: pointer;
-                    background: #d1d1d1;
                     transition: 0.2s;
                     transform: scale(1.01);
                 }

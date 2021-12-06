@@ -181,9 +181,9 @@ export default function Bug({user, role, confirmRole}) {
                                 <button onClick={unauthorized}>Save</button>
                             )
                         }
-                            <button id="clear" onClick={clearForm}>Clear Form</button>
+                            <button id="clear" onClick={clearForm}>Clear</button>
                         </div>
-                        <Link to={`/projects/${projectId}`}>Go Back</Link>
+                        <Link id="back-button" to={`/projects/${projectId}`}>Go Back</Link>
                     </div>
                 </div>
             )}
@@ -226,8 +226,8 @@ margin: auto;
                     margin: 0 20px;
                     background: #d1d1d1;
                     border: none;
-                    border-radius: 10px;
                     font-weight: 700;
+                    font-size: 1.2em;
                     @media (max-width: 420px){
                         width: 80px;
                         font-size: 1em;
@@ -246,20 +246,6 @@ margin: auto;
                         color: #000000;
                         cursor: pointer;
                         background: #ff0000;
-                        transition: 0.2s;
-                        transform: scale(1.01);
-                    }
-                }
-                a {
-                    color: #ffffff;
-                    padding: 0 6px;
-                    border-radius: 4px;
-                    font-weight: 700;
-                    background: #0f4d92;
-                    &:hover{
-                        color: #000000;
-                        cursor: pointer;
-                        background: #d1d1d1;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }

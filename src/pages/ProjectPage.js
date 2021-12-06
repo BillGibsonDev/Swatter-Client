@@ -292,9 +292,7 @@ background: #cbdff7;
             margin: 10px auto 16px auto;
             @media (max-width: 750px){
                 width: 90%;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                margin: 10px auto;
+                flex-wrap: wrap;
                 justify-content: center;
             }
         }

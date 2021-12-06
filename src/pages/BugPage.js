@@ -183,7 +183,7 @@ export default function BugPage({user, role}) {
                                                     </>
                                                 )
                                             }
-                                            <Link to={`/projects/${projectId}`}>Go Back</Link>
+                                            <Link id="back-button" to={`/projects/${projectId}`}>Go Back</Link>
                                         </div>
                                     </div>
                                 )
@@ -253,10 +253,6 @@ background: #9dc3ee;
             align-items: center;
             justify-content: space-between;
             margin: 2% 0;
-             @media (max-width: 750px){
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr; 
-            }
             button {
                 width: 100px;
                 cursor: pointer;
@@ -267,14 +263,13 @@ background: #9dc3ee;
                 @media (max-width: 1050px){
                     margin: 10px 0;
                     width: 80px;
-                    padding: 2px 1px;
                 }
-                    &:hover {
-                        color: #ffffff;
-                        background: #326be6;
-                        transform: scale(1.05);
-                        transition: 0.3s;
-                    }
+                &:hover {
+                    color: #ffffff;
+                    background: #326be6;
+                    transform: scale(1.05);
+                    transition: 0.3s;
+                }
                 }
             #delete {
                 color: white;
@@ -286,24 +281,6 @@ background: #9dc3ee;
                         transition: 0.3s;
                     }
                 }
-            a {
-                color: #ffffff;
-                padding: 2px 6px;
-                border-radius: 4px;
-                background: #0f4d92;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 1.2em;
-                font-weight: 700;
-                &:hover{
-                    color: #000000;
-                    cursor: pointer;
-                    background: #d1d1d1;
-                    transition: 0.2s;
-                    transform: scale(1.01);
-                }
-            }
         }
     }
 

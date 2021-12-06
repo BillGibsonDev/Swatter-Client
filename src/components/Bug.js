@@ -94,6 +94,7 @@ background: #ffffff;
 box-shadow: 3px 3px 3px #5252528d;
 border-radius: 12px;
 cursor: pointer;
+border: 1px solid white;
 	@media (max-width: 750px){
         min-height: 150px;
 		margin: 1em 0;

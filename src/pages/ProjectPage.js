@@ -314,22 +314,11 @@ background: #cbdff7;
         .bugs-container {
             width: 98%;
             margin: auto;
-            .Open {
-                background: #ffffff;
-            }
-            .Underway {
-                background: #d8ebfc;
-            }
-            .Reviewing {
-                background: #a8cbec;
-            }
-            .Completed {
-                background: #c3d4e6;
-            }
             .Open, .Underway, .Reviewing, .Completed {
                 display: flex;
                 &:hover {
-                    background: #eed994;
+                    background: #87befc;
+                    border: 1px black solid;
                 }
             }
         }

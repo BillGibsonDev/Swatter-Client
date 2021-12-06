@@ -38,13 +38,14 @@ export default function ProfilePage({user, role, confirmRole}) {
 
     return (
         <StyledProfilePage>
+            <h1>Profile</h1>
             {
                 user === null ? (
                     <h1>You are signed out</h1>
                 ) : (
                     <>
                         <div className="user-container">
-                            <h2>Username: {user} </h2>
+                            <h2><span>Username </span>{user}</h2>
                             {
                                 role === process.env.REACT_APP_ADMIN_SECRET ? (
                                     <h2><span>Role: </span>Admin</h2>
@@ -107,11 +108,31 @@ display: flex;
 align-items: center;
 flex-direction: column;
 justify-content: center;
+    @media (max-width: 1050px){
+        width: 98%;
+    }
+    h1 {
+		font-size: 3em;
+		color: #0f4d92;
+        margin-bottom: 20px;
+    }
     .user-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 60%;
+        @media (max-width: 1150px){
+            flex-direction: column;
+        }
+        h2 {
+            @media (max-width: 1150px){
+                margin: 6px 0;
+                font-size: 2em;
+            }
+            span {
+                color: #363636;
+            }
+        }
     }
     .update-container {
         display: flex;
@@ -128,22 +149,47 @@ justify-content: center;
         }
         .form-wrapper {
             display: flex;
-            width: 50%;
+            width: 90%;
             flex-direction: column;
             align-items: center;
+            @media (max-width: 1150px){
+                font-size: 1.2em;
+            }
             label {
                 font-weight: bold;
+                @media (max-width: 1150px){
+                    font-size: 1.2em;
+                }
             }
             input {
                 width: 200px;
                 margin-bottom: 20px;
+                border-radius: 4px;
+                @media (max-width: 1150px){
+                    width: 70%;
+                }
+                @media (max-width: 750px){
+                    width: 90%;
+                }
             }
             button {
                 width: 200px;
-                font-weight: bold;
-                font-size: 1.2em;
-                letter-spacing: 1px;
                 cursor: pointer;
+                margin: 0 20px;
+                background: lightgray;
+                border: none;
+                border-radius: 4px;
+                font-weight: 700;
+                @media (max-width: 1150px){
+                    font-size: 1.2em;
+                }
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
             }
         }
     }

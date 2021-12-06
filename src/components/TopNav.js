@@ -80,7 +80,7 @@ align-items: center;
 justify-content: space-between;
 background: #f1f1f1;
 z-index: 1000;
-    @media (max-width: 750px){
+    @media (max-width: 1050px){
         width: 98%;
     }
     .logo-wrapper {

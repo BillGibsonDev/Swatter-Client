@@ -21,15 +21,18 @@ export default function Project({
 
 
     function deleteProject(){
-        axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
-        .then(function(response){
-            if(response.data !== "Project Deleted"){
-                alert("Server Error - Project not updated")
-            } else {
-                alert('Project Deleted!');
-                window.location.reload();
-            }
-        })
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+            .then(function(response){
+                if(response.data !== "Project Deleted"){
+                    alert("Server Error - Project not updated")
+                } else {
+                    alert('Project Deleted!');
+                    window.location.reload();
+                }
+            })
+        }
     }
 
     function unauthorized(){
@@ -90,6 +93,9 @@ border-radius: 12px;
                 flex-direction: column;
                 span {
                     margin-top: 10px;
+                }
+                @media (max-width: 750px){
+                    font-size : 2em;
                 }
             }
         }

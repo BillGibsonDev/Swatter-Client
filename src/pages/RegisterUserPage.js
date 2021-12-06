@@ -88,29 +88,60 @@ height: 80vh;
 width: 90%;
 margin: auto;
 border-radius: 12px;
+	@media (max-width: 1050px){
+		width: 98%;
+	}
 	h1 {
 		font-size: 3em;
 		color: #0f4d92;
         margin-bottom: 40px;
     }
 	.form-wrapper {
-		display: flex;
-		width: 50%;
-		flex-direction: column;
-		align-items: center;
-		label {
-			font-weight: bold;
-		}
-		input {
-			width: 200px;
-			margin-bottom: 20px;
-		}
-		button {
-			width: 150px;
-			font-weight: bold;
-			font-size: 1.2em;
-			letter-spacing: 1px;
-			cursor: pointer;
-		}
-	}
+            display: flex;
+            width: 90%;
+            flex-direction: column;
+            align-items: center;
+            @media (max-width: 1150px){
+                font-size: 1.2em;
+            }
+            label {
+                font-weight: bold;
+                @media (max-width: 1150px){
+                    font-size: 1.2em;
+                }
+            }
+            input {
+                width: 200px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+                @media (max-width: 1150px){
+                    width: 50%;
+                }
+                @media (max-width: 750px){
+                    width: 70%;
+                }
+				@media (max-width: 550px){
+                    width: 90%;
+                }
+            }
+            button {
+                width: 200px;
+                cursor: pointer;
+                margin: 0 20px;
+                background: lightgray;
+                border: none;
+                border-radius: 4px;
+                font-weight: 700;
+                @media (max-width: 1150px){
+                    font-size: 1.2em;
+                }
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+            }
+        }
 `;

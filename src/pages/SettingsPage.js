@@ -21,4 +21,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+    @media (max-width: 1050px){
+        width: 98%;
+    }
+    h1,h2 {
+        @media (max-width: 615px){
+            font-size: 1.5em;
+        }
+        @media (max-width: 505px){
+            font-size: 1em;
+        }
+    }
 `;

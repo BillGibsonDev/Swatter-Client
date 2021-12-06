@@ -18,14 +18,17 @@ export default function Comment({
 }) {
 
     function deleteComment(){
-        axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
-        .then(function(response) {
-            if(response.data !== "Comment Deleted"){
-                alert("Server Error - Comment not deleted")
-            } else {
-                alert('Comment Deleted!');
-            }
-        })
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+            .then(function(response) {
+                if(response.data !== "Comment Deleted"){
+                    alert("Server Error - Comment not deleted")
+                } else {
+                    alert('Comment Deleted!');
+                }
+            })
+        }
     }
 
     function unauthorized(){
@@ -90,6 +93,9 @@ justify-content: space-around;
         top: 2%;
         right: 1%;
         cursor: pointer;
+        @media (max-width: 750px){
+            top: 5%;
+        }
         &:hover {
             transform: scale(1.1);
             transition: 0.3s;

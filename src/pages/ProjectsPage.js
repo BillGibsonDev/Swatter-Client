@@ -81,7 +81,7 @@ export default function ProjectsPage({user, role, lastLogin}) {
                             <h5>Underway: <span>{underwayBugs}</span></h5>
                             <h5>Reviewing: <span>{reviewBugs}</span></h5>
                             <h5>Completed: <span>{completedBugs}</span></h5>
-                            <h5>Total: <span>{totalBugs}</span></h5>
+                            <h5 id="total">Total: <span>{totalBugs}</span></h5>
                         </div>
                     </header>
                     { 
@@ -92,8 +92,8 @@ export default function ProjectsPage({user, role, lastLogin}) {
                             ) : (
                             <>
                                 <div className="active-wrapper">
+                                    <h3>Show:</h3>
                                     <div className="status-filter-container">
-                                        <h3>Show:</h3>
                                         <label>Open
                                             <input 
                                                 type="checkbox" 
@@ -222,6 +222,7 @@ background: #cbdff7;
                 }
                 @media (max-width: 750px){
                     font-size: 1em;
+                    margin: 6px 0;
                 }
             }
             a {
@@ -231,6 +232,9 @@ background: #cbdff7;
                 font-size: 16px;
                 font-weight: bold;
                 color: #0f4d92;
+                @media (max-width: 750px){
+                    margin: 10px 0;
+                }
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
@@ -255,11 +259,17 @@ background: #cbdff7;
             font-size: 14px;
             @media (max-width: 750px){
                 font-size: 11px;
+                margin: 4px 0;
             }
             span {
                 color: black;
                 font-size: 16px;
                 color: #0f4d92;
+            }
+        }
+        #total {
+            @media (max-width: 750px){
+                border-top: 1px solid black;
             }
         }
     }
@@ -269,6 +279,11 @@ background: #cbdff7;
         margin-top: 2%;
         flex-direction: column;
         align-items: center;
+        h3 {
+            color: #0f4d92;
+            font-size: 1.5em;
+            margin-right: 16px;
+        }
         .status-filter-container {
             display: flex;
             width: 70%;
@@ -279,14 +294,6 @@ background: #cbdff7;
                 width: 90%;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-            }
-        }
-        h3 {
-            color: #0f4d92;
-            font-size: 1em;
-            margin-right: 16px;
-            @media (max-width: 750px){
-                display: none;
             }
         }
         label {

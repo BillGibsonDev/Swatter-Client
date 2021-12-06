@@ -81,7 +81,7 @@ export default function ProjectPage({user, role, confirmRole}) {
                             <button onClick={addProject}>Save</button>
                         )
                     }
-                    <Link to={`/`}>Back to Home Page</Link>
+                    <Link to={`/`}>Go Back</Link>
                     </div>
                 </div>
             )}
@@ -96,6 +96,10 @@ width: 90%;
 background: #fff;
 border-radius: 12px;
 margin: auto;
+    @media (max-width: 750px){
+        width: 98%;
+        height: 40vh;
+    }
     h1 {
         width: 95%;
         margin: 2% auto;
@@ -110,6 +114,9 @@ margin: auto;
             margin: 10px 0;
                 input, select {
                     width: 50%;
+                    @media (max-width: 750px){
+                        width: 90%;
+                    }
                 }
             }
         .button-container{
@@ -117,9 +124,40 @@ margin: auto;
             align-items: center;
             justify-content: space-between;
             margin-top: 2%;
-            button {
+            @media (max-width: 750px){
+                margin-top: 10%;
+            }
+            button, a {
                 width: 100px;
                 cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                font-size: 1.2em;
+                font-weight: 700;
+                background: lightgray;
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #0f4d92;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+            }
+            a {
+                color: #ffffff;
+                padding: 0 6px;
+                border-radius: 4px;
+                background: #0f4d92;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover{
+                    color: #000000;
+                    cursor: pointer;
+                    background: lightgray;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
             }
         }
     }

@@ -70,17 +70,20 @@ export default function BugPage({user, role}) {
     }
 
     function deleteBug(){
-        axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {
-            projectId: projectId,
-            bugId: bug._id,
-        })
-        .then(function(response) {
-                if(response.data !== "Bug Deleted"){
-                    alert("Server Error - Bug not deleted")
-                } else {
-                    alert('Bug Deleted');
-                }
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {
+                projectId: projectId,
+                bugId: bug._id,
             })
+            .then(function(response) {
+                    if(response.data !== "Bug Deleted"){
+                        alert("Server Error - Bug not deleted")
+                    } else {
+                        alert('Bug Deleted');
+                    }
+                })
+        }
     }
 
     function unauthorized(){
@@ -174,7 +177,7 @@ export default function BugPage({user, role}) {
                                                     </>
                                                 )
                                             }
-                                            <Link to={`/projects/${projectId}`}>Back to Project</Link>
+                                            <Link to={`/projects/${projectId}`}>Go Back</Link>
                                         </div>
                                     </div>
                                 )
@@ -246,7 +249,7 @@ background: #9dc3ee;
             margin: 2% 0;
              @media (max-width: 750px){
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr; 
             }
             button {
                 width: 100px;
@@ -254,9 +257,11 @@ background: #9dc3ee;
                 border: none;
                 border-radius: 6px;
                 font-weight: 700;
+                font-size: 1.2em;
                 @media (max-width: 1050px){
                     margin: 10px 0;
-                    width: 150px;
+                    width: 80px;
+                    padding: 2px 1px;
                 }
                     &:hover {
                         color: #ffffff;
@@ -276,14 +281,21 @@ background: #9dc3ee;
                     }
                 }
             a {
-                cursor: pointer;
-                color: black;
+                color: #ffffff;
+                padding: 2px 6px;
+                border-radius: 4px;
+                background: #0f4d92;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.2em;
                 font-weight: 700;
-                margin: 20px 0;
-                &:hover {
-                    color: #2828a0;
-                    transform: scale(1.05);
-                    transition: 0.3s;
+                &:hover{
+                    color: #000000;
+                    cursor: pointer;
+                    background: lightgray;
+                    transition: 0.2s;
+                    transform: scale(1.01);
                 }
             }
         }

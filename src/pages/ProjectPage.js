@@ -26,7 +26,7 @@ export default function ProjectPage({user, role, lastLogin}) {
     const [ reviewBugs, setReviewBugs ] = useState(0);
     const [ completedBugs, setCompletedBugs ] = useState(0);
     const [ isLoading, setLoading ] = useState(true);
-   
+
     useEffect(() =>{
         getProject();
         // eslint-disable-next-line
@@ -51,17 +51,41 @@ export default function ProjectPage({user, role, lastLogin}) {
 
 
     const handleFilter = (e) => {
-        let value = e.target.value
-        let open = document.getElementsByClassName(value)
+        let value = e.target.value;
+        let open = document.getElementsByClassName(value);
         let i;
+        let defaultOpen = (document.getElementsByClassName("Open") || []);
+        let defaultUnderway = (document.getElementsByClassName("Underway") || []);
+        let defaultReviewing = (document.getElementsByClassName("Reviewing") || []);
+        let defaultCompleted = (document.getElementsByClassName("Completed") || []);
         for (i = 0; i < open.length; i++) {
-            if (open[i].style.display === "none"){
-                open[i].style.display = "flex";
-            } else {
-                open[i].style.display = "none";
-            }
+            defaultOpen[i].style.display = "none";
+            defaultUnderway[i].style.display = "none";
+            defaultReviewing[i].style.display = "none";
+            defaultCompleted[i].style.display = "none";
+            open[i].style.display = "flex";
         }
-      };
+    };
+
+    function handleShowAll(){
+        let i;
+        let defaultOpen = (document.getElementsByClassName("Open") || []);
+        let defaultUnderway = (document.getElementsByClassName("Underway") || []);
+        let defaultReviewing = (document.getElementsByClassName("Reviewing") || []);
+        let defaultCompleted = (document.getElementsByClassName("Completed") || []);
+        for (i = 0; i < defaultOpen.length; i++) {
+            defaultOpen[i].style.display = "flex";
+        }
+        for (i = 0; i < defaultUnderway.length; i++) {
+            defaultUnderway[i].style.display = "flex";
+        }
+        for (i = 0; i < defaultReviewing.length; i++) {
+            defaultReviewing[i].style.display = "flex";
+        }
+        for (i = 0; i < defaultCompleted.length; i++) {
+            defaultCompleted[i].style.display = "flex";
+        }
+    }
 
     return (
         <StyledProjectPage>
@@ -92,43 +116,12 @@ export default function ProjectPage({user, role, lastLogin}) {
                             ) : (
                             <>
                                 <div className="active-wrapper">
-                                    <h3>Show:</h3>
-                                    <div className="status-filter-container">
-                                        <label>Open
-                                            <input 
-                                                type="checkbox" 
-                                                id="Open"
-                                                value="Open"
-                                                defaultChecked 
-                                                onClick={handleFilter} />
-                                        </label>
-                                        <label>Underway
-                                            <input 
-                                                type="checkbox" 
-                                                id="Open" 
-                                                value="Underway"
-                                                defaultChecked 
-                                                onClick={handleFilter}
-                                                />
-                                        </label>
-                                        <label>Reviewing
-                                            <input 
-                                                type="checkbox" 
-                                                id="inReview" 
-                                                value="Reviewing"
-                                                defaultChecked 
-                                                onClick={handleFilter}
-                                                />
-                                        </label>
-                                        <label>Completed
-                                            <input 
-                                                type="checkbox" 
-                                                id="completed" 
-                                                value="Completed"
-                                                defaultChecked
-                                                onClick={handleFilter}
-                                                />
-                                        </label>
+                                    <div className="button-wrapper">
+                                        <button onClick={handleShowAll}>All</button>
+                                        <button value="Open" onClick={handleFilter}>Open</button>
+                                        <button value="Underway" onClick={handleFilter}>Underway</button>
+                                        <button value="Reviewing" onClick={handleFilter}>Reviewing</button>
+                                        <button value="Completed" onClick={handleFilter}>Completed</button>
                                     </div>
                                     <div className="bugs-container">
                                         {
@@ -153,11 +146,11 @@ export default function ProjectPage({user, role, lastLogin}) {
                                         }
                                     </div>
                                 </div>
-                            <CommentSection
-                                role={role}
-                                user={user}
-                            />
-                        </>
+                                <CommentSection
+                                    role={role}
+                                    user={user}
+                                />
+                            </>
                         )
                     }
                 </>

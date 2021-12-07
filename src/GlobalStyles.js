@@ -48,6 +48,7 @@ button, a, label, input, textarea {
     justify-content: center;
     font-size: 1.2em;
     padding: 2.5px 6px;
+    border: none;
     @media (max-width: 420px){
         width: 80px;
     }

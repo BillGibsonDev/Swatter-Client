@@ -34,7 +34,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 								setPassword(event.target.value);
 							}}
 						/>
-						<button type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</button>
+						<button id="back-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</button>
 					</div>
 				)
 			}
@@ -111,13 +111,6 @@ border-radius: 12px;
 		input {
 			width: 200px;
 			margin-bottom: 20px;
-		}
-		button {
-			width: 120px;
-			font-weight: bold;
-			font-size: 1.2em;
-			letter-spacing: 1px;
-			cursor: pointer;
 		}
 	}
 	.guest-container {

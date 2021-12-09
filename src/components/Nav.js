@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // images
 import Home from '../images/homeYaleBlue.png';
-import Cog from '../images/cog.png';
 import Profile from '../images/profileYaleBlue.png';
 import Register from '../images/registerYaleBlue.png';
 
@@ -19,7 +18,6 @@ export default function Nav({role, confirmAdmin}) {
             <nav>
                 <div className="top-wrapper">
                     <Link to="/"><img src={Home} alt="" /><span>Home</span></Link>
-                    <Link to="/SettingsPage"><img src={Cog} alt="" /><span>Settings</span></Link>
                     <Link to="/ProfilePage"><img src={Profile} alt="" /><span>Profile</span></Link>
                     {
                         role === process.env.REACT_APP_ADMIN_SECRET ? (

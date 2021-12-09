@@ -52,7 +52,6 @@ function closeNav() {
                     <div className="overlayContent" onClick={closeNav}>
                         <Link to="/">Home</Link>
                         <Link to={'/AddProjectPage'}>New Project</Link>
-                        <Link to="/SettingsPage">Settings</Link>
                         <Link to="/ProfilePage">Profile</Link>
                         {
                             role === process.env.REACT_APP_ADMIN_SECRET ? (

@@ -12,7 +12,6 @@ import TopNav from "./components/TopNav";
 // pages
 import HomePage from './pages/HomePage.js';
 import ProjectPage from './pages/ProjectPage';
-import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
 import BugPage from "./pages/BugPage";
@@ -165,8 +164,6 @@ function App() {
 		});
 	}}
 	
-
-
 	return (
 		<>
 			<GlobalStyles />
@@ -215,12 +212,6 @@ function App() {
 							user={user}
 							role={role}
 							confirmRole={confirmRole}
-						/>
-					</Route>
-					<Route path={'/SettingsPage'} exact>
-						<SettingsPage 
-							user={user}
-							role={role}
 						/>
 					</Route>
 					<Route path={"/ProfilePage"} exact>

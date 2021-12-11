@@ -128,6 +128,7 @@ export default function BugPage({user, role}) {
                                                         <option value="Bug">Bug</option>
                                                         <option value="Feature">Feature</option>
                                                         <option value="Enhancement">Enhancement</option>
+                                                        <option value="Task">Task</option>
                                                     </select>
                                                 </label>
                                                 <label>Priority:

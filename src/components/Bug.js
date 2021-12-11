@@ -9,6 +9,7 @@ import Enhancement from '../images/cog.png';
 import arrowUp from "../images/arrowUp.png";
 import arrowUpYellow from "../images/arrowUpYellow.png";
 import arrowDown from '../images/arrowDown.png';
+import Task from '../images/taskIcon.png';
 
 // router
 import { Link } from 'react-router-dom';
@@ -40,6 +41,9 @@ export default function Bug({
 						)
 						case "Enhancement": return (
 							<img src={Enhancement} alt="" />
+						)
+						case "Task": return (
+							<img src={Task} alt="" />
 						)
 						default: return (
 							<h2>{tag}</h2>

@@ -5,35 +5,45 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 // router
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // components
 import Loader from '../loaders/Loader';
 
-export default function AddProjectPage({user, role, confirmRole}) {
+export default function EditProjectPage({user, role, confirmRole}) {
 
-    const [ projectTitle, setProjectTitle] = useState("");
-    const [ startDate, setStartDate] = useState("");
-    const [ author, setAuthor ] = useState(user);
-    const [ projectLink, setProjectLink ] = useState("");
-    const [ projectImage, setProjectImage ] = useState("");
+    const { projectId } = useParams();
+
+    const [ project, setProject ] = useState([]);
     const [ isLoading, setLoading ] = useState(false);
 
-    function makeDate(){
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
-        setStartDate(date);
+    useEffect(() =>{
+        setAuthor(user);
+        getProject();
+        // eslint-disable-next-line
+    }, [ projectId]);
+
+    function getProject(){
+        axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+        .then(function (response){
+            setProject(response.data)
+            setLoading(false)
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
     }
 
-    useEffect(() => {
-        makeDate();
-        setAuthor(user);
-    }, [user]);
+    const [ projectTitle, setProjectTitle] = useState(project.projectTitle);
+    const [ startDate, setStartDate] = useState(project.startDate);
+    const [ author, setAuthor ] = useState(user);
+    const [ projectLink, setProjectLink ] = useState(project.projectLink);
+    const [ projectImage, setProjectImage ] = useState(project.projectImage);
 
-    function addProject() {
+    function editProject() {
         confirmRole(role);
         setLoading(true);
-        axios.post(`${process.env.REACT_APP_ADD_PROJECT_URL}`, {
+        axios.post(`${process.env.REACT_APP_UPDATE_PROJECT_URL}/${projectId}`, {
             projectTitle: projectTitle,
             startDate: startDate,
             author: author,
@@ -41,12 +51,12 @@ export default function AddProjectPage({user, role, confirmRole}) {
             projectImage: projectImage,
         })
         .then(function(response) {
-            if(response.data !== "Project Created"){
+            if(response.data !== "Project Updated"){
                 setLoading(false);
                 alert("Server Error - Project not created")
             } else {
                 setLoading(false);
-                alert('Project Started!');
+                alert('Project Updated!');
             }
         })
     }
@@ -69,6 +79,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                         <input 
                             type="text"
                             id="title"
+                            defaultValue={project.projectTitle}
                             onChange={(event) => {
                                 setProjectTitle(event.target.value);
                             }} 
@@ -78,6 +89,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                         <input 
                             type="text"
                             id="projectLink"
+                            defaultValue={project.projectLink}
                             onChange={(event) => {
                                 setProjectLink(event.target.value);
                             }} 
@@ -87,7 +99,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                         <input 
                             type="text" 
                             id="date"
-                            defaultValue={startDate}
+                            defaultValue={project.startDate}
                             onChange={(event) => {
                                 setStartDate(event.target.value);
                             }} 
@@ -97,6 +109,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                         <input 
                             type="text" 
                             id="image"
+                            defaultValue={project.projectImage}
                             onChange={(event) => {
                                 setProjectImage(event.target.value);
                             }} 
@@ -105,9 +118,9 @@ export default function AddProjectPage({user, role, confirmRole}) {
                     <div className="button-container">
                     {
                         role === process.env.REACT_APP_GUEST_SECRET ? (
-                            <button onClick={unauthorized}>Start</button>
+                            <button onClick={unauthorized}>Update</button>
                         ) : (    
-                            <button onClick={addProject}>Start</button>
+                            <button onClick={editProject}>Update</button>
                         )
                     }
                     <Link id="back-button" to={`/`}>Go Back</Link>
@@ -122,7 +135,7 @@ const StyledProjectPage = styled.div`
 display: flex;
 flex-direction: column;
 width: 90%;
-height: 50vh;
+min-height: 50vh;
 background: #fff;
 border-radius: 12px;
 margin: auto;

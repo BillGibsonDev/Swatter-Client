@@ -72,9 +72,12 @@ export default function ProjectPage({user, role, lastLogin}) {
                 <>
                     <header>
                         <div className="project-title-container">
-                            <h2>Project: <span>{project.projectTitle}</span></h2>
-                            <h2>Started: <span>{project.startDate}</span></h2>
-                            <Link to={`/${projectId}/AddBugPage`}>Add Bug</Link>
+                            <div className="info-wrapper">
+                                <h2>Project: <span>{project.projectTitle}</span></h2>
+                                <h2>Started: <span>{project.startDate}</span></h2>
+                                <a href={project.projectLink} target="_blank" rel="noreferrer">Project Link</a>
+                            </div>
+                                <Link id="add-bug" to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
                         <div className="data-container">
                             <h5>Open: <span>{openBugs}</span></h5>
@@ -191,10 +194,9 @@ background: #cbdff7;
     header {
         background: #f1f1f1;
         border-radius: 12px 12px 0 0;
-        margin: 0 auto;
         width: 100%;
         min-height: 10vh;
-        justify-content: space-around;
+        justify-content: space-between;
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -202,8 +204,8 @@ background: #cbdff7;
     .project-title-container {
         border-radius: 12px;
         margin: 10px auto;
-        width: 100%;
-        justify-content: space-around;
+        width: 90%;
+        justify-content: space-between;
         display: flex;
         align-items: center;
             @media (max-width: 750px){
@@ -213,34 +215,53 @@ background: #cbdff7;
                 align-items: flex-start;
                 margin: 10px auto;
             }
-            h2 {
-                color: #444444;
-                font-size: 1.2em;
-                span {
-                    color: black;
-                    font-size: 1.5em;
+            .info-wrapper {
+                h2 {
+                    color: #444444;
+                    font-size: 1.2em;
+                    span {
+                        color: black;
+                        font-size: 1.5em;
+                    }
+                    @media (max-width: 750px){
+                        font-size: 1em;
+                        margin: 6px 0;
+                    }
                 }
-                @media (max-width: 750px){
-                    font-size: 1em;
-                    margin: 6px 0;
+                 a {
+                    margin-bottom: 10px;
+                    font-weight: 700;
+                    font-size : 2em;
+                    color: black;
+                    &:hover{
+                        color: #ffffff;
+                        cursor: pointer;
+                        background: #0f4d92;
+                        transition: 0.2s;
+                        transform: scale(1.01);
+                    }
                 }
             }
-            a {
-                background: #ffffff;
-                padding: 0 6px;
-                border-radius: 4px;
-                font-size: 16px;
-                font-weight: bold;
-                color: #0f4d92;
-                @media (max-width: 750px){
-                    margin: 10px 0;
-                }
-                &:hover{
-                    color: #ffffff;
-                    cursor: pointer;
-                    background: #0f4d92;
-                    transition: 0.2s;
-                    transform: scale(1.01);
+                #add-bug {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: #ffffff;
+                    padding: 0 6px;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #0f4d92;
+                    @media (max-width: 750px){
+                        margin: 10px 0;
+                    }
+                    &:hover{
+                        color: #ffffff;
+                        cursor: pointer;
+                        background: #0f4d92;
+                        transition: 0.2s;
+                        transform: scale(1.01);
+                    }
                 }
             }
     }

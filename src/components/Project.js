@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 // images
 import X from "../images/whiteX.png";
+import Edit from "../images/editIconWhite.png";
 
 // components
 import Loader from '../loaders/Loader';
@@ -20,7 +21,8 @@ export default function Project({
     author,
     user,
     role,
-    confirmRole
+    confirmRole,
+    projectImage
 }) {
 
     const [ isLoading, setLoading ] = useState(false);
@@ -57,16 +59,18 @@ export default function Project({
                 <>
             <Link to={`/projects/${projectId}`} id="background-color">
                 <div className="info-container">
+                    <img id="projectImage" src={projectImage} alt="" />
                     <h2 id="title">{title}<span>{date}</span></h2>
                 </div>
             </Link>
             {
                 author === user || role === process.env.REACT_APP_ADMIN ? (
-                    <img src={X} onClick={()=>{confirmRole(); deleteProject();}} alt="" />
+                    <img id="delete" src={X} onClick={()=>{confirmRole(); deleteProject();}} alt="" />
                 ) : (
-                    <img src={X} onClick={()=>{unauthorized();}} alt="" />
+                    <img id="delete" src={X} onClick={()=>{unauthorized();}} alt="" />
                 )
             }
+            <Link id="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="" /></Link>
             </>
             )}
         </StyledProject>
@@ -102,6 +106,13 @@ border-radius: 12px;
             flex-direction: column;
             width: 90%;
             margin: auto;
+            #projectImage {
+                width: 150px;
+                margin-bottom: 10px;
+                @media (max-width: 750px){
+                    width: 100px;
+                }
+            }
             h2 {
                 font-size: 1.2em;
                 color: #ffffff;
@@ -120,7 +131,7 @@ border-radius: 12px;
             margin: auto;
         }
     }
-    img {
+    #delete {
         width: 20px;
         position: absolute;
         top: 2%;
@@ -130,6 +141,21 @@ border-radius: 12px;
         &:hover {
             transform: scale(1.2);
             transition: 0.2s;
+        }
+    }
+    #edit-link {
+        width: 30px;
+        #edit-button {
+            width: 30px;
+            position: absolute;
+            top: 85%;
+            right: 5%;
+            z-index: 3;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.2);
+                transition: 0.2s;
+            }
         }
     }
 `;

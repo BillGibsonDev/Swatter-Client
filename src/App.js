@@ -18,6 +18,7 @@ import BugPage from "./pages/BugPage";
 import AddBugPage from "./pages/AddBugPage";
 import AddProjectPage from "./pages/AddProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
+import EditProjectPage from "./pages/EditProjectPage";
 
 // react router
 import { Route, Switch, useHistory} from 'react-router-dom';
@@ -209,6 +210,13 @@ function App() {
 					</Route>
 					<Route path={"/AddProjectPage"} exact>
 						<AddProjectPage
+							user={user}
+							role={role}
+							confirmRole={confirmRole}
+						/>
+					</Route>
+					<Route path={"/EditProject/:projectId"} exact>
+						<EditProjectPage
 							user={user}
 							role={role}
 							confirmRole={confirmRole}

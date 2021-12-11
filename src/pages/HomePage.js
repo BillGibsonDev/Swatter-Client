@@ -54,8 +54,7 @@ export default function HomePage({user, role, confirmRole}) {
                                             title={project.projectTitle}
                                             date={project.startDate}
                                             author={project.author}
-                                            fontColor={project.fontColor}
-                                            background={project.backgroundColor}
+                                            projectImage={project.projectImage}
                                             key={key}
                                             user={user}
                                             role={role}

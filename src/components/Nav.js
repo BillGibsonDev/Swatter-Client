@@ -36,11 +36,11 @@ const StyledNav = styled.div`
 display: flex;
 flex-direction: column;
 position: fixed;
-left: 10%;
+left:5%;
 top: 20%;
 z-index: 99;
     @media (max-width: 1650px){
-        left: 8%;
+        left: 4%;
     }
     @media (max-width: 1550px){
         left: 2%;

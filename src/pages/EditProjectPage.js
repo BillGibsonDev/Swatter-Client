@@ -5,7 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 // router
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 
 // components
 import Loader from '../loaders/Loader';
@@ -13,6 +13,7 @@ import Loader from '../loaders/Loader';
 export default function EditProjectPage({user, role, confirmRole}) {
 
     const { projectId } = useParams();
+    const history = useHistory();
 
     const [ project, setProject ] = useState([]);
     const [ isLoading, setLoading ] = useState(false);
@@ -22,6 +23,24 @@ export default function EditProjectPage({user, role, confirmRole}) {
         getProject();
         // eslint-disable-next-line
     }, [ projectId]);
+
+    function deleteProject(){
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            setLoading(true);
+            axios.delete(`${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+            .then(function(response){
+                if(response.data !== "Project Deleted"){
+                    setLoading(false);
+                    alert("Server Error - Project not updated")
+                } else {
+                    history.push("/");
+                    setLoading(false);
+                    alert('Project Deleted!');
+                }
+            })
+        }
+    }
 
     function getProject(){
         axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
@@ -67,7 +86,10 @@ export default function EditProjectPage({user, role, confirmRole}) {
 
     return (
         <StyledProjectPage>
-            <h1>Just add the Title and adjust the Correct Start Date (if nessecary)..</h1>
+            <div className="title-container">
+                <h1>Edit Project</h1>
+                <Link id="back-button" to={`/`}>Back</Link>
+            </div>
             {
                 user === null ? (
                     <h1>You are signed out</h1>
@@ -123,7 +145,13 @@ export default function EditProjectPage({user, role, confirmRole}) {
                             <button onClick={editProject}>Update</button>
                         )
                     }
-                    <Link id="back-button" to={`/`}>Go Back</Link>
+                    {
+                        author === user || role === process.env.REACT_APP_ADMIN ? (
+                            <button  id="delete" onClick={deleteProject}>Delete</button>
+                        ) : (
+                            <button onClick={unauthorized}>Update</button>
+                        )
+                    }
                     </div>
                 </div>
             )}
@@ -134,26 +162,47 @@ export default function EditProjectPage({user, role, confirmRole}) {
 const StyledProjectPage = styled.div`
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
     width: 100%;
     max-width: 1000px;
     min-height: 50vh;
-    background: #fff;
     margin: auto;
     @media (max-width: 750px){
-
         height: 40vh;
     }
-    h1 {
-        width: 95%;
-        margin: 2% auto;
-        font-size: 1.2em;
+    .title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 50%;
+        h1 {
+            color: white;
+            font-size: 2em;
+        }
+        #back-button {
+            width: 100px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.2em;
+            @media (max-width: 1050px){
+                margin: 10px 0;
+                width: 50px;
+            }
+            &:hover {
+                color: #ffffff;
+                background: #000000;
+                transform: scale(1.05);
+                transition: 0.3s;
+            }
+        }
     }
     .form-wrapper {
-        width: 95%;
+        width: 100%;
         margin: 2% auto;
         label {
             display: flex;
+            color: white;
             flex-direction: column;
             margin: 10px 0;
                 input, select {
@@ -169,8 +218,10 @@ const StyledProjectPage = styled.div`
             align-items: center;
             justify-content: space-between;
             margin-top: 2%;
+            width: 50%;
             @media (max-width: 750px){
                 margin-top: 10%;
+                width: 90%;
             }
             button, a {
                 width: 100px;
@@ -183,9 +234,19 @@ const StyledProjectPage = styled.div`
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
-                    background: #0f4d92;
+                    background: #000000;
                     transition: 0.2s;
                     transform: scale(1.01);
+                }
+            }
+            #delete {
+                color: white;
+                background: red;
+                &:hover {
+                    color: black;
+                    background: #df6464;
+                    transform: scale(1.05);
+                    transition: 0.3s;
                 }
             }
         }

@@ -77,14 +77,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                                 <h2>Started: <span>{project.startDate}</span></h2>
                                 <a href={project.projectLink} target="_blank" rel="noreferrer">Project Link</a>
                             </div>
-                                <Link id="add-bug" to={`/${projectId}/AddBugPage`}>Add Bug</Link>
-                        </div>
-                        <div className="data-container">
-                            <h5>Open: <span>{openBugs}</span></h5>
-                            <h5>Underway: <span>{underwayBugs}</span></h5>
-                            <h5>Reviewing: <span>{reviewBugs}</span></h5>
-                            <h5>Completed: <span>{completedBugs}</span></h5>
-                            <h5 id="total">Total: <span>{totalBugs}</span></h5>
+                            <Link id="add-bug" to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
                     </header>
                     { 
@@ -96,7 +89,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                             <>
                                 <div className="active-wrapper">
                                     <div className="status-filter-container">
-                                        <label>Open
+                                        <label><span>{openBugs}</span> Open
                                             <input 
                                                 type="checkbox" 
                                                 id="Open"
@@ -104,7 +97,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                                                 defaultChecked 
                                                 onClick={handleFilter} />
                                         </label>
-                                        <label>Underway
+                                        <label><span>{underwayBugs}</span> Underway
                                             <input 
                                                 type="checkbox" 
                                                 id="Open" 
@@ -113,7 +106,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                                                 onClick={handleFilter}
                                                 />
                                         </label>
-                                        <label>Reviewing
+                                        <label><span>{reviewBugs}</span>Reviewing
                                             <input 
                                                 type="checkbox" 
                                                 id="inReview" 
@@ -122,7 +115,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                                                 onClick={handleFilter}
                                                 />
                                         </label>
-                                        <label>Completed
+                                        <label><span>{completedBugs}</span> Completed
                                             <input 
                                                 type="checkbox" 
                                                 id="completed" 
@@ -131,6 +124,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                                                 onClick={handleFilter}
                                                 />
                                         </label>
+                                        <h5 id="total"><span>{totalBugs}</span>Total</h5>
                                     </div>
                                 <div className="bugs-container">
                                     {
@@ -170,12 +164,10 @@ export default function ProjectPage({user, role, lastLogin}) {
 
 const StyledProjectPage = styled.div`
     min-height: 80vh;
-    border-radius: 4px;
     width: 100%;
     margin: auto;
     display: flex;
     flex-direction: column;
-    background: #cbdff7;
     max-width: 1000px;
     .undefined {
         background: white;
@@ -188,8 +180,6 @@ const StyledProjectPage = styled.div`
         margin: auto;
     }
     header {
-        background: #f1f1f1;
-        border-radius: 12px 12px 0 0;
         width: 100%;
         min-height: 10vh;
         justify-content: space-between;
@@ -213,10 +203,10 @@ const StyledProjectPage = styled.div`
             }
             .info-wrapper {
                 h2 {
-                    color: #444444;
+                    color: #bbbbbb;
                     font-size: 1.2em;
                     span {
-                        color: black;
+                        color: #ffffff;
                         font-size: 1.5em;
                     }
                     @media (max-width: 750px){
@@ -228,11 +218,11 @@ const StyledProjectPage = styled.div`
                     margin-bottom: 10px;
                     font-weight: 700;
                     font-size : 2em;
-                    color: black;
+                    color: #ffffff;
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
-                        background: #0f4d92;
+                        background: #99a2ac;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }
@@ -254,41 +244,12 @@ const StyledProjectPage = styled.div`
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
-                        background: #0f4d92;
+                        background: #000000;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }
                 }
             }
-    }
-    .data-container {
-        margin: 20px auto;
-        display: flex;
-        width: 80%;
-        justify-content: space-between;
-            @media (max-width: 750px){
-                width: 90%;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-            }
-        h5 {
-            color: #444444;
-            font-size: 14px;
-            @media (max-width: 750px){
-                font-size: 11px;
-                margin: 4px 0;
-            }
-            span {
-                color: black;
-                font-size: 16px;
-                color: #0f4d92;
-            }
-        }
-        #total {
-            @media (max-width: 750px){
-                border-top: 1px solid black;
-            }
-        }
     }
     .active-wrapper {
         height: 100%;
@@ -303,23 +264,31 @@ const StyledProjectPage = styled.div`
             justify-content: space-between;
             margin: 10px auto 16px auto;
             @media (max-width: 750px){
-                width: 90%;
+                width: 100%;
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            label {
+            label, #total {
                 display: flex;
                 height: 100%;
-                color: #000000;
+                color: #ffffff;
                 align-items: center;
                 height: 100%;
-                font-weight: bold;
-                margin: 6px;
+                font-size: 20px;
+                font-weight: 700;
+                margin: 0 6px;
+                @media (max-width: 750px){
+                    font-size: 14px;
+                }
+                span {
+                    color: #d1d1d1;
+                    margin-right: 6px;
+                }
                 input {
                     border-radius: 4px;
                     border: none;
                     margin: 0 6px;
-                    color: #0f4d92;
+                    color: #000000;
                 }
             }
         }
@@ -329,7 +298,7 @@ const StyledProjectPage = styled.div`
         .Open, .Underway, .Reviewing, .Completed {
             display: flex;
             &:hover {
-                background: #87befc;
+                background: #000000;
                 border: 1px black solid;
             }
         }

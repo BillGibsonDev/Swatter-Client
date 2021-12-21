@@ -80,7 +80,7 @@ const StyledLoginPage = styled.div`
 		position: relative;
 		.loader {
 			opacity: 80%;
-			border: 16px dashed #0f4d92;
+			border: 16px dashed #ffffff;
 			border-radius: 50%;
 			width: 180px;
 			height: 180px;
@@ -113,6 +113,13 @@ const StyledLoginPage = styled.div`
 		input {
 			width: 200px;
 			margin-bottom: 20px;
+		}
+		#back-button {
+			color: white;
+			background: #0f4d92;
+			&:hover {
+				background: black;
+			}
 		}
 	}
 	.guest-container {

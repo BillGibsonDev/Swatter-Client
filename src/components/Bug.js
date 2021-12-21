@@ -94,8 +94,6 @@ width: 99%;
 max-height: 250px;
 min-height: 50px;
 margin: 1% auto;
-background: #ffffff;
-box-shadow: 3px 3px 3px #5252528d;
 border-radius: 4px;
 cursor: pointer;
 border: 1px solid white;
@@ -133,7 +131,7 @@ border: 1px solid white;
 		}
 		h2 {
 			font-size: 14px;
-			color: black;
+			color: #ffffff;
 			display: flex;
 			justify-content: center;
 			text-align: center;
@@ -143,7 +141,7 @@ border: 1px solid white;
 			}
 		}
 		#title {
-			color: black;
+			color: #ffffff;
 		}
 		.bottom-wrapper, .center-wrapper {
 			display: flex;
@@ -158,7 +156,7 @@ border: 1px solid white;
 				display: flex;
 				flex-direction: column;
 				span {
-					color: #5f5f5f;
+					color: #c2c2c2;
 				}
 				@media (max-width: 750px){
 					font-size: 12px;
@@ -174,16 +172,16 @@ border: 1px solid white;
 		}
 		/* status  styles*/
 		#Open {
-			color: green;
+			color: #00cc00;
 		}
 		#Reviewing {
-			color: #d40000;
+			color: #ff4d4d;
 		}
 		#Underway {
-			color: #0066ff;
+			color: #83b5ff;
 		}
 		#Completed {
-			color: #717171;
+			color: #a8a8a8;
 		}
 	}
 `;

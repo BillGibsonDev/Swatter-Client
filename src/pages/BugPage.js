@@ -110,7 +110,10 @@ export default function BugPage({user, role}) {
                             bug.map((bugs, key) => {
                                 return (
                                     <div className="bug-container" key={key}>
-                                        <h1>{bugs.title}</h1>
+                                        <div className="title-container">
+                                            <h1>{bugs.title}</h1>
+                                            <Link id="back-button" to={`/projects/${projectId}`}>Back</Link>
+                                        </div>
                                         <div className="info-wrapper">
                                             <div className="info-container">
                                                 <h2><span>Creator: </span>{bugs.author}</h2>
@@ -184,7 +187,6 @@ export default function BugPage({user, role}) {
                                                     </>
                                                 )
                                             }
-                                            <Link id="back-button" to={`/projects/${projectId}`}>Go Back</Link>
                                         </div>
                                     </div>
                                 )
@@ -200,19 +202,41 @@ export default function BugPage({user, role}) {
 
 const StyledBugPage = styled.div `
     min-height: 80vh;
-    border-radius: 4px;
     width: 100%;
     max-width: 1000px;
     margin: auto;
     margin-bottom: 5%;
-    background: #9dc3ee;
     .bug-container {
         display: flex;
         flex-direction: column;
         width: 95%;
         margin: auto;
-        h1 {
-            font-size: 3em;
+        .title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            h1 {
+                color: white;
+                font-size: 3em;
+            }
+            #back-button {
+                width: 100px;
+                cursor: pointer;
+                border: none;
+                border-radius: 6px;
+                font-weight: 700;
+                font-size: 1.2em;
+                @media (max-width: 1050px){
+                    margin: 10px 0;
+                    width: 50px;
+                }
+                &:hover {
+                    color: #ffffff;
+                    background: #000000;
+                    transform: scale(1.05);
+                    transition: 0.3s;
+                }
+            }
         }
         .info-container, .selector-container {
             display: flex;
@@ -225,16 +249,18 @@ const StyledBugPage = styled.div `
                 align-items: flex-start;
             }
             h2 {
-                color: #353535;
+                color: white;
                 font-size: 1.5em;
                 margin: 10px 0;
                 span {
+                    color: #cecece;
                     font-weight: 400;
                     font-size: 16px;
                 }
             }
         }
         label {
+            color: white;
             margin: 10px 0;
         }
         select {
@@ -265,21 +291,21 @@ const StyledBugPage = styled.div `
                 }
                 &:hover {
                     color: #ffffff;
-                    background: #326be6;
+                    background: #000000;
                     transform: scale(1.05);
                     transition: 0.3s;
                 }
-                }
+            }
             #delete {
                 color: white;
                 background: red;
-                    &:hover {
-                        color: black;
-                        background: #df6464;
-                        transform: scale(1.05);
-                        transition: 0.3s;
-                    }
+                &:hover {
+                    color: black;
+                    background: #df6464;
+                    transform: scale(1.05);
+                    transition: 0.3s;
                 }
+            }
         }
     }
 

@@ -57,7 +57,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
 
     return (
         <StyledProjectPage>
-            <h1>Just add the Title and adjust the Correct Start Date (if nessecary)..</h1>
+            <h1>Start a Project</h1>
             {
                 user === null ? (
                     <h1>You are signed out</h1>
@@ -110,7 +110,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                             <button onClick={addProject}>Start</button>
                         )
                     }
-                    <Link id="back-button" to={`/`}>Go Back</Link>
+                    <Link id="back-button" to={`/`}>Back</Link>
                     </div>
                 </div>
             )}
@@ -122,8 +122,6 @@ const StyledProjectPage = styled.div`
     display: flex;
     flex-direction: column;
     height: 50vh;
-    background: #fff;
-    border-radius: 4px;
     width: 100%;
     max-width: 1000px;
     margin: auto;
@@ -131,6 +129,7 @@ const StyledProjectPage = styled.div`
         height: 40vh;
     }
     h1 {
+        color: white;
         width: 95%;
         margin: 2% auto;
         font-size: 1.2em;
@@ -142,6 +141,7 @@ const StyledProjectPage = styled.div`
             display: flex;
             flex-direction: column;
             margin: 10px 0;
+            color: white;
                 input, select {
                     width: 50%;
                     padding: 2px;
@@ -154,9 +154,10 @@ const StyledProjectPage = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 2%;
+            width: 50%;
             @media (max-width: 750px){
                 margin-top: 10%;
+                width: 90%;
             }
             button, a {
                 width: 100px;
@@ -165,11 +166,11 @@ const StyledProjectPage = styled.div`
                 border-radius: 4px;
                 font-size: 1.2em;
                 font-weight: 700;
-                background: #d1d1d1;
+                background: #ffffff;
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
-                    background: #0f4d92;
+                    background: #000000;
                     transition: 0.2s;
                     transform: scale(1.01);
                 }

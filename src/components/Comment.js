@@ -71,25 +71,25 @@ export default function Comment({
 }
 
 const StyledComment = styled.div`
-display: flex;
-width: 95%;
-min-height: 100px;
-margin: 2% auto;
-background: #ffffff;
-border-radius: 4px;
-box-shadow: 3px 3px 3px #5252528d;
-position: relative;
-align-items: center;
-justify-content: space-around;
+    display: flex;
+    width: 95%;
+    min-height: 100px;
+    margin: 2% auto;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 3px 3px 3px #5252528d;
+    position: relative;
+    align-items: center;
+    justify-content: space-around;
     .comment-wrapper {
         width: 95%;
         margin: auto;
         h3 {
             font-size: 12px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             span {
+                margin-left: 10px;
                 font-size: 11px;
                 color: #575757;
             }

@@ -7,12 +7,12 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
 }
 html {
-margin: auto;
-scroll-behavior: smooth;
-background: #0f4d92;;
-font-family: 'Roboto Mono', monospace;
-letter-spacing: 1px;
-line-height: 1.5;
+    margin: auto;
+    scroll-behavior: smooth;
+    background: #0f4d92;;
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 1px;
+    line-height: 1.5;
     @media (max-width: 1450px){
         font-size: 90%;
     }
@@ -35,10 +35,11 @@ button, a, label, input, textarea {
 
 #back-button {
     width: 100px;
-    color: #ffffff;
+    height: 30px;
+    color: #000000;
     border-radius: 4px;
     font-weight: 700;
-    background: #0f4d92;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,9 +50,9 @@ button, a, label, input, textarea {
         width: 80px;
     }
     &:hover{
-        color: #000000;
+        color: #ffffff;
         cursor: pointer;
-        background: #d1d1d1;
+        background: #000000;
         transition: 0.2s;
         transform: scale(1.01);
     }

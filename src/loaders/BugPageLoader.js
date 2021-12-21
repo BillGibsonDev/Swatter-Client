@@ -15,17 +15,17 @@ export default function BugPageLoader() {
 }
 
 const StyledLoader = styled.div`
-width: 90%;
-height: 70vh;
-margin: 1% auto;
-display: flex;
-justify-content: center;
-align-items: center;
-position: relative;
-flex-direction: column;
+    width: 90%;
+    height: 70vh;
+    margin: 1% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
     .loader {
         opacity: 80%;
-        border: 16px dashed #0f4d92;
+        border: 16px dashed #ffffff;
         border-radius: 50%;
         width: 250px;
         height: 250px;

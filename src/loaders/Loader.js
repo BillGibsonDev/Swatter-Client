@@ -13,19 +13,19 @@ export default function Loader() {
 }
 
 const StyledLoader = styled.div`
-width: 100%;
-max-height: 70vh;
-margin: 1% auto;
-display: flex;
-justify-content: center;
-align-items: center;
-position: relative;
-flex-direction: column;
-z-index: 99;
-background: white;
+    width: 100%;
+    max-height: 70vh;
+    margin: 1% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    z-index: 99;
+    background: white;
     .loader {
         opacity: 80%;
-        border: 16px dashed #0f4d92;
+        border: 16px dashed #ffffff;
         border-radius: 50%;
         width: 250px;
         height: 250px;

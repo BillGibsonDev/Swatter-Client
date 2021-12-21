@@ -69,7 +69,33 @@ export default function ProjectsPage({user, role}) {
     return (
         <StyledCommentSection>
             <h1>Comments</h1>
-            {
+            { 
+                comments === undefined ? (
+                    <div className="undefined">
+                        <h1>You've havent entered any comments</h1>
+                    </div>
+                ) : (
+                    <div className="comment-container">
+                        {
+                            comments.slice().reverse().map((comment, key) => {
+                                return (
+                                    <Comment
+                                        date={comment.date}
+                                        author={comment.author}
+                                        comments={comment.comment}
+                                        commentId={comment._id}
+                                        user={user}
+                                        projectId={projectId}
+                                        key={key}
+                                        role={role}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
+                )
+            }
+{
                 isLoading === true ? (
                     <Loader />
                 ) : (
@@ -92,60 +118,34 @@ export default function ProjectsPage({user, role}) {
                     </div>
                 )
             }
-            { 
-                comments === undefined ? (
-                    <div className="undefined">
-                        <h1>You've havent entered any comments</h1>
-                    </div>
-                ) : (
-                    <>
-                        {
-                            comments.slice().reverse().map((comment, key) => {
-                                return (
-                                    <Comment
-                                        date={comment.date}
-                                        author={comment.author}
-                                        comments={comment.comment}
-                                        commentId={comment._id}
-                                        user={user}
-                                        projectId={projectId}
-                                        key={key}
-                                        role={role}
-                                    />
-                                )
-                            })
-                        }
-                    </>
-                )
-            }
-
         </StyledCommentSection>
     )
 }
 
 const StyledCommentSection = styled.div`
     width: 98%;
-    margin: 2% auto;
-    max-height: 60vh;
-    border-radius: 4px;
-    background: #64a5f0;
+    margin: 20px auto;
+    min-height: 20vh;
     position: relative;
-    overflow-y: scroll;
+    border: 2px white solid;
     .undefined {
         width: 98%;
     }
     h1 {
         width: 95%;
         margin: auto;
-        color: black;
+        color: #ffffff;
     }
     .comment-maker {
-        width: 98%;
-        margin: auto;
+        width: 60%;
+        margin: 10px auto;
         display: flex;
         flex-direction: column;
+        @media (max-width: 750px){
+            width: 90%;
+        }
         textarea {
-            border-radius: 6px;
+            border-radius: 4px;
             background: #d6d6d6;
             padding: 2px;
             min-height: 10vh;
@@ -154,10 +154,10 @@ const StyledCommentSection = styled.div`
             margin: 1% auto;
             width: 150px;
             cursor: pointer;
-            color: white;
-            background: #0f4d92;
+            color: #0f4d92;
+            background: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             font-size: 1.2em;
             font-weight: 700;
             @media (max-width: 750px){
@@ -170,5 +170,9 @@ const StyledCommentSection = styled.div`
                 color: black;
             }
         }
+    }
+    .comment-container {
+        max-height: 40vh;
+        overflow-y: scroll;
     }
 `;

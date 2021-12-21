@@ -26,12 +26,12 @@ export default function ProjectsPageLoader() {
 }
 
 const StyledLoader = styled.div`
-display: flex;
-flex-direction: column;
-width: 100%;
-height: 80vh;
-align-items: center;
-position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 80vh;
+    align-items: center;
+    position: relative;
     .skelton-header {
         background: #3f3f3f2f;
         border-radius: 12px 12px 0 0;
@@ -57,7 +57,7 @@ position: relative;
     }
     .loader {
         opacity: 80%;
-        border: 16px dashed #0f4d92;
+        border: 16px dashed #ffffff;
         border-radius: 50%;
         width: 250px;
         height: 250px;

@@ -78,6 +78,7 @@ export default function Bug({user, role, confirmRole}) {
 
     return (
         <StyledBug>
+            <h1>Add a Bug</h1>
             {
                 user === null ? (
                     <h1>You are signed out</h1>
@@ -85,83 +86,89 @@ export default function Bug({user, role, confirmRole}) {
                     <Loader />
                 ) : (    
                 <div className="form-wrapper">
-                    <label>Title
-                        <input 
-                            type="text"
-                            id="title"
-                            onChange={(event) => {
-                                setTitle(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Date
-                        <input 
-                            type="text" 
-                            id="date"
-                            defaultValue={date}
-                            onChange={(event) => {
-                                setDate(event.target.value);
-                            }}
-                        />
-                    </label>
-                    <label>Created By
-                        <input
-                            readOnly 
-                            defaultValue={user}
-                            type="text" 
-                            id="author" 
-                            onChange={(event) => {
-                                setAuthor(event.target.value);
-                            }}
-                        />
-                    </label>
-                    <label>Tag
-                        <select 
-                            id="status"
-                            onChange={(event) => {
-                                setTag(event.target.value);
-                            }}>
-                            <option value=""></option>
-                            <option value="Bug">Bug</option>
-                            <option value="Feature">Feature</option>
-                            <option value="Enhancement">Enhancement</option>
-                            <option value="Task">Task</option>
-                        </select>
-                    </label>
-                    <label>Priority
-                        <select 
-                            id="status"
-                            onChange={(event) => {
-                                setPriority(event.target.value);
-                            }}>
-                            <option value=""></option>
-                            <option value="Standard">Standard</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
-                    </label>
-                    <label>Status
-                        <select 
-                            id="status"
-                            onChange={(event) => {
-                                setStatus(event.target.value);
-                            }}>
-                            <option value=""></option>
-                            <option value="Open">Open</option>
-                            <option value="Underway">Underway</option>
-                            <option value="Reviewing">Reviewing</option>
-                            <option value="Completed">Completed</option>
-                        </select>
-                    </label>
-                    <label>Image
-                        <input 
-                            type="text"
-                            id="thumbnail"
-                            onChange={(event) => {
-                                setThumbnail(event.target.value);
-                            }} 
-                        />
-                    </label>
+                    <div className="container-wrapper">
+                        <div className="left-container">
+                            <label>Title
+                                <input 
+                                    type="text"
+                                    id="title"
+                                    onChange={(event) => {
+                                        setTitle(event.target.value);
+                                    }} 
+                                />
+                            </label>
+                            <label>Date
+                                <input 
+                                    type="text" 
+                                    id="date"
+                                    defaultValue={date}
+                                    onChange={(event) => {
+                                        setDate(event.target.value);
+                                    }}
+                                />
+                            </label>
+                            <label>Created By
+                                <input
+                                    readOnly 
+                                    defaultValue={user}
+                                    type="text" 
+                                    id="author" 
+                                    onChange={(event) => {
+                                        setAuthor(event.target.value);
+                                    }}
+                                />
+                            </label>
+                            <label>Image
+                                <input 
+                                    type="text"
+                                    id="thumbnail"
+                                    onChange={(event) => {
+                                        setThumbnail(event.target.value);
+                                    }} 
+                                />
+                            </label>
+                        </div>
+                        <div className="right-container">
+                            <label>Priority
+                                <select 
+                                    id="status"
+                                    onChange={(event) => {
+                                        setPriority(event.target.value);
+                                    }}>
+                                    <option value=""></option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </label>
+                            <label>Status
+                                <select 
+                                    id="status"
+                                    onChange={(event) => {
+                                        setStatus(event.target.value);
+                                    }}>
+                                    <option value=""></option>
+                                    <option value="Open">Open</option>
+                                    <option value="Underway">Underway</option>
+                                    <option value="Reviewing">Reviewing</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </label>
+                            <label>Tag
+                                <select 
+                                    id="status"
+                                    onChange={(event) => {
+                                        setTag(event.target.value);
+                                    }}>
+                                    <option value=""></option>
+                                    <option value="Bug">Bug</option>
+                                    <option value="Feature">Feature</option>
+                                    <option value="Enhancement">Enhancement</option>
+                                    <option value="Task">Task</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
                     <label>Description
                         <textarea 
                             type="text" 
@@ -184,7 +191,7 @@ export default function Bug({user, role, confirmRole}) {
                         }
                             <button id="clear" onClick={clearForm}>Clear</button>
                         </div>
-                        <Link id="back-button" to={`/projects/${projectId}`}>Go Back</Link>
+                        <Link id="back-button" to={`/projects/${projectId}`}>Back</Link>
                     </div>
                 </div>
             )}
@@ -195,20 +202,37 @@ export default function Bug({user, role, confirmRole}) {
 const StyledBug = styled.div`
     display: flex;
     flex-direction: column;
-    border-radius: 4px;
-    width: 100%;
+    width: 90%;
     max-width: 1000px;
-    background: #fff;
     margin: auto;
+    h1 {
+        color: white;
+        font-size: 24px;
+        width: 98%;
+    }
     .form-wrapper {
-        width: 95%;
-        margin: 2% auto;
+        width: 100%;
+        margin: 20px auto;
+        .container-wrapper {
+            display: flex;
+            width: 100%;
+            @media (max-width: 1050px){
+                flex-direction: column;
+            }
+            .right-container, .left-container {
+                width: 50%;
+                @media (max-width: 750px){
+                    width: 100%;
+                }
+            }
+        }
         label {
             display: flex;
+            color: white;
             flex-direction: column;
             margin: 10px 0;
                 input, select {
-                    width: 50%;
+                    width: 90%;
                 }
                 textarea {
                     padding: 2px;
@@ -234,7 +258,7 @@ const StyledBug = styled.div`
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
-                        background: #0f4d92;
+                        background: #000000;
                         transition: 0.2s;
                         transform: scale(1.01);
                     }

@@ -52,7 +52,7 @@ position: relative;
         height: 70vh;
         .loader {
             opacity: 80%;
-            border: 16px dashed #0f4d92;
+            border: 16px dashed #ffffff;
             border-radius: 50%;
             width: 250px;
             height: 250px;

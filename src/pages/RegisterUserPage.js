@@ -83,15 +83,13 @@ const StyledRegister = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	background: white;
 	height: 80vh;
-	border-radius: 4px;
 	width: 100%;
 	max-width: 1000px;
 	margin: auto;
 	h1 {
 		font-size: 3em;
-		color: #0f4d92;
+		color: #ffffff;
         margin-bottom: 40px;
     }
 	.form-wrapper {
@@ -104,6 +102,7 @@ const StyledRegister = styled.div`
             }
             label {
                 font-weight: bold;
+				color: white;
                 @media (max-width: 1150px){
                     font-size: 1.2em;
                 }
@@ -136,7 +135,7 @@ const StyledRegister = styled.div`
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
-                    background: #0f4d92;
+                    background: #000000;
                     transition: 0.2s;
                     transform: scale(1.01);
                 }

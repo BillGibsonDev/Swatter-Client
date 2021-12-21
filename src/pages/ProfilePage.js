@@ -34,9 +34,7 @@ export default function ProfilePage({user, role}) {
 }
 
 const StyledProfilePage = styled.div`
-    background: #fff;
-    min-height: 80vh;
-    border-radius: 4px;
+    min-height: 60vh;
     width: 100%;
     max-width: 1000px;
     margin: auto;
@@ -45,12 +43,12 @@ const StyledProfilePage = styled.div`
     flex-direction: column;
     h1 {
 		font-size: 3em;
-		color: #0f4d92;
+		color: #ffffff;
         margin: 20px auto;
         display: flex;
         justify-content: center;
         width: 50%;
-        border-bottom: 2px #0f4d92 solid;
+        border-bottom: 2px #ffffff solid;
     }
     .user-container {
         display: flex;
@@ -63,12 +61,13 @@ const StyledProfilePage = styled.div`
         }
         h2 {
             margin: 20px 0;
+            color: white;
             @media (max-width: 1150px){
                 margin: 10px 0;
                 font-size: 2em;
             }
             span {
-                color: #363636;
+                color: #e2e2e2;
             }
         }
     }

@@ -46,9 +46,9 @@ function closeNav() {
                         </div>       
                     )
                 }
-                <div class="dropdown">
-                    <button class="dropbtn">Menu</button>
-                    <div class="dropdown-content">
+                <div classname="dropdown">
+                    <button className="dropbtn">Menu</button>
+                    <div className="dropdown-content">
                         <Link to="/">Home</Link>
                         <Link to="/ProfilePage">Profile</Link>
                         {

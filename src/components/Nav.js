@@ -134,6 +134,9 @@ const StyledNav = styled.div`
     .dropdown {
         position: relative;
         display: inline-block;
+        @media (max-width: 750px){
+            display: none;
+        }
     .dropbtn {
         background-color: #0f4d92;
         color: white;

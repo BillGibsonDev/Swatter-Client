@@ -134,7 +134,7 @@ const StyledNav = styled.div`
     .dropdown {
         position: relative;
         display: inline-block;
-        @media (max-width: 750px){
+        @media (max-width: 1050px){
             display: none;
         }
     .dropbtn {

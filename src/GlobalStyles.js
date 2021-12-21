@@ -17,7 +17,7 @@ line-height: 1.5;
         font-size: 90%;
     }
     @media (max-width: 750px){
-        font-size: 70%;
+        font-size: 80%;
     } 
 }
 ul {

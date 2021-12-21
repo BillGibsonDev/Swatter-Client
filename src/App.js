@@ -7,7 +7,6 @@ import GlobalStyles from "./GlobalStyles";
 
 // components
 import Nav from "./components/Nav";
-import TopNav from "./components/TopNav";
 
 // pages
 import HomePage from './pages/HomePage.js';
@@ -181,16 +180,11 @@ function App() {
 				</>
 		) : (
 			<>
-				<TopNav 
+				<Nav 
 					user={user}
 					role={role}
 					logout={logout}
 					isLoggedIn={isLoggedIn}/>
-				<Nav
-					user={user}
-					role={role}
-					confirmAdmin={confirmAdmin}
-				/>
 				<Switch>
 					<Route path={'/'} exact>
 						<HomePage

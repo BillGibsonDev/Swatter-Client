@@ -11,6 +11,8 @@ import HomePageLoader from '../loaders/HomePageLoader';
 // link
 import { Link } from 'react-router-dom';
 
+// images
+import Add from '../images/Add.png';
 
 export default function HomePage({user, role, confirmRole}) {
 
@@ -40,10 +42,6 @@ export default function HomePage({user, role, confirmRole}) {
                     <HomePageLoader />
                 ) : (
                     <>
-                        <header>
-                            <h1>What can we achieve today?</h1>
-                            <Link to={'/AddProjectPage'}>New Project</Link>
-                        </header>
                         <div className="projects-container">
                             {
                                 projects.slice().reverse().map((project, key) => {
@@ -63,6 +61,7 @@ export default function HomePage({user, role, confirmRole}) {
                                     )
                                 })
                             }
+                            <Link id="add-button" to={'/AddProjectPage'}>Add Project<img src={Add} alt=""/></Link>
                         </div>
                     </>
                 )
@@ -72,43 +71,25 @@ export default function HomePage({user, role, confirmRole}) {
 }
 
 const StyledHomePage = styled.div`
-background: #fff;
-width: 90%;
-margin: auto;
-min-height: 80vh;
-border-radius: 20px;
-display: flex;
-flex-direction: column;
-    @media (max-width: 1050px){
-        width: 98%;
-    }
-    header {
-    display: flex;
     width: 100%;
-    align-items: center;
-    justify-content: space-between;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 5%;
+    min-height: 80vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    header {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
         h1, a {
             font-size: 1.2em;
             margin: 1% auto;
-            color: #0f4d92;
+            color: #ffffff;
             span {
                 color: black;
-            }
-        }
-        a {
-            background: #f3f3f3;
-            padding: 0 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            &:hover{
-                color: #ffffff;
-                cursor: pointer;
-                background: #0f4d92;
-                transition: 0.2s;
-                transform: scale(1.01);
-            }
-            @media (max-width: 750px){
-                display: none;
             }
         }
     }
@@ -124,6 +105,30 @@ flex-direction: column;
         }
         @media (max-width: 750px){
             grid-template-columns: 1fr;
+        }
+        #add-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            height: 300px;
+            margin: 10px auto;
+            position: relative;
+            background: #1673dd;
+            color: white;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 20px;
+            img {
+                margin-top: 10px;
+                width: 50px;
+            }
+            &:hover{
+                transition: 0.2s;
+                transform: scale(1.01);
+                background: #919191;
+            }
         }
     }
 `;

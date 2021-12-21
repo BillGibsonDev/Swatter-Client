@@ -96,7 +96,7 @@ min-height: 50px;
 margin: 1% auto;
 background: #ffffff;
 box-shadow: 3px 3px 3px #5252528d;
-border-radius: 12px;
+border-radius: 4px;
 cursor: pointer;
 border: 1px solid white;
 	@media (max-width: 750px){

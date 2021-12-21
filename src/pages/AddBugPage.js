@@ -193,15 +193,13 @@ export default function Bug({user, role, confirmRole}) {
 }
 
 const StyledBug = styled.div`
-display: flex;
-flex-direction: column;
-width: 90%;
-background: #fff;
-border-radius: 12px;
-margin: auto;
-    @media (max-width: 750px){
-        width: 98%
-    }
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 1000px;
+    background: #fff;
+    margin: auto;
     .form-wrapper {
         width: 95%;
         margin: 2% auto;

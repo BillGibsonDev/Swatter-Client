@@ -199,15 +199,13 @@ export default function BugPage({user, role}) {
 }
 
 const StyledBugPage = styled.div `
-width: 90%;
-min-height: 80vh;
-border-radius: 12px;
-margin: auto;
-margin-bottom: 5%;
-background: #9dc3ee;
-    @media (max-width: 1050px){
-        width: 98%;
-    }
+    min-height: 80vh;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    margin-bottom: 5%;
+    background: #9dc3ee;
     .bug-container {
         display: flex;
         flex-direction: column;

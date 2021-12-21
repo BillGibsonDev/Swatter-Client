@@ -124,13 +124,13 @@ export default function ProjectsPage({user, role}) {
 }
 
 const StyledCommentSection = styled.div`
-width: 98%;
-margin: 2% auto;
-max-height: 60vh;
-border-radius: 12px;
-background: #64a5f0;
-position: relative;
-overflow-y: scroll;
+    width: 98%;
+    margin: 2% auto;
+    max-height: 60vh;
+    border-radius: 4px;
+    background: #64a5f0;
+    position: relative;
+    overflow-y: scroll;
     .undefined {
         width: 98%;
     }
@@ -170,6 +170,5 @@ overflow-y: scroll;
                 color: black;
             }
         }
-    
-}
+    }
 `;

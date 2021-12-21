@@ -34,17 +34,15 @@ export default function ProfilePage({user, role}) {
 }
 
 const StyledProfilePage = styled.div`
-background: #fff;
-min-height: 80vh;
-border-radius: 20px;
-width: 90%;
-margin: auto;
-display: flex;
-align-items: center;
-flex-direction: column;
-    @media (max-width: 1050px){
-        width: 98%;
-    }
+    background: #fff;
+    min-height: 80vh;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     h1 {
 		font-size: 3em;
 		color: #0f4d92;

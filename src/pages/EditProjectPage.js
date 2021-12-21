@@ -132,15 +132,16 @@ export default function EditProjectPage({user, role, confirmRole}) {
 }
 
 const StyledProjectPage = styled.div`
-display: flex;
-flex-direction: column;
-width: 90%;
-min-height: 50vh;
-background: #fff;
-border-radius: 12px;
-margin: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 50vh;
+    background: #fff;
+    margin: auto;
     @media (max-width: 750px){
-        width: 98%;
+
         height: 40vh;
     }
     h1 {

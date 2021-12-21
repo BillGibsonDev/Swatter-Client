@@ -69,19 +69,18 @@ function closeNav() {
 }
 
 const StyledTopNav = styled.div`
-height: 10vh;
-width: 90%;
-padding: 0 5%;
-margin: 2% auto 2px auto;
-border-radius: 12px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-background: #f1f1f1;
-z-index: 1000;
-    @media (max-width: 1050px){
-        width: 98%;
-    }
+    height: 6vh;
+    width: 100vw;
+    padding: 0 5%;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f1f1;
+    z-index: 1000;
+    position: relative;
+    top: 0;
+    left: 0;
     .logo-wrapper {
         display: flex;
         align-items: center;
@@ -118,8 +117,8 @@ z-index: 1000;
             }
     }
     #signOut {
-        background: #ffffff;
-        color: #0f4d92;;
+        background: #0f4d92;
+        color: #ffffff;
         padding: 0 6px;
         border-radius: 4px;
         font-weight: bold;

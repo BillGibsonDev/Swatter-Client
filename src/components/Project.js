@@ -78,20 +78,19 @@ export default function Project({
 }
 
 const StyledProject = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-height: 300px;
-margin: 10px auto;
-position: relative;
-background: #0f4d92;
-box-shadow: 6px 6px 6px #5252528d;
-border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+    margin: 10px auto;
+    position: relative;
+    background: #1673dd;
+    border-radius: 4px;
     &:hover{
         transition: 0.2s;
         transform: scale(1.01);
-        background: #3a63d1;
+        background: #a7a7a7;
     }
     a {
         display: flex;

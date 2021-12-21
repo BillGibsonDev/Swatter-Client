@@ -95,74 +95,72 @@ export default function ProjectPage({user, role, lastLogin}) {
                             ) : (
                             <>
                                 <div className="active-wrapper">
-                                        <h3>Show:</h3>
-                                        <div className="status-filter-container">
-                                            <label>Open
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="Open"
-                                                    value="Open"
-                                                    defaultChecked 
-                                                    onClick={handleFilter} />
-                                            </label>
-                                            <label>Underway
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="Open" 
-                                                    value="Underway"
-                                                    defaultChecked 
-                                                    onClick={handleFilter}
-                                                    />
-                                            </label>
-                                            <label>Reviewing
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="inReview" 
-                                                    value="Reviewing"
-                                                    defaultChecked 
-                                                    onClick={handleFilter}
-                                                    />
-                                            </label>
-                                            <label>Completed
-                                                <input 
-                                                    type="checkbox" 
-                                                    id="completed" 
-                                                    value="Completed"
-                                                    defaultChecked
-                                                    onClick={handleFilter}
-                                                    />
-                                            </label>
-                                        </div>
-                                    <div className="bugs-container">
-                                        {
-                                            bugs.slice().reverse().map((bug, key) => {
-                                                return (
-                                                    <Bug
-                                                        projectId = {projectId}
-                                                        bugId={bug._id}
-                                                        title={bug.title}
-                                                        thumbnail = {bug.thumbnail}
-                                                        description = {bug.description}
-                                                        priority={bug.priority}
-                                                        author={bug.author}
-                                                        status={bug.status}
-                                                        tag={bug.tag}
-                                                        lastUpdate={bug.lastUpdate}
-                                                        key={key}
-                                                        user={user}
-                                                    />
-                                                )
-                                            })
-                                        }
+                                    <div className="status-filter-container">
+                                        <label>Open
+                                            <input 
+                                                type="checkbox" 
+                                                id="Open"
+                                                value="Open"
+                                                defaultChecked 
+                                                onClick={handleFilter} />
+                                        </label>
+                                        <label>Underway
+                                            <input 
+                                                type="checkbox" 
+                                                id="Open" 
+                                                value="Underway"
+                                                defaultChecked 
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
+                                        <label>Reviewing
+                                            <input 
+                                                type="checkbox" 
+                                                id="inReview" 
+                                                value="Reviewing"
+                                                defaultChecked 
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
+                                        <label>Completed
+                                            <input 
+                                                type="checkbox" 
+                                                id="completed" 
+                                                value="Completed"
+                                                defaultChecked
+                                                onClick={handleFilter}
+                                                />
+                                        </label>
                                     </div>
+                                <div className="bugs-container">
+                                    {
+                                        bugs.slice().reverse().map((bug, key) => {
+                                            return (
+                                                <Bug
+                                                    projectId = {projectId}
+                                                    bugId={bug._id}
+                                                    title={bug.title}
+                                                    thumbnail = {bug.thumbnail}
+                                                    description = {bug.description}
+                                                    priority={bug.priority}
+                                                    author={bug.author}
+                                                    status={bug.status}
+                                                    tag={bug.tag}
+                                                    lastUpdate={bug.lastUpdate}
+                                                    key={key}
+                                                    user={user}
+                                                />
+                                            )
+                                        })
+                                    }
                                 </div>
-                                <CommentSection
-                                    role={role}
-                                    user={user}
-                                />
-                            </>
-                        )
-                    }
+                            </div>
+                            <CommentSection
+                                role={role}
+                                user={user}
+                            />
+                        </>
+                    )}
                 </>
                 )
             }
@@ -171,16 +169,14 @@ export default function ProjectPage({user, role, lastLogin}) {
 }
 
 const StyledProjectPage = styled.div`
-min-height: 80vh;
-border-radius: 20px;
-width: 90%;
-margin: auto;
-display: flex;
-flex-direction: column;
-background: #cbdff7;
-    @media (max-width: 1050px){
-        width: 98%;
-    }
+    min-height: 80vh;
+    border-radius: 4px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background: #cbdff7;
+    max-width: 1000px;
     .undefined {
         background: white;
         width: 100%;
@@ -297,14 +293,9 @@ background: #cbdff7;
     .active-wrapper {
         height: 100%;
         display: flex;
-        margin-top: 2%;
+        margin-top: 16px;
         flex-direction: column;
         align-items: center;
-        h3 {
-            color: #0f4d92;
-            font-size: 1.5em;
-            margin-right: 16px;
-        }
         .status-filter-container {
             display: flex;
             width: 70%;
@@ -332,16 +323,15 @@ background: #cbdff7;
                 }
             }
         }
-        .bugs-container {
-            width: 98%;
-            margin: auto;
-            .Open, .Underway, .Reviewing, .Completed {
-                display: flex;
-                &:hover {
-                    background: #87befc;
-                    border: 1px black solid;
-                }
+    .bugs-container {
+        width: 98%;
+        margin: auto;
+        .Open, .Underway, .Reviewing, .Completed {
+            display: flex;
+            &:hover {
+                background: #87befc;
+                border: 1px black solid;
             }
         }
-    } 
+    }
 `;

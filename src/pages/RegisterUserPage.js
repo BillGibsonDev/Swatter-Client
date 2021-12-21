@@ -79,18 +79,16 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 }
 
 const StyledRegister = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-background: white;
-height: 80vh;
-width: 90%;
-margin: auto;
-border-radius: 12px;
-	@media (max-width: 1050px){
-		width: 98%;
-	}
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: white;
+	height: 80vh;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 1000px;
+	margin: auto;
 	h1 {
 		font-size: 3em;
 		color: #0f4d92;

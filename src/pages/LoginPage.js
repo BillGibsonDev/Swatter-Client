@@ -49,15 +49,16 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 }
 
 const StyledLoginPage = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-background: white;
-min-height: 80vh;
-width: 90%;
-margin: 5% auto;
-border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: white;
+	min-height: 80vh;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 1000px;
+	margin: 5% auto;
 	h1 {
 		font-size: 5em;
 		color: #0f4d92;

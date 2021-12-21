@@ -76,7 +76,7 @@ width: 95%;
 min-height: 100px;
 margin: 2% auto;
 background: #ffffff;
-border-radius: 12px;
+border-radius: 4px;
 box-shadow: 3px 3px 3px #5252528d;
 position: relative;
 align-items: center;

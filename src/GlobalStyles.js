@@ -9,16 +9,12 @@ const GlobalStyles = createGlobalStyle`
 html {
 margin: auto;
 scroll-behavior: smooth;
-max-width: 1200px;
 background: #0f4d92;;
-font-family: 'Poppins', sans-serif;
+font-family: 'Roboto Mono', monospace;
 letter-spacing: 1px;
 line-height: 1.5;
     @media (max-width: 1450px){
         font-size: 90%;
-    }
-    @media (max-width: 1450px){
-        font-size: 80%;
     }
     @media (max-width: 750px){
         font-size: 70%;
@@ -31,7 +27,7 @@ a {
     text-decoration: none;
 }
 button, a, label, input, textarea {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto Mono', monospace;
     letter-spacing: 1px;
     padding: 2px;
     border-radius: 4px;

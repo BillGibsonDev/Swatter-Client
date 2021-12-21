@@ -63,7 +63,7 @@ z-index: 99;
             margin-bottom: 30px;
             img {
                 padding: 6px;
-                border-radius: 12px;
+                border-radius: 4px;
                 width: 40px;
                 background: white;
                 &:hover + span{
@@ -77,7 +77,7 @@ z-index: 99;
                 display: none;
                 font-weight: bold;
                 font-size: 1.2em;
-                border-radius: 6px;
+                border-radius: 4px;
                 padding: 0 10px;
                 border: 2px solid #0f4d92;
             }

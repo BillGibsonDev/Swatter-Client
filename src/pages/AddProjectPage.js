@@ -119,15 +119,15 @@ export default function AddProjectPage({user, role, confirmRole}) {
 }
 
 const StyledProjectPage = styled.div`
-display: flex;
-flex-direction: column;
-width: 90%;
-height: 50vh;
-background: #fff;
-border-radius: 12px;
-margin: auto;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    background: #fff;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
     @media (max-width: 750px){
-        width: 98%;
         height: 40vh;
     }
     h1 {

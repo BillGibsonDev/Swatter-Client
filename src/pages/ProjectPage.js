@@ -259,11 +259,11 @@ const StyledProjectPage = styled.div`
         align-items: center;
         .status-filter-container {
             display: flex;
-            width: 70%;
+            width: 90%;
             align-items: center;
             justify-content: space-between;
-            margin: 10px auto 16px auto;
-            @media (max-width: 750px){
+            margin: 10px auto;
+            @media (max-width: 800px){
                 width: 100%;
                 flex-wrap: wrap;
                 justify-content: center;

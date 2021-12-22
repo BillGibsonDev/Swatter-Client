@@ -168,12 +168,16 @@ const StyledProjectPage = styled.div`
     margin: auto;
     @media (max-width: 750px){
         height: 40vh;
+        width: 90%;
     }
     .title-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 50%;
+        @media (max-width: 750px){
+            width: 90%;
+        }
         h1 {
             color: white;
             font-size: 2em;

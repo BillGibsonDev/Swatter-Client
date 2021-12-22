@@ -47,7 +47,7 @@ button, a, label, input, textarea {
     padding: 2.5px 6px;
     border: none;
     @media (max-width: 420px){
-        width: 80px;
+        width: 85px;
     }
     &:hover{
         color: #ffffff;

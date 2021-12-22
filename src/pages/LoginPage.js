@@ -80,7 +80,7 @@ const StyledLoginPage = styled.div`
 		position: relative;
 		.loader {
 			opacity: 80%;
-			border: 16px dashed #ffffff;
+			border: 16px dashed #000000;
 			border-radius: 50%;
 			width: 180px;
 			height: 180px;

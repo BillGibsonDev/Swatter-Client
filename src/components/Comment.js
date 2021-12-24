@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import axios from 'axios';
 
 // styled
@@ -8,10 +7,6 @@ import styled from 'styled-components';
 // images
 import X from "../images/XyaleBlue.png";
 
-// components
-import Loader from '../loaders/Loader';
-
-
 export default function Comment({
     comments,
     author,
@@ -19,10 +14,10 @@ export default function Comment({
     user,
     commentId,
     projectId,
-    role
+    role,
+    setLoading
 }) {
 
-    const [ isLoading, setLoading ] = useState(false);
 
     function deleteComment(){
         setLoading(true);
@@ -48,24 +43,17 @@ export default function Comment({
 
     return (
         <StyledComment>
+            <div className="comment-wrapper">
+                <h3 id={author}>{author}<span>{date}</span></h3>
+                <p>{comments}</p>
+            </div>
             {
-            isLoading === true ? (
-                <Loader />
-            ):(
-                <>
-                    <div className="comment-wrapper">
-                        <h3 id={author}>{author}<span>{date}</span></h3>
-                        <p>{comments}</p>
-                    </div>
-                    {
-                        author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <img src={X} onClick={deleteComment} alt="" />
-                        ) : (
-                            <img src={X} onClick={unauthorized} alt="" />
-                        )
-                    }
-                </>
-            )}
+                author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
+                    <img src={X} onClick={deleteComment} alt="" />
+                ) : (
+                    <img src={X} onClick={unauthorized} alt="" />
+                )
+            }
         </StyledComment>
     )
 }

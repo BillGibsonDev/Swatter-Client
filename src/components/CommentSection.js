@@ -42,7 +42,7 @@ export default function ProjectsPage({user, role}) {
         handleDate();
         setAuthor(user);
         // eslint-disable-next-line
-    }, [ projectId, bugId, user ]);
+    }, [ projectId, bugId, user, isLoading ]);
 
     function sendComment() {
         setLoading(true);
@@ -88,6 +88,7 @@ export default function ProjectsPage({user, role}) {
                                         projectId={projectId}
                                         key={key}
                                         role={role}
+                                        setLoading={setLoading}
                                     />
                                 )
                             })

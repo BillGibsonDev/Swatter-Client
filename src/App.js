@@ -167,18 +167,18 @@ function App() {
 	return (
 		<>
 			<GlobalStyles />
-		{ 
-			isLoggedIn === false ? (
-				<>
-					<LoginPage 
-						login={login}
-						setUsername={setUsername}
-						setPassword={setPassword}
-						handleTokens={handleTokens}
-						isLoading={isLoading}
-					/>
-				</>
-		) : (
+			{ 
+				isLoggedIn === false ? (
+					<>
+						<LoginPage 
+							login={login}
+							setUsername={setUsername}
+							setPassword={setPassword}
+							handleTokens={handleTokens}
+							isLoading={isLoading}
+						/>
+					</>
+			) : (
 			<>
 				<Nav 
 					user={user}

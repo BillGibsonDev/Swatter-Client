@@ -12,7 +12,7 @@ import ProjectPageLoader from '../loaders/ProjectPageLoader';
 // router
 import { Link, useParams } from 'react-router-dom';
 
-export default function ProjectPage({user, role, lastLogin}) {
+export default function ProjectPage({ user, role }) {
 
     const { projectId, bugId } = useParams();
 
@@ -28,26 +28,24 @@ export default function ProjectPage({user, role, lastLogin}) {
     const [ isLoading, setLoading ] = useState(true);
 
     useEffect(() =>{
-        getProject();
-        // eslint-disable-next-line
+        function getProject(){
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setProject(response.data)
+                setBugs(response.data.bugs)
+                setLoading(false)
+                setTotalBugs(response.data.bugs.length)
+                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open").length)
+                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway").length)
+                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing").length)
+                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed").length)
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+        }
+        getProject(projectId);
     }, [ projectId, bugId ]);
-
-    function getProject(){
-        axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-        .then(function (response){
-            setProject(response.data)
-            setBugs(response.data.bugs)
-            setLoading(false)
-            setTotalBugs(response.data.bugs.length)
-            setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open").length)
-            setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway").length)
-            setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing").length)
-            setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed").length)
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-    }
 
 
     const handleFilter = (e) => {
@@ -61,7 +59,7 @@ export default function ProjectPage({user, role, lastLogin}) {
                 open[i].style.display = "none";
             }
         }
-      };
+    };
 
     return (
         <StyledProjectPage>
@@ -228,28 +226,28 @@ const StyledProjectPage = styled.div`
                     }
                 }
             }
-                #add-bug {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background: #ffffff;
-                    padding: 0 6px;
-                    border-radius: 4px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    color: #0f4d92;
-                    @media (max-width: 750px){
-                        margin: 10px 0;
-                    }
-                    &:hover{
-                        color: #ffffff;
-                        cursor: pointer;
-                        background: #000000;
-                        transition: 0.2s;
-                        transform: scale(1.01);
-                    }
+            #add-bug {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ffffff;
+                padding: 0 6px;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #0f4d92;
+                @media (max-width: 750px){
+                    margin: 10px 0;
+                }
+                &:hover{
+                    color: #ffffff;
+                    cursor: pointer;
+                    background: #000000;
+                    transition: 0.2s;
+                    transform: scale(1.01);
                 }
             }
+        }
     }
     .active-wrapper {
         height: 100%;

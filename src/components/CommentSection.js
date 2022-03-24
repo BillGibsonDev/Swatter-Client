@@ -21,27 +21,25 @@ export default function ProjectsPage({user, role}) {
     const [ addDate, setAddDate] = useState('');
     const [ isLoading, setLoading ] = useState(false);
 
-    function getProject(){
-        axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-        .then(function (response){
-            setComments(response.data.comments)
-        })
-        .catch(function (error) {
-            throw error;
-        });
-    }
-
     function handleDate(){
         const current = new Date();
         const date = `${current.getHours()}:${current.getMinutes()} - ${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
         setAddDate(date);
     }
-    
+
     useEffect(() =>{
+        function getProject(){
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setComments(response.data.comments)
+            })
+            .catch(function (error) {
+                throw error;
+            });
+        }
         getProject(projectId);
         handleDate();
         setAuthor(user);
-        // eslint-disable-next-line
     }, [ projectId, bugId, user, isLoading ]);
 
     function sendComment() {

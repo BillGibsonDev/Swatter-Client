@@ -23,61 +23,61 @@ function closeNav() {
                 <img src={Logo} alt="" />
                 <h1>Swatter</h1>
             </div>
-                {
-                    user === null ? (
-                        <Link to="/LoginPage">Sign In</Link>
-                    ) : (
-                        <div className="link-container">
-                            <div className="text-wrapper">
-                                <h3>Signed in as:</h3>
-                                <h2>{user} - {
-                                        role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                            <span>Admin</span>
-                                        ) : role === process.env.REACT_APP_USER_SECRET ? (
-                                            <span>User</span>
-                                        ) : role === process.env.REACT_APP_GUEST_SECRET ? (
-                                            <span>Guest</span>
-                                        ) : (
-                                            <span>{role}</span>
-                                        )
-                                    }
-                                </h2>
-                            </div>
-                        </div>       
-                    )
-                }
-                <div className="dropdown">
-                    <button className="dropbtn">Menu</button>
-                    <div className="dropdown-content">
-                        <Link to="/">Home</Link>
-                        <Link to="/ProfilePage">Profile</Link>
-                        {
-                            role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
-                            ) : (
-                                <></>     
-                            )
-                        }
-                        <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
-                    </div>
+            {
+                user === null ? (
+                    <Link to="/LoginPage">Sign In</Link>
+                ) : (
+                    <div className="link-container">
+                        <div className="text-wrapper">
+                            <h3>Signed in as:</h3>
+                            <h2>{user} - {
+                                    role === process.env.REACT_APP_ADMIN_SECRET ? (
+                                        <span>Admin</span>
+                                    ) : role === process.env.REACT_APP_USER_SECRET ? (
+                                        <span>User</span>
+                                    ) : role === process.env.REACT_APP_GUEST_SECRET ? (
+                                        <span>Guest</span>
+                                    ) : (
+                                        <span>{role}</span>
+                                    )
+                                }
+                            </h2>
+                        </div>
+                    </div>       
+                )
+            }
+            <div className="dropdown">
+                <button className="dropbtn">Menu</button>
+                <div className="dropdown-content">
+                    <Link to="/">Home</Link>
+                    <Link to="/ProfilePage">Profile</Link>
+                    {
+                        role === process.env.REACT_APP_ADMIN_SECRET ? (
+                            <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
+                        ) : (
+                            <></>     
+                        )
+                    }
+                    <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
                 </div>
-                <div id="myNav" className="overlay">
-                    <button onClick={closeNav}>&times;</button>
-                    <div className="overlayContent" onClick={closeNav}>
-                        <Link to="/">Home</Link>
-                        <Link to={'/AddProjectPage'}>New Project</Link>
-                        <Link to="/ProfilePage">Profile</Link>
-                        {
-                            role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
-                            ) : (
-                                <></>     
-                            )
-                        }
-                        <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
-                    </div>
+            </div>
+            <div id="myNav" className="overlay">
+                <button onClick={closeNav}>&times;</button>
+                <div className="overlayContent" onClick={closeNav}>
+                    <Link to="/">Home</Link>
+                    <Link to={'/AddProjectPage'}>New Project</Link>
+                    <Link to="/ProfilePage">Profile</Link>
+                    {
+                        role === process.env.REACT_APP_ADMIN_SECRET ? (
+                            <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
+                        ) : (
+                            <></>     
+                        )
+                    }
+                    <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
                 </div>
-                <img id='hamburger' src={Hamburger} onClick={openNav} alt="hamburger menu"/>
+            </div>
+            <img id='hamburger' src={Hamburger} onClick={openNav} alt="hamburger menu"/>
         </StyledNav>
     )
 }

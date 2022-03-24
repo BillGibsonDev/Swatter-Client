@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Project from '../components/Project.js';
 import HomePageLoader from '../loaders/HomePageLoader';
 
-// link
+// router
 import { Link } from 'react-router-dom';
 
 // images
@@ -20,20 +20,18 @@ export default function HomePage({user, role, confirmRole}) {
     const [ isLoading, setLoading ] = useState(true)
 
     useEffect(() =>{
+        function getProjects(){
+            axios.get(`${process.env.REACT_APP_GET_PROJECTS_URL}`)
+            .then(function (response){
+                setProjects(response.data)
+                setLoading(false)
+            })
+            .catch(function (error) {
+                throw error;
+            });
+        }
         getProjects();
-        // eslint-disable-next-line
     }, []);
-
-    function getProjects(){
-        axios.get(`${process.env.REACT_APP_GET_PROJECTS_URL}`)
-        .then(function (response){
-            setProjects(response.data)
-            setLoading(false)
-        })
-        .catch(function (error) {
-            throw error;
-        });
-    }
 
     return (
         <StyledHomePage>

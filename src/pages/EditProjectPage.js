@@ -19,10 +19,19 @@ export default function EditProjectPage({user, role, confirmRole}) {
     const [ isLoading, setLoading ] = useState(false);
 
     useEffect(() =>{
+        function getProject(){
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setProject(response.data)
+                setLoading(false)
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+        }
         setAuthor(user);
-        getProject();
-        // eslint-disable-next-line
-    }, [ projectId]);
+        getProject(projectId);
+    }, [ projectId, user]);
 
     function deleteProject(){
         const result = window.confirm("Are you sure you want to delete?");
@@ -40,17 +49,6 @@ export default function EditProjectPage({user, role, confirmRole}) {
                 }
             })
         }
-    }
-
-    function getProject(){
-        axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-        .then(function (response){
-            setProject(response.data)
-            setLoading(false)
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
     }
 
     const [ projectTitle, setProjectTitle] = useState(project.projectTitle);

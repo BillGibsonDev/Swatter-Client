@@ -14,8 +14,7 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 	useEffect(() => {
 		confirmAdmin(role);
 		setUserRole(process.env.REACT_APP_GUEST_SECRET);
-		// eslint-disable-next-line
-	}, [role, userRole])
+	}, [role, confirmAdmin, userRole])
 
     function registerUser() {
 			if (password !== confirm ) {
@@ -44,36 +43,36 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 	return (
 		<StyledRegister>
 			<h1>Register User</h1>
-				<div className="form-wrapper">
-					<label>Username:</label>
-					<input 
-						type="text" 
-						onChange={(event) => {
-							setUsername(event.target.value);
-						}}
-					/>
-					<label>Password:</label>
-					<input 
-						type="text" 
-						onChange={(event) => {
-							setPassword(event.target.value);
-						}}
-					/>
-                    <label>Retype Password:</label>
-					<input 
-						type="text" 
-						onChange={(event) => {
-							setConfirm(event.target.value);
-						}}
-					/>
-					{
-                        role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <button type="submit" onClick={()=>{registerUser();}}>Create User</button>
-                        ) : (    
-                            <button onClick={unauthorized}>Create User</button>
-                        )
-                    }
-				</div>
+			<div className="form-wrapper">
+				<label>Username:</label>
+				<input 
+					type="text" 
+					onChange={(event) => {
+						setUsername(event.target.value);
+					}}
+				/>
+				<label>Password:</label>
+				<input 
+					type="text" 
+					onChange={(event) => {
+						setPassword(event.target.value);
+					}}
+				/>
+				<label>Retype Password:</label>
+				<input 
+					type="text" 
+					onChange={(event) => {
+						setConfirm(event.target.value);
+					}}
+				/>
+				{
+					role === process.env.REACT_APP_ADMIN_SECRET ? (
+						<button type="submit" onClick={()=>{registerUser();}}>Create User</button>
+					) : (    
+						<button onClick={unauthorized}>Create User</button>
+					)
+				}
+			</div>
 		</StyledRegister>
 	)
 }

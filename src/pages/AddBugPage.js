@@ -26,14 +26,13 @@ export default function Bug({user, role, confirmRole}) {
     const [ lastUpdate, setLastUpdate ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
 
-    function handleDate(){
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
-        setDate(date);
-        setLastUpdate(date);
-    }
-
     useEffect(() => {
+        function handleDate(){
+            const current = new Date();
+            const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
+            setDate(date);
+            setLastUpdate(date);
+        }
        handleDate()
     }, []);
 

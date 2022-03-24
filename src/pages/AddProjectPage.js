@@ -19,14 +19,13 @@ export default function AddProjectPage({user, role, confirmRole}) {
     const [ projectImage, setProjectImage ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
 
-    function makeDate(){
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
-        setStartDate(date);
-    }
-
     useEffect(() => {
-        makeDate();
+        function handleDate(){
+            const current = new Date();
+            const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
+            setStartDate(date);
+        }
+        handleDate();
         setAuthor(user);
     }, [user]);
 
@@ -103,14 +102,14 @@ export default function AddProjectPage({user, role, confirmRole}) {
                         />
                     </label>
                     <div className="button-container">
-                    {
-                        role === process.env.REACT_APP_GUEST_SECRET ? (
-                            <button onClick={unauthorized}>Start</button>
-                        ) : (    
-                            <button onClick={addProject}>Start</button>
-                        )
-                    }
-                    <Link id="back-button" to={`/`}>Back</Link>
+                        {
+                            role === process.env.REACT_APP_GUEST_SECRET ? (
+                                <button onClick={unauthorized}>Start</button>
+                            ) : (    
+                                <button onClick={addProject}>Start</button>
+                            )
+                        }
+                        <Link id="back-button" to={`/`}>Back</Link>
                     </div>
                 </div>
             )}

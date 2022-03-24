@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 // styled
@@ -17,32 +17,28 @@ export default function BugPage({user, role}) {
     const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
     const [ isLoading, setLoading ] = useState(true)
-
-
-    function getBug(){
-        axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
-        .then(function (response){
-            setBug(response.data[0].bugs)
-            setAuthor(response.data[0].bugs[0].author)
-            setLoading(false)
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
-
     const [ lastUpdate, setLastUpdate ] = useState("");
 
-    function handleDate(){
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
-        setLastUpdate(date);
-    }
-
-    useEffect(() =>{
+    
+    useEffect(() => {
+        function getBug(){
+            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+            .then(function (response){
+                setBug(response.data[0].bugs)
+                setAuthor(response.data[0].bugs[0].author)
+                setLoading(false)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        function handleDate(){
+            const current = new Date();
+            const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
+            setLastUpdate(date);
+        }
         getBug(projectId);
         handleDate();
-        // eslint-disable-next-line
     }, [ projectId, bugId ]);
 
     const [ status, setStatus ] = useState(bug.status);

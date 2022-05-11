@@ -94,7 +94,8 @@ export default function ProjectPage({ user, role }) {
                                                 id="Open"
                                                 value="Open"
                                                 defaultChecked 
-                                                onClick={handleFilter} />
+                                                onClick={handleFilter} 
+                                            />
                                         </label>
                                         <label><span>{underwayBugs}</span> Underway
                                             <input 
@@ -103,7 +104,7 @@ export default function ProjectPage({ user, role }) {
                                                 value="Underway"
                                                 defaultChecked 
                                                 onClick={handleFilter}
-                                                />
+                                            />
                                         </label>
                                         <label><span>{reviewBugs}</span>Reviewing
                                             <input 
@@ -112,16 +113,15 @@ export default function ProjectPage({ user, role }) {
                                                 value="Reviewing"
                                                 defaultChecked 
                                                 onClick={handleFilter}
-                                                />
+                                            />
                                         </label>
                                         <label><span>{completedBugs}</span> Completed
                                             <input 
                                                 type="checkbox" 
                                                 id="completed" 
                                                 value="Completed"
-                                                defaultChecked
                                                 onClick={handleFilter}
-                                                />
+                                            />
                                         </label>
                                         <h5 id="total"><span>{totalBugs}</span>Total</h5>
                                     </div>

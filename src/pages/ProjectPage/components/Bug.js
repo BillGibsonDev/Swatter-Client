@@ -26,7 +26,7 @@ export default function Bug({
 }) {
 
     return (
-        <StyledBug className={status}>
+        <StyledBug className={status} style={{ display: status === "Completed" ? "none": ""}}>
             <Link to={`/${projectId}/${bugId}`}>
                 <div className="wrapper">
                     {(() => {

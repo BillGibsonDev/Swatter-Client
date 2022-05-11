@@ -181,7 +181,7 @@ border: 1px solid white;
 			color: #83b5ff;
 		}
 		#Completed {
-			color: #a8a8a8;
+			color: #cccccc;
 		}
 	}
 `;

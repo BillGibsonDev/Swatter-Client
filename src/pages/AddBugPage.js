@@ -234,7 +234,7 @@ const StyledBug = styled.div`
                     width: 90%;
                 }
                 textarea {
-                    padding: 2px;
+                    padding: 10px;
                 }
             }
             .button-container {

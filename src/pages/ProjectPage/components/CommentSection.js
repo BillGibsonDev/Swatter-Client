@@ -124,7 +124,7 @@ export default function ProjectsPage({user, role}) {
 }
 
 const StyledCommentSection = styled.div`
-    width: 98%;
+    width: 100%;
     margin: 20px auto;
     min-height: 20vh;
     position: relative;
@@ -148,7 +148,7 @@ const StyledCommentSection = styled.div`
         textarea {
             border-radius: 4px;
             background: #d6d6d6;
-            padding: 2px;
+            padding: 10px;
             min-height: 10vh;
         }
         button {

@@ -19,7 +19,6 @@ export default function BugPage({user, role}) {
     const [ isLoading, setLoading ] = useState(true)
     const [ lastUpdate, setLastUpdate ] = useState("");
 
-    
     useEffect(() => {
         function getBug(){
             axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
@@ -99,8 +98,7 @@ export default function BugPage({user, role}) {
                     <>
                         <BugPageLoader />
                     </>
-                    ) : (
-            
+                ) : (
                     <>
                         {
                             bug.map((bugs, key) => {
@@ -200,8 +198,10 @@ const StyledBugPage = styled.div `
     min-height: 80vh;
     width: 100%;
     max-width: 1000px;
-    margin: auto;
-    margin-bottom: 5%;
+    margin: 50px auto 5% auto;
+    @media (max-width: 700px){
+        margin: 20px auto 5% auto;
+    }
     .bug-container {
         display: flex;
         flex-direction: column;
@@ -216,7 +216,7 @@ const StyledBugPage = styled.div `
                 font-size: 3em;
             }
             #back-button {
-                width: 100px;
+                width: 150px;
                 cursor: pointer;
                 border: none;
                 border-radius: 6px;
@@ -224,7 +224,7 @@ const StyledBugPage = styled.div `
                 font-size: 1.2em;
                 @media (max-width: 1050px){
                     margin: 10px 0;
-                    width: 50px;
+                    width: 100px;
                 }
                 &:hover {
                     color: #ffffff;
@@ -235,29 +235,43 @@ const StyledBugPage = styled.div `
             }
         }
         .info-container, .selector-container {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             align-items: center;
-            width: 80%;
+            width: 100%;
             margin: 20px 0 10px 0;
-            @media (max-width: 1050px){
+            @media (max-width: 700px){
+                display: flex;
                 flex-direction: column;
                 align-items: flex-start;
             }
             h2 {
                 color: white;
-                font-size: 1.5em;
-                margin: 10px 0;
+                font-size: 20px;
+                display: flex;
+                flex-direction: column;
                 span {
                     color: #cecece;
                     font-weight: 400;
                     font-size: 16px;
                 }
+                &:last-child {
+                    margin-left: auto;
+                    @media (max-width: 700px){
+                        margin: 0;
+                    }
+                }
             }
         }
         label {
             color: white;
-            margin: 10px 0;
+            font-size: 20px;
+            &:last-child {
+                margin-left: auto;
+                @media (max-width: 700px){
+                    margin: 0;
+                }
+            }
         }
         select {
             margin-left: 6px;
@@ -275,7 +289,7 @@ const StyledBugPage = styled.div `
             justify-content: space-between;
             margin: 2% 0;
             button {
-                width: 100px;
+                width: 150px;
                 cursor: pointer;
                 border: none;
                 border-radius: 6px;
@@ -283,13 +297,13 @@ const StyledBugPage = styled.div `
                 font-size: 1.2em;
                 @media (max-width: 1050px){
                     margin: 10px 0;
-                    width: 80px;
+                    width: 100px;
                 }
                 &:hover {
                     color: #ffffff;
                     background: #000000;
                     transform: scale(1.05);
-                    transition: 0.3s;
+                    transition: 0.2s;
                 }
             }
             #delete {

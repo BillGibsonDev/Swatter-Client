@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
 html {
     margin: auto;
     scroll-behavior: smooth;
-    background: #0f4d92;;
+    background: #124075;;
     font-family: 'Roboto Mono', monospace;
     letter-spacing: 1px;
     line-height: 1.5;

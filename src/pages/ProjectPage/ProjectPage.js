@@ -3,11 +3,12 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../../styled/ThemeVariables';
 
 // components
-import Bug from '../components/Bug.js';
-import CommentSection from '../components/CommentSection';
-import ProjectPageLoader from '../loaders/ProjectPageLoader';
+import Bug from './components/Bug.js';
+import CommentSection from './components/CommentSection';
+import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';
@@ -68,22 +69,22 @@ export default function ProjectPage({ user, role }) {
                     <ProjectPageLoader />
                 ) : (
                 <>
-                    <header>
-                        <div className="project-title-container">
-                            <div className="info-wrapper">
-                                <h2>Project: <span>{project.projectTitle}</span></h2>
-                                <h2>Started: <span>{project.startDate}</span></h2>
-                                <a href={project.projectLink} target="_blank" rel="noreferrer">Project Link</a>
-                            </div>
+                    <div className="title-wrapper">
+                        <div className="left-container">
+                            <h2>Project: <span>{project.projectTitle}</span></h2>
+                            <h2>Started: <span>{project.startDate}</span></h2>
+                        </div>
+                        <div className="right-container">
+                            <a href={project.projectLink} target="_blank" rel="noreferrer">Project Link</a>
                             <Link id="add-bug" to={`/${projectId}/AddBugPage`}>Add Bug</Link>
                         </div>
-                    </header>
+                    </div>
                     { 
                         bugs === undefined ? (
                             <div className="undefined">
                                 <h1>You've havent entered any bugs</h1>
                             </div>
-                            ) : (
+                        ) : (
                             <>
                                 <div className="active-wrapper">
                                     <div className="status-filter-container">
@@ -129,6 +130,7 @@ export default function ProjectPage({ user, role }) {
                                         bugs.slice().reverse().map((bug, key) => {
                                             return (
                                                 <Bug
+                                                    projectTitle={project.projectTitle}
                                                     projectId = {projectId}
                                                     bugId={bug._id}
                                                     title={bug.title}
@@ -162,11 +164,11 @@ export default function ProjectPage({ user, role }) {
 
 const StyledProjectPage = styled.div`
     min-height: 80vh;
-    width: 100%;
-    margin: auto;
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
-    max-width: 1000px;
     .undefined {
         background: white;
         width: 100%;
@@ -177,94 +179,100 @@ const StyledProjectPage = styled.div`
         align-items: center;
         margin: auto;
     }
-    header {
-        width: 100%;
-        min-height: 10vh;
-        justify-content: space-between;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-    }
-    .project-title-container {
-        border-radius: 12px;
+    .title-wrapper {
         margin: 10px auto;
-        width: 90%;
-        justify-content: space-between;
+        width: 100%;
         display: flex;
+        justify-content: space-between;
         align-items: center;
             @media (max-width: 750px){
-                width: 90%;
                 flex-direction: column;
                 justify-content: flex-start;
                 align-items: flex-start;
-                margin: 10px auto;
             }
-            .info-wrapper {
+            .left-container, .right-container {
                 h2 {
                     color: #bbbbbb;
-                    font-size: 1.2em;
+                    font-size: 18px;
+                    @media (max-width: 750px){
+                        display: flex;
+                        flex-direction: column;
+                    }
                     span {
                         color: #ffffff;
-                        font-size: 1.5em;
-                    }
-                    @media (max-width: 750px){
-                        font-size: 1em;
-                        margin: 6px 0;
+                        font-size: ${pallette.subtitleSize};
+                        @media (max-width: 750px){
+                            font-size: 20px;
+                        }
                     }
                 }
-                 a {
-                    margin-bottom: 10px;
+                h2:last-child {
+                    margin-top: 20px;
+                }
+                a {
                     font-weight: 700;
-                    font-size : 2em;
+                    font-size: ${pallette.subtitleSize};
                     color: #ffffff;
+                    @media (max-width: 750px){
+                        margin-top: 40px;
+                        font-size: 20px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                        text-decoration: underline;
+                        text-underline-position: under;
+                    }
+                }
+                #add-bug {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #ffffff;
+                    padding: 4px 10px;
+                    border-radius: 4px;
+                    font-size: ${pallette.subtitleSize};
+                    font-weight: 700;
+                    color: ${pallette.accentColor};
+                    width: 200px;
+                    margin-left: auto;
+                    margin-top: 20px;
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
-                        background: #99a2ac;
+                        background: #000000;
                         transition: 0.2s;
-                        transform: scale(1.01);
+                        text-decoration: none;
+                    }
+                    @media (max-width: 750px){
+                        font-size: 20px;
                     }
                 }
             }
-            #add-bug {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background: #ffffff;
-                padding: 0 6px;
-                border-radius: 4px;
-                font-size: 16px;
-                font-weight: bold;
-                color: #0f4d92;
+            .right-container {
                 @media (max-width: 750px){
-                    margin: 10px 0;
-                }
-                &:hover{
-                    color: #ffffff;
-                    cursor: pointer;
-                    background: #000000;
-                    transition: 0.2s;
-                    transform: scale(1.01);
+                    margin-top: 20px;
                 }
             }
         }
     }
     .active-wrapper {
         height: 100%;
+        width: 100%;
         display: flex;
         margin-top: 16px;
         flex-direction: column;
         align-items: center;
         .status-filter-container {
             display: flex;
-            width: 90%;
+            width: 100%;
             align-items: center;
             justify-content: space-between;
             margin: 10px auto;
             @media (max-width: 800px){
-                width: 100%;
-                flex-wrap: wrap;
-                justify-content: center;
+                flex-direction: column;
+                justify-content: left;
+                text-align: left;
+                align-items: normal;
             }
             label, #total {
                 display: flex;
@@ -275,9 +283,6 @@ const StyledProjectPage = styled.div`
                 font-size: 20px;
                 font-weight: 700;
                 margin: 0 6px;
-                @media (max-width: 750px){
-                    font-size: 14px;
-                }
                 span {
                     color: #d1d1d1;
                     margin-right: 6px;
@@ -291,7 +296,7 @@ const StyledProjectPage = styled.div`
             }
         }
     .bugs-container {
-        width: 98%;
+        width: 100%;
         margin: auto;
         .Open, .Underway, .Reviewing, .Completed {
             display: flex;

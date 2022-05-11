@@ -1,11 +1,8 @@
-
 import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-
-// images
-import X from "../images/XyaleBlue.png";
+import * as pallette from '../../../styled/ThemeVariables';
 
 export default function Comment({
     comments,
@@ -49,9 +46,9 @@ export default function Comment({
             </div>
             {
                 author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                    <img src={X} onClick={deleteComment} alt="" />
+                    <button onClick={deleteComment}>&times;</button>
                 ) : (
-                    <img src={X} onClick={unauthorized} alt="" />
+                    <button onClick={unauthorized}>&times;</button>
                 )
             }
         </StyledComment>
@@ -83,28 +80,22 @@ const StyledComment = styled.div`
             }
         }
         #Gibby{
-                color: #008ee0;
-            }
-            #Moose{
-                color: #0dbe7a;
-            }
+            color: #008ee0;
+        }
+        #Moose{
+            color: #0dbe7a;
+        }
         p {
-            font-size: 1.2em;
+            font-size: ${pallette.paraSize};
         }
     }
-    img {
-        width: 15px;
-        height: 15px;
+    button {
+        font-size: 30px;
         position: absolute;
-        top: 2%;
-        right: 1%;
+        top: 0;
+        right: 0;
         cursor: pointer;
-        @media (max-width: 750px){
-            top: 5%;
-        }
-        &:hover {
-            transform: scale(1.1);
-            transition: 0.3s;
-        }
+        background: none;
+        border: none;
     }
 `;

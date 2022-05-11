@@ -1,6 +1,6 @@
 
 // images
-import BugImage from '../images/bugYaleBlue.png'
+import BugImage from '../assets/icons/bugYaleBlue.png'
 
 // styled
 import styled from 'styled-components';

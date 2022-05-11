@@ -1,8 +1,10 @@
 // images
-import BugImage from '../images/bugYaleBlue.png'
+import BugImage from '../assets/icons/bugYaleBlue.png'
 
 // styled
 import styled from 'styled-components';
+import { StyledButton } from '../styled/StyledButton';
+import * as pallette from '../styled/ThemeVariables';
 
 export default function LoginPage({login, setUsername, setPassword, handleTokens, isLoading }) {
 
@@ -10,7 +12,6 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 		<StyledLoginPage>
 			<h1>Swatter</h1>
 			<h2>Bug Tracking and Workflow Organization</h2>
-			<h3>Sign In</h3>
 			{
 				isLoading === true ? (
 					<div className="loading-container">
@@ -21,21 +22,21 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 					</div>
 				) : (
 					<div className="form-wrapper">
-						<label>Username:</label>
+						<label>Username</label>
 						<input 
 							type="text" 
 							onChange={(event) => {
 								setUsername(event.target.value);
 							}}
 						/>
-						<label>Password:</label>
+						<label>Password</label>
 						<input 
 							type="password" 
 							onChange={(event) => {
 								setPassword(event.target.value);
 							}}
 						/>
-						<button id="back-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</button>
+						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</StyledButton>
 					</div>
 				)
 			}
@@ -56,7 +57,7 @@ const StyledLoginPage = styled.div`
 	background: white;
 	min-height: 80vh;
 	border-radius: 4px;
-	width: 100%;
+	width: 90%;
 	max-width: 1000px;
 	margin: 5% auto;
 	h1 {
@@ -67,6 +68,7 @@ const StyledLoginPage = styled.div`
 		font-size: 1em;
 		margin-bottom: 40px;
 		color: #0f4c92bc;
+		text-align: center;
 	}
 	h3 {
 		font-size: 2em;
@@ -104,21 +106,33 @@ const StyledLoginPage = styled.div`
     }
 	.form-wrapper {
 		display: flex;
-		width: 50%;
 		flex-direction: column;
 		align-items: center;
+		margin: 50px 0;
+		@media (max-width: 750px){
+			margin: 20px 0;
+		}
 		label {
 			font-weight: bold;
+			font-size: ${pallette.subtitleSize};
 		}
 		input {
-			width: 200px;
+			width: 300px;
+			height: 40px;
 			margin-bottom: 20px;
+			font-size: 18px;
 		}
-		#back-button {
-			color: white;
+		#submit-button {
+			color: #ffffff;
 			background: #0f4d92;
-			&:hover {
-				background: black;
+			width: 200px;
+			height: 40px;
+			font-size: ${pallette.subtitleSize};
+			&:hover{
+				color: #ffffff;
+				cursor: pointer;
+				background: #000000;
+				transition: 0.2s;
 			}
 		}
 	}
@@ -129,12 +143,12 @@ const StyledLoginPage = styled.div`
 		justify-content: center;
 		flex-direction: column;
 		h4 {
-			font-size: 1.2em;
+			font-size: ${pallette.paraSize};
 			color: #636363;
 		}
 		h5 {
 			color: #636363;
-			font-size: 1em;
+			font-size: ${pallette.paraSize};
 		}
 	}
 `;

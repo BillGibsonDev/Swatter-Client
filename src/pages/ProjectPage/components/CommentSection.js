@@ -9,7 +9,9 @@ import Comment from '../components/Comment';
 
 // router
 import { useParams } from 'react-router-dom';
-import Loader from '../loaders/Loader';
+
+// loader asset
+import Loader from '../../../loaders/Loader';
 
 export default function ProjectsPage({user, role}) {
 
@@ -94,7 +96,7 @@ export default function ProjectsPage({user, role}) {
                     </div>
                 )
             }
-{
+            {
                 isLoading === true ? (
                     <Loader />
                 ) : (

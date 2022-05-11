@@ -3,18 +3,17 @@ import styled from 'styled-components';
 // router
 import { Link } from 'react-router-dom';
 
+// components
+import NavOverlay from './NavOverlay';
+
 // images
-import Logo from '../images/bugMicroYaleBlue.png';
-import Hamburger from '../images/hamburgerYaleBlue.png';
+import Logo from '../assets/images/bugMicroYaleBlue.png';
+import Hamburger from '../assets/images/hamburgerYaleBlue.png';
 
 export default function Nav({logout, user, role, confirmAdmin}) {
 
 function openNav() {
     document.getElementById("myNav").style.width = "100%";
-}
-
-function closeNav() {
-    document.getElementById("myNav").style.width = "0%";
 }
 
     return (
@@ -27,8 +26,8 @@ function closeNav() {
                 user === null ? (
                     <Link to="/LoginPage">Sign In</Link>
                 ) : (
-                    <div className="link-container">
-                        <div className="text-wrapper">
+                    <div className="text-wrapper">
+                        <div className="text-container">
                             <h3>Signed in as:</h3>
                             <h2>{user} - {
                                     role === process.env.REACT_APP_ADMIN_SECRET ? (
@@ -61,22 +60,11 @@ function closeNav() {
                     <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
                 </div>
             </div>
-            <div id="myNav" className="overlay">
-                <button onClick={closeNav}>&times;</button>
-                <div className="overlayContent" onClick={closeNav}>
-                    <Link to="/">Home</Link>
-                    <Link to={'/AddProjectPage'}>New Project</Link>
-                    <Link to="/ProfilePage">Profile</Link>
-                    {
-                        role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
-                        ) : (
-                            <></>     
-                        )
-                    }
-                    <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
-                </div>
-            </div>
+            <NavOverlay
+                role={role}
+                logout={logout}
+                confirmAdmin={confirmAdmin}
+            />
             <img id='hamburger' src={Hamburger} onClick={openNav} alt="hamburger menu"/>
         </StyledNav>
     )
@@ -84,38 +72,38 @@ function closeNav() {
 
 const StyledNav = styled.div`
     height: 6vh;
-    width: 100vw;
+    width: 100%;
+    margin: auto;
     padding: 0 5%;
-    margin-bottom: 20px;
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr;
     background: #f1f1f1;
     z-index: 1000;
     position: relative;
-    top: 0;
-    left: 0;
+    @media (max-width: 750px){
+        grid-template-columns: 25% 50% 25%;
+    }
     .logo-wrapper {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         h1 {
-            font-size: 3em;
+            font-size: 30px;
             color: #0f4d92;
             @media (max-width: 750px){
                 display: none;
             }
         }
         img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
         }
     }
-    .link-container {
+    .text-wrapper {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        .text-wrapper{
+        margin: auto;
+        .text-container{
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -134,15 +122,19 @@ const StyledNav = styled.div`
     .dropdown {
         position: relative;
         display: inline-block;
+        margin-left: auto;
         @media (max-width: 1050px){
             display: none;
         }
-    .dropbtn {
-        background-color: #0f4d92;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
+        .dropbtn {
+            background-color: #0f4d92;
+            color: white;
+            padding: 10px 16px;
+            font-size: 16px;
+            border: none;
+            &:hover {
+                background: black;
+            }
         }
         .dropdown-content {
             display: none;
@@ -156,79 +148,30 @@ const StyledNav = styled.div`
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
+                &:hover {
+                    text-decoration: underline;
+                    text-underline-position: under;
+                    background: #dbdbdb;
+                }
             }
         }
-    }
-
-    .dropdown-content a:hover {
-        background-color: #ddd;
     }
 
     .dropdown:hover .dropdown-content {
         display: block;
     }
 
-    .dropdown:hover .dropbtn {
-        background-color: #a5a5a5;
+    #hamburger {
+        cursor: pointer;
+        display: none;
+        width: 30px;
+        margin-left: auto;
+        &:hover, &:focus {
+            transition: 0.2s;
+            transform: rotateZ(10deg);
+        }
+        @media (max-width: 1050px){
+            display: block;
+        }
     }
-
-    .overlay {
-        height: 100%;
-        width: 0;
-        position: fixed; 
-        left: 0;
-        top: 0;
-        background-color: rgb(0,0,0); 
-        overflow-x: hidden; 
-        transition: 0.5s;
-        z-index: 99; 
-            button {
-                position: absolute;
-                top: 20px;
-                right: 45px;
-                font-size: 60px;
-                color: #3a63d1;
-                background: transparent;
-                border: none;
-                cursor: pointer;
-                &:hover, &:focus {
-                    transition: 0.3s;
-                    transform: scale(1.1);
-                    color: #ffffff;
-                }
-            }
-            .overlayContent {
-                position: relative;
-                top: 15%; 
-                width: 50%;
-                margin: auto;
-                margin-top: 30px;
-                z-index: 99;
-                a {
-                    display: flex;
-                    justify-content: center;
-                    font-size: 2em;
-                    color: #3a63d1;
-                    margin: 2em 0;
-                    transition: 0.3s; 
-                        &:hover, &:focus {
-                        color: #f1f1f1;
-                        transition: 0.3s;
-                        transform: scale(1.1);
-                    }
-                }
-            } 
-        }
-        #hamburger {
-            cursor: pointer;
-            display: none;
-            width: 30px;
-            &:hover, &:focus {
-                transition: 0.3s;
-                transform: rotateZ(30deg);
-            }
-            @media (max-width: 1050px){
-                display: block;
-            }
-        }
 `;

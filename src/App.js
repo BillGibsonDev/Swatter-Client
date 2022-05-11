@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 // styles
 import GlobalStyles from "./GlobalStyles";
 
@@ -9,8 +8,8 @@ import GlobalStyles from "./GlobalStyles";
 import Nav from "./components/Nav";
 
 // pages
-import HomePage from './pages/HomePage.js';
-import ProjectPage from './pages/ProjectPage';
+import HomePage from './pages/HomePage/HomePage.js';
+import ProjectPage from './pages/ProjectPage/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
 import BugPage from "./pages/BugPage";
@@ -178,7 +177,7 @@ function App() {
 							isLoading={isLoading}
 						/>
 					</>
-			) : (
+				) : (
 			<>
 				<Nav 
 					user={user}

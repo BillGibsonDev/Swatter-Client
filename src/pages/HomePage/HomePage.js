@@ -3,16 +3,17 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../../styled/ThemeVariables';
 
 // components
-import Project from '../components/Project.js';
-import HomePageLoader from '../loaders/HomePageLoader';
+import Project from './components/Project.js';
+import HomePageLoader from '../../loaders/HomePageLoader';
 
 // router
 import { Link } from 'react-router-dom';
 
 // images
-import Add from '../images/Add.png';
+import Add from '../../assets/icons/Add.png';
 
 export default function HomePage({user, role, confirmRole}) {
 
@@ -69,7 +70,7 @@ export default function HomePage({user, role, confirmRole}) {
 }
 
 const StyledHomePage = styled.div`
-    width: 100%;
+    width: 90%;
     max-width: 1000px;
     margin: auto;
     margin-top: 5%;
@@ -77,32 +78,19 @@ const StyledHomePage = styled.div`
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    header {
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        h1, a {
-            font-size: 1.2em;
-            margin: 1% auto;
-            color: #ffffff;
-            span {
-                color: black;
-            }
-        }
-    }
     .projects-container {
-        width: 90%;
+        width: 100%;
         margin: 1% auto;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-column-gap: 2%;
-        grid-row-gap: 2em;
+        column-gap: 2%;
+        row-gap: 2em;
         @media (max-width: 1050px){
             grid-template-columns: 1fr 1fr;
         }
-        @media (max-width: 750px){
+        @media (max-width: 550px){
             grid-template-columns: 1fr;
+            row-gap: 20px;
         }
         #add-button {
             display: flex;
@@ -113,11 +101,11 @@ const StyledHomePage = styled.div`
             height: 300px;
             margin: 10px auto;
             position: relative;
-            background: #1673dd;
+            background: ${pallette.accentColor};
             color: white;
             border-radius: 4px;
             font-weight: 700;
-            font-size: 20px;
+            font-size: ${pallette.subtitleSize};
             img {
                 margin-top: 10px;
                 width: 50px;
@@ -125,7 +113,7 @@ const StyledHomePage = styled.div`
             &:hover{
                 transition: 0.2s;
                 transform: scale(1.01);
-                background: #919191;
+                background:#000000;
             }
         }
     }

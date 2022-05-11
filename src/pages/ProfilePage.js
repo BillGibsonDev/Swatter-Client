@@ -41,6 +41,10 @@ const StyledProfilePage = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 50px auto;
+    @media (max-width: 700px){
+        margin: 20px auto;
+    }
     h1 {
 		font-size: 3em;
 		color: #ffffff;

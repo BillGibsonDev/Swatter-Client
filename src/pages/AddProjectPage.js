@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // router
 import { Link } from 'react-router-dom';
@@ -109,7 +110,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                                 <button onClick={addProject}>Start</button>
                             )
                         }
-                        <Link id="back-button" to={`/`}>Back</Link>
+                        <Link to={`/`}>Back</Link>
                     </div>
                 </div>
             )}
@@ -120,18 +121,22 @@ export default function AddProjectPage({user, role, confirmRole}) {
 const StyledProjectPage = styled.div`
     display: flex;
     flex-direction: column;
-    height: 50vh;
+    min-height: 50vh;
     width: 100%;
     max-width: 1000px;
-    margin: auto;
+    margin: 50px auto;
     @media (max-width: 750px){
         height: 40vh;
+        margin: 20px auto;
     }
     h1 {
         color: white;
         width: 95%;
         margin: 2% auto;
-        font-size: 1.2em;
+        font-size: ${pallette.titleSize};
+        @media (max-width: 750px){
+            font-size: ${pallette.subtitleSize};
+        }
     }
     .form-wrapper {
         width: 95%;
@@ -139,13 +144,20 @@ const StyledProjectPage = styled.div`
         label {
             display: flex;
             flex-direction: column;
-            margin: 10px 0;
+            margin: 20px 0;
             color: white;
+            font-size: ${pallette.subtitleSize};
+            @media (max-width: 750px){
+                font-size: ${pallette.paraSize};
+            }
                 input, select {
                     width: 50%;
+                    height: 40px;
+                    font-size: 18px;
                     padding: 2px;
+                    background: ${pallette.helperGrey};
                     @media (max-width: 750px){
-                        width: 90%;
+                        width: 100%;
                     }
                 }
             }
@@ -156,22 +168,33 @@ const StyledProjectPage = styled.div`
             width: 50%;
             @media (max-width: 750px){
                 margin-top: 10%;
-                width: 90%;
+            }
+            @media (max-width: 750px){
+                width: 100%;
             }
             button, a {
-                width: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 150px;
+                height: 40px;
                 cursor: pointer;
                 border: none;
                 border-radius: 4px;
-                font-size: 1.2em;
+                font-size: ${pallette.subtitleSize};
                 font-weight: 700;
                 background: #ffffff;
+                color: ${pallette.accentColor};
                 &:hover{
                     color: #ffffff;
                     cursor: pointer;
                     background: #000000;
                     transition: 0.2s;
                     transform: scale(1.01);
+                }
+                @media (max-width: 750px){
+                    width: 100px;
+                    font-size: ${pallette.paraSize};
                 }
             }
         }

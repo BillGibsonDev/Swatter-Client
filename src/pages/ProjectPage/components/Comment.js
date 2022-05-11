@@ -41,16 +41,18 @@ export default function Comment({
     return (
         <StyledComment>
             <div className="comment-wrapper">
-                <h3 id={author}>{author}<span>{date}</span></h3>
+                <div className="title-container">
+                    <h3 id={author}>{author}<span>{date}</span></h3>
+                    {
+                        author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
+                            <button onClick={deleteComment}>&times;</button>
+                        ) : (
+                            <button onClick={unauthorized}>&times;</button>
+                        )
+                    }
+                </div>
                 <p>{comments}</p>
             </div>
-            {
-                author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                    <button onClick={deleteComment}>&times;</button>
-                ) : (
-                    <button onClick={unauthorized}>&times;</button>
-                )
-            }
         </StyledComment>
     )
 }
@@ -58,25 +60,42 @@ export default function Comment({
 const StyledComment = styled.div`
     display: flex;
     width: 95%;
-    min-height: 100px;
     margin: 2% auto;
     background: #ffffff;
     border-radius: 4px;
     box-shadow: 3px 3px 3px #5252528d;
     position: relative;
-    align-items: center;
     justify-content: space-around;
     .comment-wrapper {
         width: 95%;
-        margin: auto;
-        h3 {
-            font-size: 12px;
+        margin: 10px auto;
+        .title-container {
             display: flex;
+            justify-content: space-between;
+            width: 100%;
             align-items: center;
-            span {
-                margin-left: 10px;
-                font-size: 11px;
-                color: #575757;
+            margin-bottom: 10px;
+            h3 {
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                span {
+                    margin-left: 10px;
+                    font-size: 11px;
+                    color: #575757;
+                }
+            }
+            button {
+                font-size: 30px;
+                height: 30px;
+                width: 30px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
             }
         }
         #Gibby{
@@ -87,15 +106,9 @@ const StyledComment = styled.div`
         }
         p {
             font-size: ${pallette.paraSize};
+            @media (max-width: 700px){
+                font-size: 14px;
+            }
         }
-    }
-    button {
-        font-size: 30px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-        background: none;
-        border: none;
     }
 `;

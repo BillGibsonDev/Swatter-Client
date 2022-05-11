@@ -152,7 +152,7 @@ const StyledCommentSection = styled.div`
             min-height: 10vh;
         }
         button {
-            margin: 1% auto;
+            margin: 20px auto 0 auto ;
             width: 150px;
             cursor: pointer;
             color: #0f4d92;

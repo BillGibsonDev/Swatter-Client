@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // components
 import BugPageLoader from '../loaders/BugPageLoader';
@@ -195,8 +196,8 @@ export default function BugPage({user, role}) {
 }
 
 const StyledBugPage = styled.div `
-    min-height: 80vh;
-    width: 100%;
+    min-height: 50vh;
+    width: 90%;
     max-width: 1000px;
     margin: 50px auto 5% auto;
     @media (max-width: 700px){
@@ -205,41 +206,37 @@ const StyledBugPage = styled.div `
     .bug-container {
         display: flex;
         flex-direction: column;
-        width: 95%;
+        width: 100%;
         margin: auto;
         .title-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            margin-bottom: 20px;
             h1 {
                 color: white;
-                font-size: 3em;
+                font-size: 40px;
             }
             #back-button {
                 width: 150px;
+                height: 40px;
                 cursor: pointer;
                 border: none;
                 border-radius: 6px;
                 font-weight: 700;
-                font-size: 1.2em;
-                @media (max-width: 1050px){
-                    margin: 10px 0;
-                    width: 100px;
-                }
+                font-size: ${pallette.subtitleSize};
                 &:hover {
                     color: #ffffff;
                     background: #000000;
                     transform: scale(1.05);
-                    transition: 0.3s;
+                    transition: 0.2s;
                 }
             }
         }
         .info-container, .selector-container {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            align-items: center;
             width: 100%;
-            margin: 20px 0 10px 0;
+            margin: 10px 0 10px 0;
             @media (max-width: 700px){
                 display: flex;
                 flex-direction: column;
@@ -250,35 +247,33 @@ const StyledBugPage = styled.div `
                 font-size: 20px;
                 display: flex;
                 flex-direction: column;
+                width: 90%;
+                margin: 10px 0;
                 span {
                     color: #cecece;
                     font-weight: 400;
                     font-size: 16px;
                 }
-                &:last-child {
-                    margin-left: auto;
-                    @media (max-width: 700px){
-                        margin: 0;
-                    }
-                }
             }
-        }
-        label {
-            color: white;
-            font-size: 20px;
-            &:last-child {
-                margin-left: auto;
+            label {
+                display: flex;
+                flex-direction: column;
+                color: white;
+                font-size: 20px;
+                margin: 20px 0;
                 @media (max-width: 700px){
-                    margin: 0;
+                    flex-direction: row;
+                }
+                select {
+                    cursor: pointer;
+                    width: 90%;
+                    font-size: 20px;
                 }
             }
-        }
-        select {
-            margin-left: 6px;
-            cursor: pointer;
         }
         textarea {
             margin: 20px 0;
+            background: ${pallette.helperGrey};
         }
         img {
             width: 300px;
@@ -289,15 +284,16 @@ const StyledBugPage = styled.div `
             justify-content: space-between;
             margin: 2% 0;
             button {
-                width: 150px;
+                width: 200px;
+                height: 40px;
                 cursor: pointer;
                 border: none;
                 border-radius: 6px;
                 font-weight: 700;
-                font-size: 1.2em;
+                font-size: ${pallette.subtitleSize};
                 @media (max-width: 1050px){
                     margin: 10px 0;
-                    width: 100px;
+                    width: 150px;
                 }
                 &:hover {
                     color: #ffffff;

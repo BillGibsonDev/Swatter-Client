@@ -11,7 +11,7 @@ import arrowDown from '../../../assets/icons/arrowDown.png';
 import Task from '../../../assets/icons/taskIcon.png';
 
 // router
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Bug({
     projectId,
@@ -43,8 +43,9 @@ export default function Bug({
                                 return (
                                     <h2>{tag}</h2>
                                 )
-                        }
-                    })()}
+                        	}	
+                    	}
+					)()}
                     {(() => {
                         switch (priority) {
                             case "Standard":
@@ -57,29 +58,23 @@ export default function Bug({
                                 return (
                                     <h2>{priority}</h2>
                                 )
-                        }
-                    })()}
+                        	}
+                    	}
+					)()}
                 </div>
                 <div className="center-wrapper">
                     <h2 id="title">{title}</h2>
-                    <h2 id="date">
-                        <span>Updated:
-                        </span>{lastUpdate}</h2>
+                    <h2 id="date"><span>Updated:</span>{lastUpdate}</h2>
                 </div>
                 <div className="bottom-wrapper">
                     <h2 id={status}>{status}</h2>
-                    {user === author
-                        ? (
-                            <h2 id="author" className={author}>
-                                <span>Created by:
-                                </span>You</h2>
-                        )
-                        : (
-                            <h2 id="author" className={author}>
-                                <span>Created by:
-                                </span>{author}</h2>
-                        )
-}
+                    {
+						user === author ? (
+							<h2 id="author" className={author}><span>Created by:</span>You</h2>
+						): (
+							<h2 id="author" className={author}><span>Created by:</span>{author}</h2>
+						)
+					}
                 </div>
             </Link>
         </StyledBug>
@@ -87,19 +82,18 @@ export default function Bug({
 }
 
 const StyledBug = styled.div `
-display: flex;
-align-items: center;
-justify-content: center;
-width: 99%;
-max-height: 250px;
-min-height: 50px;
-margin: 1% auto;
-border-radius: 4px;
-cursor: pointer;
-border: 1px solid white;
+	display: flex;
+	justify-content: center;
+	width: 99%;
+	max-height: 250px;
+	min-height: 50px;
+	margin: 2% auto;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid white;
 	@media (max-width: 750px){
         min-height: 150px;
-		margin: 1em 0;
+		margin: 20px 0;
     }
 	&:hover{
 		transition: 0.2s;
@@ -108,16 +102,15 @@ border: 1px solid white;
 	}
 	a {
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
-		margin: auto;
+		margin: 0 auto;
 		height: 100%;
 		width: 98%;
 		@media (max-width: 750px){
 			flex-direction: column;
 		}
 		.wrapper {
-			width: 20%;
+			width: 10%;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -133,11 +126,11 @@ border: 1px solid white;
 			font-size: 14px;
 			color: #ffffff;
 			display: flex;
-			justify-content: center;
-			text-align: center;
+			width: 50%;
 			@media (max-width: 750px){
 				font-size: 14px;
-				width: 100%;
+				width: 90%;
+				margin: auto;
 			}
 		}
 		#title {
@@ -145,22 +138,35 @@ border: 1px solid white;
 		}
 		.bottom-wrapper, .center-wrapper {
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
-			width: 98%;
-			margin: 10px 0;
+			width: 30%;
 			@media (max-width: 750px){
 				font-size: 14px;
+				width: 90%;
+				margin: auto;
 			}
 			#date, #author {
 				display: flex;
+				justify-content: center;
 				flex-direction: column;
 				span {
 					color: #c2c2c2;
 				}
 				@media (max-width: 750px){
 					font-size: 12px;
+					justify-content: left;
 				}
+			}
+		}
+		.center-wrapper {
+			margin: 0 10px;
+			width: 50%;
+			@media (max-width: 750px){
+				font-size: 14px;
+				width: 90%;
+				margin: 0 auto;
+				margin-bottom: 10px;
 			}
 		}
 		/* author colors */

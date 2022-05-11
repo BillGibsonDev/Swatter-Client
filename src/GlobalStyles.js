@@ -20,6 +20,9 @@ html {
         font-size: 80%;
     } 
 }
+body {
+    font-family: 'Roboto Mono', monospace;
+}
 ul {
     list-style-type: none;
 }
@@ -31,6 +34,9 @@ button, a, label, input, textarea {
     letter-spacing: 1px;
     padding: 2px;
     border-radius: 4px;
+}
+h1 {
+    line-height: normal;
 }
 
 #back-button {

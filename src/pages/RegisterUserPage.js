@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables.js';
 
 export default function RegisterUserPage({role, confirmAdmin}) {
 
@@ -44,27 +45,30 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 		<StyledRegister>
 			<h1>Register User</h1>
 			<div className="form-wrapper">
-				<label>Username:</label>
-				<input 
-					type="text" 
-					onChange={(event) => {
-						setUsername(event.target.value);
-					}}
-				/>
-				<label>Password:</label>
-				<input 
-					type="text" 
-					onChange={(event) => {
-						setPassword(event.target.value);
-					}}
-				/>
-				<label>Retype Password:</label>
-				<input 
-					type="text" 
-					onChange={(event) => {
-						setConfirm(event.target.value);
-					}}
-				/>
+				<label>Username
+					<input 
+						type="text" 
+						onChange={(event) => {
+							setUsername(event.target.value);
+						}}
+					/>
+				</label>
+				<label>Password
+					<input 
+						type="text" 
+						onChange={(event) => {
+							setPassword(event.target.value);
+						}}
+					/>
+				</label>
+				<label>Retype Password
+					<input 
+						type="text" 
+						onChange={(event) => {
+							setConfirm(event.target.value);
+						}}
+					/>
+				</label>
 				{
 					role === process.env.REACT_APP_ADMIN_SECRET ? (
 						<button type="submit" onClick={()=>{registerUser();}}>Create User</button>
@@ -82,14 +86,17 @@ const StyledRegister = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	height: 80vh;
+	min-height: 50vh;
 	width: 100%;
 	max-width: 1000px;
-	margin: auto;
+	margin: 50px auto;
+	@media (max-width: 750px){
+		margin: 20px auto;
+	}
 	h1 {
-		font-size: 3em;
+		font-size: 40px;
 		color: #ffffff;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
 	.form-wrapper {
             display: flex;
@@ -100,44 +107,49 @@ const StyledRegister = styled.div`
                 font-size: 1.2em;
             }
             label {
-                font-weight: bold;
+				display: flex;
 				color: white;
-                @media (max-width: 1150px){
-                    font-size: 1.2em;
-                }
-            }
-            input {
-                width: 200px;
-                margin-bottom: 20px;
-                border-radius: 4px;
-                @media (max-width: 1150px){
-                    width: 50%;
-                }
-                @media (max-width: 750px){
-                    width: 70%;
-                }
-				@media (max-width: 550px){
-                    width: 90%;
-                }
-            }
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				margin: 20px 0;
+				font-size: ${pallette.subtitleSize};
+				@media (max-width: 750px){
+					font-size: ${pallette.paraSize};
+				}
+				input {
+					width: 300px;
+					height: 40px;
+					border-radius: 4px;
+					font-size: 18px;
+					padding: 6px;
+					background: ${pallette.helperGrey};
+				}
+			}
             button {
-                width: 200px;
-                cursor: pointer;
-                margin: 0 20px;
-                background: #d1d1d1;
-                border: none;
-                border-radius: 4px;
-                font-weight: 700;
-                @media (max-width: 1150px){
-                    font-size: 1.2em;
-                }
-                &:hover{
-                    color: #ffffff;
-                    cursor: pointer;
-                    background: #000000;
-                    transition: 0.2s;
-                    transform: scale(1.01);
-                }
-            }
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 300px;
+				height: 40px;
+				cursor: pointer;
+				border: none;
+				border-radius: 4px;
+				font-size: ${pallette.subtitleSize};
+				font-weight: 700;
+				background: #ffffff;
+				color: ${pallette.accentColor};
+				margin-top: 20px;
+				&:hover{
+					color: #ffffff;
+					cursor: pointer;
+					background: #000000;
+					transition: 0.2s;
+					transform: scale(1.01);
+				}
+				@media (max-width: 750px){
+					font-size: ${pallette.paraSize};
+				}
+			}
         }
 `;

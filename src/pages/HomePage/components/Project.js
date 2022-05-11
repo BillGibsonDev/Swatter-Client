@@ -32,11 +32,9 @@ export default function Project({
 
 const StyledProject = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
     width: 100%;
-    height: 300px;
+    height: 400px;
     margin: 10px auto;
     position: relative;
     background: ${pallette.accentColor};
@@ -47,19 +45,16 @@ const StyledProject = styled.div`
     }
     #image-link {
         display: flex;
-        align-items: center;
         justify-content: center;
         flex-direction: column;
-        height: 100%;
+        height: 70%;
         width: 100%;
+        margin-bottom: auto;
             #projectImage {
                 width: 100%;
-                height: 150px;
+                height: 100%;
                 margin-bottom: 10px;
                 border-radius: 4px;
-                @media (max-width: 550px){
-                    height: 60%;
-                }
             }
         }
     .text-container {

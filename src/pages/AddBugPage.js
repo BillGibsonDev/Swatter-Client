@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // router
 import { useParams, Link } from 'react-router-dom';
@@ -62,13 +63,6 @@ export default function Bug({user, role, confirmRole}) {
             }
         })
         
-    }
-
-    const clearForm = () =>{
-        document.getElementById('title').value = '';
-        document.getElementById('thumbnail').value = '';
-        document.getElementById('description').value = '';
-        alert('Form Cleared')
     }
 
     function unauthorized() {
@@ -180,7 +174,6 @@ export default function Bug({user, role, confirmRole}) {
                         />
                     </label> 
                     <div className="button-container">
-                        <div className="div">
                         {
                             role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET ? (
                                 <button onClick={()=>{confirmRole(); addBug();}}>Save</button>
@@ -188,9 +181,7 @@ export default function Bug({user, role, confirmRole}) {
                                 <button onClick={unauthorized}>Save</button>
                             )
                         }
-                            <button id="clear" onClick={clearForm}>Clear</button>
-                        </div>
-                        <Link id="back-button" to={`/projects/${projectId}`}>Back</Link>
+                        <Link to={`/projects/${projectId}`}>Back</Link>
                     </div>
                 </div>
             )}
@@ -203,11 +194,15 @@ const StyledBug = styled.div`
     flex-direction: column;
     width: 90%;
     max-width: 1000px;
-    margin: auto;
+    margin: 50px auto;
+    @media (max-width: 750px){
+		margin: 20px auto;
+	}
     h1 {
         color: white;
         font-size: 24px;
         width: 98%;
+        font-size: 40px;
     }
     .form-wrapper {
         width: 100%;
@@ -215,13 +210,19 @@ const StyledBug = styled.div`
         .container-wrapper {
             display: flex;
             width: 100%;
-            @media (max-width: 1050px){
+            @media (max-width: 800px){
                 flex-direction: column;
             }
             .right-container, .left-container {
-                width: 50%;
-                @media (max-width: 750px){
+                width: 45%;
+                @media (max-width: 800px){
                     width: 100%;
+                }
+            }
+            .right-container {
+                margin-left: auto;
+                @media (max-width: 800px){
+                    margin: 0;
                 }
             }
         }
@@ -229,12 +230,22 @@ const StyledBug = styled.div`
             display: flex;
             color: white;
             flex-direction: column;
-            margin: 10px 0;
+            margin: 20px 0;
+            font-size: ${pallette.subtitleSize};
+            @media (max-width: 750px){
+               font-size: ${pallette.paraSize};
+            }
                 input, select {
-                    width: 90%;
+                    width: 100%;
+                    height: 40px;
+                    padding: 5px 10px;
+                    font-size: 18px;
+                    background: ${pallette.helperGrey};
                 }
                 textarea {
                     padding: 10px;
+                    font-size: 18px;
+                    background: ${pallette.helperGrey};
                 }
             }
             .button-container {
@@ -242,18 +253,19 @@ const StyledBug = styled.div`
                 align-items: center;
                 justify-content: space-between;
                 margin-top: 2%;
-                button {
-                    width: 100px;
+                button, a {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 150px;
+                    height: 40px;
                     cursor: pointer;
-                    margin: 0 20px;
-                    background: #d1d1d1;
                     border: none;
+                    border-radius: 4px;
+                    font-size: ${pallette.subtitleSize};
                     font-weight: 700;
-                    font-size: 1.2em;
-                    @media (max-width: 420px){
-                        width: 80px;
-                        font-size: 1em;
-                    }
+                    background: #ffffff;
+                    color: ${pallette.accentColor};
                     &:hover{
                         color: #ffffff;
                         cursor: pointer;
@@ -261,15 +273,9 @@ const StyledBug = styled.div`
                         transition: 0.2s;
                         transform: scale(1.01);
                     }
-                }
-                #clear{
-                    background: lightcoral;
-                    &:hover{
-                        color: #000000;
-                        cursor: pointer;
-                        background: #ff0000;
-                        transition: 0.2s;
-                        transform: scale(1.01);
+                    @media (max-width: 750px){
+                        width: 100px;
+                        font-size: ${pallette.paraSize};
                     }
                 }
             }

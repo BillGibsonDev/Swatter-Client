@@ -18,14 +18,13 @@ export default function Project({
     return (
         <StyledProject>
             <Link id="image-link" to={`/projects/${projectId}`}><img id="projectImage" src={projectImage} alt="" /></Link>
-                <div className="text-container">
-                    <div className="info-container">
-                        <Link to={`/projects/${projectId}`}>{title}</Link>
-                        <h2>{date}</h2>
-                    </div>
-                    <Link id="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="" /></Link>
+            <div className="text-container">
+                <div className="info-container">
+                    <Link to={`/projects/${projectId}`}>{title}</Link>
+                    <h2>{date}</h2>
                 </div>
-            
+                <Link id="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="" /></Link>
+            </div>
         </StyledProject>
     )
 }

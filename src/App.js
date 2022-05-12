@@ -84,6 +84,7 @@ function App() {
 			}
 		})
 		.catch(function (error) {
+			console.log(error)
 			alert("Wrong Username or Password")
 			setLoading(false);
 		});
@@ -167,8 +168,8 @@ function App() {
 		<>
 			<GlobalStyles />
 			{ 
-				isLoggedIn === false ? (
-					<>
+				isLoggedIn === false 
+				? <>
 						<LoginPage 
 							login={login}
 							setUsername={setUsername}
@@ -177,76 +178,75 @@ function App() {
 							isLoading={isLoading}
 						/>
 					</>
-				) : (
-			<>
-				<Nav 
-					user={user}
-					role={role}
-					logout={logout}
-					isLoggedIn={isLoggedIn}/>
-				<Switch>
-					<Route path={'/'} exact>
-						<HomePage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-							reloadLogin={reloadLogin}
-						/>
-					</Route>
-					<Route path={"/projects/:projectId"} exact>
-						<ProjectPage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-							lastLogin={lastLogin}
-						/>
-					</Route>
-					<Route path={"/AddProjectPage"} exact>
-						<AddProjectPage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-						/>
-					</Route>
-					<Route path={"/EditProject/:projectId"} exact>
-						<EditProjectPage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-						/>
-					</Route>
-					<Route path={"/ProfilePage"} exact>
-						<ProfilePage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-						/>
-					</Route>
-					<Route path={"/RegisterUserPage"} exact>
-						<RegisterUserPage
-							user={user}
-							role={role}
-							confirmAdmin={confirmAdmin}
-						/>
-					</Route>
-					<Route path={'/:projectId/AddBugPage'} exact>
-						<AddBugPage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-						/>
-					</Route> 
-					<Route path={"/:projectId/:bugId"} exact>
-						<BugPage
-							user={user}
-							role={role}
-							confirmRole={confirmRole}
-						/>  
-					</Route> 
-				</Switch>
-			</>
-		)}
-	</>
+				: <>
+					<Nav 
+						user={user}
+						role={role}
+						logout={logout}
+						isLoggedIn={isLoggedIn}/>
+					<Switch>
+						<Route path={'/'} exact>
+							<HomePage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+								reloadLogin={reloadLogin}
+							/>
+						</Route>
+						<Route path={"/projects/:projectId"} exact>
+							<ProjectPage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+								lastLogin={lastLogin}
+							/>
+						</Route>
+						<Route path={"/AddProjectPage"} exact>
+							<AddProjectPage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+							/>
+						</Route>
+						<Route path={"/EditProject/:projectId"} exact>
+							<EditProjectPage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+							/>
+						</Route>
+						<Route path={"/ProfilePage"} exact>
+							<ProfilePage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+							/>
+						</Route>
+						<Route path={"/RegisterUserPage"} exact>
+							<RegisterUserPage
+								user={user}
+								role={role}
+								confirmAdmin={confirmAdmin}
+							/>
+						</Route>
+						<Route path={'/:projectId/AddBugPage'} exact>
+							<AddBugPage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+							/>
+						</Route> 
+						<Route path={"/:projectId/:bugId"} exact>
+							<BugPage
+								user={user}
+								role={role}
+								confirmRole={confirmRole}
+							/>  
+						</Route> 
+					</Switch>
+				</>
+			}
+		</>
 	);
 }
 export default App;

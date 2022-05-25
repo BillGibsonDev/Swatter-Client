@@ -132,6 +132,7 @@ const StyledNav = styled.div`
             padding: 10px 16px;
             font-size: 16px;
             border: none;
+            cursor: pointer;
             &:hover {
                 background: black;
             }

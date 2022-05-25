@@ -292,6 +292,7 @@ const StyledProjectPage = styled.div`
                     border: none;
                     margin: 0 6px;
                     color: #000000;
+                    accent-color: black;
                 }
             }
         }

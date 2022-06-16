@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // styled
@@ -15,6 +16,18 @@ export default function Comment({
     setLoading
 }) {
 
+    const [ compareDate, setCompareDate] = useState("");
+
+	useEffect(() => {
+	  const handleDate = () => {
+		const currentDate = new Date();
+		setCompareDate( currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+	  }
+	  handleDate();
+	}, [])
+	
+	const [ currentDate ] = compareDate.split(",");
+	const [ bugDate, bugTime ] = date.split(",");
 
     function deleteComment(){
         setLoading(true);
@@ -42,7 +55,15 @@ export default function Comment({
         <StyledComment>
             <div className="comment-wrapper">
                 <div className="title-container">
-                    <h3 id={author}>{author}<span>{date}</span></h3>
+                    <h3 id={author}>{author}
+                        <span>
+                            {
+                                currentDate === bugDate 
+                                ? bugTime
+                                : date
+                            }
+                        </span>
+                    </h3>
                     {
                         author === user || role === process.env.REACT_APP_ADMIN_SECRET 
                         ? <button onClick={deleteComment}>&times;</button>

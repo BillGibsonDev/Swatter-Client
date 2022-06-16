@@ -37,33 +37,31 @@ export default function HomePage({user, role, confirmRole}) {
     return (
         <StyledHomePage>
             {
-                isLoading === true ? (
-                    <HomePageLoader />
-                ) : (
-                    <>
-                        <div className="projects-container">
-                            {
-                                projects.slice().reverse().map((project, key) => {
-                                    return (
-                                        <Project
-                                            projects={projects}
-                                            projectId={project._id}
-                                            title={project.projectTitle}
-                                            date={project.startDate}
-                                            author={project.author}
-                                            projectImage={project.projectImage}
-                                            key={key}
-                                            user={user}
-                                            role={role}
-                                            confirmRole={confirmRole}
-                                        />
-                                    )
-                                })
-                            }
-                            <Link id="add-button" to={'/AddProjectPage'}>Add Project<img src={Add} alt=""/></Link>
-                        </div>
-                    </>
-                )
+                isLoading === true 
+                ? <HomePageLoader />
+                : <>
+                    <div className="projects-container">
+                        {
+                            projects.slice().reverse().map((project, key) => {
+                                return (
+                                    <Project
+                                        projects={projects}
+                                        projectId={project._id}
+                                        title={project.projectTitle}
+                                        date={project.startDate}
+                                        author={project.author}
+                                        projectImage={project.projectImage}
+                                        key={key}
+                                        user={user}
+                                        role={role}
+                                        confirmRole={confirmRole}
+                                    />
+                                )
+                            })
+                        }
+                        <Link id="add-button" to={'/AddProjectPage'}>Add Project<img src={Add} alt=""/></Link>
+                    </div>
+                </>
             }
         </StyledHomePage>
     )

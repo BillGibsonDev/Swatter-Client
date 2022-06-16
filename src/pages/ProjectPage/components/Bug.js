@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 // styled
 import styled from 'styled-components';
 
@@ -24,6 +25,19 @@ export default function Bug({
     lastUpdate,
     user
 }) {
+
+	const [ compareDate, setCompareDate] = useState("");
+
+	useEffect(() => {
+	  const handleDate = () => {
+		const currentDate = new Date();
+		setCompareDate( currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+	  }
+	  handleDate();
+	}, [])
+	
+	const [ currentDate ] = compareDate.split(",");
+	const [ bugDate, bugTime ] = lastUpdate.split(",");
 
     return (
         <StyledBug className={status} style={{ display: status === "Completed" ? "none": ""}}>
@@ -64,7 +78,13 @@ export default function Bug({
                 </div>
                 <div className="center-wrapper">
                     <h2 id="title">{title}</h2>
-                    <h2 id="date"><span>Updated:</span>{lastUpdate}</h2>
+                    <h2 id="date"><span>Updated:</span>
+						{
+							currentDate === bugDate 
+							? bugTime
+							: lastUpdate
+						}
+					</h2>
                 </div>
                 <div className="bottom-wrapper">
                     <h2 id={status}>{status}</h2>

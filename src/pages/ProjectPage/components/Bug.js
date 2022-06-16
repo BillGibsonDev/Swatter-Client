@@ -98,7 +98,6 @@ const StyledBug = styled.div `
 	&:hover{
 		transition: 0.2s;
 		transform: scale(1.01);
-		background: #ffeba8;
 	}
 	a {
 		display: flex;

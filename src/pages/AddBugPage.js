@@ -33,6 +33,7 @@ export default function Bug({user, role, confirmRole}) {
             const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
             setDate(date);
             setLastUpdate(date);
+            
         }
        handleDate()
     }, []);
@@ -88,16 +89,6 @@ export default function Bug({user, role, confirmRole}) {
                                     onChange={(event) => {
                                         setTitle(event.target.value);
                                     }} 
-                                />
-                            </label>
-                            <label>Date
-                                <input 
-                                    type="text" 
-                                    id="date"
-                                    defaultValue={date}
-                                    onChange={(event) => {
-                                        setDate(event.target.value);
-                                    }}
                                 />
                             </label>
                             <label>Created By

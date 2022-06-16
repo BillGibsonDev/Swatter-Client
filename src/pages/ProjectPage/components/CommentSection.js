@@ -20,14 +20,7 @@ export default function ProjectsPage({user, role}) {
     const [ comments, setComments ] = useState([]);
     const [ addComment, setAddComment] = useState('');
     const [ addAuthor, setAuthor] = useState(user);
-    const [ addDate, setAddDate] = useState('');
     const [ isLoading, setLoading ] = useState(false);
-
-    function handleDate(){
-        const current = new Date();
-        const date = `${current.getHours()}:${current.getMinutes()} - ${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
-        setAddDate(date);
-    }
 
     useEffect(() =>{
         function getProject(){
@@ -40,7 +33,6 @@ export default function ProjectsPage({user, role}) {
             });
         }
         getProject(projectId);
-        handleDate();
         setAuthor(user);
     }, [ projectId, bugId, user, isLoading ]);
 
@@ -49,7 +41,6 @@ export default function ProjectsPage({user, role}) {
         axios.post(`${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`, {
             projectId: projectId,
             comment: addComment,
-            date: addDate,
             author: addAuthor,
         })
         .then(function(response) {
@@ -70,54 +61,47 @@ export default function ProjectsPage({user, role}) {
         <StyledCommentSection>
             <h1>Comments</h1>
             { 
-                comments === undefined ? (
-                    <div className="undefined">
-                        <h1>You've havent entered any comments</h1>
-                    </div>
-                ) : (
-                    <div className="comment-container">
-                        {
-                            comments.slice().reverse().map((comment, key) => {
-                                return (
-                                    <Comment
-                                        date={comment.date}
-                                        author={comment.author}
-                                        comments={comment.comment}
-                                        commentId={comment._id}
-                                        user={user}
-                                        projectId={projectId}
-                                        key={key}
-                                        role={role}
-                                        setLoading={setLoading}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                )
+                comments === undefined 
+                ? <div className="undefined">
+                    <h1>You've havent entered any comments</h1>
+                  </div>
+                : <div className="comment-container">
+                    {
+                        comments.slice().reverse().map((comment, key) => {
+                            return (
+                                <Comment
+                                    date={comment.date}
+                                    author={comment.author}
+                                    comments={comment.comment}
+                                    commentId={comment._id}
+                                    user={user}
+                                    projectId={projectId}
+                                    key={key}
+                                    role={role}
+                                    setLoading={setLoading}
+                                />
+                            )
+                        })
+                    }
+                </div>
             }
             {
-                isLoading === true ? (
-                    <Loader />
-                ) : (
-                    <div className="comment-maker">
-                        <textarea 
-                            name="comment" 
-                            id="comment" 
-                            required
-                            onChange={(event) => {
-                                setAddComment(event.target.value);
-                            }}  
-                        />
-                        {
-                            role === process.env.REACT_APP_GUEST_SECRET ? (
-                                <button onClick={()=> { unauthorized();}}>Send</button>
-                            ) : (
-                                <button onClick={()=> { handleDate(); sendComment();}}>Send</button>
-                            )
-                        }
-                    </div>
-                )
+                isLoading === true ? <Loader />               
+                : <div className="comment-maker">
+                    <textarea 
+                        name="comment" 
+                        id="comment" 
+                        required
+                        onChange={(event) => {
+                            setAddComment(event.target.value);
+                        }}  
+                    />
+                    {
+                        role === process.env.REACT_APP_GUEST_SECRET 
+                        ? <button onClick={()=> { unauthorized();}}>Send</button>
+                        : <button onClick={()=> { handleDate(); sendComment();}}>Send</button>
+                    }
+                </div>
             }
         </StyledCommentSection>
     )

@@ -69,11 +69,9 @@ export default function Bug({
                 <div className="bottom-wrapper">
                     <h2 id={status}>{status}</h2>
                     {
-						user === author ? (
-							<h2 id="author" className={author}><span>Created by:</span>You</h2>
-						): (
-							<h2 id="author" className={author}><span>Created by:</span>{author}</h2>
-						)
+						user === author 
+						? <h2 id="author" className={author}><span>Created by:</span>You</h2>
+						: <h2 id="author" className={author}><span>Created by:</span>{author}</h2>
 					}
                 </div>
             </Link>

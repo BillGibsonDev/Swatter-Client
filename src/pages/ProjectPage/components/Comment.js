@@ -44,11 +44,9 @@ export default function Comment({
                 <div className="title-container">
                     <h3 id={author}>{author}<span>{date}</span></h3>
                     {
-                        author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <button onClick={deleteComment}>&times;</button>
-                        ) : (
-                            <button onClick={unauthorized}>&times;</button>
-                        )
+                        author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                        ? <button onClick={deleteComment}>&times;</button>
+                        : <button onClick={unauthorized}>&times;</button>
                     }
                 </div>
                 <p>{comments}</p>

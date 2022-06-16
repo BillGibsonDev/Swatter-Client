@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 // styled
@@ -11,46 +11,30 @@ import { useParams, Link } from 'react-router-dom';
 // components
 import Loader from '../loaders/Loader';
 
-
 export default function Bug({user, role, confirmRole}) {
 
     const { projectId } = useParams();
 
     const [ title, setTitle ] = useState("");
-    const [ date, setDate ] = useState("");
     const [ thumbnail, setThumbnail ] = useState("");
     const [ status, setStatus ] = useState("");
     const [ description, setDescription ] = useState("");
     const [ author, setAuthor ] = useState(user);
     const [ priority, setPriority ] = useState("");
     const [ tag, setTag ] = useState("");
-    const [ lastUpdate, setLastUpdate ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
-
-    useEffect(() => {
-        function handleDate(){
-            const current = new Date();
-            const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
-            setDate(date);
-            setLastUpdate(date);
-            
-        }
-       handleDate()
-    }, []);
 
     function addBug() {
         setLoading(true)
         axios.post(`${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`, {
             projectId: projectId,
             title: title,
-            date: date,
             description: description,
             thumbnail: thumbnail,
             status: status,
             author: author,
             priority: priority,
             tag: tag,
-            lastUpdate: lastUpdate,
             role: role,
         })
         .then(function(response) {
@@ -60,10 +44,8 @@ export default function Bug({user, role, confirmRole}) {
             } else {
                 setLoading(false);
                 alert('Bug Created!');
-
             }
         })
-        
     }
 
     function unauthorized() {
@@ -74,12 +56,9 @@ export default function Bug({user, role, confirmRole}) {
         <StyledBug>
             <h1>Add a Bug</h1>
             {
-                user === null ? (
-                    <h1>You are signed out</h1>
-                ) :isLoading === true ? (
-                    <Loader />
-                ) : (    
-                <div className="form-wrapper">
+                user === null ? <h1>You are signed out</h1>
+                : isLoading === true ? <Loader />
+                : <div className="form-wrapper">
                     <div className="container-wrapper">
                         <div className="left-container">
                             <label>Title
@@ -166,16 +145,14 @@ export default function Bug({user, role, confirmRole}) {
                     </label> 
                     <div className="button-container">
                         {
-                            role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                <button onClick={()=>{confirmRole(); addBug();}}>Save</button>
-                        ) : (    
-                                <button onClick={unauthorized}>Save</button>
-                            )
+                            role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
+                            ? <button onClick={()=>{confirmRole(); addBug();}}>Save</button>
+                            : <button onClick={unauthorized}>Save</button>
                         }
                         <Link to={`/projects/${projectId}`}>Back</Link>
                     </div>
                 </div>
-            )}
+            }
         </StyledBug>
     ) 
 }

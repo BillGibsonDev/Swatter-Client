@@ -89,12 +89,10 @@ export default function EditProjectPage({user, role, confirmRole}) {
                 <Link id="back-button" to={`/`}>Back</Link>
             </div>
             {
-                user === null ? (
-                    <h1>You are signed out</h1>
-                ) :isLoading === true ? (    
-                    <Loader/>
-                ) : (
-                <div className="form-wrapper">
+                user === null 
+                ? <h1>You are signed out</h1>
+                : isLoading === true ? <Loader/>
+                : <div className="form-wrapper">
                     <label>Title
                         <input 
                             type="text"
@@ -137,22 +135,18 @@ export default function EditProjectPage({user, role, confirmRole}) {
                     </label>
                     <div className="button-container">
                     {
-                        role === process.env.REACT_APP_GUEST_SECRET ? (
-                            <button onClick={unauthorized}>Update</button>
-                        ) : (    
-                            <button onClick={editProject}>Update</button>
-                        )
+                        role === process.env.REACT_APP_GUEST_SECRET 
+                        ? <button onClick={unauthorized}>Update</button>
+                        : <button onClick={editProject}>Update</button>
                     }
                     {
-                        author === user || role === process.env.REACT_APP_ADMIN ? (
-                            <button  id="delete" onClick={deleteProject}>Delete</button>
-                        ) : (
-                            <button onClick={unauthorized}>Update</button>
-                        )
+                        author === user || role === process.env.REACT_APP_ADMIN 
+                        ? <button  id="delete" onClick={deleteProject}>Delete</button>
+                        : <button onClick={unauthorized}>Update</button>
                     }
                     </div>
                 </div>
-            )}
+            }
         </StyledProjectPage>
     ) 
 }

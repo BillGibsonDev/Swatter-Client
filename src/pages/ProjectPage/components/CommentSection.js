@@ -99,7 +99,7 @@ export default function ProjectsPage({user, role}) {
                     {
                         role === process.env.REACT_APP_GUEST_SECRET 
                         ? <button onClick={()=> { unauthorized();}}>Send</button>
-                        : <button onClick={()=> { handleDate(); sendComment();}}>Send</button>
+                        : <button onClick={()=> { sendComment();}}>Send</button>
                     }
                 </div>
             }

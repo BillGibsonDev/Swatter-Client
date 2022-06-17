@@ -125,8 +125,9 @@ export default function Bug({user, role, confirmRole}) {
                                     }}>
                                     <option value=""></option>
                                     <option value="Bug">Bug</option>
-                                    <option value="Feature">Feature</option>
                                     <option value="Enhancement">Enhancement</option>
+                                    <option value="Feature">Feature</option>
+                                    <option value="Redesign">Redesign</option>
                                     <option value="Task">Task</option>
                                 </select>
                             </label>

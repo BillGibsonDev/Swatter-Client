@@ -56,6 +56,11 @@ export default function EditProjectPage({user, role, confirmRole}) {
     const [ author, setAuthor ] = useState(user);
     const [ projectLink, setProjectLink ] = useState(project.projectLink);
     const [ projectImage, setProjectImage ] = useState(project.projectImage);
+    const [ projectKey, setProjectKey ] = useState(project.projectKey);
+    const [ description, setDescription ] = useState(project.description);
+    const [ repositiory, setRepositiory ] = useState(project.repositiory);
+    const [ projectLead, setProjectLead ] = useState(project.projectLead);
+    const [ projectType, setProjectType ] = useState(project.projectType);
 
     function editProject() {
         confirmRole(role);
@@ -66,11 +71,16 @@ export default function EditProjectPage({user, role, confirmRole}) {
             author: author,
             projectLink: projectLink,
             projectImage: projectImage,
+            repositiory: repositiory,
+            description: description,
+            projectKey: projectKey,
+            projectLead: projectLead,
+            projectType: projectType
         })
         .then(function(response) {
             if(response.data !== "Project Updated"){
                 setLoading(false);
-                alert("Server Error - Project not created")
+                alert("Server Error - Project not updated")
             } else {
                 setLoading(false);
                 alert('Project Updated!');
@@ -103,13 +113,43 @@ export default function EditProjectPage({user, role, confirmRole}) {
                             }} 
                         />
                     </label>
-                    <label>Link
+                    <label>Key
+                        <input 
+                            type="text"
+                            id="key"
+                            defaultValue={project.projectKey}
+                            onChange={(event) => {
+                                setProjectKey(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>URL
                         <input 
                             type="text"
                             id="projectLink"
                             defaultValue={project.projectLink}
                             onChange={(event) => {
                                 setProjectLink(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Repository
+                        <input 
+                            type="text"
+                            id="repositiory"
+                            defaultValue={project.repositiory}
+                            onChange={(event) => {
+                                setRepositiory(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Lead
+                        <input 
+                            type="text" 
+                            id="projectLead"
+                            defaultValue={project.projectLead}
+                            onChange={(event) => {
+                                setProjectLead(event.target.value);
                             }} 
                         />
                     </label>
@@ -120,6 +160,26 @@ export default function EditProjectPage({user, role, confirmRole}) {
                             defaultValue={project.startDate}
                             onChange={(event) => {
                                 setStartDate(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Project Type
+                        <input 
+                            type="text" 
+                            id="projectType"
+                            defaultValue={project.projectType}
+                            onChange={(event) => {
+                                setProjectType(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Description
+                        <input 
+                            type="text" 
+                            id="description"
+                            defaultValue={project.description}
+                            onChange={(event) => {
+                                setDescription(event.target.value);
                             }} 
                         />
                     </label>
@@ -134,16 +194,16 @@ export default function EditProjectPage({user, role, confirmRole}) {
                         />
                     </label>
                     <div className="button-container">
-                    {
-                        role === process.env.REACT_APP_GUEST_SECRET 
-                        ? <button onClick={unauthorized}>Update</button>
-                        : <button onClick={editProject}>Update</button>
-                    }
-                    {
-                        author === user || role === process.env.REACT_APP_ADMIN 
-                        ? <button  id="delete" onClick={deleteProject}>Delete</button>
-                        : <button onClick={unauthorized}>Update</button>
-                    }
+                        {
+                            role === process.env.REACT_APP_GUEST_SECRET 
+                            ? <button onClick={unauthorized}>Update</button>
+                            : <button onClick={editProject}>Update</button>
+                        }
+                        {
+                            author === user || role === process.env.REACT_APP_ADMIN 
+                            ? <button  id="delete" onClick={deleteProject}>Delete</button>
+                            : <button onClick={unauthorized}>Update</button>
+                        }
                     </div>
                 </div>
             }

@@ -19,6 +19,11 @@ export default function AddProjectPage({user, role, confirmRole}) {
     const [ projectLink, setProjectLink ] = useState("");
     const [ projectImage, setProjectImage ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
+    const [ projectKey, setProjectKey ] = useState("");
+    const [ description, setDescription ] = useState("");
+    const [ repositiory, setRepositiory ] = useState("");
+    const [ projectLead, setProjectLead ] = useState("");
+    const [ projectType, setProjectType ] = useState("");
 
     useEffect(() => {
         function handleDate(){
@@ -39,6 +44,11 @@ export default function AddProjectPage({user, role, confirmRole}) {
             author: author,
             projectLink: projectLink,
             projectImage: projectImage,
+            repositiory: repositiory,
+            description: description,
+            projectKey: projectKey,
+            projectLead: projectLead,
+            projectType: projectType
         })
         .then(function(response) {
             if(response.data !== "Project Created"){
@@ -74,7 +84,16 @@ export default function AddProjectPage({user, role, confirmRole}) {
                             }} 
                         />
                     </label>
-                    <label>Link
+                    <label>Key
+                        <input 
+                            type="text"
+                            id="key"
+                            onChange={(event) => {
+                                setProjectKey(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>URL
                         <input 
                             type="text"
                             id="projectLink"
@@ -83,13 +102,48 @@ export default function AddProjectPage({user, role, confirmRole}) {
                             }} 
                         />
                     </label>
+                    <label>Repository
+                        <input 
+                            type="text"
+                            id="repositiory"
+                            onChange={(event) => {
+                                setRepositiory(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Lead
+                        <input 
+                            type="text" 
+                            id="projectLead"
+                            onChange={(event) => {
+                                setProjectLead(event.target.value);
+                            }} 
+                        />
+                    </label>
                     <label>Date
                         <input 
                             type="text" 
                             id="date"
-                            defaultValue={startDate}
                             onChange={(event) => {
                                 setStartDate(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Project Type
+                        <input 
+                            type="text" 
+                            id="projectType"
+                            onChange={(event) => {
+                                setProjectType(event.target.value);
+                            }} 
+                        />
+                    </label>
+                    <label>Description
+                        <input 
+                            type="text" 
+                            id="description"
+                            onChange={(event) => {
+                                setDescription(event.target.value);
                             }} 
                         />
                     </label>
@@ -104,11 +158,9 @@ export default function AddProjectPage({user, role, confirmRole}) {
                     </label>
                     <div className="button-container">
                         {
-                            role === process.env.REACT_APP_GUEST_SECRET ? (
-                                <button onClick={unauthorized}>Start</button>
-                            ) : (    
-                                <button onClick={addProject}>Start</button>
-                            )
+                            role === process.env.REACT_APP_GUEST_SECRET 
+                            ? <button onClick={unauthorized}>Start</button>
+                            : <button onClick={addProject}>Start</button>
                         }
                         <Link to={`/`}>Back</Link>
                     </div>

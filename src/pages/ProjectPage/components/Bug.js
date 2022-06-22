@@ -10,7 +10,7 @@ import arrowUp from "../../../assets/icons/arrowUp.png";
 import arrowUpYellow from "../../../assets/icons/arrowUpYellow.png";
 import arrowDown from '../../../assets/icons/arrowDown.png';
 import Task from '../../../assets/icons/taskIcon.png';
-import Redesign from '../../../assets/icons/design0f4d92.png';
+import Redesign from '../../../assets/icons/designWHITE.png';
 
 // router
 import { Link } from 'react-router-dom';

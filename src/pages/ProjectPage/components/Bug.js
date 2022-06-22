@@ -10,6 +10,7 @@ import arrowUp from "../../../assets/icons/arrowUp.png";
 import arrowUpYellow from "../../../assets/icons/arrowUpYellow.png";
 import arrowDown from '../../../assets/icons/arrowDown.png';
 import Task from '../../../assets/icons/taskIcon.png';
+import Redesign from '../../../assets/icons/design0f4d92.png';
 
 // router
 import { Link } from 'react-router-dom';
@@ -53,6 +54,8 @@ export default function Bug({
                                 return (<img src={Enhancement} alt=""/>)
                             case "Task":
                                 return (<img src={Task} alt=""/>)
+							case "Redesign":
+                                return (<img src={Redesign} alt=""/>)
                             default:
                                 return (
                                     <h2>{tag}</h2>

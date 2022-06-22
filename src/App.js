@@ -27,16 +27,9 @@ function App() {
   	const [ username, setUsername] = useState('');
 	const [ isLoggedIn, setLoggedIn ] = useState(false);
 	const [ role, setRole ] = useState("");
-	const [ lastLogin, setLastLogin ] = useState("");
 	const [ isLoading, setLoading ] = useState(false);
 
 	const history = useHistory();
-
-	function handleDate(){
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()} @ ${current.getHours()}:${current.getMinutes()}`;
-        setLastLogin(date);
-    }
 
 	function handleTokens() {
 		let tokenPW = sessionStorage.getItem("tokenPW");
@@ -53,7 +46,6 @@ function App() {
 	}
 
 	useEffect(() =>{
-		handleDate();
 		reloadLogin();
 		// eslint-disable-next-line
 	},[])
@@ -63,13 +55,12 @@ function App() {
 		axios.post(`${process.env.REACT_APP_LOGIN_URL}`, {
 			username: username,
 			password: password,
-			lastLogin: lastLogin,
 		})
 		.then(function(response){
-			setUser(username)
-			setLoggedIn(true)
-			setLoading(false)
-			handleTokens()
+			setUser(username);
+			setLoggedIn(true);
+			setLoading(false);
+			handleTokens();
 			history.push("/");
 			if (response.data === "LOGGED IN"){
 				axios.post(`${process.env.REACT_APP_SET_ROLE_URL}`, {
@@ -77,15 +68,15 @@ function App() {
 					password: password,
 				})
 				.then((response) => {
-					setRole(response.data)
+					setRole(response.data);
 				})
 			} else {
-				alert("Wrong Username or Password")
+				alert("Wrong Username or Password");
 			}
 		})
 		.catch(function (error) {
-			console.log(error)
-			alert("Wrong Username or Password")
+			console.log(error);
+			alert("Wrong Username or Password");
 			setLoading(false);
 		});
 	}
@@ -200,7 +191,6 @@ function App() {
 								user={user}
 								role={role}
 								confirmRole={confirmRole}
-								lastLogin={lastLogin}
 							/>
 						</Route>
 						<Route path={"/AddProjectPage"} exact>

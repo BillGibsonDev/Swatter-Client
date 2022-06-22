@@ -12,9 +12,9 @@ import Hamburger from '../assets/images/hamburgerYaleBlue.png';
 
 export default function Nav({logout, user, role, confirmAdmin}) {
 
-function openNav() {
-    document.getElementById("myNav").style.width = "100%";
-}
+    function openNav() {
+        document.getElementById("myNav").style.width = "100%";
+    }
 
     return (
         <StyledNav>
@@ -23,27 +23,25 @@ function openNav() {
                 <h1>Swatter</h1>
             </div>
             {
-                user === null ? (
-                    <Link to="/LoginPage">Sign In</Link>
-                ) : (
-                    <div className="text-wrapper">
-                        <div className="text-container">
-                            <h3>Signed in as:</h3>
-                            <h2>{user} - {
-                                    role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                        <span>Admin</span>
-                                    ) : role === process.env.REACT_APP_USER_SECRET ? (
-                                        <span>User</span>
-                                    ) : role === process.env.REACT_APP_GUEST_SECRET ? (
-                                        <span>Guest</span>
-                                    ) : (
-                                        <span>{role}</span>
-                                    )
-                                }
-                            </h2>
-                        </div>
-                    </div>       
-                )
+                user === null 
+                ? <Link to="/LoginPage">Sign In</Link>
+                : <div className="text-wrapper">
+                    <div className="text-container">
+                        <h3>Signed in as:</h3>
+                        <h2>{user} - {
+                                role === process.env.REACT_APP_ADMIN_SECRET ? (
+                                    <span>Admin</span>
+                                ) : role === process.env.REACT_APP_USER_SECRET ? (
+                                    <span>User</span>
+                                ) : role === process.env.REACT_APP_GUEST_SECRET ? (
+                                    <span>Guest</span>
+                                ) : (
+                                    <span>{role}</span>
+                                )
+                            }
+                        </h2>
+                    </div>
+                </div>       
             }
             <div className="dropdown">
                 <button className="dropbtn">Menu</button>
@@ -51,11 +49,9 @@ function openNav() {
                     <Link to="/">Home</Link>
                     <Link to="/ProfilePage">Profile</Link>
                     {
-                        role === process.env.REACT_APP_ADMIN_SECRET ? (
-                            <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
-                        ) : (
-                            <></>     
-                        )
+                        role === process.env.REACT_APP_ADMIN_SECRET 
+                        ? <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
+                        : <></>
                     }
                     <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
                 </div>

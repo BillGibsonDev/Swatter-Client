@@ -255,6 +255,7 @@ const StyledBugPage = styled.div`
                     cursor: pointer;
                     width: 90%;
                     font-size: 20px;
+                    background: ${pallette.helperGrey};
                 }
             }
         }

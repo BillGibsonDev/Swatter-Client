@@ -247,6 +247,7 @@ const StyledBugPage = styled.div`
                 color: white;
                 font-size: 20px;
                 margin: 20px 0;
+                background: ${pallette.helperGrey};
                 @media (max-width: 700px){
                     flex-direction: row;
                 }

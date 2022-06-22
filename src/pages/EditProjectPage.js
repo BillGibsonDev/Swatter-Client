@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // router
 import { Link, useParams, useHistory } from 'react-router-dom';

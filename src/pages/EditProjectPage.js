@@ -264,6 +264,7 @@ const StyledProjectPage = styled.div`
                 input, select {
                     width: 50%;
                     padding: 2px;
+                    background: ${pallette.helperGrey};
                     @media (max-width: 750px){
                         width: 90%;
                     }

@@ -5,6 +5,10 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
+// images
+import Menu from '../../../assets/icons/dotMenu.png';
+
+
 export default function Comment({
     comments,
     author,
@@ -27,7 +31,7 @@ export default function Comment({
 	}, [])
 	
 	const [ currentDate ] = compareDate.split(",");
-	const [ bugDate, bugTime ] = date.split(",");
+	const [ commentDate, commentTime ] = date.split(",");
 
     function deleteComment(){
         setLoading(true);
@@ -41,7 +45,6 @@ export default function Comment({
                 } else {
                     setLoading(false);
                     alert('Comment Deleted!');
-                    window.location.reload();
                 }
             })
         }
@@ -54,21 +57,26 @@ export default function Comment({
     return (
         <StyledComment>
             <div className="comment-wrapper">
-                <div className="title-container">
+                <div className="comment-title-container">
                     <h3 id={author}>{author}
                         <span>
                             {
-                                currentDate === bugDate 
-                                ? bugTime
+                                currentDate === commentDate 
+                                ? commentTime
                                 : date
                             }
                         </span>
                     </h3>
-                    {
-                        author === user || role === process.env.REACT_APP_ADMIN_SECRET 
-                        ? <button onClick={deleteComment}>&times;</button>
-                        : <button onClick={unauthorized}>&times;</button>
-                    }
+                    <div className="dropdown">
+                        <button className="dropbtn"><img src={Menu} alt="" /></button>
+                        <div className="dropdown-content">
+                            {
+                                author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                                ? <button onClick={deleteComment}>Delete</button>
+                                : <button onClick={unauthorized}>Delete</button>
+                            }
+                        </div>
+                    </div>
                 </div>
                 <p>{comments}</p>
             </div>
@@ -88,10 +96,11 @@ const StyledComment = styled.div`
     .comment-wrapper {
         width: 95%;
         margin: 10px auto;
-        .title-container {
+        .comment-title-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
+            height: 20px;
             align-items: center;
             margin-bottom: 10px;
             h3 {
@@ -103,19 +112,45 @@ const StyledComment = styled.div`
                     font-size: 11px;
                     color: #575757;
                 }
+                
             }
-            button {
-                font-size: 30px;
-                height: 30px;
-                width: 30px;
-                cursor: pointer;
-                background: none;
-                border: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
+            .dropdown {
+                position: relative;
+                display: inline-block;
+                .dropbtn {
+                    color: white;
+                    padding: 4px;
+                    font-size: 16px;
+                    border: none;
+                    background: none;
+                    cursor: pointer;
+                    img {
+                        height: 25px;
+                        width: 25px;
+                    }
+                }
+                .dropdown-content {
+                    display: none;
+                    position: absolute;
+                    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                    z-index: 1;
+                    background: ${pallette.helperGrey};
+                    button {
+                        color: black;
+                        padding: 12px 16px;
+                        text-decoration: none;
+                        display: block;
+                        border: none;
+                        background: none;
+                        cursor: pointer;
+                        &:hover {
+                            background: white;
+                        }
+                    }
+                }
             }
+            .dropdown:hover .dropdown-content {display: block;}
+            .dropdown:hover .dropbtn {background-color: ${pallette.helperGrey};}
         }
         #Gibby{
             color: #008ee0;

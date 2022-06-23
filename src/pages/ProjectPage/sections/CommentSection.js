@@ -7,13 +7,16 @@ import styled from 'styled-components';
 // components
 import Comment from '../components/Comment';
 
+// images
+import X from '../../../assets/icons/whiteX.png';
+
 // router
 import { useParams } from 'react-router-dom';
 
 // loader asset
 import Loader from '../../../loaders/Loader';
 
-export default function ProjectsPage({user, role}) {
+export default function ProjectsPage({user, role, handleShowComments}) {
 
     const { projectId, bugId } = useParams();
 
@@ -58,10 +61,14 @@ export default function ProjectsPage({user, role}) {
     }
 
     return (
-        <StyledCommentSection>
-            <h1>Comments</h1>
+        <StyledCommentSection id="comment-section">
+            <div className="title-container">
+                <h1>Comments</h1>
+                <img src={X} alt="Exit" onClick={() => {handleShowComments()}} />
+            </div>
+            
             { 
-                comments === undefined 
+                comments === [] 
                 ? <div className="undefined">
                     <h1>You've havent entered any comments</h1>
                   </div>
@@ -108,26 +115,47 @@ export default function ProjectsPage({user, role}) {
 }
 
 const StyledCommentSection = styled.div`
+    display: none;
     width: 100%;
     margin: 20px auto;
-    min-height: 20vh;
+    min-height: 95vh;
     position: relative;
     border: 2px white solid;
+    animation-name: slideLeft;
+    animation-duration: .5s;
+    position: absolute;
+    background: grey;
+    z-index: 2;
     .undefined {
         width: 98%;
     }
-    h1 {
+    .title-container {
+        display: flex;
         width: 95%;
-        margin: auto;
-        color: #ffffff;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px auto;
+        h1 {
+            color: #ffffff;
+        
+        }
+        img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
     }
     .comment-maker {
         width: 60%;
         margin: 10px auto;
         display: flex;
         flex-direction: column;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
         @media (max-width: 750px){
             width: 90%;
+            left: 10%;
         }
         textarea {
             border-radius: 4px;
@@ -157,7 +185,11 @@ const StyledCommentSection = styled.div`
         }
     }
     .comment-container {
-        max-height: 40vh;
+        max-height: 65vh;
         overflow-y: scroll;
+    }
+    @keyframes slideLeft {
+        from {width: 0;}
+        to {width: 100%;}
     }
 `;

@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
+
 // styled
 import styled from 'styled-components';
+import * as pallette from '../../../styled/ThemeVariables';
 
 // images
 import BugPicture from '../../../assets/icons/bugYaleBlue.png';
 import Feature from '../../../assets/icons/featureYaleBlue.png';
 import Enhancement from '../../../assets/icons/cog.png';
-import arrowUp from "../../../assets/icons/arrowUp.png";
-import arrowUpYellow from "../../../assets/icons/arrowUpYellow.png";
-import arrowDown from '../../../assets/icons/arrowDown.png';
+import arrowRed from "../../../assets/icons/arrowRed.png";
+import arrowYellow from "../../../assets/icons/arrowYellow.png";
+import arrowGreen from '../../../assets/icons/arrowGreen.png';
 import Task from '../../../assets/icons/taskIcon.png';
 import Redesign from '../../../assets/icons/designWHITE.png';
-
-// router
-import { Link } from 'react-router-dom';
 
 export default function Bug({
     projectId,
@@ -24,7 +23,11 @@ export default function Bug({
     status,
     tag,
     lastUpdate,
-    user
+    user,
+	role,
+	handleShowBug,
+	setSectionProjectId,
+	setSectionBugId,
 }) {
 
 	const [ compareDate, setCompareDate] = useState("");
@@ -39,65 +42,63 @@ export default function Bug({
 	
 	const [ currentDate ] = compareDate.split(",");
 	const [ bugDate, bugTime ] = lastUpdate.split(",");
-
     return (
-        <StyledBug className={status} style={{ display: status === "Completed" ? "none": ""}}>
-            <Link to={`/${projectId}/${bugId}`}>
-                <div className="wrapper">
-                    {(() => {
-                        switch (tag) {
-                            case "Bug":
-                                return (<img src={BugPicture} alt=""/>)
-                            case "Feature":
-                                return (<img src={Feature} alt=""/>)
-                            case "Enhancement":
-                                return (<img src={Enhancement} alt=""/>)
-                            case "Task":
-                                return (<img src={Task} alt=""/>)
-							case "Redesign":
-                                return (<img src={Redesign} alt=""/>)
-                            default:
-                                return (
-                                    <h2>{tag}</h2>
-                                )
-                        	}	
-                    	}
-					)()}
-                    {(() => {
-                        switch (priority) {
-                            case "Standard":
-                                return (<img src={arrowDown} alt=""/>)
-                            case "Medium":
-                                return (<img src={arrowUpYellow} alt=""/>)
-                            case "High":
-                                return (<img src={arrowUp} alt=""/>)
-                            default:
-                                return (
-                                    <h2>{priority}</h2>
-                                )
-                        	}
-                    	}
-					)()}
-                </div>
-                <div className="center-wrapper">
-                    <h2 id="title">{title}</h2>
-                    <h2 id="date"><span>Updated:</span>
-						{
-							currentDate === bugDate 
-							? bugTime
-							: lastUpdate
-						}
-					</h2>
-                </div>
-                <div className="bottom-wrapper">
-                    <h2 id={status}>{status}</h2>
-                    {
-						user === author 
-						? <h2 id="author" className={author}><span>Created by:</span>You</h2>
-						: <h2 id="author" className={author}><span>Created by:</span>{author}</h2>
+        <StyledBug className={status} onClick={() => { setSectionProjectId(projectId); setSectionBugId(bugId); handleShowBug();}}>
+			<div className="top-container">
+				<h2 id="title">{title}</h2>
+			</div>
+			<div className="center-container">
+				<h2 id="date">
+					{
+						currentDate === bugDate 
+						? bugTime
+						: bugDate
 					}
-                </div>
-            </Link>
+				</h2>
+			</div>
+			<div className="bottom-container">
+				<div className="status-icons-container">
+					{(() => {
+						switch (tag) {
+							case "Bug":
+								return (<img src={BugPicture} alt=""/>)
+							case "Feature":
+								return (<img src={Feature} alt=""/>)
+							case "Enhancement":
+								return (<img src={Enhancement} alt=""/>)
+							case "Task":
+								return (<img src={Task} alt=""/>)
+							case "Redesign":
+								return (<img src={Redesign} alt=""/>)
+							default:
+								return (
+									<h2>{tag}</h2>
+								)
+							}	
+						}
+					)()}
+					{(() => {
+						switch (priority) {
+							case "Standard":
+								return (<img src={arrowGreen} alt=""/>)
+							case "Medium":
+								return (<img className="yellow-arrow" src={arrowYellow} alt=""/>)
+							case "High":
+								return (<img className="red-arrow" src={arrowRed} alt=""/>)
+							default:
+								return (
+									<h2>{priority}</h2>
+								)
+							}
+						}
+					)()}
+				</div>
+				{
+					user === author 
+					? <h2 id="author" className={author}>You</h2>
+					: <h2 id="author" className={author}>{author}</h2>
+				}
+			</div>
         </StyledBug>
     )
 }
@@ -105,89 +106,45 @@ export default function Bug({
 const StyledBug = styled.div `
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
 	width: 99%;
-	max-height: 250px;
-	min-height: 50px;
+	min-height: 150px;
 	margin: 2% auto;
 	border-radius: 4px;
 	cursor: pointer;
 	border: 1px solid white;
-	@media (max-width: 750px){
-        min-height: 150px;
-		margin: 20px 0;
-    }
-	&:hover{
-		transition: 0.2s;
-		transform: scale(1.01);
-	}
-	a {
-		display: flex;
-		justify-content: space-between;
-		margin: 0 auto;
-		height: 100%;
-		width: 98%;
-		@media (max-width: 750px){
-			flex-direction: column;
-		}
-		.wrapper {
-			width: 10%;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			img {
-				width: 25px;
-			}
-			@media (max-width: 750px){
-				width: 98%;
-				margin: 6px auto;
-			}
-		}
-		h2 {
-			font-size: 14px;
-			color: #ffffff;
-			display: flex;
-			width: 50%;
-			@media (max-width: 750px){
-				font-size: 14px;
-				width: 90%;
-				margin: auto;
-			}
-		}
+	background: ${pallette.accentColor};
 		#title {
 			color: #ffffff;
 		}
-		.bottom-wrapper, .center-wrapper {
+		.center-container, .bottom-container, .top-container {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			width: 30%;
-			@media (max-width: 750px){
-				font-size: 14px;
-				width: 90%;
-				margin: auto;
+			width: 90%;
+			height: 50%;
+			margin: 10px auto;
+			.status-icons-container {
+				img {
+					width: 25px;
+					&:first-child {
+						margin-right: 10px;
+					}
+				}
+			}
+			h2 {
+				font-size: ${pallette.paraSize};
 			}
 			#date, #author {
 				display: flex;
 				justify-content: center;
 				flex-direction: column;
-				span {
-					color: #c2c2c2;
-				}
-				@media (max-width: 750px){
-					font-size: 12px;
-					justify-content: left;
-				}
+				color: #e4e4e4;
+				font-size: 12px;
 			}
 		}
-		.center-wrapper {
-			margin: 0 10px;
-			width: 50%;
-			@media (max-width: 750px){
-				font-size: 14px;
-				width: 90%;
-				margin: 0 auto;
-				margin-bottom: 10px;
-			}
+		.bottom-container {
+			margin-bottom: 0;
 		}
 		/* author colors */
 		.Gibby {
@@ -209,5 +166,7 @@ const StyledBug = styled.div `
 		#Completed {
 			color: #cccccc;
 		}
-	}
+		.red-arrow, .yellow-arrow {
+			transform: rotate(-90deg);
+		}
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as pallette from '../styled/ThemeVariables';
 
 // router
 import { Link } from 'react-router-dom';
@@ -7,8 +8,14 @@ import { Link } from 'react-router-dom';
 import NavOverlay from './NavOverlay';
 
 // images
-import Logo from '../assets/images/bugMicroYaleBlue.png';
 import Hamburger from '../assets/images/hamburgerYaleBlue.png';
+import Add from '../assets/icons/Add.png';
+import Logout from '../assets/icons/logoutWhite.png';
+import Help from '../assets/icons/help.png';
+import Search from '../assets/icons/searchWhite.png';
+import Profile from '../assets/icons/profileWhite.png';
+import Home from '../assets/icons/homeWhite.png';
+import Register from '../assets/icons/taskIcon.png';
 
 export default function Nav({logout, user, role, confirmAdmin}) {
 
@@ -18,43 +25,21 @@ export default function Nav({logout, user, role, confirmAdmin}) {
 
     return (
         <StyledNav>
-            <div className="logo-wrapper">
-                <img src={Logo} alt="" />
-                <h1>Swatter</h1>
+            <div className="top-container">
+                <Link to="/"><img src={Home} alt="Home" /></Link>
+                <Link to="/"><img src={Search} alt="Search" /></Link>
+                {
+                    role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <Link onClick={confirmAdmin} to="/RegisterUserPage"><img src={Register} alt="Register User" /></Link>
+                    : <></>
+                }
+                <Link id="add-button" to={'/AddProjectPage'}><img src={Add} alt="Add Project"/></Link>
+                <Link to="/"><img src={Help} alt="Help" /></Link>
             </div>
-            {
-                user === null 
-                ? <Link to="/LoginPage">Sign In</Link>
-                : <div className="text-wrapper">
-                    <div className="text-container">
-                        <h3>Signed in as:</h3>
-                        <h2>{user} - {
-                                role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                    <span>Admin</span>
-                                ) : role === process.env.REACT_APP_USER_SECRET ? (
-                                    <span>User</span>
-                                ) : role === process.env.REACT_APP_GUEST_SECRET ? (
-                                    <span>Guest</span>
-                                ) : (
-                                    <span>{role}</span>
-                                )
-                            }
-                        </h2>
-                    </div>
-                </div>       
-            }
-            <div className="dropdown">
-                <button className="dropbtn">Menu</button>
-                <div className="dropdown-content">
-                    <Link to="/">Home</Link>
-                    <Link to="/ProfilePage">Profile</Link>
-                    {
-                        role === process.env.REACT_APP_ADMIN_SECRET 
-                        ? <Link onClick={confirmAdmin} to="/RegisterUserPage">Register</Link>
-                        : <></>
-                    }
-                    <Link to="/LoginPage" onClick={logout}>Sign Out</Link>
-                </div>
+
+            <div className="bottom-container">
+                <Link to="/ProfilePage"><img src={Profile} alt="Profile" /></Link>
+                <Link to="/LoginPage" onClick={logout}><img src={Logout} alt="Log Out" /></Link>
             </div>
             <NavOverlay
                 role={role}
@@ -67,95 +52,52 @@ export default function Nav({logout, user, role, confirmAdmin}) {
 }
 
 const StyledNav = styled.div`
-    height: 6vh;
-    width: 100%;
-    margin: auto;
-    padding: 0 5%;
-    display: grid;
+    height: 100%;
+    width: 60px;
+    display: flex;
     align-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
-    background: #f1f1f1;
+    flex-direction: column;
+    background: #000000;
     z-index: 1000;
-    position: relative;
-    @media (max-width: 750px){
-        grid-template-columns: 25% 50% 25%;
-    }
-    .logo-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    .top-container {
         display: flex;
+        height: 60%;
+        flex-direction: column;
         align-items: center;
-        h1 {
-            font-size: 30px;
-            color: #0f4d92;
-            @media (max-width: 750px){
-                display: none;
-            }
-        }
-        img {
-            width: 40px;
-            height: 40px;
-        }
-    }
-    .text-wrapper {
-        display: flex;
-        align-items: center;
-        margin: auto;
-        .text-container{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            h2 {
-                font-size: 16px;
-                color: #000000;
-            }
-            h3 {
-                font-size: 14px;
-                color: #383838;
-            }
-        }
-    }
-
-    .dropdown {
+        margin-top: 16px;
+        margin-bottom: auto;
         position: relative;
-        display: inline-block;
-        margin-left: auto;
-        @media (max-width: 1050px){
-            display: none;
-        }
-        .dropbtn {
-            background-color: #0f4d92;
-            color: white;
-            padding: 10px 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            &:hover {
-                background: black;
-            }
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                &:hover {
-                    text-decoration: underline;
-                    text-underline-position: under;
-                    background: #dbdbdb;
-                }
-            }
+        a {
+            margin-bottom: 20px;
         }
     }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
+    .bottom-container {
+        display: flex;
+        height: 15%;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+        margin-bottom: 0;
+        position: relative;
+        a {
+            margin-bottom: 20px;
+        }
+    }
+    a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6px;
+        &:hover {
+            background: ${pallette.accentColor};
+        }
+    }
+    img {
+        width: 30px;
+        height: 30px;
     }
 
     #hamburger {

@@ -3,17 +3,28 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables.js';
+import * as pallette from '../../../styled/ThemeVariables.js';
 
 // components
-import BugPageLoader from '../loaders/BugPageLoader';
+import BugPageLoader from '../../../loaders/BugPageLoader';
 
 // router
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function BugPage({user, role}) {
+// images
+import X from '../../../assets/icons/whiteX.png';
 
-    const { projectId, bugId } = useParams();
+export default function BugSection({
+    user, 
+    role, 
+    bugId, 
+    projectId, 
+    handleShowBug, 
+    sectionProjectId,
+    sectionBugId,
+}) {
+
+    //const { projectId, bugId } = useParams();
 
     const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
@@ -21,7 +32,7 @@ export default function BugPage({user, role}) {
 
     useEffect(() => {
         function getBug(){
-            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${sectionProjectId}/${sectionBugId}`)
             .then(function (response){
                 setBug(response.data[0].bugs)
                 setAuthor(response.data[0].bugs[0].author)
@@ -31,8 +42,8 @@ export default function BugPage({user, role}) {
                 console.log(error);
             });
         }
-        getBug(projectId);
-    }, [ projectId, bugId ]);
+        getBug(sectionProjectId, sectionBugId);
+    }, [ sectionProjectId, sectionBugId ]);
 
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);
@@ -41,12 +52,12 @@ export default function BugPage({user, role}) {
 
     function updateBug() {
         setLoading(true);
-        axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`, {
+        axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${sectionProjectId}/${sectionBugId}`, {
             description: description,
             status: status,
             tag: tag,
             priority: priority,
-            projectId: projectId,
+            projectId: sectionProjectId,
             bugId: bug._id,
         })
         .then(function(response) {
@@ -64,8 +75,8 @@ export default function BugPage({user, role}) {
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
             setLoading(true);
-            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {
-                projectId: projectId,
+            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${sectionProjectId}/${sectionBugId}`, {
+                projectId: sectionProjectId,
                 bugId: bug._id,
             })
             .then(function(response) {
@@ -85,7 +96,17 @@ export default function BugPage({user, role}) {
     }
 
     return (
-        <StyledBugPage>
+        <StyledBugSection id="bug-section">
+            <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowBug()}} />
+            <div className="breadcrumbs">
+                <Link to={`/`}>Home</Link><span>/</span>
+                <Link to={`/projects/${sectionProjectId}`}>Project</Link><span>/</span>
+                {
+                    bug[0] === undefined
+                    ? <></>
+                    : <p>{bug[0].title}</p>
+                }
+            </div>
             {
                 isLoading === true 
                 ? <BugPageLoader />
@@ -96,7 +117,6 @@ export default function BugPage({user, role}) {
                                 <div className="bug-container" key={key}>
                                     <div className="title-container">
                                         <h1>{bugs.title}</h1>
-                                        <Link id="back-button" to={`/projects/${projectId}`}>Back</Link>
                                     </div>
                                     <div className="info-wrapper">
                                         <div className="info-container">
@@ -177,18 +197,50 @@ export default function BugPage({user, role}) {
                     }
                 </>
             }
-        </StyledBugPage>
+        </StyledBugSection >
     )
 }
 
-const StyledBugPage = styled.div`
-    min-height: 50vh;
-    width: 90%;
-    max-width: 1000px;
-    margin: 50px auto 5% auto;
-    @media (max-width: 700px){
-        margin: 20px auto 5% auto;
+const StyledBugSection = styled.div`
+    display: none;
+    min-height: 90vh;
+    width: 100%;
+    top: 8%;
+    left: 0;
+    position: absolute;
+    z-index: 100;
+    background: ${pallette.accentColor};
+    border-radius: 12px;
+    padding: 2%;
+    #exit-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
     }
+    .breadcrumbs {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        a {
+            font-size: 20px;
+            color: ${pallette.helperGrey};
+            &:hover {
+                color: white;
+            }
+        }
+        p {
+            font-size: 20px;
+            color: ${pallette.helperGrey};
+        }
+        span {
+            margin: 0 10px;
+            color: white;
+        }
+    }
+    
     .bug-container {
         display: flex;
         flex-direction: column;
@@ -201,21 +253,6 @@ const StyledBugPage = styled.div`
             h1 {
                 color: white;
                 font-size: 40px;
-            }
-            #back-button {
-                width: 150px;
-                height: 40px;
-                cursor: pointer;
-                border: none;
-                border-radius: 6px;
-                font-weight: 700;
-                font-size: ${pallette.subtitleSize};
-                &:hover {
-                    color: #ffffff;
-                    background: #000000;
-                    transform: scale(1.05);
-                    transition: 0.2s;
-                }
             }
         }
         .info-container, .selector-container {

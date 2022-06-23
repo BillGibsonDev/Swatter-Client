@@ -7,11 +7,17 @@ import * as pallette from '../../styled/ThemeVariables';
 
 // components
 import Bug from './components/Bug.js';
-import CommentSection from './components/CommentSection';
 import ProjectPageLoader from '../../loaders/ProjectPageLoader';
+import { ProjectSideNav } from './components/ProjectSideNav';
+
+// pop out sections
+import CommentSection from './sections/CommentSection';
+import BugSection from './sections/BugSection';
+
 
 // router
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Searchbar } from './components/Searchbar';
 
 export default function ProjectPage({ user, role }) {
 
@@ -21,12 +27,16 @@ export default function ProjectPage({ user, role }) {
     const [ project, setProject ] = useState([]);
 
     // data states
-    const [ totalBugs, setTotalBugs ] = useState(0);
-    const [ openBugs, setOpenBugs] = useState(0);
-    const [ underwayBugs, setUnderwayBugs ] = useState(0);
-    const [ reviewBugs, setReviewBugs ] = useState(0);
-    const [ completedBugs, setCompletedBugs ] = useState(0);
+    //const [ totalBugs, setTotalBugs ] = useState([]);
+    const [ openBugs, setOpenBugs] = useState([]);
+    const [ underwayBugs, setUnderwayBugs ] = useState([]);
+    const [ reviewBugs, setReviewBugs ] = useState([]);
+    const [ completedBugs, setCompletedBugs ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);
+
+    // bug section states
+    const [ sectionBugId, setSectionBugId ] = useState()
+    const [ sectionProjectId, setSectionProjectId ] = useState()
 
     useEffect(() =>{
         function getProject(){
@@ -35,11 +45,11 @@ export default function ProjectPage({ user, role }) {
                 setProject(response.data)
                 setBugs(response.data.bugs)
                 setLoading(false)
-                setTotalBugs(response.data.bugs.length)
-                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open").length)
-                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway").length)
-                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing").length)
-                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed").length)
+               // setTotalBugs(response.data.bugs.length)
+                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open"))
+                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"))
+                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"))
+                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"))
             })
             .catch(function (error) {
                 console.log(error)
@@ -48,127 +58,176 @@ export default function ProjectPage({ user, role }) {
         getProject(projectId);
     }, [ projectId, bugId ]);
 
-
-    const handleFilter = (e) => {
-        let value = e.target.value
-        let open = document.getElementsByClassName(value)
-        let i;
-        for (i = 0; i < open.length; i++) {
-            if (open[i].style.display === "none"){
-                open[i].style.display = "flex";
-            } else {
-                open[i].style.display = "none";
-            }
+    const handleShowComments = () => {
+        let section = document.getElementById("comment-section");
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
         }
-    };
+    }
+
+    const handleShowBug = () => {
+        let section = document.getElementById("bug-section");
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
 
     return (
         <StyledProjectPage>
+            <ProjectSideNav
+                project={project}
+                handleShowComments={handleShowComments}
+            />
             {
-                isLoading === true ? (
-                    <ProjectPageLoader />
-                ) : (
-                <>
-                    <div className="title-wrapper">
-                        <div className="left-container">
-                            <h2>Project: <span>{project.projectTitle}</span></h2>
-                            <h2>Started: <span>{project.startDate}</span></h2>
-                        </div>
-                        <div className="right-container">
-                            <a href={project.projectLink} target="_blank" rel="noreferrer">Project Link</a>
-                            <Link id="add-bug" to={`/${projectId}/AddBugPage`}>Add Bug</Link>
-                        </div>
-                    </div>
+                isLoading === true 
+                ? <ProjectPageLoader />
+                : <div className="bug-table-wrapper">
+                    <Searchbar />
                     { 
-                        bugs === undefined ? (
-                            <div className="undefined">
-                                <h1>You've havent entered any bugs</h1>
+                        bugs === undefined 
+                        ? <div className="undefined">
+                            <h1>You've havent entered any bugs</h1>
+                        </div>
+                        : <>
+                            <div className="bugs-container">
+                                <h5>Open <span>{openBugs.length}</span></h5>
+                                {
+                                    openBugs.slice().reverse().map((bug, key) => {
+                                        return (
+                                            <Bug
+                                                setSectionProjectId={setSectionProjectId}
+				                                setSectionBugId={setSectionBugId}
+                                                projectTitle={project.projectTitle}
+                                                projectId = {projectId}
+                                                bugId={bug._id}
+                                                title={bug.title}
+                                                thumbnail = {bug.thumbnail}
+                                                description = {bug.description}
+                                                priority={bug.priority}
+                                                author={bug.author}
+                                                status={bug.status}
+                                                tag={bug.tag}
+                                                lastUpdate={bug.lastUpdate}
+                                                key={key}
+                                                user={user}
+                                                handleShowBug={handleShowBug}
+                                            />
+                                        )
+                                    })
+                                }
                             </div>
-                        ) : (
-                            <>
-                                <div className="active-wrapper">
-                                    <div className="status-filter-container">
-                                        <label><span>{openBugs}</span> Open
-                                            <input 
-                                                type="checkbox" 
-                                                id="Open"
-                                                value="Open"
-                                                defaultChecked 
-                                                onClick={handleFilter} 
+                            <div className="bugs-container">
+                                <h5>Underway <span>{underwayBugs.length}</span></h5>
+                                {
+                                    underwayBugs.slice().reverse().map((bug, key) => {
+                                        return (
+                                            <Bug
+                                                setSectionProjectId={setSectionProjectId}
+				                                setSectionBugId={setSectionBugId}
+                                                handleShowBug={handleShowBug}
+                                                projectTitle={project.projectTitle}
+                                                projectId = {projectId}
+                                                bugId={bug._id}
+                                                title={bug.title}
+                                                thumbnail = {bug.thumbnail}
+                                                description = {bug.description}
+                                                priority={bug.priority}
+                                                author={bug.author}
+                                                status={bug.status}
+                                                tag={bug.tag}
+                                                lastUpdate={bug.lastUpdate}
+                                                key={key}
+                                                user={user}
                                             />
-                                        </label>
-                                        <label><span>{underwayBugs}</span> Underway
-                                            <input 
-                                                type="checkbox" 
-                                                id="Open" 
-                                                value="Underway"
-                                                defaultChecked 
-                                                onClick={handleFilter}
-                                            />
-                                        </label>
-                                        <label><span>{reviewBugs}</span>Reviewing
-                                            <input 
-                                                type="checkbox" 
-                                                id="inReview" 
-                                                value="Reviewing"
-                                                defaultChecked 
-                                                onClick={handleFilter}
-                                            />
-                                        </label>
-                                        <label><span>{completedBugs}</span> Completed
-                                            <input 
-                                                type="checkbox" 
-                                                id="completed" 
-                                                value="Completed"
-                                                onClick={handleFilter}
-                                            />
-                                        </label>
-                                        <h5 id="total"><span>{totalBugs}</span>Total</h5>
-                                    </div>
-                                <div className="bugs-container">
-                                    {
-                                        bugs.slice().reverse().map((bug, key) => {
-                                            return (
-                                                <Bug
-                                                    projectTitle={project.projectTitle}
-                                                    projectId = {projectId}
-                                                    bugId={bug._id}
-                                                    title={bug.title}
-                                                    thumbnail = {bug.thumbnail}
-                                                    description = {bug.description}
-                                                    priority={bug.priority}
-                                                    author={bug.author}
-                                                    status={bug.status}
-                                                    tag={bug.tag}
-                                                    lastUpdate={bug.lastUpdate}
-                                                    key={key}
-                                                    user={user}
-                                                />
-                                            )
-                                        })
-                                    }
-                                </div>
+                                        )
+                                    })
+                                }
                             </div>
-                            <CommentSection
-                                role={role}
-                                user={user}
-                            />
+                            <div className="bugs-container">
+                                <h5>Reviewing <span>{reviewBugs.length}</span></h5>
+                                {
+                                    reviewBugs.slice().reverse().map((bug, key) => {
+                                        return (
+                                            <Bug
+                                                setSectionProjectId={setSectionProjectId}
+				                                setSectionBugId={setSectionBugId}
+                                                handleShowBug={handleShowBug}
+                                                projectTitle={project.projectTitle}
+                                                projectId = {projectId}
+                                                bugId={bug._id}
+                                                title={bug.title}
+                                                thumbnail = {bug.thumbnail}
+                                                description = {bug.description}
+                                                priority={bug.priority}
+                                                author={bug.author}
+                                                status={bug.status}
+                                                tag={bug.tag}
+                                                lastUpdate={bug.lastUpdate}
+                                                key={key}
+                                                user={user}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className="bugs-container">
+                                <h5>Completed <span>{completedBugs.length}</span></h5>
+                                {
+                                    completedBugs.slice().reverse().map((bug, key) => {
+                                        return (
+                                            <Bug
+                                                setSectionProjectId={setSectionProjectId}
+				                                setSectionBugId={setSectionBugId}
+                                                handleShowBug={handleShowBug}
+                                                projectTitle={project.projectTitle}
+                                                projectId = {projectId}
+                                                bugId={bug._id}
+                                                title={bug.title}
+                                                thumbnail = {bug.thumbnail}
+                                                description = {bug.description}
+                                                priority={bug.priority}
+                                                author={bug.author}
+                                                status={bug.status}
+                                                tag={bug.tag}
+                                                lastUpdate={bug.lastUpdate}
+                                                key={key}
+                                                user={user}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
                         </>
-                    )}
-                </>
-                )
+                    }
+                </div>
             }
+            <CommentSection
+                handleShowComments={handleShowComments}
+                user={user}
+                role={role}
+            />
+            <BugSection
+                handleShowBug={handleShowBug}
+                user={user}
+                role={role}
+                sectionProjectId={sectionProjectId}
+				sectionBugId={sectionBugId}
+            />
         </StyledProjectPage>
     )
 }
 
 const StyledProjectPage = styled.div`
-    min-height: 80vh;
-    width: 90%;
-    max-width: 1000px;
-    margin: 50px auto;
+    height: 100%;
+    width: 100%;
+    max-width: 1400px;
     display: flex;
-    flex-direction: column;
+    position: relative;
+    margin-left: 400px;
     .undefined {
         background: white;
         width: 100%;
@@ -179,131 +238,41 @@ const StyledProjectPage = styled.div`
         align-items: center;
         margin: auto;
     }
-    .title-wrapper {
-        margin: 10px auto;
+    .bug-table-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+        max-height: 90vh;
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-            @media (max-width: 750px){
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-            }
-            .left-container, .right-container {
-                h2 {
-                    color: #bbbbbb;
-                    font-size: 18px;
-                    @media (max-width: 750px){
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    span {
-                        color: #ffffff;
-                        font-size: ${pallette.subtitleSize};
-                        @media (max-width: 750px){
-                            font-size: 20px;
-                        }
-                    }
-                }
-                h2:last-child {
-                    margin-top: 20px;
-                }
-                a {
-                    font-weight: 700;
-                    font-size: ${pallette.subtitleSize};
-                    color: #ffffff;
-                    @media (max-width: 750px){
-                        margin-top: 40px;
-                        font-size: 20px;
-                    }
-                    &:hover{
-                        cursor: pointer;
-                        text-decoration: underline;
-                        text-underline-position: under;
-                    }
-                }
-                #add-bug {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: #ffffff;
-                    padding: 4px 10px;
-                    border-radius: 4px;
-                    font-size: ${pallette.subtitleSize};
-                    font-weight: 700;
-                    color: ${pallette.accentColor};
-                    width: 200px;
-                    margin-left: auto;
-                    margin-top: 20px;
-                    &:hover{
-                        color: #ffffff;
-                        cursor: pointer;
-                        background: #000000;
-                        transition: 0.2s;
-                        text-decoration: none;
-                    }
-                    @media (max-width: 750px){
-                        font-size: 20px;
-                    }
-                }
-            }
-            .right-container {
-                @media (max-width: 750px){
-                    margin-top: 20px;
-                }
-            }
+        overflow-x: scroll;
+        overflow-y: scroll;
+        margin-top: 5%;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+        &:-webkit-scrollbar {
+            display: none;
         }
-    }
-    .active-wrapper {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        margin-top: 16px;
-        flex-direction: column;
-        align-items: center;
-        .status-filter-container {
-            display: flex;
+        .bugs-container {
             width: 100%;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px auto;
-            @media (max-width: 800px){
-                flex-direction: column;
-                justify-content: left;
-                text-align: left;
-                align-items: normal;
-            }
-            label, #total {
-                display: flex;
-                height: 100%;
-                color: #ffffff;
-                align-items: center;
-                height: 100%;
-                font-size: 20px;
-                font-weight: 700;
-                margin: 0 6px;
+            background: black;
+            padding: 10px;
+            background: #0b2849;
+            border-radius: 12px;
+            h5 {
+                color: ${pallette.helperGrey};
+                padding: 10px;
+                font-size: ${pallette.paraSize};
                 span {
-                    color: #d1d1d1;
-                    margin-right: 6px;
-                }
-                input {
-                    border-radius: 4px;
-                    border: none;
-                    margin: 0 6px;
-                    color: #000000;
-                    accent-color: black;
+                    font-weight: 400;
                 }
             }
-        }
-    .bugs-container {
-        width: 100%;
-        margin: auto;
-        .Open, .Underway, .Reviewing, .Completed {
-            display: flex;
-            &:hover {
-                background: #000000;
-                border: 1px black solid;
+            .Open, .Underway, .Reviewing, .Completed {
+                display: flex;
+                &:hover {
+                    background: #000000;
+                    border: 1px black solid;
+                }
             }
         }
     }

@@ -71,7 +71,7 @@ const StyledHomePage = styled.div`
     width: 90%;
     max-width: 1000px;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 2%;
     min-height: 80vh;
     border-radius: 20px;
     display: flex;

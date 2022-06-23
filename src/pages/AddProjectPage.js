@@ -21,7 +21,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
     const [ isLoading, setLoading ] = useState(false);
     const [ projectKey, setProjectKey ] = useState("");
     const [ description, setDescription ] = useState("");
-    const [ repositiory, setRepositiory ] = useState("");
+    const [ repository, setRepository ] = useState("");
     const [ projectLead, setProjectLead ] = useState("");
     const [ projectType, setProjectType ] = useState("");
 
@@ -44,7 +44,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
             author: author,
             projectLink: projectLink,
             projectImage: projectImage,
-            repositiory: repositiory,
+            repository: repository,
             description: description,
             projectKey: projectKey,
             projectLead: projectLead,
@@ -107,7 +107,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
                             type="text"
                             id="repositiory"
                             onChange={(event) => {
-                                setRepositiory(event.target.value);
+                                setRepository(event.target.value);
                             }} 
                         />
                     </label>

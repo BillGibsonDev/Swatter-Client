@@ -12,7 +12,6 @@ import HomePage from './pages/HomePage/HomePage.js';
 import ProjectPage from './pages/ProjectPage/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
-import BugPage from "./pages/BugPage";
 import AddBugPage from "./pages/AddBugPage";
 import AddProjectPage from "./pages/AddProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
@@ -227,13 +226,6 @@ function App() {
 								role={role}
 								confirmRole={confirmRole}
 							/>
-						</Route> 
-						<Route path={"/:projectId/:bugId"} exact>
-							<BugPage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-							/>  
 						</Route> 
 					</Switch>
 				</>

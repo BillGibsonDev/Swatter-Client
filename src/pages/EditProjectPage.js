@@ -59,7 +59,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
     const [ projectImage, setProjectImage ] = useState(project.projectImage);
     const [ projectKey, setProjectKey ] = useState(project.projectKey);
     const [ description, setDescription ] = useState(project.description);
-    const [ repositiory, setRepositiory ] = useState(project.repositiory);
+    const [ repository, setRepository ] = useState(project.repository);
     const [ projectLead, setProjectLead ] = useState(project.projectLead);
     const [ projectType, setProjectType ] = useState(project.projectType);
 
@@ -72,7 +72,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
             author: author,
             projectLink: projectLink,
             projectImage: projectImage,
-            repositiory: repositiory,
+            repository: repository,
             description: description,
             projectKey: projectKey,
             projectLead: projectLead,
@@ -138,9 +138,9 @@ export default function EditProjectPage({user, role, confirmRole}) {
                         <input 
                             type="text"
                             id="repositiory"
-                            defaultValue={project.repositiory}
+                            defaultValue={project.repository}
                             onChange={(event) => {
-                                setRepositiory(event.target.value);
+                                setRepository(event.target.value);
                             }} 
                         />
                     </label>

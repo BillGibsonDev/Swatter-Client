@@ -1,5 +1,6 @@
 // colors
 export const accentColor = "#0f4d92";
+export const accentColorTransparent = "#0f4c9290";
 export const helperGrey = "#dddddd";
 export const titleColor = "#ffffff";
 

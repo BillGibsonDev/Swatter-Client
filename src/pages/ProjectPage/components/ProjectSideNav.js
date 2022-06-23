@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 
 export const ProjectSideNav = ({project, handleShowComments}) => {
 
-    console.log(project)
   return (
     <StyledSideNav id="side-nav">
         <div className="sidenav-wrapper">

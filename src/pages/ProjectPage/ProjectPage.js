@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 // styled
@@ -7,19 +7,23 @@ import * as pallette from '../../styled/ThemeVariables';
 
 // components
 import Bug from './components/Bug.js';
-import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 import { ProjectSideNav } from './components/ProjectSideNav';
+import { Searchbar } from './components/Searchbar';
+
+// loaders
+import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 
 // pop out sections
 import CommentSection from './sections/CommentSection';
 import BugSection from './sections/BugSection';
 
-
 // router
 import { useParams } from 'react-router-dom';
-import { Searchbar } from './components/Searchbar';
 
 export default function ProjectPage({ user, role }) {
+
+    const commentSection = useRef();
+    const bugSection = useRef(null);
 
     const { projectId, bugId } = useParams();
 
@@ -35,8 +39,8 @@ export default function ProjectPage({ user, role }) {
     const [ isLoading, setLoading ] = useState(true);
 
     // bug section states
-    const [ sectionBugId, setSectionBugId ] = useState()
-    const [ sectionProjectId, setSectionProjectId ] = useState()
+    const [ sectionBugId, setSectionBugId ] = useState();
+    const [ sectionProjectId, setSectionProjectId ] = useState();
 
     useEffect(() =>{
         function getProject(){
@@ -58,8 +62,10 @@ export default function ProjectPage({ user, role }) {
         getProject(projectId);
     }, [ projectId, bugId ]);
 
+
     const handleShowComments = () => {
-        let section = document.getElementById("comment-section");
+        let section = commentSection.current;
+        console.log(commentSection.current.style.display)
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -68,7 +74,7 @@ export default function ProjectPage({ user, role }) {
     }
 
     const handleShowBug = () => {
-        let section = document.getElementById("bug-section");
+        let section = bugSection.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -209,6 +215,7 @@ export default function ProjectPage({ user, role }) {
                 handleShowComments={handleShowComments}
                 user={user}
                 role={role}
+                commentSection={commentSection}
             />
             <BugSection
                 handleShowBug={handleShowBug}
@@ -216,6 +223,7 @@ export default function ProjectPage({ user, role }) {
                 role={role}
                 sectionProjectId={sectionProjectId}
 				sectionBugId={sectionBugId}
+                bugSection={bugSection}
             />
         </StyledProjectPage>
     )

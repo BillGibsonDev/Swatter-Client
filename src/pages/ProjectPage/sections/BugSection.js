@@ -22,6 +22,7 @@ export default function BugSection({
     handleShowBug, 
     sectionProjectId,
     sectionBugId,
+    bugSection
 }) {
 
     //const { projectId, bugId } = useParams();
@@ -96,7 +97,7 @@ export default function BugSection({
     }
 
     return (
-        <StyledBugSection id="bug-section">
+        <StyledBugSection ref={bugSection} style={{display: "none"}}>
             <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowBug()}} />
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
@@ -212,6 +213,8 @@ const StyledBugSection = styled.div`
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
+    animation-name: slideLeft;
+    animation-duration: .5s;
     #exit-btn {
         position: absolute;
         top: 10px;
@@ -339,6 +342,10 @@ const StyledBugSection = styled.div`
                 }
             }
         }
+    }
+    @keyframes slideLeft {
+        from {width: 0; opacity: 0;}
+        to {width: 100%; opacity: 1;}
     }
 
 `;

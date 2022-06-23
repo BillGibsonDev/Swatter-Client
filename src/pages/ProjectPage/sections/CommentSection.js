@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 // loader asset
 import Loader from '../../../loaders/Loader';
 
-export default function ProjectsPage({user, role, handleShowComments}) {
+export default function ProjectsPage({user, role, handleShowComments, commentSection}) {
 
     const { projectId, bugId } = useParams();
 
@@ -61,7 +61,7 @@ export default function ProjectsPage({user, role, handleShowComments}) {
     }
 
     return (
-        <StyledCommentSection id="comment-section">
+        <StyledCommentSection ref={commentSection} style={{display: "none"}}>
             <div className="title-container">
                 <h1>Comments</h1>
                 <img src={X} alt="Exit" onClick={() => {handleShowComments()}} />
@@ -189,7 +189,7 @@ const StyledCommentSection = styled.div`
         overflow-y: scroll;
     }
     @keyframes slideLeft {
-        from {width: 0;}
-        to {width: 100%;}
+        from {width: 0; opacity: 0;}
+        to {width: 100%; opacity: 1;}
     }
 `;

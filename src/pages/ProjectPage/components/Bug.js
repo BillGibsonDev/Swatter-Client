@@ -143,30 +143,30 @@ const StyledBug = styled.div `
 				font-size: 12px;
 			}
 		}
-		.bottom-container {
-			margin-bottom: 0;
-		}
-		/* author colors */
-		.Gibby {
-			color: #008ee0;;
-		}
-		.Moose {
-			color: #0dbe7a;
-		}
-		/* status  styles*/
-		#Open {
-			color: #00cc00;
-		}
-		#Reviewing {
-			color: #ff4d4d;
-		}
-		#Underway {
-			color: #83b5ff;
-		}
-		#Completed {
-			color: #cccccc;
-		}
-		.red-arrow, .yellow-arrow {
-			transform: rotate(-90deg);
-		}
+	.bottom-container {
+		margin-bottom: 0;
+	}
+	/* author colors */
+	.Gibby {
+		color: #008ee0;;
+	}
+	.Moose {
+		color: #0dbe7a;
+	}
+	/* status  styles*/
+	#Open {
+		color: #00cc00;
+	}
+	#Reviewing {
+		color: #ff4d4d;
+	}
+	#Underway {
+		color: #83b5ff;
+	}
+	#Completed {
+		color: #cccccc;
+	}
+	.red-arrow, .yellow-arrow {
+		transform: rotate(-90deg);
+	}
 `;

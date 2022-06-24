@@ -63,13 +63,12 @@ const StyledNav = styled.div`
     }
     .bottom-container {
         display: flex;
-        height: 12%;
+        height: 15%;
         flex-direction: column;
         align-items: center;
         margin-bottom: 0;
         bottom: 0;
         position: relative;
-
         a {
             margin-bottom: 10px;
         }

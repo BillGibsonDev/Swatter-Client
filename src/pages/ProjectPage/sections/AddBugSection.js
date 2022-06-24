@@ -174,6 +174,7 @@ const StyledAddBug = styled.div`
     display: none;
     flex-direction: column;
     min-height: 96vh;
+    height: 100%;
     width: 100%;
     margin: 16px auto;
     position: absolute;
@@ -183,6 +184,21 @@ const StyledAddBug = styled.div`
     padding: 2%;
     animation-name: slideLeft;
     animation-duration: .5s;
+    @media (max-width: 810px){
+        top: 0;
+        left: -65px;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        animation-name: slideLeft810;
+        animation-duration: .5s;
+    }
+    @media (max-width: 390px){
+        left: -65px;
+        animation-name: slideLeft390;
+        animation-duration: .5s;
+    }
     #exit-btn {
         position: absolute;
         top: 10px;
@@ -196,10 +212,16 @@ const StyledAddBug = styled.div`
         font-size: 24px;
         width: 98%;
         font-size: 40px;
+        @media (max-width: 450px){
+            font-size: 30px;
+        }
     }
     .form-wrapper {
         width: 100%;
         margin: 20px auto;
+        @media (max-width: 450px){
+            margin: 10px auto;
+        }
         .container-wrapper {
             display: flex;
             width: 100%;
@@ -228,53 +250,65 @@ const StyledAddBug = styled.div`
             @media (max-width: 750px){
                font-size: ${pallette.paraSize};
             }
-                input, select {
-                    width: 100%;
-                    height: 40px;
-                    padding: 5px 10px;
-                    font-size: 18px;
-                    background: ${pallette.helperGrey};
-                }
-                textarea {
-                    padding: 10px;
-                    font-size: 18px;
-                    background: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 16px;
+                margin: 10px 0;
+            }
+            input, select {
+                width: 100%;
+                height: 40px;
+                padding: 5px 10px;
+                font-size: 18px;
+                background: ${pallette.helperGrey};
+                @media (max-width: 450px){
+                    height: 30px;
+                    font-size: 16px;
                 }
             }
-            .button-container {
+            textarea {
+                padding: 10px;
+                font-size: 18px;
+                background: ${pallette.helperGrey};
+                @media (max-width: 450px){
+                    font-size: 16px;
+                }
+            }
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 2%;
+            button, a {
                 display: flex;
+                justify-content: center;
                 align-items: center;
-                justify-content: space-between;
-                margin-top: 2%;
-                button, a {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 150px;
-                    height: 40px;
+                width: 150px;
+                height: 40px;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                font-size: ${pallette.subtitleSize};
+                font-weight: 700;
+                background: #ffffff;
+                color: ${pallette.accentColor};
+                &:hover{
+                    color: #ffffff;
                     cursor: pointer;
-                    border: none;
-                    border-radius: 4px;
-                    font-size: ${pallette.subtitleSize};
-                    font-weight: 700;
-                    background: #ffffff;
-                    color: ${pallette.accentColor};
-                    &:hover{
-                        color: #ffffff;
-                        cursor: pointer;
-                        background: #000000;
-                        transition: 0.2s;
-                        transform: scale(1.01);
-                    }
-                    @media (max-width: 750px){
-                        width: 100px;
-                        font-size: ${pallette.paraSize};
-                    }
+                    background: #000000;
+                    transition: 0.2s;
+                    transform: scale(1.01);
+                }
+                @media (max-width: 750px){
+                    width: 100px;
+                    font-size: ${pallette.paraSize};
+                }
+                @media (max-width: 450px){
+                    font-size: 16px;
+                    width: 100px;
                 }
             }
+        }
     }
-    @keyframes slideLeft {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: 0; }
-    }
+
 `;

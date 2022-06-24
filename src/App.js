@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styles
@@ -20,6 +20,9 @@ import EditProjectPage from "./pages/EditProjectPage";
 import { Route, Switch, useHistory} from 'react-router-dom';
 
 function App() {
+
+	const projectSideNavRef = useRef();
+
 	const [ password, setPassword ] = useState('');
 	const [ user, setUser] = useState('');
   	const [ username, setUsername] = useState('');
@@ -174,7 +177,9 @@ function App() {
 						user={user}
 						role={role}
 						logout={logout}
-						isLoggedIn={isLoggedIn}/>
+						isLoggedIn={isLoggedIn}
+						projectSideNavRef={projectSideNavRef}
+						/>
 					<Switch>
 						<Route path={'/'} exact>
 							<HomePage
@@ -189,6 +194,7 @@ function App() {
 								user={user}
 								role={role}
 								confirmRole={confirmRole}
+								projectSideNavRef={projectSideNavRef}
 							/>
 						</Route>
 						<Route path={"/AddProjectPage"} exact>

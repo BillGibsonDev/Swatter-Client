@@ -181,6 +181,10 @@ const StyledProjectPage = styled.div`
         height: 40vh;
         margin: 20px auto;
     }
+    @media (max-width: 412px){
+        margin-left: 65px;
+        width: 80vw;
+    }
     h1 {
         color: white;
         width: 95%;
@@ -202,17 +206,25 @@ const StyledProjectPage = styled.div`
             @media (max-width: 750px){
                 font-size: ${pallette.paraSize};
             }
-                input, select {
-                    width: 50%;
-                    height: 40px;
-                    font-size: 18px;
-                    padding: 2px;
-                    background: ${pallette.helperGrey};
-                    @media (max-width: 750px){
-                        width: 100%;
-                    }
+            @media (max-width: 412px){
+                font-size: 16px;
+                margin: 10px 0;
+            }
+            input, select {
+                width: 50%;
+                height: 40px;
+                font-size: 18px;
+                padding: 2px;
+                background: ${pallette.helperGrey};
+                @media (max-width: 750px){
+                    width: 100%;
+                }
+                @media (max-width: 412px){
+                    font-size: 16px;
+                    height: 30px;
                 }
             }
+        }
         .button-container{
             display: flex;
             align-items: center;
@@ -247,6 +259,10 @@ const StyledProjectPage = styled.div`
                 @media (max-width: 750px){
                     width: 100px;
                     font-size: ${pallette.paraSize};
+                }
+                @media (max-width: 412px){
+                    width: 100px;
+                    font-size: 16px;
                 }
             }
         }

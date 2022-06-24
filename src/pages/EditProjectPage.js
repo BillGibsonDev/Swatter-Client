@@ -219,9 +219,10 @@ const StyledProjectPage = styled.div`
     max-width: 1000px;
     min-height: 50vh;
     margin: auto;
-    @media (max-width: 750px){
+    @media (max-width: 810px){
         height: 40vh;
-        width: 90%;
+        margin-left: 65px;
+        width: 85vw;
     }
     .title-container {
         display: flex;

@@ -86,9 +86,10 @@ const StyledHomePage = styled.div`
         @media (max-width: 1050px){
             grid-template-columns: 1fr 1fr;
         }
-        @media (max-width: 550px){
-            grid-template-columns: 1fr;
+        @media (max-width: 450px){
+            grid-template-columns: 75vw;
             row-gap: 20px;
+            margin-left: 50px;
         }
         #add-button {
             display: flex;

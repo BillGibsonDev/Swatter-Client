@@ -7,7 +7,6 @@ const GlobalStyles = createGlobalStyle`
         box-sizing: border-box;
     }
     html {
-        margin: auto;
         scroll-behavior: smooth;
         background: #124075;;
         font-family: 'Roboto Mono', monospace;
@@ -62,6 +61,18 @@ const GlobalStyles = createGlobalStyle`
             transition: 0.2s;
             transform: scale(1.01);
         }
+    }
+    @keyframes slideLeft810 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 100%; opacity: 1; left: -400px; }
+    }
+    @keyframes slideLeft390 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 100%; opacity: 1; left: -65px; }
+    }
+    @keyframes slideLeft390 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 100%; opacity: 1; left: 0; }
     }
 `;
 

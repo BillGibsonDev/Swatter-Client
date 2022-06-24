@@ -124,8 +124,21 @@ const StyledCommentSection = styled.div`
     animation-duration: .5s;
     position: absolute;
     background: grey;
-    z-index: 2;
+    z-index: 100;
     border-radius: 12px;
+    @media (max-width: 810px){
+        top: 0;
+        left: -65px;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+    @media (max-width: 390px){
+        left: -65px;
+        animation-name: slideLeft390;
+        animation-duration: .5s;
+    }
     .undefined {
         width: 98%;
     }
@@ -155,7 +168,7 @@ const StyledCommentSection = styled.div`
         left: 20%;
         @media (max-width: 750px){
             width: 90%;
-            left: 10%;
+            left: 5%;
         }
         textarea {
             border-radius: 4px;
@@ -187,9 +200,5 @@ const StyledCommentSection = styled.div`
     .comment-container {
         max-height: 65vh;
         overflow-y: scroll;
-    }
-    @keyframes slideLeft {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: 0; }
     }
 `;

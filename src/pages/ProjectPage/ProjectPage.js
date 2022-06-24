@@ -18,10 +18,13 @@ import CommentSection from './sections/CommentSection';
 import BugSection from './sections/BugSection';
 import AddBugSection from './sections/AddBugSection';
 
+// images
+import arrowRight from '../../assets/icons/arrowRight.png';
+
 // router
 import { useParams } from 'react-router-dom';
 
-export default function ProjectPage({ user, role, confirmRole }) {
+export default function ProjectPage({ user, role, confirmRole, projectSideNavRef }) {
 
     const commentSection = useRef();
     const bugSection = useRef();
@@ -68,7 +71,6 @@ export default function ProjectPage({ user, role, confirmRole }) {
     const handleShowComments = () => {
         setRerender(!rerender)
         let section = commentSection.current;
-        console.log(commentSection.current.style.display)
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -96,12 +98,28 @@ export default function ProjectPage({ user, role, confirmRole }) {
         }
     }
 
+    const handleArrow = () => {
+        let element = document.getElementById("arrow");
+        element.classList.toggle("rotate");
+    }
+
+    const handleShowSideNav = () => {
+        let section = projectSideNavRef.current;
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
+
     return (
         <StyledProjectPage>
+            <button id="arrow-button" onClick={() => { handleArrow(); handleShowSideNav();}}><img id="arrow" src={arrowRight} alt="" /></button>
             <ProjectSideNav
                 project={project}
                 handleShowComments={handleShowComments}
                 handleShowAddBugs={handleShowAddBug}
+                projectSideNavRef={projectSideNavRef}
             />
             {
                 isLoading === true 
@@ -260,11 +278,44 @@ export default function ProjectPage({ user, role, confirmRole }) {
 
 const StyledProjectPage = styled.div`
     height: 100%;
+    max-height: 100vh;
     width: 100%;
     max-width: 1400px;
     display: flex;
     position: relative;
     margin-left: 400px;
+    @media (max-width: 810px){
+        margin-left: 65px;
+        width: 740px;
+    }
+    @media (max-width: 412px){
+        margin-left: 65px;
+        width: 340px;
+    }
+    @media (max-width: 390px){
+        width: 320px;
+    }
+    #arrow-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: none;
+        position: absolute;
+        z-index: 6;
+        top: 50%;
+        @media (max-width: 810px){
+            display: block;
+            left: -40px;
+        }
+        @media (max-width: 412px){
+            left: -45px;
+        }
+        img {
+            transition: 0.2s;
+            width: 30px;
+            height: 30px;
+        }   
+    }
     .undefined {
         background: white;
         width: 100%;
@@ -277,16 +328,19 @@ const StyledProjectPage = styled.div`
     }
     .bug-table-wrapper {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 350px 350px 350px 350px;
         grid-row-gap: 10px;
         grid-column-gap: 10px;
-        max-height: 90vh;
+        max-height: 93vh;
         width: 100%;
         overflow-x: scroll;
         overflow-y: scroll;
-        margin-top: 5%;
+        margin-top: 7vh;
         scrollbar-width: none;  /* Firefox */
         -ms-overflow-style: none;
+        @media (max-width: 450px){
+            grid-template-columns: 300px 300px 300px 300px;
+        }
         &::-webkit-scrollbar {
             display: none;
             width: none;
@@ -313,5 +367,9 @@ const StyledProjectPage = styled.div`
                 }
             }
         }
+    }
+    .rotate {
+        transform: rotate(180deg);
+        transition: 0.2s;
     }
 `;

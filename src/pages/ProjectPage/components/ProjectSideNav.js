@@ -17,10 +17,10 @@ import Sprints from '../../../assets/icons/sprint.png';
 // router
 import { Link } from 'react-router-dom';
 
-export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs}) => {
+export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, projectSideNavRef}) => {
 
   return (
-    <StyledSideNav id="side-nav">
+    <StyledSideNav ref={projectSideNavRef} style={{display: "none"}}>
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
@@ -53,6 +53,15 @@ const StyledSideNav = styled.div`
     left: 60px;
     position: fixed;
     z-index: 100;
+    max-height: 100vh;
+    animation-name: slideLeftSideNav810;
+    animation-duration: .5s;
+    @media (max-width: 412px){
+        width: 100%;
+        left: 50px;
+        animation-name: slideLeftSideNav390;
+        animation-duration: .5s;
+    }
     .sidenav-wrapper {
         margin: 16px;
     }
@@ -97,4 +106,13 @@ const StyledSideNav = styled.div`
             }
         }
     }
+    @keyframes slideLeftSideNav810 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 250px; opacity: 1; left: 50px; }
+    }
+    @keyframes slideLeftSideNav390 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 100%; opacity: 1; left: 50px; }
+    }
+    
 `;

@@ -216,6 +216,22 @@ const StyledBugSection = styled.div`
     padding: 2%;
     animation-name: slideLeft;
     animation-duration: .5s;
+    @media (max-width: 810px){
+        top: 0;
+        left: -400px;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        animation-name: slideLeft810;
+        animation-duration: .5s;
+    }
+    @media (max-width: 390px){
+        left: -65px;
+        animation-name: slideLeft390;
+        animation-duration: .5s;
+    }
+    
     #exit-btn {
         position: absolute;
         top: 10px;
@@ -231,6 +247,9 @@ const StyledBugSection = styled.div`
         a {
             font-size: 20px;
             color: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 12px;
+            }
             &:hover {
                 color: white;
             }
@@ -238,6 +257,9 @@ const StyledBugSection = styled.div`
         p {
             font-size: 20px;
             color: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 12px;
+            }
         }
         span {
             margin: 0 10px;
@@ -256,6 +278,9 @@ const StyledBugSection = styled.div`
             h1 {
                 color: white;
                 font-size: 40px;
+                @media (max-width: 450px){
+                    font-size: 20px;
+                }
             }
         }
         .info-container, .selector-container {
@@ -276,10 +301,16 @@ const StyledBugSection = styled.div`
                 width: 90%;
                 margin: 10px 0;
                 font-weight: 400;
+                @media (max-width: 450px){
+                    font-size: 16px;
+                }
                 span {
                     color: #cecece;
                     font-weight: 400;
                     font-size: 16px;
+                    @media (max-width: 450px){
+                        font-size: 12px;
+                    }
                 }
             }
             label {
@@ -292,12 +323,18 @@ const StyledBugSection = styled.div`
                 @media (max-width: 700px){
                     flex-direction: row;
                 }
+                @media (max-width: 450px){
+                    font-size: 14px;
+                }
                 select {
                     cursor: pointer;
                     width: 90%;
                     font-size: 20px;
                     background: ${pallette.helperGrey};
                     font-weight: 400;
+                    @media (max-width: 450px){
+                        font-size: 14px;
+                    }
                 }
             }
         }
@@ -306,6 +343,9 @@ const StyledBugSection = styled.div`
             padding: 10px;
             font-size: 18px;
             background: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 14px;
+            }
         }
         img {
             width: 300px;
@@ -327,6 +367,10 @@ const StyledBugSection = styled.div`
                     margin: 10px 0;
                     width: 150px;
                 }
+                @media (max-width: 450px){
+                    font-size: 16px;
+                    width: 100px;
+                }
                 &:hover {
                     color: #ffffff;
                     background: #000000;
@@ -346,9 +390,4 @@ const StyledBugSection = styled.div`
             }
         }
     }
-    @keyframes slideLeft {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: 0; }
-    }
-
 `;

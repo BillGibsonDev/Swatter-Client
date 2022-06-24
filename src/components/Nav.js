@@ -4,11 +4,7 @@ import * as pallette from '../styled/ThemeVariables';
 // router
 import { Link } from 'react-router-dom';
 
-// components
-import NavOverlay from './NavOverlay';
-
 // images
-import Hamburger from '../assets/images/hamburgerYaleBlue.png';
 import Add from '../assets/icons/Add.png';
 import Logout from '../assets/icons/logoutWhite.png';
 import Help from '../assets/icons/help.png';
@@ -18,10 +14,6 @@ import Home from '../assets/icons/homeWhite.png';
 import Register from '../assets/icons/taskIcon.png';
 
 export default function Nav({logout, user, role, confirmAdmin}) {
-
-    function openNav() {
-        document.getElementById("myNav").style.width = "100%";
-    }
 
     return (
         <StyledNav>
@@ -36,54 +28,50 @@ export default function Nav({logout, user, role, confirmAdmin}) {
                 <Link id="add-button" to={'/AddProjectPage'}><img src={Add} alt="Add Project"/></Link>
                 <Link to="/"><img src={Help} alt="Help" /></Link>
             </div>
-
             <div className="bottom-container">
                 <Link to="/ProfilePage"><img src={Profile} alt="Profile" /></Link>
                 <Link to="/LoginPage" onClick={logout}><img src={Logout} alt="Log Out" /></Link>
             </div>
-            <NavOverlay
-                role={role}
-                logout={logout}
-                confirmAdmin={confirmAdmin}
-            />
-            <img id='hamburger' src={Hamburger} onClick={openNav} alt="hamburger menu"/>
         </StyledNav>
     )
 }
 
 const StyledNav = styled.div`
-    height: 100%;
+    height: 100vh;
     width: 60px;
     display: flex;
     align-items: center;
     flex-direction: column;
     background: #000000;
-    z-index: 1000;
+    z-index: 5;
     position: fixed;
     left: 0;
     top: 0;
+    @media (max-width: 450px){
+        width: 50px;
+    }
     .top-container {
         display: flex;
-        height: 60%;
+        height: 88%;
         flex-direction: column;
         align-items: center;
         margin-top: 16px;
-        margin-bottom: auto;
         position: relative;
         a {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
     }
     .bottom-container {
         display: flex;
-        height: 15%;
+        height: 12%;
         flex-direction: column;
         align-items: center;
-        margin-top: auto;
         margin-bottom: 0;
+        bottom: 0;
         position: relative;
+
         a {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
     }
     a {
@@ -98,19 +86,5 @@ const StyledNav = styled.div`
     img {
         width: 30px;
         height: 30px;
-    }
-
-    #hamburger {
-        cursor: pointer;
-        display: none;
-        width: 30px;
-        margin-left: auto;
-        &:hover, &:focus {
-            transition: 0.2s;
-            transform: rotateZ(10deg);
-        }
-        @media (max-width: 1050px){
-            display: block;
-        }
     }
 `;

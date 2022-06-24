@@ -204,10 +204,9 @@ export default function BugSection({
 
 const StyledBugSection = styled.div`
     display: none;
-    min-height: 90vh;
+    min-height: 96vh;
     width: 100%;
-    top: 8%;
-    left: 0;
+    margin: 16px auto;
     position: absolute;
     z-index: 100;
     background: ${pallette.accentColor};
@@ -243,7 +242,6 @@ const StyledBugSection = styled.div`
             color: white;
         }
     }
-    
     .bug-container {
         display: flex;
         flex-direction: column;

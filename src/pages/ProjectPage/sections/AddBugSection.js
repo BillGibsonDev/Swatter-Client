@@ -3,17 +3,19 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables.js';
+import * as pallette from '../../../styled/ThemeVariables.js';
+
+// images
+import X from '../../../assets/icons/whiteX.png';
 
 // router
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // components
-import Loader from '../loaders/Loader';
+import Loader from '../../../loaders/Loader';
 
-export default function Bug({user, role, confirmRole}) {
+export default function AddBugSection({user, role, confirmRole, projectId, addBugSection, handleShowAddBug}) {
 
-    const { projectId } = useParams();
 
     const [ title, setTitle ] = useState("");
     const [ thumbnail, setThumbnail ] = useState("");
@@ -53,7 +55,8 @@ export default function Bug({user, role, confirmRole}) {
     }
 
     return (
-        <StyledBug>
+        <StyledAddBug ref={addBugSection} style={{display: "none"}}> 
+            <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowAddBug()}} />
             <h1>Add a Bug</h1>
             {
                 user === null ? <h1>You are signed out</h1>
@@ -154,19 +157,31 @@ export default function Bug({user, role, confirmRole}) {
                     </div>
                 </div>
             }
-        </StyledBug>
+        </StyledAddBug>
     ) 
 }
 
-const StyledBug = styled.div`
-    display: flex;
+const StyledAddBug = styled.div`
+    display: none;
     flex-direction: column;
-    width: 90%;
-    max-width: 1000px;
-    margin: 50px auto;
-    @media (max-width: 750px){
-		margin: 20px auto;
-	}
+    min-height: 96vh;
+    width: 100%;
+    margin: 16px auto;
+    position: absolute;
+    z-index: 100;
+    background: ${pallette.accentColor};
+    border-radius: 12px;
+    padding: 2%;
+    animation-name: slideLeft;
+    animation-duration: .5s;
+    #exit-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
     h1 {
         color: white;
         font-size: 24px;

@@ -117,15 +117,15 @@ export default function ProjectsPage({user, role, handleShowComments, commentSec
 const StyledCommentSection = styled.div`
     display: none;
     width: 100%;
-    margin: 20px auto;
-    min-height: 95vh;
-    position: relative;
+    margin: 16px auto;
+    min-height: 96vh;
     border: 2px white solid;
     animation-name: slideLeft;
     animation-duration: .5s;
     position: absolute;
     background: grey;
     z-index: 2;
+    border-radius: 12px;
     .undefined {
         width: 98%;
     }

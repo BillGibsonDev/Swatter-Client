@@ -17,7 +17,7 @@ import Sprints from '../../../assets/icons/sprint.png';
 // router
 import { Link } from 'react-router-dom';
 
-export const ProjectSideNav = ({project, handleShowComments}) => {
+export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs}) => {
 
   return (
     <StyledSideNav id="side-nav">
@@ -38,7 +38,7 @@ export const ProjectSideNav = ({project, handleShowComments}) => {
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
                 <h6 onClick={()=> { handleShowComments()}}><img src={Comments} alt="" />Comments</h6>
-                <Link to={`/${project._id}/AddBugPage`}><img src={AddBug} alt="" />Add Bug</Link>
+                <h6 onClick={()=> { handleShowAddBugs()}}><img src={AddBug} alt="" />Add Bug</h6>
                 <Link to={`/`}><img src={Settings} alt="" />Settings</Link>
             </div>
         </div>
@@ -52,6 +52,7 @@ const StyledSideNav = styled.div`
     height: 100%;
     left: 60px;
     position: fixed;
+    z-index: 100;
     .sidenav-wrapper {
         margin: 16px;
     }

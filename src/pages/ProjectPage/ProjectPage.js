@@ -16,6 +16,7 @@ import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 // pop out sections
 import CommentSection from './sections/CommentSection';
 import BugSection from './sections/BugSection';
+import AddBugSection from './sections/AddBugSection';
 
 // router
 import { useParams } from 'react-router-dom';
@@ -24,6 +25,7 @@ export default function ProjectPage({ user, role }) {
 
     const commentSection = useRef();
     const bugSection = useRef(null);
+    const addBugSection = useRef();
 
     const { projectId, bugId } = useParams();
 
@@ -82,11 +84,21 @@ export default function ProjectPage({ user, role }) {
         }
     }
 
+    const handleShowAddBug = () => {
+        let section = addBugSection.current;
+        if (section.style.display === "none") {
+            section.style.display = "flex";
+        } else {
+            section.style.display = "none";
+        }
+    }
+
     return (
         <StyledProjectPage>
             <ProjectSideNav
                 project={project}
                 handleShowComments={handleShowComments}
+                handleShowAddBugs={handleShowAddBug}
             />
             {
                 isLoading === true 
@@ -224,6 +236,13 @@ export default function ProjectPage({ user, role }) {
                 sectionProjectId={sectionProjectId}
 				sectionBugId={sectionBugId}
                 bugSection={bugSection}
+            />
+            <AddBugSection
+                handleShowAddBug={handleShowAddBug}
+                user={user}
+                role={role}
+                projectId={projectId}
+                addBugSection={addBugSection}
             />
         </StyledProjectPage>
     )

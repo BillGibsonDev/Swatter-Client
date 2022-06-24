@@ -347,8 +347,8 @@ const StyledBugSection = styled.div`
         }
     }
     @keyframes slideLeft {
-        from {width: 0; opacity: 0;}
-        to {width: 100%; opacity: 1;}
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 100%; opacity: 1; left: 0; }
     }
 
 `;

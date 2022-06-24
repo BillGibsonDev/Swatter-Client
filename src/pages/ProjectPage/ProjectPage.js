@@ -285,10 +285,11 @@ const StyledProjectPage = styled.div`
         overflow-x: scroll;
         overflow-y: scroll;
         margin-top: 5%;
-        -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
-        &:-webkit-scrollbar {
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
             display: none;
+            width: none;
         }
         .bugs-container {
             width: 100%;

@@ -134,6 +134,7 @@ const StyledBug = styled.div `
 			}
 			h2 {
 				font-size: ${pallette.paraSize};
+				font-weight: 400;
 			}
 			#date, #author {
 				display: flex;
@@ -141,6 +142,7 @@ const StyledBug = styled.div `
 				flex-direction: column;
 				color: #e4e4e4;
 				font-size: 12px;
+				font-weight: 400;
 			}
 		}
 	.bottom-container {

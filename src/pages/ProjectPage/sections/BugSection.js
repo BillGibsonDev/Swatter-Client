@@ -17,12 +17,12 @@ import X from '../../../assets/icons/whiteX.png';
 export default function BugSection({
     user, 
     role, 
-    bugId, 
-    projectId, 
     handleShowBug, 
     sectionProjectId,
     sectionBugId,
-    bugSection
+    bugSection,
+    rerender,
+    setRerender
 }) {
 
     //const { projectId, bugId } = useParams();
@@ -44,11 +44,11 @@ export default function BugSection({
             });
         }
         getBug(sectionProjectId, sectionBugId);
-    }, [ sectionProjectId, sectionBugId ]);
+    }, [ sectionProjectId, sectionBugId, rerender ]);
 
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);
-    const [ priority , setPriority ] = useState(bug.priority);
+    const [ priority, setPriority ] = useState(bug.priority);
     const [ tag, setTag ] = useState(bug.tag);
 
     function updateBug() {
@@ -68,6 +68,7 @@ export default function BugSection({
             } else {
                 setLoading(false);
                 alert('Bug Updated!');
+                setRerender(!rerender);
             }
         })
     }
@@ -87,6 +88,7 @@ export default function BugSection({
                 } else {
                     setLoading(false);
                     alert('Bug Deleted');
+                    setRerender(!rerender);
                 }
             })
         }
@@ -155,7 +157,7 @@ export default function BugSection({
                                             <label>Status:
                                                 <select
                                                     id="status"
-                                                    defaultValue={bug.status}
+                                                    defaultValue={bugs.status}
                                                     onChange={(event) => {
                                                         setStatus(event.target.value);
                                                 }}>
@@ -273,6 +275,7 @@ const StyledBugSection = styled.div`
                 flex-direction: column;
                 width: 90%;
                 margin: 10px 0;
+                font-weight: 400;
                 span {
                     color: #cecece;
                     font-weight: 400;
@@ -285,6 +288,7 @@ const StyledBugSection = styled.div`
                 color: white;
                 font-size: 20px;
                 margin: 20px 0;
+                font-weight: 400;
                 @media (max-width: 700px){
                     flex-direction: row;
                 }
@@ -293,6 +297,7 @@ const StyledBugSection = styled.div`
                     width: 90%;
                     font-size: 20px;
                     background: ${pallette.helperGrey};
+                    font-weight: 400;
                 }
             }
         }

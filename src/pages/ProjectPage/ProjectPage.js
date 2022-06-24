@@ -21,16 +21,17 @@ import AddBugSection from './sections/AddBugSection';
 // router
 import { useParams } from 'react-router-dom';
 
-export default function ProjectPage({ user, role }) {
+export default function ProjectPage({ user, role, confirmRole }) {
 
     const commentSection = useRef();
-    const bugSection = useRef(null);
+    const bugSection = useRef();
     const addBugSection = useRef();
 
     const { projectId, bugId } = useParams();
 
     const [ bugs, setBugs ] = useState([]);
     const [ project, setProject ] = useState([]);
+    const [ rerender, setRerender ] = useState(false);
 
     // data states
     //const [ totalBugs, setTotalBugs ] = useState([]);
@@ -62,10 +63,10 @@ export default function ProjectPage({ user, role }) {
             });
         }
         getProject(projectId);
-    }, [ projectId, bugId ]);
-
+    }, [ projectId, bugId, rerender ]);
 
     const handleShowComments = () => {
+        setRerender(!rerender)
         let section = commentSection.current;
         console.log(commentSection.current.style.display)
         if (section.style.display === "none") {
@@ -76,6 +77,7 @@ export default function ProjectPage({ user, role }) {
     }
 
     const handleShowBug = () => {
+        setRerender(!rerender)
         let section = bugSection.current;
         if (section.style.display === "none") {
             section.style.display = "block";
@@ -85,6 +87,7 @@ export default function ProjectPage({ user, role }) {
     }
 
     const handleShowAddBug = () => {
+        setRerender(!rerender)
         let section = addBugSection.current;
         if (section.style.display === "none") {
             section.style.display = "flex";
@@ -228,6 +231,8 @@ export default function ProjectPage({ user, role }) {
                 user={user}
                 role={role}
                 commentSection={commentSection}
+                setRerender={setRerender}
+                rerender={rerender}
             />
             <BugSection
                 handleShowBug={handleShowBug}
@@ -236,6 +241,8 @@ export default function ProjectPage({ user, role }) {
                 sectionProjectId={sectionProjectId}
 				sectionBugId={sectionBugId}
                 bugSection={bugSection}
+                setRerender={setRerender}
+                rerender={rerender}
             />
             <AddBugSection
                 handleShowAddBug={handleShowAddBug}
@@ -243,6 +250,9 @@ export default function ProjectPage({ user, role }) {
                 role={role}
                 projectId={projectId}
                 addBugSection={addBugSection}
+                confirmRole={confirmRole}
+                setRerender={setRerender}
+                rerender={rerender}
             />
         </StyledProjectPage>
     )

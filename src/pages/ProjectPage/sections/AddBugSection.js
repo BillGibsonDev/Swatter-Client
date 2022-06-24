@@ -14,8 +14,16 @@ import { Link } from 'react-router-dom';
 // components
 import Loader from '../../../loaders/Loader';
 
-export default function AddBugSection({user, role, confirmRole, projectId, addBugSection, handleShowAddBug}) {
-
+export default function AddBugSection({
+    user, 
+    role, 
+    confirmRole, 
+    projectId, 
+    addBugSection, 
+    handleShowAddBug,
+    rerender,
+    setRerender
+}) {
 
     const [ title, setTitle ] = useState("");
     const [ thumbnail, setThumbnail ] = useState("");
@@ -44,6 +52,7 @@ export default function AddBugSection({user, role, confirmRole, projectId, addBu
                 setLoading(false);
                 alert("Server Error - Bug not created");
             } else {
+                setRerender(!rerender);
                 setLoading(false);
                 alert('Bug Created!');
             }

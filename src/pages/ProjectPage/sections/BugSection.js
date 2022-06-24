@@ -206,7 +206,7 @@ export default function BugSection({
 
 const StyledBugSection = styled.div`
     display: none;
-    min-height: 96vh;
+    min-height: 100vh;
     width: 100%;
     margin: 16px auto;
     position: absolute;

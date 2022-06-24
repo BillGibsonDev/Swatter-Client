@@ -131,7 +131,7 @@ const StyledCommentSection = styled.div`
         left: -65px;
         margin: 0;
         width: 100vw;
-        height: 100vh;
+        height: 100%;
         border-radius: 0;
     }
     @media (max-width: 390px){

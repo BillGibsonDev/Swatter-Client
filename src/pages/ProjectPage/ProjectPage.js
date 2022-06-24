@@ -295,6 +295,9 @@ const StyledProjectPage = styled.div`
     @media (max-width: 390px){
         width: 320px;
     }
+    @media (max-width: 360px){
+        width: 295px;
+    }
     #arrow-button {
         background: none;
         border: none;

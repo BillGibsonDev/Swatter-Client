@@ -221,7 +221,7 @@ const StyledBugSection = styled.div`
         left: -400px;
         margin: 0;
         width: 100vw;
-        height: 100vh;
+        height: 100%;
         border-radius: 0;
         animation-name: slideLeft810;
         animation-duration: .5s;

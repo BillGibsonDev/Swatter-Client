@@ -116,9 +116,9 @@ export default function ProjectsPage({user, role, handleShowComments, commentSec
 
 const StyledCommentSection = styled.div`
     display: none;
-    width: 100%;
-    margin: 16px auto;
-    min-height: 96vh;
+    width: 79vw;
+    margin: 0 auto;
+    min-height: 100vh;
     border: 2px white solid;
     animation-name: slideLeft;
     animation-duration: .5s;
@@ -126,6 +126,7 @@ const StyledCommentSection = styled.div`
     background: grey;
     z-index: 100;
     border-radius: 12px;
+    left: -50px;
     @media (max-width: 810px){
         top: 0;
         left: -65px;
@@ -134,7 +135,7 @@ const StyledCommentSection = styled.div`
         height: 100%;
         border-radius: 0;
     }
-    @media (max-width: 390px){
+    @media (max-width: 428px){
         left: -65px;
         animation-name: slideLeft390;
         animation-duration: .5s;

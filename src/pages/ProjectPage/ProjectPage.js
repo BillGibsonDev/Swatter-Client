@@ -3,10 +3,10 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../styled/ThemeVariables';
+//import * as pallette from '../../styled/ThemeVariables';
 
 // components
-import Bug from './components/Bug.js';
+import BugTable from './components/BugTable.js';
 import { ProjectSideNav } from './components/ProjectSideNav';
 import { Searchbar } from './components/Searchbar';
 
@@ -132,114 +132,22 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                             <h1>You've havent entered any bugs</h1>
                         </div>
                         : <>
-                            <div className="bugs-container">
-                                <h5>Open <span>{openBugs.length}</span></h5>
-                                {
-                                    openBugs.slice().reverse().map((bug, key) => {
-                                        return (
-                                            <Bug
-                                                setSectionProjectId={setSectionProjectId}
-				                                setSectionBugId={setSectionBugId}
-                                                projectTitle={project.projectTitle}
-                                                projectId = {projectId}
-                                                bugId={bug._id}
-                                                title={bug.title}
-                                                thumbnail = {bug.thumbnail}
-                                                description = {bug.description}
-                                                priority={bug.priority}
-                                                author={bug.author}
-                                                status={bug.status}
-                                                tag={bug.tag}
-                                                lastUpdate={bug.lastUpdate}
-                                                key={key}
-                                                user={user}
-                                                handleShowBug={handleShowBug}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className="bugs-container">
-                                <h5>Underway <span>{underwayBugs.length}</span></h5>
-                                {
-                                    underwayBugs.slice().reverse().map((bug, key) => {
-                                        return (
-                                            <Bug
-                                                setSectionProjectId={setSectionProjectId}
-				                                setSectionBugId={setSectionBugId}
-                                                handleShowBug={handleShowBug}
-                                                projectTitle={project.projectTitle}
-                                                projectId = {projectId}
-                                                bugId={bug._id}
-                                                title={bug.title}
-                                                thumbnail = {bug.thumbnail}
-                                                description = {bug.description}
-                                                priority={bug.priority}
-                                                author={bug.author}
-                                                status={bug.status}
-                                                tag={bug.tag}
-                                                lastUpdate={bug.lastUpdate}
-                                                key={key}
-                                                user={user}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className="bugs-container">
-                                <h5>Reviewing <span>{reviewBugs.length}</span></h5>
-                                {
-                                    reviewBugs.slice().reverse().map((bug, key) => {
-                                        return (
-                                            <Bug
-                                                setSectionProjectId={setSectionProjectId}
-				                                setSectionBugId={setSectionBugId}
-                                                handleShowBug={handleShowBug}
-                                                projectTitle={project.projectTitle}
-                                                projectId = {projectId}
-                                                bugId={bug._id}
-                                                title={bug.title}
-                                                thumbnail = {bug.thumbnail}
-                                                description = {bug.description}
-                                                priority={bug.priority}
-                                                author={bug.author}
-                                                status={bug.status}
-                                                tag={bug.tag}
-                                                lastUpdate={bug.lastUpdate}
-                                                key={key}
-                                                user={user}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                            <div className="bugs-container">
-                                <h5>Completed <span>{completedBugs.length}</span></h5>
-                                {
-                                    completedBugs.slice().reverse().map((bug, key) => {
-                                        return (
-                                            <Bug
-                                                setSectionProjectId={setSectionProjectId}
-				                                setSectionBugId={setSectionBugId}
-                                                handleShowBug={handleShowBug}
-                                                projectTitle={project.projectTitle}
-                                                projectId = {projectId}
-                                                bugId={bug._id}
-                                                title={bug.title}
-                                                thumbnail = {bug.thumbnail}
-                                                description = {bug.description}
-                                                priority={bug.priority}
-                                                author={bug.author}
-                                                status={bug.status}
-                                                tag={bug.tag}
-                                                lastUpdate={bug.lastUpdate}
-                                                key={key}
-                                                user={user}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
+                            <BugTable
+                                setRerender={setRerender}
+                                rerender={rerender}
+                                user={user}
+                                bugs={bugs}
+                                openBugs={openBugs}
+                                underwayBugs={underwayBugs}
+                                reviewBugs={reviewBugs}
+                                completedBugs={completedBugs}
+                                setSectionProjectId={setSectionProjectId}
+                                setSectionBugId={setSectionBugId}
+                                projectId={projectId}
+                                project={project}
+                                handleShowBug={handleShowBug}
+                                bugSection={bugSection}
+                            />
                         </>
                     }
                 </div>
@@ -280,15 +188,15 @@ const StyledProjectPage = styled.div`
     height: 100%;
     max-height: 100vh;
     width: 100%;
-    max-width: 1400px;
+    max-width: 80vw;
     display: flex;
     position: relative;
-    margin-left: 400px;
+    margin-left: 350px;
     @media (max-width: 810px){
         margin-left: 65px;
         width: 740px;
     }
-    @media (max-width: 412px){
+    @media (max-width: 428px){
         margin-left: 65px;
         width: 340px;
     }
@@ -310,7 +218,7 @@ const StyledProjectPage = styled.div`
             display: block;
             left: -40px;
         }
-        @media (max-width: 412px){
+        @media (max-width: 428px){
             left: -45px;
         }
         img {
@@ -328,48 +236,6 @@ const StyledProjectPage = styled.div`
         justify-content: center;
         align-items: center;
         margin: auto;
-    }
-    .bug-table-wrapper {
-        display: grid;
-        grid-template-columns: 350px 350px 350px 350px;
-        grid-row-gap: 10px;
-        grid-column-gap: 10px;
-        max-height: 93vh;
-        width: 100%;
-        overflow-x: scroll;
-        overflow-y: scroll;
-        margin-top: 7vh;
-        scrollbar-width: none;  /* Firefox */
-        -ms-overflow-style: none;
-        @media (max-width: 450px){
-            grid-template-columns: 300px 300px 300px 300px;
-        }
-        &::-webkit-scrollbar {
-            display: none;
-            width: none;
-        }
-        .bugs-container {
-            width: 100%;
-            background: black;
-            padding: 10px;
-            background: #0b2849;
-            border-radius: 12px;
-            h5 {
-                color: ${pallette.helperGrey};
-                padding: 10px;
-                font-size: ${pallette.paraSize};
-                span {
-                    font-weight: 400;
-                }
-            }
-            .Open, .Underway, .Reviewing, .Completed {
-                display: flex;
-                &:hover {
-                    background: #000000;
-                    border: 1px black solid;
-                }
-            }
-        }
     }
     .rotate {
         transform: rotate(180deg);

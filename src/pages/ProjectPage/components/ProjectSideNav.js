@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react';
 
 // styled 
 import styled from 'styled-components'
@@ -19,8 +19,17 @@ import { Link } from 'react-router-dom';
 
 export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, projectSideNavRef}) => {
 
+    const [ screenWidth, setScreenWidth ] = useState(0)
+
+    useEffect(() => {
+      const handleScreenWidth = () => {
+        setScreenWidth(window.innerWidth)
+      }
+      handleScreenWidth();
+    }, [])
+
   return (
-    <StyledSideNav ref={projectSideNavRef} style={{display: "none"}}>
+    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 810 ? "block" : "none"}}>
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
@@ -56,7 +65,7 @@ const StyledSideNav = styled.div`
     max-height: 100vh;
     animation-name: slideLeftSideNav810;
     animation-duration: .5s;
-    @media (max-width: 412px){
+    @media (max-width: 428px){
         width: 100%;
         left: 50px;
         animation-name: slideLeftSideNav390;

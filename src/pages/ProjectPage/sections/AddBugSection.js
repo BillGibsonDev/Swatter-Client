@@ -175,8 +175,8 @@ const StyledAddBug = styled.div`
     flex-direction: column;
     min-height: 96vh;
     height: 100%;
-    width: 100%;
-    margin: 16px auto;
+    width: 79vw;
+    margin: 0 auto;
     position: absolute;
     z-index: 100;
     background: ${pallette.accentColor};
@@ -184,6 +184,7 @@ const StyledAddBug = styled.div`
     padding: 2%;
     animation-name: slideLeft;
     animation-duration: .5s;
+    left: -50px;
     @media (max-width: 810px){
         top: 0;
         left: -65px;
@@ -194,7 +195,7 @@ const StyledAddBug = styled.div`
         animation-name: slideLeft810;
         animation-duration: .5s;
     }
-    @media (max-width: 390px){
+    @media (max-width: 428px){
         left: -65px;
         animation-name: slideLeft390;
         animation-duration: .5s;

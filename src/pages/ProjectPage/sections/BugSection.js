@@ -207,8 +207,8 @@ export default function BugSection({
 const StyledBugSection = styled.div`
     display: none;
     min-height: 100vh;
-    width: 100%;
-    margin: 16px auto;
+    width: 79vw;
+    margin: 0 auto;
     position: absolute;
     z-index: 100;
     background: ${pallette.accentColor};
@@ -216,9 +216,10 @@ const StyledBugSection = styled.div`
     padding: 2%;
     animation-name: slideLeft;
     animation-duration: .5s;
+    left: -50px;
     @media (max-width: 810px){
         top: 0;
-        left: -400px;
+        left: -65px;
         margin: 0;
         width: 100vw;
         height: 100%;
@@ -226,7 +227,7 @@ const StyledBugSection = styled.div`
         animation-name: slideLeft810;
         animation-duration: .5s;
     }
-    @media (max-width: 390px){
+    @media (max-width: 428px){
         left: -65px;
         animation-name: slideLeft390;
         animation-duration: .5s;

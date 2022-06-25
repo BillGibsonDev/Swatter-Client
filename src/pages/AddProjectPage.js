@@ -181,7 +181,7 @@ const StyledProjectPage = styled.div`
         height: 40vh;
         margin: 20px auto;
     }
-    @media (max-width: 412px){
+    @media (max-width: 428px){
         margin-left: 65px;
         width: 80vw;
     }
@@ -206,7 +206,7 @@ const StyledProjectPage = styled.div`
             @media (max-width: 750px){
                 font-size: ${pallette.paraSize};
             }
-            @media (max-width: 412px){
+            @media (max-width: 428px){
                 font-size: 16px;
                 margin: 10px 0;
             }
@@ -219,7 +219,7 @@ const StyledProjectPage = styled.div`
                 @media (max-width: 750px){
                     width: 100%;
                 }
-                @media (max-width: 412px){
+                @media (max-width: 428px){
                     font-size: 16px;
                     height: 30px;
                 }
@@ -260,7 +260,7 @@ const StyledProjectPage = styled.div`
                     width: 100px;
                     font-size: ${pallette.paraSize};
                 }
-                @media (max-width: 412px){
+                @media (max-width: 429px){
                     width: 100px;
                     font-size: 16px;
                 }

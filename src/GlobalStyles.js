@@ -72,7 +72,7 @@ const GlobalStyles = createGlobalStyle`
     }
     @keyframes slideLeft {
         from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: 0; }
+        to {width: 100%; opacity: 1; left: -50px; }
     }
 `;
 

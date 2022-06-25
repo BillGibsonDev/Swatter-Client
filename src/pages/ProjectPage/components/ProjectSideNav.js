@@ -29,7 +29,7 @@ export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, 
     }, [])
 
   return (
-    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 810 ? "block" : "none"}}>
+    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 820 ? "block" : "none"}}>
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
@@ -68,7 +68,7 @@ const StyledSideNav = styled.div`
     @media (max-width: 1440px){
         width: 225px;
     }
-    @media (max-width: 810px){
+    @media (max-width: 820px){
         width: 300px;
     }
     @media (max-width: 428px){

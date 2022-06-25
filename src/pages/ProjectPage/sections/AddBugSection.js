@@ -189,7 +189,7 @@ const StyledAddBug = styled.div`
         width: 100%;
         left: -15px;
     }
-    @media (max-width: 810px){
+    @media (max-width: 820px){
         top: 0;
         left: -120px;
         margin: 0;

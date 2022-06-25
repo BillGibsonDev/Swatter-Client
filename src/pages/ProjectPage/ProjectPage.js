@@ -195,12 +195,12 @@ const StyledProjectPage = styled.div`
     @media (max-width: 1440px){
         margin-left: 300px;
     }
-    @media (max-width: 810px){
-        margin-left: 120px;
+    @media (max-width: 820px){
+        margin-left: 80px;
         width: 740px;
     }
     @media (max-width: 428px){
-        margin-left: 100px;
+        margin-left: 60px;
         width: 340px;
     }
     @media (max-width: 390px){
@@ -217,12 +217,12 @@ const StyledProjectPage = styled.div`
         position: absolute;
         z-index: 6;
         top: 50%;
-        @media (max-width: 810px){
+        @media (max-width: 820px){
             display: block;
-            left: -90px;
+            left: -60px;
         }
         @media (max-width: 428px){
-            left: -85px;
+            left: -45px;
         }
         img {
             transition: 0.2s;

@@ -192,12 +192,15 @@ const StyledProjectPage = styled.div`
     display: flex;
     position: relative;
     margin-left: 350px;
+    @media (max-width: 1440px){
+        margin-left: 300px;
+    }
     @media (max-width: 810px){
-        margin-left: 65px;
+        margin-left: 120px;
         width: 740px;
     }
     @media (max-width: 428px){
-        margin-left: 65px;
+        margin-left: 100px;
         width: 340px;
     }
     @media (max-width: 390px){
@@ -216,10 +219,10 @@ const StyledProjectPage = styled.div`
         top: 50%;
         @media (max-width: 810px){
             display: block;
-            left: -40px;
+            left: -90px;
         }
         @media (max-width: 428px){
-            left: -45px;
+            left: -85px;
         }
         img {
             transition: 0.2s;
@@ -236,6 +239,18 @@ const StyledProjectPage = styled.div`
         justify-content: center;
         align-items: center;
         margin: auto;
+    }
+    .bug-table-wrapper {
+        overflow: scroll;
+        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none;
+        position: relative;
+        width: 100vw;
+        display: flex;
+        &::-webkit-scrollbar {
+            display: none;
+            width: none;
+        }
     }
     .rotate {
         transform: rotate(180deg);

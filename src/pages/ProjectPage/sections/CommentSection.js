@@ -127,9 +127,13 @@ const StyledCommentSection = styled.div`
     z-index: 100;
     border-radius: 12px;
     left: -50px;
+    @media (max-width: 1440px){
+        width: 100%;
+        left: -15px;
+    }
     @media (max-width: 810px){
         top: 0;
-        left: -65px;
+        left: -120px;
         margin: 0;
         width: 100vw;
         height: 100%;

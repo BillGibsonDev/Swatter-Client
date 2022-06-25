@@ -153,21 +153,19 @@ const StyledBugTable = styled.div`
     height: 100%;
     max-height: 93vh;
     width: 100%;
-    overflow: scroll;
     margin-top: 7vh;
-    scrollbar-width: none;  /* Firefox */
-    -ms-overflow-style: none;
     position: relative;
+    @media (max-width: 1440px){
+        grid-template-columns: 275px 275px 275px 275px;
+        width: 100%;
+    }
     @media (max-width: 810px){
-        width: 90vw;
+        width: 100%;
+        grid-template-columns: 310px 310px 310px 310px;
     }
     @media (max-width: 428px){
         grid-template-columns: 310px 310px 310px 310px;
         width: 85vw;
-    }
-    &::-webkit-scrollbar {
-        display: none;
-        width: none;
     }
     .bugs-container {
         width: 100%;

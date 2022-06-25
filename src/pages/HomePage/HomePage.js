@@ -85,6 +85,7 @@ const StyledHomePage = styled.div`
         row-gap: 2em;
         @media (max-width: 1050px){
             grid-template-columns: 1fr 1fr;
+            margin-left: 30px;
         }
         @media (max-width: 450px){
             grid-template-columns: 75vw;

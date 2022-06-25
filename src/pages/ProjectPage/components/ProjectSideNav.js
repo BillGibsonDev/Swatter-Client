@@ -65,6 +65,12 @@ const StyledSideNav = styled.div`
     max-height: 100vh;
     animation-name: slideLeftSideNav810;
     animation-duration: .5s;
+    @media (max-width: 1440px){
+        width: 225px;
+    }
+    @media (max-width: 810px){
+        width: 300px;
+    }
     @media (max-width: 428px){
         width: 100%;
         left: 50px;
@@ -117,7 +123,7 @@ const StyledSideNav = styled.div`
     }
     @keyframes slideLeftSideNav810 {
         from {width: 0; opacity: 0; left: -300px;}
-        to {width: 250px; opacity: 1; left: 50px; }
+        to {width: 300px; opacity: 1; left: 50px; }
     }
     @keyframes slideLeftSideNav390 {
         from {width: 0; opacity: 0; left: -300px;}

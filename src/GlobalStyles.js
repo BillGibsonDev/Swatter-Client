@@ -70,7 +70,7 @@ const GlobalStyles = createGlobalStyle`
         from {width: 0; opacity: 0; left: -300px;}
         to {width: 100%; opacity: 1; left: -65px; }
     }
-    @keyframes slideLeft390 {
+    @keyframes slideLeft {
         from {width: 0; opacity: 0; left: -300px;}
         to {width: 100%; opacity: 1; left: 0; }
     }

@@ -55,7 +55,7 @@ const StyledNav = styled.div`
         height: 88%;
         flex-direction: column;
         align-items: center;
-        margin-top: 16px;
+        margin-top: 8px;
         position: relative;
         a {
             margin-bottom: 30px;

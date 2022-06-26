@@ -189,10 +189,10 @@ const StyledAddBug = styled.div`
         width: 100%;
         left: -15px;
     }
-    @media (max-width: 820px){
+    @media (max-width: 834px){
         top: 0;
-        left: -120px;
-        margin: 0;
+        left: -80px;
+        padding: 10px;
         width: 100vw;
         height: 100%;
         border-radius: 0;
@@ -203,6 +203,7 @@ const StyledAddBug = styled.div`
         left: -65px;
         animation-name: slideLeft390;
         animation-duration: .5s;
+        padding: 10px;
     }
     #exit-btn {
         position: absolute;
@@ -223,6 +224,7 @@ const StyledAddBug = styled.div`
     }
     .form-wrapper {
         width: 100%;
+        height: 100%;
         margin: 20px auto;
         @media (max-width: 450px){
             margin: 10px auto;

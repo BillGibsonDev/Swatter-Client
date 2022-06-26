@@ -195,9 +195,17 @@ const StyledProjectPage = styled.div`
     @media (max-width: 1440px){
         margin-left: 300px;
     }
+    @media (max-width: 834px){
+        margin-left: 80px;
+        width: 900px;
+        max-width: 85vw;
+    }
     @media (max-width: 820px){
         margin-left: 80px;
-        width: 740px;
+        width: 760px;
+    }
+    @media (max-width: 768px){
+        width: 710px;
     }
     @media (max-width: 428px){
         margin-left: 60px;
@@ -217,10 +225,11 @@ const StyledProjectPage = styled.div`
         position: absolute;
         z-index: 6;
         top: 50%;
-        @media (max-width: 820px){
+        @media (max-width: 834px){
             display: block;
             left: -60px;
         }
+        
         @media (max-width: 428px){
             left: -45px;
         }

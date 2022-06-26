@@ -221,9 +221,9 @@ const StyledBugSection = styled.div`
         width: 100%;
         left: -15px;
     }
-    @media (max-width: 820px){
+    @media (max-width: 834px){
         top: 0;
-        left: -120px;
+        left: -80px;
         margin: 0;
         width: 100vw;
         height: 100%;
@@ -235,6 +235,7 @@ const StyledBugSection = styled.div`
         left: -65px;
         animation-name: slideLeft390;
         animation-duration: .5s;
+        padding: 10px;
     }
     
     #exit-btn {

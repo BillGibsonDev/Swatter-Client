@@ -29,7 +29,7 @@ export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, 
     }, [])
 
   return (
-    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 820 ? "block" : "none"}}>
+    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 834 ? "block" : "none"}}>
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
@@ -63,12 +63,14 @@ const StyledSideNav = styled.div`
     position: fixed;
     z-index: 100;
     max-height: 100vh;
-    animation-name: slideLeftSideNav810;
+    animation-name: slideLeftSideNav;
     animation-duration: .5s;
     @media (max-width: 1440px){
         width: 225px;
+        animation-name: slideLeftSideNav1440;
     }
-    @media (max-width: 820px){
+    @media (max-width: 834px){
+        animation-name: slideLeftSide810;
         width: 300px;
     }
     @media (max-width: 428px){
@@ -120,6 +122,14 @@ const StyledSideNav = styled.div`
                 color: white;
             }
         }
+    }
+    @keyframes slideLeftSideNav {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 250px; opacity: 1; left: 50px; }
+    }
+    @keyframes slideLeftSideNav1440 {
+        from {width: 0; opacity: 0; left: -300px;}
+        to {width: 225px; opacity: 1; left: 50px; }
     }
     @keyframes slideLeftSideNav810 {
         from {width: 0; opacity: 0; left: -300px;}

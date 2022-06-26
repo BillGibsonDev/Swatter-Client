@@ -159,7 +159,7 @@ const StyledBugTable = styled.div`
         grid-template-columns: 275px 275px 275px 275px;
         width: 100%;
     }
-    @media (max-width: 810px){
+    @media (max-width: 834px){
         width: 100%;
         grid-template-columns: 310px 310px 310px 310px;
     }

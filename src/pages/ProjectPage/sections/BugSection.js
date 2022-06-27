@@ -100,7 +100,7 @@ export default function BugSection({
 
     return (
         <StyledBugSection ref={bugSection} style={{display: "none"}}>
-            <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowBug()}} />
+            <button id="exit-btn" onClick={() => {handleShowBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
                 <Link to={`/projects/${sectionProjectId}`}>Project</Link><span>/</span>
@@ -232,17 +232,44 @@ const StyledBugSection = styled.div`
         padding: 10px;
     }
     #exit-btn {
+        background: none;
+        border: none;
+        width: 30px;
+        height: 30px;
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
+        #exit-btn-icon {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .tooltiptext {
+            visibility: hidden;
+            width: 100%;
+            min-width: 160px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1000;
+            top: 0;
+            right: 105%;
+        }
+    }
+    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+        visibility: visible;
+        transition-delay: 1s;
     }
     .breadcrumbs {
         display: flex;
         align-items: center;
         margin-bottom: 16px;
+        @media (max-width: 428px){
+            display: none;
+        }
         a {
             font-size: 20px;
             color: ${pallette.helperGrey};

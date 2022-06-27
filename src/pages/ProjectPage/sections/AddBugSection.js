@@ -65,7 +65,7 @@ export default function AddBugSection({
 
     return (
         <StyledAddBug ref={addBugSection} style={{display: "none"}}> 
-            <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowAddBug()}} />
+            <button id="exit-btn" onClick={() => {handleShowAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <h1>Add a Bug</h1>
             {
                 user === null ? <h1>You are signed out</h1>
@@ -200,12 +200,36 @@ const StyledAddBug = styled.div`
         padding: 10px;
     }
     #exit-btn {
+        background: none;
+        border: none;
+        width: 30px;
+        height: 30px;
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
+        #exit-btn-icon {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .tooltiptext {
+            visibility: hidden;
+            width: 100%;
+            min-width: 160px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1000;
+            top: 0;
+            right: 105%;
+        }
+    }
+    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+        visibility: visible;
+        transition-delay: 1s;
     }
     h1 {
         color: white;

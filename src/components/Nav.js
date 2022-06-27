@@ -18,19 +18,19 @@ export default function Nav({logout, user, role, confirmAdmin}) {
     return (
         <StyledNav>
             <div className="top-container">
-                <Link to="/"><img src={Home} alt="Home" /></Link>
-                <Link to="/"><img src={Search} alt="Search" /></Link>
+                <Link to="/"><img src={Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
+                <Link to="/"><img src={Search} alt="Search" /><span className="tooltiptext">Search</span></Link>
                 {
                     role === process.env.REACT_APP_ADMIN_SECRET 
-                    ? <Link onClick={confirmAdmin} to="/RegisterUserPage"><img src={Register} alt="Register User" /></Link>
+                    ? <Link onClick={confirmAdmin} to="/RegisterUserPage"><img src={Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
                     : <></>
                 }
-                <Link id="add-button" to={'/AddProjectPage'}><img src={Add} alt="Add Project"/></Link>
-                <Link to="/"><img src={Help} alt="Help" /></Link>
+                <Link id="add-button" to={'/AddProjectPage'}><img src={Add} alt="Add Project"/><span className="tooltiptext">Add Project</span></Link>
+                <Link to="/"><img src={Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
             </div>
             <div className="bottom-container">
-                <Link to="/ProfilePage"><img src={Profile} alt="Profile" /></Link>
-                <Link to="/LoginPage" onClick={logout}><img src={Logout} alt="Log Out" /></Link>
+                <Link to="/ProfilePage"><img src={Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
+                <Link to="/LoginPage" onClick={logout}><img src={Logout} alt="Log Out" /><span className="tooltiptext">Log Out</span></Link>
             </div>
         </StyledNav>
     )
@@ -43,7 +43,7 @@ const StyledNav = styled.div`
     align-items: center;
     flex-direction: column;
     background: #000000;
-    z-index: 5;
+    z-index: 101;
     position: fixed;
     left: 0;
     top: 0;
@@ -59,6 +59,25 @@ const StyledNav = styled.div`
         position: relative;
         a {
             margin-bottom: 30px;
+            position: relative;
+            .tooltiptext {
+                visibility: hidden;
+                width: 100%;
+                min-width: 160px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1000;
+                top: 0;
+                left: 105%;
+            }
+        }
+        a:hover .tooltiptext, a:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
         }
     }
     .bottom-container {
@@ -71,6 +90,25 @@ const StyledNav = styled.div`
         position: relative;
         a {
             margin-bottom: 10px;
+            position: relative;
+            .tooltiptext {
+                visibility: hidden;
+                width: 100%;
+                min-width: 160px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1000;
+                top: 0;
+                left: 105%;
+            }
+        }
+        a:hover .tooltiptext, a:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
         }
     }
     a {

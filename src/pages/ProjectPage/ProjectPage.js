@@ -114,7 +114,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     return (
         <StyledProjectPage>
-            <button id="arrow-button" onClick={() => { handleArrow(); handleShowSideNav();}}><img id="arrow" src={arrowRight} alt="" /></button>
+            <button id="arrow-button" onClick={() => { handleArrow(); handleShowSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
             <ProjectSideNav
                 project={project}
                 handleShowComments={handleShowComments}
@@ -230,13 +230,26 @@ const StyledProjectPage = styled.div`
         cursor: pointer;
         display: none;
         position: absolute;
-        z-index: 6;
+        z-index: 1001;
         top: 50%;
+        .tooltiptext {
+            visibility: hidden;
+            width: 100%;
+            min-width: 160px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1000;
+            top: 0;
+            left: 105%;
+        }
         @media (max-width: 834px){
             display: block;
             left: -60px;
         }
-        
         @media (max-width: 428px){
             left: -45px;
         }
@@ -245,6 +258,10 @@ const StyledProjectPage = styled.div`
             width: 30px;
             height: 30px;
         }   
+    }
+    #arrow-button:hover .tooltiptext, #arrow-button:active .tooltiptext {
+        visibility: visible;
+        transition-delay: 1s;
     }
     .undefined {
         background: white;

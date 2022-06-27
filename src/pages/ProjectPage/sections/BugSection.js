@@ -25,8 +25,6 @@ export default function BugSection({
     setRerender
 }) {
 
-    //const { projectId, bugId } = useParams();
-
     const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);

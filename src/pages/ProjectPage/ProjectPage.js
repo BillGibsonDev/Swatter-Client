@@ -201,7 +201,6 @@ const StyledProjectPage = styled.div`
         max-width: 85vw;
     }
     @media (max-width: 820px){
-        margin-left: 80px;
         width: 760px;
     }
     @media (max-width: 768px){
@@ -209,6 +208,9 @@ const StyledProjectPage = styled.div`
     }
     @media (max-width: 428px){
         margin-left: 60px;
+        width: 360px;
+    }
+    @media (max-width: 414px){
         width: 340px;
     }
     @media (max-width: 390px){
@@ -251,7 +253,7 @@ const StyledProjectPage = styled.div`
     }
     .bug-table-wrapper {
         overflow: scroll;
-        scrollbar-width: none;  /* Firefox */
+        scrollbar-width: none;
         -ms-overflow-style: none;
         position: relative;
         width: 100vw;

@@ -52,9 +52,9 @@ export default function AddBugSection({
                 setLoading(false);
                 alert("Server Error - Bug not created");
             } else {
-                setRerender(!rerender);
                 setLoading(false);
                 alert('Bug Created!');
+                setRerender(!rerender);
             }
         })
     }

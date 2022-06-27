@@ -61,7 +61,7 @@ export default function ProjectsPage({user, role, handleShowComments, commentSec
     }
 
     return (
-        <StyledCommentSection ref={commentSection} style={{display: "none"}}>
+        <StyledCommentSection ref={commentSection} style={{display: "none" }}>
             <div className="title-container">
                 <h1>Comments</h1>
                 <img src={X} alt="Exit" onClick={() => {handleShowComments()}} />
@@ -120,8 +120,6 @@ const StyledCommentSection = styled.div`
     margin: 0 auto;
     min-height: 100vh;
     border: 2px white solid;
-    animation-name: slideLeft;
-    animation-duration: .5s;
     position: absolute;
     background: grey;
     z-index: 100;
@@ -140,9 +138,7 @@ const StyledCommentSection = styled.div`
         border-radius: 0;
     }
     @media (max-width: 428px){
-        left: -65px;
-        animation-name: slideLeft390;
-        animation-duration: .5s;
+        left: -60px;
         padding: 10px;
     }
     .undefined {

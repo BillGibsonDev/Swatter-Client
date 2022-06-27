@@ -182,8 +182,6 @@ const StyledAddBug = styled.div`
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
-    animation-name: slideLeft;
-    animation-duration: .5s;
     left: -50px;
     @media (max-width: 1440px){
         width: 100%;
@@ -196,13 +194,9 @@ const StyledAddBug = styled.div`
         width: 100vw;
         height: 100%;
         border-radius: 0;
-        animation-name: slideLeft810;
-        animation-duration: .5s;
     }
     @media (max-width: 428px){
-        left: -65px;
-        animation-name: slideLeft390;
-        animation-duration: .5s;
+        left: -60px;
         padding: 10px;
     }
     #exit-btn {

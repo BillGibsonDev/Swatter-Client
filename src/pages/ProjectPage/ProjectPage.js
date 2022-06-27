@@ -209,10 +209,17 @@ const StyledProjectPage = styled.div`
     }
     @media (max-width: 428px){
         margin-left: 60px;
+        width: 360px;
+    }
+    @media (max-width: 414px){
+        margin-left: 60px;
         width: 340px;
     }
     @media (max-width: 390px){
         width: 320px;
+    }
+    @media (max-width: 375px){
+        width: 310px;
     }
     @media (max-width: 360px){
         width: 295px;

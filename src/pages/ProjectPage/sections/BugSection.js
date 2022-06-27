@@ -206,7 +206,7 @@ export default function BugSection({
 
 const StyledBugSection = styled.div`
     display: none;
-    min-height: 100vh;
+    height: 100%;
     width: 79vw;
     margin: 0 auto;
     position: absolute;
@@ -214,8 +214,6 @@ const StyledBugSection = styled.div`
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
-    animation-name: slideLeft;
-    animation-duration: .5s;
     left: -50px;
     @media (max-width: 1440px){
         width: 100%;
@@ -228,16 +226,11 @@ const StyledBugSection = styled.div`
         width: 100vw;
         height: 100%;
         border-radius: 0;
-        animation-name: slideLeft810;
-        animation-duration: .5s;
     }
     @media (max-width: 428px){
-        left: -65px;
-        animation-name: slideLeft390;
-        animation-duration: .5s;
+        left: -60px;
         padding: 10px;
     }
-    
     #exit-btn {
         position: absolute;
         top: 10px;
@@ -249,7 +242,7 @@ const StyledBugSection = styled.div`
     .breadcrumbs {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         a {
             font-size: 20px;
             color: ${pallette.helperGrey};
@@ -360,7 +353,7 @@ const StyledBugSection = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 2% 0;
+            height: 100%;
             button {
                 width: 200px;
                 height: 40px;
@@ -376,6 +369,7 @@ const StyledBugSection = styled.div`
                 @media (max-width: 450px){
                     font-size: 16px;
                     width: 100px;
+                    margin-bottom: 0;
                 }
                 &:hover {
                     color: #ffffff;

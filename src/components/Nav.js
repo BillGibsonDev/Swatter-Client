@@ -82,7 +82,7 @@ const StyledNav = styled.div`
     }
     .bottom-container {
         display: flex;
-        height: 15%;
+        height: 20%;
         flex-direction: column;
         align-items: center;
         margin-bottom: 0;
@@ -109,6 +109,7 @@ const StyledNav = styled.div`
         a:hover .tooltiptext, a:active .tooltiptext {
             visibility: visible;
             transition-delay: 1s;
+            margin-bottom: 30px;
         }
     }
     a {

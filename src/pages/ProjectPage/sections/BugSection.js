@@ -98,7 +98,7 @@ export default function BugSection({
 
     return (
         <StyledBugSection ref={bugSection} style={{display: "none"}}>
-            <img id="exit-btn" src={X} alt="Exit" onClick={() => {handleShowBug()}} />
+            <button id="exit-btn" onClick={() => {handleShowBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
                 <Link to={`/projects/${sectionProjectId}`}>Project</Link><span>/</span>
@@ -204,7 +204,7 @@ export default function BugSection({
 
 const StyledBugSection = styled.div`
     display: none;
-    min-height: 100vh;
+    height: 100%;
     width: 79vw;
     margin: 0 auto;
     position: absolute;
@@ -212,8 +212,6 @@ const StyledBugSection = styled.div`
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
-    animation-name: slideLeft;
-    animation-duration: .5s;
     left: -50px;
     @media (max-width: 1440px){
         width: 100%;
@@ -226,28 +224,50 @@ const StyledBugSection = styled.div`
         width: 100vw;
         height: 100%;
         border-radius: 0;
-        animation-name: slideLeft810;
-        animation-duration: .5s;
     }
     @media (max-width: 428px){
-        left: -65px;
-        animation-name: slideLeft390;
-        animation-duration: .5s;
+        left: -60px;
         padding: 10px;
     }
-    
     #exit-btn {
+        background: none;
+        border: none;
+        width: 30px;
+        height: 30px;
         position: absolute;
         top: 10px;
         right: 10px;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
+        #exit-btn-icon {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .tooltiptext {
+            visibility: hidden;
+            width: 100%;
+            min-width: 160px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1000;
+            top: 0;
+            right: 105%;
+        }
+    }
+    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+        visibility: visible;
+        transition-delay: 1s;
     }
     .breadcrumbs {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
+        @media (max-width: 428px){
+            display: none;
+        }
         a {
             font-size: 20px;
             color: ${pallette.helperGrey};
@@ -358,7 +378,7 @@ const StyledBugSection = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 2% 0;
+            height: 100%;
             button {
                 width: 200px;
                 height: 40px;
@@ -374,6 +394,7 @@ const StyledBugSection = styled.div`
                 @media (max-width: 450px){
                     font-size: 16px;
                     width: 100px;
+                    margin-bottom: 0;
                 }
                 &:hover {
                     color: #ffffff;

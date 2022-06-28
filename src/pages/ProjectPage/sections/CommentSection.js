@@ -61,12 +61,11 @@ export default function ProjectsPage({user, role, handleShowComments, commentSec
     }
 
     return (
-        <StyledCommentSection ref={commentSection} style={{display: "none"}}>
+        <StyledCommentSection ref={commentSection} style={{display: "none" }}>
             <div className="title-container">
                 <h1>Comments</h1>
-                <img src={X} alt="Exit" onClick={() => {handleShowComments()}} />
+                <button id="exit-btn" onClick={() => {handleShowComments()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             </div>
-            
             { 
                 comments === [] 
                 ? <div className="undefined">
@@ -120,8 +119,6 @@ const StyledCommentSection = styled.div`
     margin: 0 auto;
     min-height: 100vh;
     border: 2px white solid;
-    animation-name: slideLeft;
-    animation-duration: .5s;
     position: absolute;
     background: grey;
     z-index: 100;
@@ -140,9 +137,7 @@ const StyledCommentSection = styled.div`
         border-radius: 0;
     }
     @media (max-width: 428px){
-        left: -65px;
-        animation-name: slideLeft390;
-        animation-duration: .5s;
+        left: -60px;
         padding: 10px;
     }
     .undefined {
@@ -153,15 +148,40 @@ const StyledCommentSection = styled.div`
         width: 95%;
         justify-content: space-between;
         align-items: center;
-        margin: 20px auto;
+        margin: 10px auto 20px auto;
         h1 {
             color: #ffffff;
         
         }
-        img {
+        #exit-btn {
+            background: none;
+            border: none;
             width: 30px;
             height: 30px;
-            cursor: pointer;
+            position: relative;
+                #exit-btn-icon {
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                }
+                .tooltiptext {
+                    visibility: hidden;
+                    width: 100%;
+                    min-width: 160px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1000;
+                    top: 0;
+                    right: 105%;
+                }
+            }
+        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
         }
     }
     .comment-maker {

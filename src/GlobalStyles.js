@@ -62,18 +62,6 @@ const GlobalStyles = createGlobalStyle`
             transform: scale(1.01);
         }
     }
-    @keyframes slideLeft810 {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: -400px; }
-    }
-    @keyframes slideLeft390 {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: -65px; }
-    }
-    @keyframes slideLeft {
-        from {width: 0; opacity: 0; left: -300px;}
-        to {width: 100%; opacity: 1; left: -50px; }
-    }
 `;
 
 export default GlobalStyles;

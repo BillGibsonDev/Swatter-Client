@@ -149,8 +149,8 @@ const StyledComment = styled.div`
                     }
                 }
             }
-            .dropdown:hover .dropdown-content {display: block;}
-            .dropdown:hover .dropbtn {background-color: ${pallette.helperGrey};}
+            .dropdown:hover .dropdown-content, .dropdown:active .dropdown-content, .dropdown:focus .dropdown-content {display: block;}
+            .dropdown:hover .dropbtn, .dropdown:active .dropdown-content, .dropdown:focus .dropdown-content {background-color: ${pallette.helperGrey};}
         }
         #Gibby{
             color: #008ee0;

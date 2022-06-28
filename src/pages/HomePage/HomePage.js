@@ -3,17 +3,11 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../styled/ThemeVariables';
+//import * as pallette from '../../styled/ThemeVariables';
 
 // components
 import Project from './components/Project.js';
 import HomePageLoader from '../../loaders/HomePageLoader';
-
-// router
-import { Link } from 'react-router-dom';
-
-// images
-import Add from '../../assets/icons/Add.png';
 
 export default function HomePage({user, role, confirmRole}) {
 
@@ -59,7 +53,6 @@ export default function HomePage({user, role, confirmRole}) {
                                 )
                             })
                         }
-                        <Link id="add-button" to={'/AddProjectPage'}>Add Project<img src={Add} alt=""/></Link>
                     </div>
                 </>
             }
@@ -69,52 +62,59 @@ export default function HomePage({user, role, confirmRole}) {
 
 const StyledHomePage = styled.div`
     width: 90%;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: auto;
     margin-top: 2%;
     min-height: 80vh;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    @media (max-width: 1280px){
+        margin-left: 80px;
+    }
+    @media (max-width: 1024px){
+        margin-left: 80px;
+    }
+    @media (max-width: 834px){
+        width: 900px;
+        max-width: 86vw;
+        margin-left: 90px;
+    }
+    @media (max-width: 820px){
+        width: 760px;
+    }
+    @media (max-width: 768px){
+        width: 710px;
+    }
+    @media (max-width: 428px){
+        width: 360px;
+        margin-left: 70px;
+    }
+    @media (max-width: 414px){
+        width: 340px;
+    }
+    @media (max-width: 390px){
+        width: 320px;
+    }
+    @media (max-width: 375px){
+        width: 310px;
+    }
+    @media (max-width: 360px){
+        width: 295px;
+    }
     .projects-container {
         width: 100%;
-        margin: 1% auto;
+        margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 2%;
         row-gap: 2em;
         @media (max-width: 1050px){
             grid-template-columns: 1fr 1fr;
-            margin-left: 30px;
         }
         @media (max-width: 450px){
             grid-template-columns: 75vw;
             row-gap: 20px;
-            margin-left: 50px;
-        }
-        #add-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            width: 100%;
-            height: 300px;
-            margin: 10px auto;
-            position: relative;
-            background: ${pallette.accentColor};
-            color: white;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: ${pallette.subtitleSize};
-            img {
-                margin-top: 10px;
-                width: 50px;
-            }
-            &:hover{
-                transition: 0.2s;
-                transform: scale(1.01);
-                background:#000000;
-            }
         }
     }
 `;

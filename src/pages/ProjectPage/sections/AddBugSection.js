@@ -163,6 +163,7 @@ export default function AddBugSection({
                                         onChange={(event) => {
                                             setSprint(event.target.value);
                                         }}>
+                                            <option value="">None</option>
                                         {
                                             options.map((sprint, key) => {
                                                 return(
@@ -170,7 +171,6 @@ export default function AddBugSection({
                                                 )
                                             })
                                         }
-                                        <option value="">None</option>
                                     </select>
                                 }
                             </label>

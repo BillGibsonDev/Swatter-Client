@@ -43,7 +43,7 @@ const StyledNav = styled.div`
     align-items: center;
     flex-direction: column;
     background: #000000;
-    z-index: 101;
+    z-index: 1;
     position: fixed;
     left: 0;
     top: 0;

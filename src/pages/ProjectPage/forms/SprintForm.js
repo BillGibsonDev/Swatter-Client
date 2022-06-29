@@ -107,7 +107,7 @@ const StyledSprintForm = styled.div`
     flex-direction: column;
     position: absolute;
     top: 100px;
-    left: 40%;
+    left: 10px;
     z-index: 1003;
     background: grey;
     border-radius: 8px;

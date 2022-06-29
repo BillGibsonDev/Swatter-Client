@@ -54,14 +54,13 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         function getProject(){
             axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
             .then(function (response){
-                setProject(response.data)
-                setBugs(response.data.bugs)
-                setLoading(false)
-               // setTotalBugs(response.data.bugs.length)
+                setProject(response.data);
+                setBugs(response.data.bugs);
                 setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open"));
                 setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"));
                 setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"));
                 setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"));
+                setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
@@ -166,10 +165,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                     }
                 </div>
             }
-            {
-                project === undefined || project.lenth === 0
-                ?<></>
-                :<>
+            {<>
                     <CommentSection
                         toggleComments={toggleComments}
                         user={user}
@@ -236,6 +232,7 @@ const StyledProjectPage = styled.div`
     display: flex;
     position: relative;
     margin-left: 350px;
+    z-index: 2;
     @media (max-width: 1440px){
         margin-left: 300px;
     }
@@ -273,7 +270,7 @@ const StyledProjectPage = styled.div`
         cursor: pointer;
         display: none;
         position: absolute;
-        z-index: 1001;
+        z-index: 2;
         top: 50%;
         .tooltiptext {
             visibility: hidden;

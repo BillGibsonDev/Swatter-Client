@@ -150,7 +150,7 @@ export default function SprintSection({
             {
                 isLoading === true 
                 ? <ProjectPageLoader />
-                : <div className="bug-table-wrapper">
+                : <div className="sprint-bug-table-wrapper">
                     <Searchbar />
                     { 
                         bugs === undefined 
@@ -186,14 +186,13 @@ export default function SprintSection({
 const StyledSprintSection = styled.div`
     display: none;
     height: 100%;
-    width: 80vw;
+    width: 100%;
     margin: 0 auto;
     position: absolute;
-    z-index: 100;
+    z-index: 101;
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
-    left: -50px;
     @media (max-width: 1440px){
         width: 100%;
         left: -15px;
@@ -255,7 +254,6 @@ const StyledSprintSection = styled.div`
     .button-wrapper {
         max-width: 70vw;
         display: flex;
-        margin-bottom: 10px;
         select, button {
             cursor: pointer;
             height: 30px;
@@ -275,6 +273,9 @@ const StyledSprintSection = styled.div`
             align-items: center;
             flex-direction: column;
             height: 10vh;
+            @media (max-width: 450px){
+                margin-top: 20px;
+            }
             .title-container {
                 display: flex;
                 width: 600px;
@@ -333,8 +334,14 @@ const StyledSprintSection = styled.div`
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
+                @media (max-width: 450px){
+                   flex-direction: column;
+                }
                 h5 {
                     color: white;
+                    @media (max-width: 450px){
+                        margin-bottom: 6px;
+                    }
                     span {
                         color: ${pallette.helperGrey};
                     }
@@ -343,7 +350,7 @@ const StyledSprintSection = styled.div`
         }
     }
 
-    .bug-table-wrapper {
+    .sprint-bug-table-wrapper {
         overflow: scroll;
         scrollbar-width: none;
         -ms-overflow-style: none;

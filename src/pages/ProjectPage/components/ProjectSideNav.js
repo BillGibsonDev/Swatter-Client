@@ -67,7 +67,7 @@ const StyledSideNav = styled.div`
     height: 100%;
     left: 60px;
     position: fixed;
-    z-index: 100;
+    z-index: 2;
     max-height: 100vh;
     animation-name: slideLeftSideNav;
     animation-duration: .5s;

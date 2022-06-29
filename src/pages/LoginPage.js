@@ -11,7 +11,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 	return (
 		<StyledLoginPage>
 			<h1>Swatter</h1>
-			<h2>Bug Tracking and Workflow Organization</h2>
+			<h2>Project Management</h2>
 			{
 				isLoading === true ? (
 					<div className="loading-container">

@@ -32,7 +32,7 @@ export default function BugSection({
     const [ options, setOptions ] = useState([])
 
     useEffect(() => {
-        function getBug(){
+        const getBug = (sectionProjectId, sectionBugId) => {
             axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${sectionProjectId}/${sectionBugId}`)
             .then(function (response){
                 setBug(response.data[0].bugs[0]);
@@ -45,8 +45,8 @@ export default function BugSection({
         }
         setOptions(project.sprints);
         getBug(sectionProjectId, sectionBugId);
-    }, [ sectionProjectId, sectionBugId, project, isLoading, rerender ]);
-    
+    }, [ sectionProjectId, sectionBugId, project ]);
+
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);
     const [ priority, setPriority ] = useState(bug.priority);
@@ -70,8 +70,8 @@ export default function BugSection({
                 alert("Server Error - Bug not updated")
             } else {
                 setLoading(false);
-                alert('Bug Updated!');
                 setRerender(!rerender);
+                alert('Bug Updated!');
             }
         })
     }
@@ -103,117 +103,115 @@ export default function BugSection({
 
     return (
         <StyledBugSection ref={bugSection} style={{display: "none"}}>
-            <button id="exit-btn" onClick={() => {toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <button id="exit-btn" onClick={() => { toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
                 <Link to={`/projects/${sectionProjectId}`}>Project</Link><span>/</span>
                 {
-                    bug[0] === undefined
+                    bug === undefined
                     ? <></>
-                    : <p>{bug[0].title}</p>
+                    : <p>{bug.title}</p>
                 }
             </div>
             {
                 isLoading === true 
                 ? <BugPageLoader />
-                :
-                    <div className="bug-container">
-                        <div className="title-container">
-                            <h1>{bug.title}</h1>
+                :<form className="bug-container">
+                    <div className="title-container">
+                        <h1>{bug.title}</h1>
+                    </div>
+                    <div className="info-wrapper">
+                        <div className="info-container">
+                            <h2><span>Creator: </span>{bug.author}</h2>
+                            <h2><span>Created: </span>{bug.date}</h2>
+                            <h2><span>Updated: </span>{bug.lastUpdate}</h2>
                         </div>
-                        <div className="info-wrapper">
-                            <div className="info-container">
-                                <h2><span>Creator: </span>{bug.author}</h2>
-                                <h2><span>Created: </span>{bug.date}</h2>
-                                <h2><span>Updated: </span>{bug.lastUpdate}</h2>
-                            </div>
-                            <div className="selector-container">
-                                <label>Tag:
-                                    <select 
-                                        id="tag"
-                                        defaultValue={bug.tag}
-                                        onChange={(event) => {
-                                            setTag(event.target.value);
-                                        }}>
-                                        <option value={bug.tag}>{bug.tag}</option>
-                                        <option value="Bug">Bug</option>
-                                        <option value="Feature">Feature</option>
-                                        <option value="Enhancement">Enhancement</option>
-                                        <option value="Task">Task</option>
-                                    </select>
-                                </label>
-                                <label>Priority:
-                                    <select
-                                        id="priority"
-                                        defaultValue={bug.priority}
-                                        onChange={(event) => {
-                                            setPriority(event.target.value);
+                        <div className="selector-container">
+                            <label>Tag:
+                                <select 
+                                    id="tag"
+                                    defaultValue={bug.tag}
+                                    onChange={(event) => {
+                                        setTag(event.target.value);
                                     }}>
-                                        <option value={bug.priority}>{bug.priority}</option>
-                                        <option value="Standard">Standard</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                    </select>
-                                </label>
-                                <label>Status:
-                                    <select
-                                        id="status"
-                                        defaultValue={bug.status}
-                                        onChange={(event) => {
-                                            setStatus(event.target.value);
-                                        }}>
-                                        <option value={bug.status}>{bug.status}</option>
-                                        <option value="Open">Open</option>
-                                        <option value="Underway">Underway</option>
-                                        <option value="Reviewing">Reviewing</option>
-                                        <option value="Completed">Completed</option>
-                                    </select>
-                                </label>
-                                <label>Sprint:
-                                    <select
-                                        id="sprint"
-                                        defaultValue={bug.sprint}
-                                        onChange={(event) => {
-                                            setSprint(event.target.value);
-                                        }}>
-                                        <option value={bug.sprint}>{bug.sprint}</option>
-                                        {
-                                            options.map((sprint, key) => {
-                                                return(
-                                                    <option key={key} value={`${sprint.title}`}>{sprint.title}</option>
-                                                )
-                                            })
-                                        }
-                                        <option value="">None</option>
-                                    </select>
-                                </label>
-                            </div>
-                        </div>
-                        <textarea
-                            type="text"
-                            cols="30"
-                            rows="10"
-                            id="description"
-                            defaultValue={bug.description}
-                            onChange={(event) => {
-                                setDescription(event.target.value);
-                            }}
-                        />
-                        <img src={bug.thumbnail} alt=""/>
-                        <div className="button-container">
-                            {
-                                author === user || role === process.env.REACT_APP_ADMIN_SECRET 
-                                ? <>
-                                    <button onClick={() => {updateBug();}}>Save</button>
-                                    <button  id="delete" onClick={() => { deleteBug();}}>Delete</button>
-                                </>
-                                : <>
-                                    <button onClick={unauthorized}>Save</button>
-                                    <button id="delete" onClick={unauthorized}>Delete</button>
-                                </>
-                            }
+                                    <option value={bug.tag}>{bug.tag}</option>
+                                    <option value="Bug">Bug</option>
+                                    <option value="Feature">Feature</option>
+                                    <option value="Enhancement">Enhancement</option>
+                                    <option value="Task">Task</option>
+                                </select>
+                            </label>
+                            <label>Priority:
+                                <select
+                                    id="priority"
+                                    defaultValue={bug.priority}
+                                    onChange={(event) => {
+                                        setPriority(event.target.value);
+                                }}>
+                                    <option value={bug.priority}>{bug.priority}</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </label>
+                            <label>Status:
+                                <select
+                                    id="status"
+                                    defaultValue={bug.status}
+                                    onChange={(event) => {
+                                        setStatus(event.target.value);
+                                    }}>
+                                    <option value={bug.status}>{bug.status}</option>
+                                    <option value="Open">Open</option>
+                                    <option value="Underway">Underway</option>
+                                    <option value="Reviewing">Reviewing</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                            </label>
+                            <label>Sprint:
+                                <select
+                                    id="sprint"
+                                    defaultValue={bug.sprint}
+                                    onChange={(event) => {
+                                        setSprint(event.target.value);
+                                    }}>
+                                    <option value={bug.sprint}>{bug.sprint}</option>
+                                    {
+                                        options.map((sprint, key) => {
+                                            return(
+                                                <option key={key} value={`${sprint.title}`}>{sprint.title}</option>
+                                            )
+                                        })
+                                    }
+                                    <option value="">None</option>
+                                </select>
+                            </label>
                         </div>
                     </div>
+                    <textarea
+                        defaultValue={bug.description}
+                        cols="30"
+                        rows="10"
+                        id="description"
+                        onChange={(event) => {
+                            setDescription(event.target.value);
+                        }}
+                    />
+                    <img src={bug.thumbnail} alt=""/>
+                    <div className="button-container">
+                        {
+                            author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                            ? <>
+                                <button onClick={() => {updateBug(); setRerender(!rerender)}}>Save</button>
+                                <button  id="delete" onClick={() => { deleteBug();}}>Delete</button>
+                            </>
+                            : <>
+                                <button onClick={unauthorized}>Save</button>
+                                <button id="delete" onClick={unauthorized}>Delete</button>
+                            </>
+                        }
+                    </div>
+                </form>
             }
         </StyledBugSection >
     )
@@ -225,7 +223,7 @@ const StyledBugSection = styled.div`
     width: 100%;
     margin: 0 auto;
     position: absolute;
-    z-index: 101;
+    z-index: 1000;
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
@@ -380,6 +378,7 @@ const StyledBugSection = styled.div`
             }
         }
         textarea {
+            width: 100%;
             margin: 20px 0;
             padding: 10px;
             font-size: 18px;
@@ -388,6 +387,7 @@ const StyledBugSection = styled.div`
                 font-size: 14px;
             }
         }
+        
         img {
             width: 300px;
         }

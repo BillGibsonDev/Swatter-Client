@@ -334,7 +334,7 @@ const StyledAddBug = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 2%;
+            margin-top: 16px;
             button, a {
                 display: flex;
                 justify-content: center;

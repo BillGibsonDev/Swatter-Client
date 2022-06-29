@@ -72,7 +72,7 @@ export const SprintForm = ({
             </label>
              <label>End Date 
                 <input 
-                    type="text"
+                    type="date"
                     id="end-date"
                     onChange={(event) => {
                         setEndDate(event.target.value);

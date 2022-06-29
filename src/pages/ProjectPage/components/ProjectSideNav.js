@@ -8,7 +8,6 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 import DefaultImage from '../../../assets/icons/cubeBlack.png';
 import Repo from '../../../assets/icons/code.png';
 import Globe from '../../../assets/icons/globe.png';
-import Schedule from '../../../assets/icons/schedule.png';
 import Settings from '../../../assets/icons/panel.png';
 import AddBug from '../../../assets/icons/plus.png';
 import Comments from '../../../assets/icons/comments.png';
@@ -48,7 +47,6 @@ export const ProjectSideNav = ({
                 </h5>
             </div>
             <div className="menu-wrapper">
-                <Link to={`/`}><img src={Schedule} alt="" />Schedule</Link>
                 <button onClick={() => { toggleSprints()}} ><img src={Sprints} alt="" />Sprints</button>
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>

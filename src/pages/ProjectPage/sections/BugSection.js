@@ -80,10 +80,7 @@ export default function BugSection({
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
             setLoading(true);
-            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${sectionProjectId}/${sectionBugId}`, {
-                projectId: sectionProjectId,
-                bugId: bug._id,
-            })
+            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${sectionProjectId}/${sectionBugId}`)
             .then(function(response) {
                 if(response.data !== "Bug Deleted"){
                     setLoading(false);

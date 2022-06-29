@@ -29,21 +29,21 @@ export const EditSprintForm = ({
 
     useEffect(() => {
         if(searchSprint){
-           setSprintId(project.sprints.filter(sprints => sprints.title === searchSprint)[0]._id);
+            setSprintId(project.sprints.filter(sprints => sprints.title === searchSprint)[0]._id);
         }
         const handleSprint = (projectId, sprintId) => {
-                axios.get(`${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
-                .then(function(response) {
-                    setSprint(response.data[0].sprints[0]);
-                })
-                .catch(function(response){
-                    console.log(response);
-                })
-            };
+            axios.get(`${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
+            .then(function(response) {
+                setSprint(response.data[0].sprints[0]);
+            })
+            .catch(function(response){
+                console.log(response);
+            })
+        };
         if(sprintId){
             handleSprint(projectId, sprintId);
         }
-    }, [project, projectId, searchSprint, sprintId, rerender]) 
+    }, [project, projectId, searchSprint, sprintId]) 
 
     const [ title, setTitle ] = useState(sprint.title);
     const [ goal, setGoal ] = useState(sprint.goal);
@@ -70,6 +70,20 @@ export const EditSprintForm = ({
         .catch(function(response){
             console.log(response);
         })
+    }
+
+    const handleDeleteSprint = () => {
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            axios.post(`${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`)
+            .then(function(response) {
+                if(response.data !== "Sprint Deleted"){
+                    alert("Server Error - Sprint not deleted")
+                } else {
+                    alert('Sprint Deleted');
+                }
+            })
+        }
     }
 
     return (
@@ -116,11 +130,19 @@ export const EditSprintForm = ({
                     }} 
                 />
             </label>
-            {
-                role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
-                ? <button onClick={()=>{confirmRole(); handleUpdateSprint();}}>Save</button>
-                : <button onClick={unauthorized}>Save</button>
-            }
+            <div className="button-container">
+                {
+                    role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <>
+                        <button onClick={()=>{confirmRole(); handleUpdateSprint();}}>Save</button>
+                        <button id="delete" onClick={()=>{confirmRole(); toggleEditSprintForm(); handleDeleteSprint();}}>Delete</button>
+                    </>
+                    : <>
+                        <button onClick={unauthorized}>Save</button>
+                        <button id="delete" onClick={unauthorized}>Delete</button>
+                    </>
+                }
+            </div>
         </StyledSprintForm>
     )
 }
@@ -171,7 +193,20 @@ const StyledSprintForm = styled.div`
             padding: 2px 4px;
         }
     }
-    button {
-        cursor: pointer;
+    .button-container {
+        display: flex;
+        width: 90%;
+        justify-content: space-between;
+        margin: auto;
+        button {
+            width: 100px;
+            padding: 2px 8px;
+            cursor: pointer;
+        }
+        #delete {
+            color: white;
+            background: red;
+            border: red;
+        }
     }
 `;

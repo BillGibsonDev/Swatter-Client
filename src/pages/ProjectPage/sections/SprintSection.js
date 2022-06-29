@@ -9,6 +9,7 @@ import SprintBugTable from '../components/BugTable.js';
 import { Searchbar } from '../forms/Searchbar';
 import { SprintForm } from '../forms/SprintForm.js';
 import { EditSprintForm } from '../forms/EditSprintForm.js';
+
 // images
 import X from '../../../assets/icons/whiteX.png';
 import Edit from "../../../assets/icons/editIconWhite.png";
@@ -118,7 +119,7 @@ export default function SprintSection({
                                         {
                                             sprint.endDate === "" 
                                             ? <></>
-                                            : <h5>{handleDaysRemaining(sprint.endDate)} Days Remaining</h5>
+                                            : <h5>{handleDaysRemaining(sprint.endDate)+ 1} Days Remaining</h5>
                                         }
                                     </div>
                                 </div>
@@ -136,17 +137,21 @@ export default function SprintSection({
                 confirmRole={confirmRole}
                 role={role}
             />
-            <EditSprintForm
-                projectId={projectId}
-                toggleEditSprintForm={toggleEditSprintForm}
-                editSprintForm={editSprintForm}
-                setRerender={setRerender}
-                rerender={rerender}
-                project={project}
-                searchSprint={searchSprint}
-                confirmRole={confirmRole}
-                role={role}
-            />
+            {
+                searchSprint === undefined &&  project.sprints === undefined
+                ? <></>
+                : <EditSprintForm
+                    projectId={projectId}
+                    toggleEditSprintForm={toggleEditSprintForm}
+                    editSprintForm={editSprintForm}
+                    setRerender={setRerender}
+                    rerender={rerender}
+                    project={project}
+                    searchSprint={searchSprint}
+                    confirmRole={confirmRole}
+                    role={role}
+                />
+            }
             {
                 isLoading === true 
                 ? <ProjectPageLoader />
@@ -349,7 +354,6 @@ const StyledSprintSection = styled.div`
             }
         }
     }
-
     .sprint-bug-table-wrapper {
         overflow: scroll;
         scrollbar-width: none;

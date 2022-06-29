@@ -8,7 +8,7 @@ import styled from 'styled-components';
 // components
 import BugTable from './components/BugTable.js';
 import { ProjectSideNav } from './components/ProjectSideNav';
-import { Searchbar } from './components/Searchbar';
+import { Searchbar } from './forms/Searchbar';
 
 // loaders
 import ProjectPageLoader from '../../loaders/ProjectPageLoader';
@@ -17,6 +17,7 @@ import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 import CommentSection from './sections/CommentSection';
 import BugSection from './sections/BugSection';
 import AddBugSection from './sections/AddBugSection';
+import SprintSection from './sections/SprintSection.js';
 
 // images
 import arrowRight from '../../assets/icons/arrowRight.png';
@@ -29,6 +30,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
     const commentSection = useRef();
     const bugSection = useRef();
     const addBugSection = useRef();
+    const sprintSection = useRef();
 
     const { projectId, bugId } = useParams();
 
@@ -56,20 +58,20 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                 setBugs(response.data.bugs)
                 setLoading(false)
                // setTotalBugs(response.data.bugs.length)
-                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open"))
-                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"))
-                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"))
-                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"))
+                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open"));
+                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"));
+                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"));
+                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"));
             })
             .catch(function (error) {
-                console.log(error)
+                console.log(error);
             });
         }
-        getProject(projectId);
+       getProject(projectId);
     }, [ projectId, bugId, rerender ]);
 
-    const handleShowComments = () => {
-        setRerender(!rerender)
+    const toggleComments = () => {
+        setRerender(!rerender);
         let section = commentSection.current;
         if (section.style.display === "none") {
             section.style.display = "block";
@@ -78,7 +80,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         }
     }
 
-    const handleShowBug = () => {
+    const toggleBug = () => {
         setRerender(!rerender)
         let section = bugSection.current;
         if (section.style.display === "none") {
@@ -88,7 +90,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         }
     }
 
-    const handleShowAddBug = () => {
+    const toggleAddBug = () => {
         setRerender(!rerender)
         let section = addBugSection.current;
         if (section.style.display === "none") {
@@ -103,8 +105,19 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         element.classList.toggle("rotate");
     }
 
-    const handleShowSideNav = () => {
+    const toggleSideNav = () => {
+        setRerender(!rerender);
         let section = projectSideNavRef.current;
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
+
+    const toggleSprints = () => {
+        setRerender(!rerender);
+        let section = sprintSection.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -114,12 +127,13 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     return (
         <StyledProjectPage>
-            <button id="arrow-button" onClick={() => { handleArrow(); handleShowSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
+            <button id="arrow-button" onClick={() => { handleArrow(); toggleSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
             <ProjectSideNav
                 project={project}
-                handleShowComments={handleShowComments}
-                handleShowAddBugs={handleShowAddBug}
+                toggleComments={toggleComments}
+                toggleAddBugs={toggleAddBug}
                 projectSideNavRef={projectSideNavRef}
+                toggleSprints={toggleSprints}
             />
             {
                 isLoading === true 
@@ -145,41 +159,71 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                                 setSectionBugId={setSectionBugId}
                                 projectId={projectId}
                                 project={project}
-                                handleShowBug={handleShowBug}
+                                toggleBug={toggleBug}
                                 bugSection={bugSection}
                             />
                         </>
                     }
                 </div>
             }
-            <CommentSection
-                handleShowComments={handleShowComments}
-                user={user}
-                role={role}
-                commentSection={commentSection}
-                setRerender={setRerender}
-                rerender={rerender}
-            />
-            <BugSection
-                handleShowBug={handleShowBug}
-                user={user}
-                role={role}
-                sectionProjectId={sectionProjectId}
-				sectionBugId={sectionBugId}
-                bugSection={bugSection}
-                setRerender={setRerender}
-                rerender={rerender}
-            />
-            <AddBugSection
-                handleShowAddBug={handleShowAddBug}
-                user={user}
-                role={role}
-                projectId={projectId}
-                addBugSection={addBugSection}
-                confirmRole={confirmRole}
-                setRerender={setRerender}
-                rerender={rerender}
-            />
+            {
+                project === undefined || project.lenth === 0
+                ?<></>
+                :<>
+                    <CommentSection
+                        toggleComments={toggleComments}
+                        user={user}
+                        role={role}
+                        commentSection={commentSection}
+                        setRerender={setRerender}
+                        rerender={rerender}
+                    />
+                    <BugSection
+                        toggleBug={toggleBug}
+                        user={user}
+                        role={role}
+                        sectionProjectId={sectionProjectId}
+                        sectionBugId={sectionBugId}
+                        bugSection={bugSection}
+                        setRerender={setRerender}
+                        rerender={rerender}
+                        project={project}
+                    />
+                    <AddBugSection
+                        toggleAddBug={toggleAddBug}
+                        user={user}
+                        role={role}
+                        projectId={projectId}
+                        project={project}
+                        addBugSection={addBugSection}
+                        confirmRole={confirmRole}
+                        setRerender={setRerender}
+                        rerender={rerender}
+                    />
+                    <SprintSection
+                        bugs={bugs}
+                        setSectionProjectId={setSectionProjectId}
+                        setSectionBugId={setSectionBugId}
+                        projectId={projectId}
+                        project={project}
+                        toggleBug={toggleBug}
+                        bugSection={bugSection}
+                        toggleAddBug={toggleAddBug}
+                        user={user}
+                        role={role}
+                        sprintSection={sprintSection}
+                        confirmRole={confirmRole}
+                        setRerender={setRerender}
+                        rerender={rerender}
+                        openBugs={openBugs}
+                        reviewBugs={reviewBugs}
+                        underwayBugs={underwayBugs}
+                        completedBugs={completedBugs}
+                        toggleSprints={toggleSprints}
+                    />
+                </>
+            }
+            
         </StyledProjectPage>
     )
 }

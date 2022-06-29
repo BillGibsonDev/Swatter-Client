@@ -17,7 +17,13 @@ import Sprints from '../../../assets/icons/sprint.png';
 // router
 import { Link } from 'react-router-dom';
 
-export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, projectSideNavRef}) => {
+export const ProjectSideNav = ({
+    project, 
+    toggleComments, 
+    toggleAddBugs,
+    toggleSprints, 
+    projectSideNavRef
+}) => {
 
     const [ screenWidth, setScreenWidth ] = useState(0)
 
@@ -43,11 +49,11 @@ export const ProjectSideNav = ({project, handleShowComments, handleShowAddBugs, 
             </div>
             <div className="menu-wrapper">
                 <Link to={`/`}><img src={Schedule} alt="" />Schedule</Link>
-                <Link to={`/`}><img src={Sprints} alt="" />Sprints</Link>
+                <button onClick={() => { toggleSprints()}} ><img src={Sprints} alt="" />Sprints</button>
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
-                <h6 onClick={()=> { handleShowComments()}}><img src={Comments} alt="" />Comments</h6>
-                <h6 onClick={()=> { handleShowAddBugs()}}><img src={AddBug} alt="" />Add Bug</h6>
+                <button onClick={()=> { toggleComments()}}><img src={Comments} alt="" />Comments</button>
+                <button onClick={()=> { toggleAddBugs()}}><img src={AddBug} alt="" />Add Bug</button>
                 <Link to={`/`}><img src={Settings} alt="" />Settings</Link>
             </div>
         </div>
@@ -103,7 +109,7 @@ const StyledSideNav = styled.div`
     }
     .menu-wrapper {
         margin-top: 20px;
-        a, h6 {
+        a, button {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
@@ -112,6 +118,9 @@ const StyledSideNav = styled.div`
             font-size: 16px;
             font-weight: 400;
             cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
             img {
                 width: 25px;
                 height: 25px;

@@ -1,0 +1,177 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+// styled
+import styled from 'styled-components';
+//import * as pallette from '../../styled/ThemeVariables';
+
+// images
+import X from '../../../assets/icons/whiteX.png';
+
+export const EditSprintForm = ({
+    projectId,
+    editSprintForm,
+    toggleEditSprintForm,
+    rerender,
+    setRerender,
+    project, 
+    searchSprint,
+    role, 
+    confirmRole
+}) => {
+
+    const [ sprint, setSprint ] = useState([]);
+    const [ sprintId, setSprintId ] = useState(false);
+
+    function unauthorized() {
+        alert("You do not have permissions to do that!")
+    }
+
+    useEffect(() => {
+        if(searchSprint){
+           setSprintId(project.sprints.filter(sprints => sprints.title === searchSprint)[0]._id);
+        }
+        const handleSprint = (projectId, sprintId) => {
+                axios.get(`${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
+                .then(function(response) {
+                    setSprint(response.data[0].sprints[0]);
+                })
+                .catch(function(response){
+                    console.log(response);
+                })
+            };
+        if(sprintId){
+            handleSprint(projectId, sprintId);
+        }
+    }, [project, projectId, searchSprint, sprintId, rerender]) 
+
+    const [ title, setTitle ] = useState(sprint.title);
+    const [ goal, setGoal ] = useState(sprint.goal);
+    const [ endDate, setEndDate ] = useState(sprint.endDate);
+    const [ color, setColor ] = useState(sprint.color)
+
+    const handleUpdateSprint = () => {
+        axios.post(`${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`, {
+            projectId: projectId,
+            sprintId: sprintId,
+            goal: goal,
+            title: title,
+            endDate: endDate,
+            color: color,
+        })
+        .then(function(response) {
+            if(response.data !== "Sprint Updated"){
+                alert("Server Error - Sprint not updated");
+            } else {
+                alert('Sprint Updated!');
+                setRerender(!rerender);
+            }
+        })
+        .catch(function(response){
+            console.log(response);
+        })
+    }
+
+    return (
+        <StyledSprintForm ref={editSprintForm} style={{display: "none"}}>
+            <h2>Edit Sprint</h2>
+            <button id="exit-btn" onClick={() => {toggleEditSprintForm()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <label>Title 
+                <input 
+                    type="text"
+                    id="title"
+                    defaultValue={sprint.title}
+                    onChange={(event) => {
+                        setTitle(event.target.value);
+                    }} 
+                />
+            </label>
+             <label>Goal 
+                <textarea
+                    defaultValue={sprint.goal}
+                    type="text"
+                    id="goal"
+                    onChange={(event) => {
+                        setGoal(event.target.value);
+                    }} 
+                />
+            </label>
+             <label>End Date 
+                <input 
+                    type="date"
+                    defaultValue={sprint.endDate}
+                    id="end-date"
+                    onChange={(event) => {
+                        setEndDate(event.target.value);
+                    }} 
+                />
+            </label>
+            <label>Color Code
+                <input
+                    type="text"
+                    defaultValue={sprint.color}
+                    id="color-code"
+                    onChange={(event) => {
+                        setColor(event.target.value);
+                    }} 
+                />
+            </label>
+            {
+                role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
+                ? <button onClick={()=>{confirmRole(); handleUpdateSprint();}}>Save</button>
+                : <button onClick={unauthorized}>Save</button>
+            }
+        </StyledSprintForm>
+    )
+}
+
+const StyledSprintForm = styled.div`
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100px;
+    left: 40%;
+    z-index: 1003;
+    background: grey;
+    border-radius: 8px;
+    h2 {
+        margin: 10px auto;
+    }
+    #exit-btn-icon {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+    .tooltiptext {
+        visibility: hidden;
+        width: 100%;
+        min-width: 160px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1000;
+        top: 0;
+        right: 105%;
+    }
+    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+        visibility: visible;
+        transition-delay: 1s;
+    }
+    label {
+        display: flex;
+        margin: auto;
+        input, textarea {
+            padding: 2px 4px;
+        }
+    }
+    button {
+        cursor: pointer;
+    }
+`;

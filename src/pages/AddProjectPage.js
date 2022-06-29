@@ -59,6 +59,9 @@ export default function AddProjectPage({user, role, confirmRole}) {
                 alert('Project Started!');
             }
         })
+        .catch(function(response){
+            console.log(response);
+        })
     }
 
     function unauthorized() {

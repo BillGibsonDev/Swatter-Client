@@ -5,8 +5,9 @@ import * as pallette from '../../../styled/ThemeVariables';
 // components
 import Bug from './Bug.js';
 
-export default function BugTable({ 
+export default function SprintBugTable({ 
     user, 
+    role, 
     bugs,
     openBugs, 
     underwayBugs, 
@@ -14,12 +15,16 @@ export default function BugTable({
     completedBugs,
     setRerender, 
     rerender,
+    bugSection,
     setSectionProjectId,
     setSectionBugId, 
     projectId,
     project,
-    toggleBug
+    toggleBug,
+    searchSprint
 }) {
+
+    console.log
 
     return (
         <StyledBugTable>
@@ -38,11 +43,11 @@ export default function BugTable({
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         projectTitle={project.projectTitle}
-                                        projectId={projectId}
+                                        projectId = {projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
+                                        thumbnail = {bug.thumbnail}
+                                        description = {bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -51,10 +56,6 @@ export default function BugTable({
                                         key={key}
                                         user={user}
                                         toggleBug={toggleBug}
-                                        sprint={bug.sprint}
-                                        project={project}
-                                        rerender={rerender}
-                                        setRerender={setRerender}
                                     />
                                 )
                             })
@@ -66,17 +67,15 @@ export default function BugTable({
                             underwayBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        rerender={rerender}
-                                        setRerender={setRerender}
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
                                         projectTitle={project.projectTitle}
-                                        projectId={projectId}
+                                        projectId = {projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
+                                        thumbnail = {bug.thumbnail}
+                                        description = {bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -84,8 +83,6 @@ export default function BugTable({
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
                                         user={user}
-                                        sprint={bug.sprint}
-                                        project={project}
                                     />
                                 )
                             })
@@ -97,8 +94,6 @@ export default function BugTable({
                             reviewBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        rerender={rerender}
-                                        setRerender={setRerender}
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
@@ -106,8 +101,8 @@ export default function BugTable({
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
+                                        thumbnail = {bug.thumbnail}
+                                        description = {bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -115,8 +110,6 @@ export default function BugTable({
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
                                         user={user}
-                                        sprint={bug.sprint}
-                                        project={project}
                                     />
                                 )
                             })
@@ -128,17 +121,15 @@ export default function BugTable({
                             completedBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        rerender={rerender}
-                                        setRerender={setRerender}
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
                                         projectTitle={project.projectTitle}
-                                        projectId={projectId}
+                                        projectId = {projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
+                                        thumbnail = {bug.thumbnail}
+                                        description = {bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -146,8 +137,6 @@ export default function BugTable({
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
                                         user={user}
-                                        sprint={bug.sprint}
-                                        project={project}
                                     />
                                 )
                             })

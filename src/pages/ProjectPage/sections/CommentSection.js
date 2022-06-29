@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 // loader asset
 import Loader from '../../../loaders/Loader';
 
-export default function ProjectsPage({user, role, handleShowComments, commentSection}) {
+export default function ProjectsPage({user, role, toggleComments, commentSection}) {
 
     const { projectId, bugId } = useParams();
 
@@ -64,7 +64,7 @@ export default function ProjectsPage({user, role, handleShowComments, commentSec
         <StyledCommentSection ref={commentSection} style={{display: "none" }}>
             <div className="title-container">
                 <h1>Comments</h1>
-                <button id="exit-btn" onClick={() => {handleShowComments()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+                <button id="exit-btn" onClick={() => {toggleComments()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             </div>
             { 
                 comments === [] 

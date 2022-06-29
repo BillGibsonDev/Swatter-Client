@@ -24,26 +24,30 @@ export default function Bug({
     tag,
     lastUpdate,
     user,
-	role,
-	handleShowBug,
+	toggleBug,
 	setSectionProjectId,
 	setSectionBugId,
+	sprint, 
+	project,
+	rerender,
 }) {
 
 	const [ compareDate, setCompareDate] = useState("");
+	const [ sprintColor, setSprintColor ] = useState("");
 
 	useEffect(() => {
 	  const handleDate = () => {
 		const currentDate = new Date();
 		setCompareDate( currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
 	  }
+	  setSprintColor(project.sprints.filter(sprints => sprints.title === sprint))
 	  handleDate();
-	}, [])
-	
+	}, [project, sprint, rerender])
+
 	const [ currentDate ] = compareDate.split(",");
 	const [ bugDate, bugTime ] = lastUpdate.split(",");
     return (
-        <StyledBug className={status} onClick={() => { setSectionProjectId(projectId); setSectionBugId(bugId); handleShowBug();}}>
+        <StyledBug className={status} onClick={() => { setSectionProjectId(projectId); setSectionBugId(bugId); toggleBug();}}>
 			<div className="top-container">
 				<h2 id="title">{title}</h2>
 			</div>
@@ -55,6 +59,7 @@ export default function Bug({
 						: bugDate
 					}
 				</h2>
+				<h2 id="sprint" style={{background: sprintColor[0] === undefined ? "" : sprintColor[0].color}}>{sprint}</h2>
 			</div>
 			<div className="bottom-container">
 				<div className="status-icons-container">
@@ -137,12 +142,22 @@ const StyledBug = styled.div `
 				font-weight: 400;
 			}
 			#date, #author {
-				display: flex;
-				justify-content: center;
-				flex-direction: column;
 				color: #e4e4e4;
 				font-size: 12px;
 				font-weight: 400;
+			}
+		}
+		.center-container {
+			flex-direction: column;
+			#date, #sprint {
+				margin-right: auto;
+			}
+			#sprint {
+				margin-top: 6px;
+				color: white;
+				padding: 0 6px;
+				font-size: 14px;
+				border-radius: 4px;
 			}
 		}
 	.bottom-container {

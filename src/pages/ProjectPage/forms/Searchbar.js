@@ -17,7 +17,7 @@ export const Searchbar = ({project}) => {
   )
 }
 
-const StyledSearchbar = styled.div`
+const StyledSearchbar = styled.form`
 width: 200px;
 position: absolute;
 top: 20px;

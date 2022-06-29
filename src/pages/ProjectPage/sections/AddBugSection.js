@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // styled
@@ -20,9 +20,10 @@ export default function AddBugSection({
     confirmRole, 
     projectId, 
     addBugSection, 
-    handleShowAddBug,
+    toggleAddBug,
     rerender,
-    setRerender
+    setRerender, 
+    project
 }) {
 
     const [ title, setTitle ] = useState("");
@@ -33,6 +34,15 @@ export default function AddBugSection({
     const [ priority, setPriority ] = useState("");
     const [ tag, setTag ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
+    const [ sprint, setSprint ] = useState('');
+    const [ options, setOptions ] = useState([])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setOptions(project.sprints);
+        }, 2000);
+    }, [project])
+    
 
     function addBug() {
         setLoading(true)
@@ -46,6 +56,7 @@ export default function AddBugSection({
             priority: priority,
             tag: tag,
             role: role,
+            sprint: sprint,
         })
         .then(function(response) {
             if(response.data !== "Bug Created"){
@@ -65,7 +76,7 @@ export default function AddBugSection({
 
     return (
         <StyledAddBug ref={addBugSection} style={{display: "none"}}> 
-            <button id="exit-btn" onClick={() => {handleShowAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <button id="exit-btn" onClick={() => {toggleAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <h1>Add a Bug</h1>
             {
                 user === null ? <h1>You are signed out</h1>
@@ -142,6 +153,26 @@ export default function AddBugSection({
                                     <option value="Redesign">Redesign</option>
                                     <option value="Task">Task</option>
                                 </select>
+                            </label>
+                            <label>Sprint:
+                                {
+                                    options === undefined 
+                                    ?<></>    
+                                    :<select
+                                        id="sprint"
+                                        onChange={(event) => {
+                                            setSprint(event.target.value);
+                                        }}>
+                                        {
+                                            options.map((sprint, key) => {
+                                                return(
+                                                    <option key={key} value={`${sprint.title}`}>{sprint.title}</option>
+                                                )
+                                            })
+                                        }
+                                        <option value="">None</option>
+                                    </select>
+                                }
                             </label>
                         </div>
                     </div>

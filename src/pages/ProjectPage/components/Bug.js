@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
 // images
-import BugPicture from '../../../assets/icons/bugYaleBlue.png';
+import BugPicture from '../../../assets/icons/bugWhite.png';
 import Feature from '../../../assets/icons/featureYaleBlue.png';
 import Enhancement from '../../../assets/icons/cog.png';
 import arrowRed from "../../../assets/icons/arrowRed.png";

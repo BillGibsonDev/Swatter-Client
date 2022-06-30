@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-//import * as pallette from '../../styled/ThemeVariables';
+import * as pallette from '../../../styled/ThemeVariables';
 
 // images
 import X from '../../../assets/icons/whiteX.png';
@@ -199,14 +199,28 @@ const StyledSprintForm = styled.div`
         justify-content: space-between;
         margin: auto;
         button {
-            width: 100px;
-            padding: 2px 8px;
+            width: 200px;
+            height: 40px;
             cursor: pointer;
-        }
-        #delete {
-            color: white;
-            background: red;
-            border: red;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: ${pallette.subtitleSize};
+            @media (max-width: 1050px){
+                margin: 10px 0;
+                width: 150px;
+            }
+            @media (max-width: 450px){
+                font-size: 16px;
+                width: 100px;
+                margin-bottom: 0;
+            }
+            &:hover {
+                color: #ffffff;
+                background: #000000;
+                transform: scale(1.05);
+                transition: 0.2s;
+            }
         }
     }
 `;

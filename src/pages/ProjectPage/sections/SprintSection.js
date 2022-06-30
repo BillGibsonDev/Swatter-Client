@@ -198,6 +198,7 @@ const StyledSprintSection = styled.div`
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
+    left: -50px;
     @media (max-width: 1440px){
         width: 100%;
         left: -15px;

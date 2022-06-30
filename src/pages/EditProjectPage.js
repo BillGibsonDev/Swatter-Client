@@ -216,7 +216,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
                 {
                     author === user || role === process.env.REACT_APP_ADMIN 
                     ? <button  id="delete" onClick={deleteProject}>Delete</button>
-                    : <button onClick={unauthorized}>Update</button>
+                    : <button onClick={unauthorized}>Delete</button>
                 }
             </div>
         </StyledProjectPage>
@@ -357,29 +357,27 @@ const StyledProjectPage = styled.div`
             width: 90%;
         }
         button {
-            width: 100px;
+            width: 200px;
+            height: 40px;
             cursor: pointer;
             border: none;
-            border-radius: 4px;
-            font-size: 1.2em;
+            border-radius: 6px;
             font-weight: 700;
-            background: #d1d1d1;
-            &:hover{
-                color: #ffffff;
-                cursor: pointer;
-                background: #000000;
-                transition: 0.2s;
-                transform: scale(1.01);
+            font-size: 18px;
+            @media (max-width: 1050px){
+                margin: 10px 0;
+                width: 150px;
             }
-        }
-        #delete {
-            color: white;
-            background: red;
+            @media (max-width: 450px){
+                font-size: 16px;
+                width: 100px;
+                margin-bottom: 0;
+            }
             &:hover {
-                color: black;
-                background: #df6464;
+                color: #ffffff;
+                background: #000000;
                 transform: scale(1.05);
-                transition: 0.3s;
+                transition: 0.2s;
             }
         }
     }

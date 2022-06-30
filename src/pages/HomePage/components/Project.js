@@ -92,7 +92,7 @@ const StyledProject = styled.div`
             }
         }
         h2 {
-            font-size: ${pallette.subtitleSize};
+            font-size: 20px;
             color: white;
             font-weight: 400;
             @media (max-width: 450px){

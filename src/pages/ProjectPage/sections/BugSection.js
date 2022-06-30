@@ -44,7 +44,9 @@ export default function BugSection({
             });
         }
         setOptions(project.sprints);
-        getBug(sectionProjectId, sectionBugId);
+        if(sectionBugId && sectionProjectId){
+            getBug(sectionProjectId, sectionBugId);
+        }
     }, [ sectionProjectId, sectionBugId, project, isLoading ]);
 
     const [ status, setStatus ] = useState(bug.status);
@@ -70,8 +72,8 @@ export default function BugSection({
                 alert("Server Error - Bug not updated")
             } else {
                 setLoading(false);
-                setRerender(!rerender);
                 alert('Bug Updated!');
+                setRerender(!rerender);
             }
         })
     }
@@ -100,10 +102,10 @@ export default function BugSection({
 
     return (
         <StyledBugSection ref={bugSection} style={{display: "none"}}>
-            <button id="exit-btn" onClick={() => { toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <button id="exit-btn" onClick={() => { setRerender(!rerender); toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
-                <Link to={`/projects/${sectionProjectId}`}>Project</Link><span>/</span>
+                <button onClick={() =>{toggleBug()}}>Project</button><span>/</span>
                 {
                     bug === undefined
                     ? <></>
@@ -113,10 +115,8 @@ export default function BugSection({
             {
                 isLoading === true 
                 ? <BugPageLoader />
-                :<form className="bug-container">
-                    <div className="title-container">
-                        <h1>{bug.title}</h1>
-                    </div>
+                :<div className="bug-container">
+                    <h1>{bug.title}</h1>
                     <div className="info-wrapper">
                         <div className="info-container">
                             <h2><span>Creator: </span>{bug.author}</h2>
@@ -185,31 +185,35 @@ export default function BugSection({
                             </label>
                         </div>
                     </div>
-                    <textarea
-                        defaultValue={bug.description}
-                        cols="30"
-                        rows="10"
-                        id="description"
-                        onChange={(event) => {
-                            setDescription(event.target.value);
-                        }}
-                    />
+                    <label>Description
+                        <textarea 
+                            name="description" 
+                            id="description"
+                            key={bug.description}
+                            defaultValue={bug.description} 
+                            cols="30" 
+                            rows="10"
+                            onChange={(event) => {
+                                setDescription(event.target.value);
+                            }} 
+                        />
+                    </label>
                     <img src={bug.thumbnail} alt=""/>
-                    <div className="button-container">
-                        {
-                            author === user || role === process.env.REACT_APP_ADMIN_SECRET 
-                            ? <>
-                                <button onClick={() => {updateBug(); setRerender(!rerender)}}>Save</button>
-                                <button  id="delete" onClick={() => { deleteBug();}}>Delete</button>
-                            </>
-                            : <>
-                                <button onClick={unauthorized}>Save</button>
-                                <button id="delete" onClick={unauthorized}>Delete</button>
-                            </>
-                        }
-                    </div>
-                </form>
+                </div>
             }
+            <div className="button-container">
+                {
+                    author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <>
+                        <button onClick={() => {updateBug(); setRerender(!rerender)}}>Save</button>
+                        <button  id="delete" onClick={() => { deleteBug();}}>Delete</button>
+                    </>
+                    : <>
+                        <button onClick={unauthorized}>Save</button>
+                        <button id="delete" onClick={unauthorized}>Delete</button>
+                    </>
+                }
+            </div>
         </StyledBugSection >
     )
 }
@@ -280,9 +284,12 @@ const StyledBugSection = styled.div`
         @media (max-width: 428px){
             display: none;
         }
-        a {
-            font-size: 20px;
+        a, button {
+            border: none;
+            background: none;
+            font-size: 16px;
             color: ${pallette.helperGrey};
+            cursor: pointer;
             @media (max-width: 450px){
                 font-size: 12px;
             }
@@ -291,7 +298,7 @@ const StyledBugSection = styled.div`
             }
         }
         p {
-            font-size: 20px;
+            font-size: 16px;
             color: ${pallette.helperGrey};
             @media (max-width: 450px){
                 font-size: 12px;
@@ -307,16 +314,12 @@ const StyledBugSection = styled.div`
         flex-direction: column;
         width: 100%;
         margin: auto;
-        .title-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            h1 {
-                color: white;
-                font-size: 40px;
-                @media (max-width: 450px){
-                    font-size: 20px;
-                }
+        h1 {
+            color: white;
+            font-size: 30px;
+            margin: 10px 0;
+            @media (max-width: 450px){
+                font-size: 20px;
             }
         }
         .info-container, .selector-container {
@@ -331,15 +334,12 @@ const StyledBugSection = styled.div`
             }
             h2 {
                 color: white;
-                font-size: 20px;
+                font-size: 16px;
                 display: flex;
                 flex-direction: column;
                 width: 90%;
                 margin: 10px 0;
                 font-weight: 400;
-                @media (max-width: 450px){
-                    font-size: 16px;
-                }
                 span {
                     color: #cecece;
                     font-weight: 400;
@@ -353,14 +353,14 @@ const StyledBugSection = styled.div`
                 display: flex;
                 flex-direction: column;
                 color: white;
-                font-size: 20px;
-                margin: 20px 0;
+                margin: 10px 0;
                 font-weight: 400;
-                @media (max-width: 700px){
-                    flex-direction: row;
+                font-size: ${pallette.labelSize};
+                @media (max-width: 750px){
+                    font-size: 14px;
                 }
                 @media (max-width: 450px){
-                    font-size: 14px;
+                    margin: 10px 0;
                 }
                 select {
                     cursor: pointer;
@@ -374,58 +374,60 @@ const StyledBugSection = styled.div`
                 }
             }
         }
-        textarea {
-            width: 100%;
-            margin: 20px 0;
-            padding: 10px;
-            font-size: 18px;
-            background: ${pallette.helperGrey};
-            @media (max-width: 450px){
-                font-size: 14px;
-            }
-        }
-        
         img {
             width: 300px;
         }
-        .button-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 100%;
-            button {
-                width: 200px;
-                height: 40px;
-                cursor: pointer;
-                border: none;
-                border-radius: 6px;
-                font-weight: 700;
-                font-size: ${pallette.subtitleSize};
-                @media (max-width: 1050px){
-                    margin: 10px 0;
-                    width: 150px;
-                }
-                @media (max-width: 450px){
-                    font-size: 16px;
-                    width: 100px;
-                    margin-bottom: 0;
-                }
-                &:hover {
-                    color: #ffffff;
-                    background: #000000;
-                    transform: scale(1.05);
-                    transition: 0.2s;
-                }
+    }
+    label {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        margin: 10px 0;
+        font-size: ${pallette.labelSize};
+        @media (max-width: 750px){
+            font-size: 14px;
+        }
+        @media (max-width: 450px){
+            margin: 10px 0;
+        }
+        input, select {
+            width: 100%;
+            height: 30px;
+            padding: 2px;
+            background: ${pallette.helperGrey};
+        }
+        textarea {
+            padding: 10px;
+            background: ${pallette.helperGrey};
+        }
+    }
+    .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 30px;
+        button {
+            width: 200px;
+            height: 40px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 18px;
+            @media (max-width: 1050px){
+                margin: 10px 0;
+                width: 150px;
             }
-            #delete {
-                color: white;
-                background: red;
-                &:hover {
-                    color: black;
-                    background: #df6464;
-                    transform: scale(1.05);
-                    transition: 0.3s;
-                }
+            @media (max-width: 450px){
+                font-size: 16px;
+                width: 100px;
+                margin-bottom: 0;
+            }
+            &:hover {
+                color: #ffffff;
+                background: #000000;
+                transform: scale(1.05);
+                transition: 0.2s;
             }
         }
     }

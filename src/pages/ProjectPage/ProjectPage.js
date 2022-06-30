@@ -80,7 +80,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
     }
 
     const toggleBug = () => {
-        setRerender(!rerender)
+        setRerender(!rerender);
         let section = bugSection.current;
         if (section.style.display === "none") {
             section.style.display = "block";

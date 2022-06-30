@@ -77,6 +77,11 @@ export default function AddBugSection({
     return (
         <StyledAddBug ref={addBugSection} style={{display: "none"}}> 
             <button id="exit-btn" onClick={() => {toggleAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <div className="breadcrumbs">
+                <Link to={`/`}>Home</Link><span>/</span>
+                <button onClick={() =>{toggleAddBug()}}>Project</button><span>/</span>
+                <p>Add Bug</p>
+            </div>
             <h1>Add a Bug</h1>
             {
                 user === null ? <h1>You are signed out</h1>
@@ -187,14 +192,11 @@ export default function AddBugSection({
                             }}
                         />
                     </label> 
-                    <div className="button-container">
-                        {
-                            role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
-                            ? <button onClick={()=>{confirmRole(); addBug();}}>Save</button>
-                            : <button onClick={unauthorized}>Save</button>
-                        }
-                        <Link to={`/projects/${projectId}`}>Back</Link>
-                    </div>
+                    {
+                        role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
+                        ? <button onClick={()=>{confirmRole(); addBug();}}>Add</button>
+                        : <button onClick={unauthorized}>Add</button>
+                    }
                 </div>
             }
         </StyledAddBug>
@@ -262,13 +264,44 @@ const StyledAddBug = styled.div`
         visibility: visible;
         transition-delay: 1s;
     }
+    .breadcrumbs {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+        @media (max-width: 428px){
+            display: none;
+        }
+        a, button {
+            border: none;
+            background: none;
+            font-size: 16px;
+            color: ${pallette.helperGrey};
+            cursor: pointer;
+            @media (max-width: 450px){
+                font-size: 12px;
+            }
+            &:hover {
+                color: white;
+            }
+        }
+        p {
+            font-size: 16px;
+            color: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 12px;
+            }
+        }
+        span {
+            margin: 0 10px;
+            color: white;
+        }
+    }
     h1 {
         color: white;
-        font-size: 24px;
-        width: 98%;
-        font-size: 40px;
+        font-size: 30px;
+        margin: 10px 0;
         @media (max-width: 450px){
-            font-size: 30px;
+            font-size: 20px;
         }
     }
     .form-wrapper {
@@ -301,70 +334,56 @@ const StyledAddBug = styled.div`
             display: flex;
             color: white;
             flex-direction: column;
-            margin: 20px 0;
-            font-size: ${pallette.subtitleSize};
+            margin: 10px 0;
+            font-size: ${pallette.labelSize};
             @media (max-width: 750px){
-               font-size: ${pallette.paraSize};
+               font-size: 14px;
             }
             @media (max-width: 450px){
-                font-size: 16px;
                 margin: 10px 0;
             }
             input, select {
                 width: 100%;
-                height: 40px;
-                padding: 5px 10px;
-                font-size: 18px;
+                height: 30px;
+                padding: 2px;
                 background: ${pallette.helperGrey};
-                @media (max-width: 450px){
-                    height: 30px;
-                    font-size: 16px;
-                }
             }
             textarea {
                 padding: 10px;
-                font-size: 18px;
                 background: ${pallette.helperGrey};
-                @media (max-width: 450px){
-                    font-size: 16px;
-                }
             }
         }
-        .button-container {
+        button {
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
+            width: 150px;
+            height: 40px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: ${pallette.subtitleSize};
+            font-weight: 700;
+            background: #ffffff;
+            color: ${pallette.accentColor};
             margin-top: 16px;
-            button, a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 150px;
-                height: 40px;
+            &:hover{
+                color: #ffffff;
                 cursor: pointer;
-                border: none;
-                border-radius: 4px;
-                font-size: ${pallette.subtitleSize};
-                font-weight: 700;
-                background: #ffffff;
-                color: ${pallette.accentColor};
-                &:hover{
-                    color: #ffffff;
-                    cursor: pointer;
-                    background: #000000;
-                    transition: 0.2s;
-                    transform: scale(1.01);
-                }
-                @media (max-width: 750px){
-                    width: 100px;
-                    font-size: ${pallette.paraSize};
-                }
-                @media (max-width: 450px){
-                    font-size: 16px;
-                    width: 100px;
-                }
+                background: #000000;
+                transition: 0.2s;
+                transform: scale(1.01);
+            }
+            @media (max-width: 750px){
+                width: 100px;
+                font-size: ${pallette.paraSize};
+            }
+            @media (max-width: 450px){
+                font-size: 16px;
+                width: 100px;
             }
         }
+        
     }
 
 `;

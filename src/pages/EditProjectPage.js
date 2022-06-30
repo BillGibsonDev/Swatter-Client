@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables.js';
 
+// images
+import X from '../assets/icons/whiteX.png';
+
 // router
 import { Link, useParams, useHistory } from 'react-router-dom';
 
@@ -95,119 +98,127 @@ export default function EditProjectPage({user, role, confirmRole}) {
 
     return (
         <StyledProjectPage>
-            <div className="title-container">
-                <h1>Edit Project</h1>
-                <Link id="back-button" to={`/`}>Back</Link>
+            <div className="links-wrapper">
+                <div className="breadcrumbs">
+                    <Link to={`/`}>Home</Link><span>/</span>
+                    <Link to={`/`}>Edit Project</Link>
+                </div>
+                <Link id="exit-btn" to="/"><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></Link>
             </div>
+            <h1>Edit Project</h1>
             {
                 user === null 
                 ? <h1>You are signed out</h1>
                 : isLoading === true ? <Loader/>
                 : <div className="form-wrapper">
-                    <label>Title
-                        <input 
-                            type="text"
-                            id="title"
-                            defaultValue={project.projectTitle}
-                            onChange={(event) => {
-                                setProjectTitle(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Key
-                        <input 
-                            type="text"
-                            id="key"
-                            defaultValue={project.projectKey}
-                            onChange={(event) => {
-                                setProjectKey(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>URL
-                        <input 
-                            type="text"
-                            id="projectLink"
-                            defaultValue={project.projectLink}
-                            onChange={(event) => {
-                                setProjectLink(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Repository
-                        <input 
-                            type="text"
-                            id="repositiory"
-                            defaultValue={project.repository}
-                            onChange={(event) => {
-                                setRepository(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Lead
-                        <input 
-                            type="text" 
-                            id="projectLead"
-                            defaultValue={project.projectLead}
-                            onChange={(event) => {
-                                setProjectLead(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Date
-                        <input 
-                            type="text" 
-                            id="date"
-                            defaultValue={project.startDate}
-                            onChange={(event) => {
-                                setStartDate(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Project Type
-                        <input 
-                            type="text" 
-                            id="projectType"
-                            defaultValue={project.projectType}
-                            onChange={(event) => {
-                                setProjectType(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Description
-                        <input 
-                            type="text" 
-                            id="description"
-                            defaultValue={project.description}
-                            onChange={(event) => {
-                                setDescription(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <label>Image
-                        <input 
-                            type="text" 
-                            id="image"
-                            defaultValue={project.projectImage}
-                            onChange={(event) => {
-                                setProjectImage(event.target.value);
-                            }} 
-                        />
-                    </label>
-                    <div className="button-container">
-                        {
-                            role === process.env.REACT_APP_GUEST_SECRET 
-                            ? <button onClick={unauthorized}>Update</button>
-                            : <button onClick={editProject}>Update</button>
-                        }
-                        {
-                            author === user || role === process.env.REACT_APP_ADMIN 
-                            ? <button  id="delete" onClick={deleteProject}>Delete</button>
-                            : <button onClick={unauthorized}>Update</button>
-                        }
+                    <div className="top-form-container">
+                        <label>Title
+                            <input 
+                                type="text"
+                                id="title"
+                                defaultValue={project.projectTitle}
+                                onChange={(event) => {
+                                    setProjectTitle(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Key
+                            <input 
+                                type="text"
+                                id="key"
+                                defaultValue={project.projectKey}
+                                onChange={(event) => {
+                                    setProjectKey(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>URL
+                            <input 
+                                type="text"
+                                id="projectLink"
+                                defaultValue={project.projectLink}
+                                onChange={(event) => {
+                                    setProjectLink(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Repository
+                            <input 
+                                type="text"
+                                id="repositiory"
+                                defaultValue={project.repository}
+                                onChange={(event) => {
+                                    setRepository(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Lead
+                            <input 
+                                type="text" 
+                                id="projectLead"
+                                defaultValue={project.projectLead}
+                                onChange={(event) => {
+                                    setProjectLead(event.target.value);
+                                }} 
+                            />
+                        </label>
+                    </div>
+                    <div className="bottom-form-container">
+                        <label>Date
+                            <input 
+                                type="text" 
+                                id="date"
+                                defaultValue={project.startDate}
+                                onChange={(event) => {
+                                    setStartDate(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Project Type
+                            <input 
+                                type="text" 
+                                id="projectType"
+                                defaultValue={project.projectType}
+                                onChange={(event) => {
+                                    setProjectType(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Description
+                            <input 
+                                type="text" 
+                                id="description"
+                                defaultValue={project.description}
+                                onChange={(event) => {
+                                    setDescription(event.target.value);
+                                }} 
+                            />
+                        </label>
+                        <label>Image
+                            <input 
+                                type="text" 
+                                id="image"
+                                defaultValue={project.projectImage}
+                                onChange={(event) => {
+                                    setProjectImage(event.target.value);
+                                }} 
+                            />
+                        </label>
                     </div>
                 </div>
             }
+            <div className="button-container">
+                {
+                    role === process.env.REACT_APP_GUEST_SECRET 
+                    ? <button onClick={unauthorized}>Update</button>
+                    : <button onClick={editProject}>Update</button>
+                }
+                {
+                    author === user || role === process.env.REACT_APP_ADMIN 
+                    ? <button  id="delete" onClick={deleteProject}>Delete</button>
+                    : <button onClick={unauthorized}>Update</button>
+                }
+            </div>
         </StyledProjectPage>
     ) 
 }
@@ -218,95 +229,157 @@ const StyledProjectPage = styled.div`
     width: 100%;
     max-width: 1000px;
     min-height: 50vh;
-    margin: auto;
-    @media (max-width: 810px){
-        height: 40vh;
-        margin-left: 65px;
-        width: 85vw;
+    margin: 20px auto;
+    @media (max-width: 1160px){
+        width: 80%;
+        left: 60px;
     }
-    .title-container {
+    @media (max-width: 834px){
+        left: 0;
+    }
+    @media (max-width: 750px){
+        height: 40vh;
+        margin: 20px auto;
+    }
+    @media (max-width: 428px){
+        margin-left: 65px;
+        width: 80vw;
+    }
+    .links-wrapper {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        width: 50%;
-        @media (max-width: 750px){
-            width: 90%;
-        }
-        h1 {
-            color: white;
-            font-size: 2em;
-        }
-        #back-button {
-            width: 100px;
-            cursor: pointer;
+        width: 100%;
+        #exit-btn {
+            background: none;
             border: none;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 1.2em;
-            @media (max-width: 1050px){
-                margin: 10px 0;
-                width: 50px;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            @media (max-width: 428px){
+                margin-left: auto;
+            }
+            #exit-btn-icon {
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+            }
+            .tooltiptext {
+                visibility: hidden;
+                width: 100%;
+                min-width: 160px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1000;
+                top: 0;
+                right: 105%;
+            }
+        }
+        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
+        }
+    }
+    .breadcrumbs {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+        @media (max-width: 428px){
+            display: none;
+        }
+        a {
+            font-size: 20px;
+            color: ${pallette.helperGrey};
+            @media (max-width: 450px){
+                font-size: 12px;
             }
             &:hover {
-                color: #ffffff;
-                background: #000000;
-                transform: scale(1.05);
-                transition: 0.3s;
+                color: white;
             }
         }
+        span {
+            margin: 0 10px;
+            color: white;
+        }
+    }
+    h1 {
+        color: white;
+        font-size: 2em;
     }
     .form-wrapper {
         width: 100%;
-        margin: 2% auto;
-        label {
-            display: flex;
-            color: white;
+        margin: 16px auto;
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 750px){
             flex-direction: column;
-            margin: 10px 0;
+        }
+        .top-form-container, .bottom-form-container {
+            margin: 0;
+            width: 45%;
+            @media (max-width: 600px){
+                width: 100%;
+            }
+            label {
+                display: flex;
+                color: white;
+                flex-direction: column;
+                margin: 10px 0;
                 input, select {
-                    width: 50%;
+                    width: 400px;
                     padding: 2px;
                     background: ${pallette.helperGrey};
+                    @media (max-width:834px){
+                        width: 100%;
+                    }
                     @media (max-width: 750px){
-                        width: 90%;
+                        width: 100%;
+                    }
+                    @media (max-width: 428px){
+                        font-size: 16px;
+                        height: 30px;
                     }
                 }
             }
-        .button-container{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 2%;
-            width: 50%;
-            @media (max-width: 750px){
-                margin-top: 10%;
-                width: 90%;
-            }
-            button, a {
-                width: 100px;
+        }
+    }
+    .button-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 16px;
+        width: 100%;
+        @media (max-width: 750px){
+            margin-top: 10%;
+            width: 90%;
+        }
+        button {
+            width: 100px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2em;
+            font-weight: 700;
+            background: #d1d1d1;
+            &:hover{
+                color: #ffffff;
                 cursor: pointer;
-                border: none;
-                border-radius: 4px;
-                font-size: 1.2em;
-                font-weight: 700;
-                background: #d1d1d1;
-                &:hover{
-                    color: #ffffff;
-                    cursor: pointer;
-                    background: #000000;
-                    transition: 0.2s;
-                    transform: scale(1.01);
-                }
+                background: #000000;
+                transition: 0.2s;
+                transform: scale(1.01);
             }
-            #delete {
-                color: white;
-                background: red;
-                &:hover {
-                    color: black;
-                    background: #df6464;
-                    transform: scale(1.05);
-                    transition: 0.3s;
-                }
+        }
+        #delete {
+            color: white;
+            background: red;
+            &:hover {
+                color: black;
+                background: #df6464;
+                transform: scale(1.05);
+                transition: 0.3s;
             }
         }
     }

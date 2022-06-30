@@ -37,12 +37,10 @@ export default function BugTable({
                                     <Bug
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
-                                        projectTitle={project.projectTitle}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
                                         thumbnail={bug.thumbnail}
-                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -71,12 +69,10 @@ export default function BugTable({
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
-                                        projectTitle={project.projectTitle}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
                                         thumbnail={bug.thumbnail}
-                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -102,12 +98,10 @@ export default function BugTable({
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
-                                        projectTitle={project.projectTitle}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
                                         thumbnail={bug.thumbnail}
-                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -133,12 +127,10 @@ export default function BugTable({
                                         setSectionProjectId={setSectionProjectId}
                                         setSectionBugId={setSectionBugId}
                                         toggleBug={toggleBug}
-                                        projectTitle={project.projectTitle}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
                                         thumbnail={bug.thumbnail}
-                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}

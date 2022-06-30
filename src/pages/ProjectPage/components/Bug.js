@@ -29,7 +29,7 @@ export default function Bug({
 	setSectionBugId,
 	sprint, 
 	project,
-	rerender,
+	rerender
 }) {
 
 	const [ compareDate, setCompareDate] = useState("");

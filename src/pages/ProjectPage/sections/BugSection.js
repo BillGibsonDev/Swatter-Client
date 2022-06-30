@@ -45,7 +45,7 @@ export default function BugSection({
         }
         setOptions(project.sprints);
         getBug(sectionProjectId, sectionBugId);
-    }, [ sectionProjectId, sectionBugId, project ]);
+    }, [ sectionProjectId, sectionBugId, project, isLoading ]);
 
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);

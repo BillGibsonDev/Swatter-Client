@@ -165,7 +165,8 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                     }
                 </div>
             }
-            {<>
+            {
+                <>
                     <CommentSection
                         toggleComments={toggleComments}
                         user={user}

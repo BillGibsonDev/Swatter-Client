@@ -87,7 +87,7 @@ export default function SprintSection({
                     :<select 
                         onChange={(event) => {
                             setSearchSprint(event.target.value);
-                            setRerender(!rerender)
+                            setRerender(!rerender);
                         }}>
                             <option value=""></option>
                         {

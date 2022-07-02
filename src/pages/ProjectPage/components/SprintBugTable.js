@@ -15,7 +15,7 @@ export default function SprintBugTable({
     completedBugs,
     setRerender, 
     rerender,
-    bugSection,
+    bugSectionRef,
     setSectionProjectId,
     setSectionBugId, 
     projectId,

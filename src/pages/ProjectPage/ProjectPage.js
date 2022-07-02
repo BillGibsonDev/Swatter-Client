@@ -28,25 +28,24 @@ import DetailsSection from './sections/DetailsSection.js';
 
 export default function ProjectPage({ user, role, confirmRole, projectSideNavRef }) {
 
-    const commentSection = useRef();
-    const bugSection = useRef();
-    const addBugSection = useRef();
-    const sprintSection = useRef();
-    const detailsSection = useRef(); 
+    const commentSectionRef = useRef();
+    const bugSectionRef = useRef();
+    const addbugSectionRef = useRef();
+    const sprintSectionRef = useRef();
+    const detailsSectionRef = useRef(); 
 
     const { projectId, bugId } = useParams();
 
     const [ bugs, setBugs ] = useState([]);
     const [ project, setProject ] = useState([]);
     const [ rerender, setRerender ] = useState(false);
+    const [ isLoading, setLoading ] = useState(true);
 
     // data states
-    //const [ totalBugs, setTotalBugs ] = useState([]);
     const [ openBugs, setOpenBugs] = useState([]);
     const [ underwayBugs, setUnderwayBugs ] = useState([]);
     const [ reviewBugs, setReviewBugs ] = useState([]);
     const [ completedBugs, setCompletedBugs ] = useState([]);
-    const [ isLoading, setLoading ] = useState(true);
 
     // bug section states
     const [ sectionBugId, setSectionBugId ] = useState();
@@ -73,7 +72,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     const toggleComments = () => {
         setRerender(!rerender);
-        let section = commentSection.current;
+        let section = commentSectionRef.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -83,7 +82,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     const toggleBug = () => {
         setRerender(!rerender);
-        let section = bugSection.current;
+        let section = bugSectionRef.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -93,7 +92,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     const toggleAddBug = () => {
         setRerender(!rerender)
-        let section = addBugSection.current;
+        let section = addbugSectionRef.current;
         if (section.style.display === "none") {
             section.style.display = "flex";
         } else {
@@ -118,7 +117,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     const toggleSprints = () => {
         setRerender(!rerender);
-        let section = sprintSection.current;
+        let section = sprintSectionRef.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -128,7 +127,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
 
     const toggleDetails = () => {
         setRerender(!rerender);
-        let section = detailsSection.current;
+        let section = detailsSectionRef.current;
         if (section.style.display === "none") {
             section.style.display = "block";
         } else {
@@ -173,7 +172,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                                 projectId={projectId}
                                 project={project}
                                 toggleBug={toggleBug}
-                                bugSection={bugSection}
+                                bugSectionRef={bugSectionRef}
                             />
                         </>
                     }
@@ -185,7 +184,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         toggleComments={toggleComments}
                         user={user}
                         role={role}
-                        commentSection={commentSection}
+                        commentSectionRef={commentSectionRef}
                         setRerender={setRerender}
                         rerender={rerender}
                     />
@@ -195,7 +194,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         role={role}
                         sectionProjectId={sectionProjectId}
                         sectionBugId={sectionBugId}
-                        bugSection={bugSection}
+                        bugSectionRef={bugSectionRef}
                         setRerender={setRerender}
                         rerender={rerender}
                         project={project}
@@ -206,7 +205,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         role={role}
                         projectId={projectId}
                         project={project}
-                        addBugSection={addBugSection}
+                        addbugSectionRef={addbugSectionRef}
                         confirmRole={confirmRole}
                         setRerender={setRerender}
                         rerender={rerender}
@@ -218,11 +217,11 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         projectId={projectId}
                         project={project}
                         toggleBug={toggleBug}
-                        bugSection={bugSection}
+                        bugSectionRef={bugSectionRef}
                         toggleAddBug={toggleAddBug}
                         user={user}
                         role={role}
-                        sprintSection={sprintSection}
+                        sprintSectionRef={sprintSectionRef}
                         confirmRole={confirmRole}
                         setRerender={setRerender}
                         rerender={rerender}
@@ -240,7 +239,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         setRerender={setRerender}
                         rerender={rerender}
                         toggleDetails={toggleDetails}
-                        detailsSection={detailsSection}
+                        detailsSectionRef={detailsSectionRef}
                     />
                 </>
             }

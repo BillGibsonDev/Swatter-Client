@@ -8,12 +8,16 @@ import Edit from "../../../assets/icons/editIconWhite.png";
 // router
 import { Link } from 'react-router-dom';
 
-export default function DetailsSection({user, role, project, toggleDetails, detailsSection}) {
-
-    console.log(project)
+export default function DetailsSection({
+    user, 
+    role, 
+    project, 
+    toggleDetails, 
+    detailsSectionRef
+}) {
 
     return (
-        <StyledDetails ref={detailsSection}>
+        <StyledDetails ref={detailsSectionRef} style={{display: "none"}}>
             <div className="links-wrapper">
                 <div className="breadcrumbs">
                     <Link to={`/`}>Home</Link><span>/</span>

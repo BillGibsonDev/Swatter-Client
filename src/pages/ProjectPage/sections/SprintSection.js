@@ -22,7 +22,7 @@ export default function SprintSection({
     role, 
     confirmRole, 
     projectId, 
-    sprintSection, 
+    sprintSectionRef, 
     toggleBug,
     rerender,
     setRerender,
@@ -31,7 +31,7 @@ export default function SprintSection({
     underwayBugs, 
     reviewBugs, 
     completedBugs,
-    bugSection,
+    bugSectionRef,
     setSectionProjectId,
     setSectionBugId,
     project,
@@ -78,7 +78,7 @@ export default function SprintSection({
     }
 
     return (
-        <StyledSprintSection ref={sprintSection} style={{display: "none"}}>
+        <StyledSprintSection ref={sprintSectionRef} style={{display: "none"}}>
             <div className="button-wrapper">
                 <button onClick={() => {toggleSprintForm()}}>New Sprint</button>
                 { 
@@ -177,7 +177,7 @@ export default function SprintSection({
                                 projectId={projectId}
                                 project={project}
                                 toggleBug={toggleBug}
-                                bugSection={bugSection}
+                                bugSectionRef={bugSectionRef}
                                 searchSprint={searchSprint}
                             />
                         </>

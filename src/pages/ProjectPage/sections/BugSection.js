@@ -20,7 +20,7 @@ export default function BugSection({
     toggleBug, 
     sectionProjectId,
     sectionBugId,
-    bugSection,
+    bugSectionRef,
     rerender,
     setRerender,
     project
@@ -101,7 +101,7 @@ export default function BugSection({
     }
 
     return (
-        <StyledBugSection ref={bugSection} style={{display: "none"}}>
+        <StyledBugSection ref={bugSectionRef} style={{display: "none"}}>
             <button id="exit-btn" onClick={() => { setRerender(!rerender); toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>

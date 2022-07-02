@@ -19,7 +19,7 @@ export default function AddBugSection({
     role, 
     confirmRole, 
     projectId, 
-    addBugSection, 
+    addbugSectionRef, 
     toggleAddBug,
     rerender,
     setRerender, 
@@ -75,7 +75,7 @@ export default function AddBugSection({
     }
 
     return (
-        <StyledAddBug ref={addBugSection} style={{display: "none"}}> 
+        <StyledAddBug ref={addbugSectionRef} style={{display: "none"}}> 
             <button id="exit-btn" onClick={() => {toggleAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>

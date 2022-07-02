@@ -8,20 +8,18 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 import DefaultImage from '../../../assets/icons/cubeBlack.png';
 import Repo from '../../../assets/icons/code.png';
 import Globe from '../../../assets/icons/globe.png';
-import Settings from '../../../assets/icons/panel.png';
+import Details from '../../../assets/icons/panel.png';
 import AddBug from '../../../assets/icons/plus.png';
 import Comments from '../../../assets/icons/comments.png';
 import Sprints from '../../../assets/icons/sprint.png';
-
-// router
-import { Link } from 'react-router-dom';
 
 export const ProjectSideNav = ({
     project, 
     toggleComments, 
     toggleAddBugs,
     toggleSprints, 
-    projectSideNavRef
+    projectSideNavRef,
+    toggleDetails
 }) => {
 
     const [ screenWidth, setScreenWidth ] = useState(0)
@@ -52,7 +50,7 @@ export const ProjectSideNav = ({
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
                 <button onClick={()=> { toggleComments()}}><img src={Comments} alt="" />Comments</button>
                 <button onClick={()=> { toggleAddBugs()}}><img src={AddBug} alt="" />Add Bug</button>
-                <Link to={`/`}><img src={Settings} alt="" />Settings</Link>
+                <button onClick={()=> { toggleDetails()}}><img src={Details} alt="" />Details</button>
             </div>
         </div>
     </StyledSideNav>

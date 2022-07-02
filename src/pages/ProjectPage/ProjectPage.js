@@ -24,6 +24,7 @@ import arrowRight from '../../assets/icons/arrowRight.png';
 
 // router
 import { useParams } from 'react-router-dom';
+import DetailsSection from './sections/DetailsSection.js';
 
 export default function ProjectPage({ user, role, confirmRole, projectSideNavRef }) {
 
@@ -31,6 +32,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
     const bugSection = useRef();
     const addBugSection = useRef();
     const sprintSection = useRef();
+    const detailsSection = useRef(); 
 
     const { projectId, bugId } = useParams();
 
@@ -124,6 +126,17 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         }
     }
 
+    const toggleDetails = () => {
+        setRerender(!rerender);
+        let section = detailsSection.current;
+        if (section.style.display === "none") {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    }
+
+
     return (
         <StyledProjectPage>
             <button id="arrow-button" onClick={() => { handleArrow(); toggleSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
@@ -133,6 +146,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                 toggleAddBugs={toggleAddBug}
                 projectSideNavRef={projectSideNavRef}
                 toggleSprints={toggleSprints}
+                toggleDetails={toggleDetails}
             />
             {
                 isLoading === true 
@@ -217,6 +231,16 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         underwayBugs={underwayBugs}
                         completedBugs={completedBugs}
                         toggleSprints={toggleSprints}
+                    />
+                    <DetailsSection 
+                        project={project}
+                        user={user}
+                        role={role}
+                        confirmRole={confirmRole}
+                        setRerender={setRerender}
+                        rerender={rerender}
+                        toggleDetails={toggleDetails}
+                        detailsSection={detailsSection}
                     />
                 </>
             }

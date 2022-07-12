@@ -414,6 +414,7 @@ const StyledBugSection = styled.div`
             border-radius: 6px;
             font-weight: 700;
             font-size: 18px;
+            transition: 0.2s;
             @media (max-width: 1050px){
                 margin: 10px 0;
                 width: 150px;
@@ -427,7 +428,6 @@ const StyledBugSection = styled.div`
                 color: #ffffff;
                 background: #000000;
                 transform: scale(1.05);
-                transition: 0.2s;
             }
         }
     }

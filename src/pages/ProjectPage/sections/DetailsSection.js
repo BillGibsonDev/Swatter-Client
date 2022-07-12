@@ -16,6 +16,7 @@ export default function DetailsSection({
     detailsSectionRef
 }) {
 
+    console.log(project)
     return (
         <StyledDetails ref={detailsSectionRef} style={{display: "none"}}>
             <div className="links-wrapper">
@@ -30,6 +31,16 @@ export default function DetailsSection({
                 <h1>{project.projectTitle}</h1>
                 <Link id="edit-btn" to={`/EditProject/${project._id}`}><img id="edit-btn-icon" src={Edit} alt="" /><span className="tooltiptext">Edit Project</span></Link>
             </div>
+            <div className="info-container">
+                <div className="container">
+                    <h6><span>Type:</span> {project.projectType}</h6>
+                    <h6><span>Description:</span> {project.description}</h6>
+                </div>
+                <div className="container">
+                    <h6><span>Lead:</span> {project.projectLead}</h6>
+                    <h6><span>Started:</span> {project.startDate}</h6>
+                </div>
+            </div>
         </StyledDetails>
     ) 
 }
@@ -38,14 +49,14 @@ const StyledDetails = styled.div`
     display: none;
     height: 100%;
     width: 100%;
-    margin: 0 auto;
     position: absolute;
-    z-index: 1000;
     background: ${pallette.accentColor};
     border-radius: 12px;
     padding: 2%;
     left: -50px;
     z-index: 3;
+    justify-content: center;
+    align-items: center;
     @media (max-width: 1440px){
         width: 100%;
         left: -15px;
@@ -173,6 +184,18 @@ const StyledDetails = styled.div`
         #edit-btn:hover .tooltiptext, #edit-btn:active .tooltiptext, #edit-btn:focus .tooltiptext {
             visibility: visible;
             transition-delay: 1s;
+        }
+    }
+    .info-container {
+        .container {
+            h6 {
+                margin: 10px 0;
+                font-size: 18px;
+                color: white;
+                span {
+                    color: ${pallette.helperGrey};
+                }
+            }
         }
     }
 `;

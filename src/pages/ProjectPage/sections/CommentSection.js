@@ -212,12 +212,12 @@ const StyledCommentSection = styled.div`
             border-radius: 4px;
             font-size: 1.2em;
             font-weight: 700;
+            transition: 0.2s;
             @media (max-width: 750px){
                 font-size: 1.5em;
             }
             &:hover {
                 transform: scale(1.05);
-                transition: 0.2s;
                 background: #d1d1d1;
                 color: black;
             }

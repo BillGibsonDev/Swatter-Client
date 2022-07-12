@@ -367,11 +367,11 @@ const StyledAddBug = styled.div`
             background: #ffffff;
             color: ${pallette.accentColor};
             margin-top: 16px;
+            transition: 0.2s;
             &:hover{
                 color: #ffffff;
                 cursor: pointer;
                 background: #000000;
-                transition: 0.2s;
                 transform: scale(1.01);
             }
             @media (max-width: 750px){

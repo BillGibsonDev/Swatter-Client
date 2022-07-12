@@ -325,9 +325,9 @@ const StyledSprintSection = styled.div`
                         width: 100%;
                         height: 100%;
                         cursor: pointer;
+                        transition: 0.2s;
                         &:hover {
                             transform: scale(1.05);
-                            transition: 0.2s;
                         }
                     }
                 }

@@ -138,7 +138,7 @@ const StyledBug = styled.div `
 				}
 			}
 			h2 {
-				font-size: ${pallette.paraSize};
+				font-size: 14px;
 				font-weight: 400;
 			}
 			#date, #author {
@@ -156,7 +156,7 @@ const StyledBug = styled.div `
 				margin-top: 6px;
 				color: white;
 				padding: 0 6px;
-				font-size: 14px;
+				font-size: 12px;
 				border-radius: 4px;
 			}
 		}

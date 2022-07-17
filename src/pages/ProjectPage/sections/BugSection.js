@@ -365,7 +365,7 @@ const StyledBugSection = styled.div`
                 select {
                     cursor: pointer;
                     width: 90%;
-                    font-size: 20px;
+                    font-size: 16px;
                     background: ${pallette.helperGrey};
                     font-weight: 400;
                     @media (max-width: 450px){

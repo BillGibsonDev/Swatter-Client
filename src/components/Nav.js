@@ -101,7 +101,7 @@ const StyledNav = styled.div`
                 border-radius: 6px;
                 padding: 5px 0;
                 position: absolute;
-                z-index: 1000;
+                z-index: 4;
                 top: 0;
                 left: 105%;
             }

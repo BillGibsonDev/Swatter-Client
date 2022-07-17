@@ -128,8 +128,10 @@ function App() {
 	function reloadLogin() {
 		let tokenPW = sessionStorage.getItem("tokenPW");
 		let tokenUser = sessionStorage.getItem("tokenUser");
+		setLoading(true);
 		if (tokenPW === null && tokenUser === null) {
 			history.push("/LoginPage");
+			setLoading(false);
 			setLoggedIn(false);
 		} else {
 			axios.post(`${process.env.REACT_APP_LOGIN_URL}`, {
@@ -140,6 +142,7 @@ function App() {
 			let tokenPW = sessionStorage.getItem("tokenPW");
 			let tokenUser = sessionStorage.getItem("tokenUser");
 			setUser(tokenUser);
+			setLoading(false);
 			if (response.data === "LOGGED IN"){
 				axios.post(`${process.env.REACT_APP_SET_ROLE_URL}`, {
 					username: tokenUser, 

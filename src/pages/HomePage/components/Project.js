@@ -92,7 +92,7 @@ const StyledProject = styled.div`
             }
         }
         h2 {
-            font-size: 20px;
+            font-size: ${pallette.labelSize};
             color: white;
             font-weight: 400;
             @media (max-width: 450px){
@@ -133,9 +133,9 @@ const StyledProject = styled.div`
                     width: 100%;
                     height: 100%;
                     cursor: pointer;
+                    transition: 0.2s;
                     &:hover {
                         transform: scale(1.05);
-                        transition: 0.2s;
                     }
                 }
             }

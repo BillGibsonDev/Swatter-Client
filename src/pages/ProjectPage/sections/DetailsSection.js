@@ -16,7 +16,6 @@ export default function DetailsSection({
     detailsSectionRef
 }) {
 
-    console.log(project)
     return (
         <StyledDetails ref={detailsSectionRef} style={{display: "none"}}>
             <div className="links-wrapper">

@@ -49,6 +49,9 @@ export default function SprintSection({
         setTimeout(() => {
             setOptions(project.sprints);
         }, 1000);
+        if(project.sprints){
+            handleEndDate(project.sprints[0].endDate);
+        }
     }, [project, searchSprint]) 
 
     const toggleSprintForm = () => {
@@ -69,12 +72,9 @@ export default function SprintSection({
         }
     }
 
-    const handleDaysRemaining = (x) => {
-        let dateEnd = new Date(x);
-        let dateNow = new Date();
-        var total_seconds = Math.abs(dateNow - dateEnd) / 1000;  
-        var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
-        return days_difference;
+    const handleEndDate = (x) => {
+        let newArr = x.split(/[ -]+/);
+        return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
     }
 
     return (
@@ -119,7 +119,7 @@ export default function SprintSection({
                                         {
                                             sprint.endDate === "" 
                                             ? <></>
-                                            : <h5>{handleDaysRemaining(sprint.endDate)+ 1} Days Remaining</h5>
+                                            : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
                                         }
                                     </div>
                                 </div>

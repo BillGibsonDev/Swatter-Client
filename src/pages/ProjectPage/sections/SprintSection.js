@@ -114,6 +114,7 @@ export default function SprintSection({
                                         <h4>{sprint.title}</h4>
                                         <button onClick={() => {toggleEditSprintForm()}}><img id="edit-button" src={Edit} alt="" /><span className="tooltiptext">Edit Sprint</span></button>
                                     </div>
+                                    <h5 id="status"><span>Status: </span>{sprint.status}</h5>
                                     <div className="info-container">
                                         <h5><span>Updated:</span> {sprint.updated}</h5>
                                         {
@@ -334,6 +335,16 @@ const StyledSprintSection = styled.div`
                 #edit-link:hover .tooltiptext, #edit-link:active .tooltiptext, #edit-link:focus .tooltiptext {
                     visibility: visible;
                     transition-delay: 1s;
+                }
+            }
+            #status {
+                width: 100%;
+                color: white;
+                @media (max-width: 450px){
+                    margin-bottom: 6px;
+                }
+                span {
+                    color: ${pallette.helperGrey};
                 }
             }
             .info-container {

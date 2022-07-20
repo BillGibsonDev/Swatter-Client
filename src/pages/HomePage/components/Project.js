@@ -39,7 +39,7 @@ const StyledProject = styled.div`
     position: relative;
     background: #5c5c5c;
     border-radius: 4px;
-    padding: 5%;
+    padding: 10px;
     @media (max-width: 450px){
         height: 100px;
         flex-direction: row;
@@ -103,6 +103,7 @@ const StyledProject = styled.div`
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 98%;
             .edit-link {
                 width: 30px;
                 height: 30px;

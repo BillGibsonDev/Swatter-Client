@@ -49,6 +49,7 @@ export const EditSprintForm = ({
     const [ goal, setGoal ] = useState(sprint.goal);
     const [ endDate, setEndDate ] = useState(sprint.endDate);
     const [ color, setColor ] = useState(sprint.color)
+    const [ status, setStatus ] = useState(sprint.status);
 
     const handleUpdateSprint = () => {
         axios.post(`${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`, {
@@ -58,6 +59,7 @@ export const EditSprintForm = ({
             title: title,
             endDate: endDate,
             color: color,
+            status: status,
         })
         .then(function(response) {
             if(response.data !== "Sprint Updated"){
@@ -109,6 +111,17 @@ export const EditSprintForm = ({
                         setGoal(event.target.value);
                     }} 
                 />
+            </label>
+            <label>Status
+                <select 
+                    name="status"
+                    defaultValue={sprint.status} 
+                    onChange={(event) => {
+                        setStatus(event.target.value);
+                    }}>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                </select>
             </label>
              <label>End Date 
                 <input 

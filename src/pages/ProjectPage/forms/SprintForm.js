@@ -21,10 +21,11 @@ export const SprintForm = ({
     const [title, setTitle ] = useState('');
     const [ goal, setGoal ] = useState('');
     const [ endDate, setEndDate ] = useState('');
-    const [ color, setColor ] = useState('')
+    const [ color, setColor ] = useState('');
+    const [ status, setStatus ] = useState('');
 
     function unauthorized() {
-        alert("You do not have permissions to do that!")
+        alert("You do not have permissions to do that!");
     }
 
     const handleSprintForm = () => {
@@ -34,6 +35,7 @@ export const SprintForm = ({
             title: title,
             endDate: endDate,
             color: color,
+            status: status,
         })
         .then(function(response) {
             if(response.data !== "Sprint Created"){
@@ -69,6 +71,17 @@ export const SprintForm = ({
                         setGoal(event.target.value);
                     }} 
                 />
+            </label>
+            <label>Status
+                <select 
+                    name="status"
+                    defaultValue={'Active'} 
+                    onChange={(event) => {
+                        setStatus(event.target.value);
+                    }}>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+                </select>
             </label>
              <label>End Date 
                 <input 

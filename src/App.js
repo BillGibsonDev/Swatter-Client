@@ -15,9 +15,13 @@ import LoginPage from "./pages/LoginPage";
 import AddProjectPage from "./pages/AddProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
 import EditProjectPage from "./pages/EditProjectPage";
+import BugPage from "./pages/BugPage.js";
+import AddBugPage from "./pages/AddBugPage.js";
+import SprintsPage from "./pages/Sprints/SprintsPage.js";
+import DetailsPage from "./pages/DetailsPage";
 
 // react router
-import { Route, Switch, useHistory} from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 function App() {
 
@@ -30,13 +34,13 @@ function App() {
 	const [ role, setRole ] = useState("");
 	const [ isLoading, setLoading ] = useState(false);
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
-	function handleTokens() {
+	const handleTokens = () => {
 		let tokenPW = sessionStorage.getItem("tokenPW");
 		let tokenUser = sessionStorage.getItem("tokenUser");
 		if (tokenPW === null) {
-			history.push("/LoginPage");
+			navigate("/LoginPage");
 		} else {
 			tokenPW = password;
 			tokenUser = username;
@@ -51,7 +55,7 @@ function App() {
 		// eslint-disable-next-line
 	},[])
 
-	function login () {
+	const login = () => {
 		setLoading(true)
 		axios.post(`${process.env.REACT_APP_LOGIN_URL}`, {
 			username: username,
@@ -62,7 +66,7 @@ function App() {
 			setLoggedIn(true);
 			setLoading(false);
 			handleTokens();
-			history.push("/");
+			navigate("/");
 			if (response.data === "LOGGED IN"){
 				axios.post(`${process.env.REACT_APP_SET_ROLE_URL}`, {
 					username: username, 
@@ -90,10 +94,10 @@ function App() {
 		setUser("");
 		setPassword('');
 		setUsername("");
-		history.push("/LoginPage");
+		navigate("/LoginPage");
 	}
 
-	function confirmAdmin () {
+	const confirmAdmin = () => {
 		axios.post(`${process.env.REACT_APP_ADMIN_CONFIRM_URL}`, {
 			role: role,
 		})
@@ -104,12 +108,12 @@ function App() {
 				sessionStorage.clear();
 				window.location.reload();
 				setLoggedIn(false);
-				history.push("/LoginPage");
+				navigate("/LoginPage");
 			} 
 		})
 	}
 
-	function confirmRole () {
+	const confirmRole = () => {
 		axios.post(`${process.env.REACT_APP_ROLE_CONFIRM_URL}`, {
 			role: role,
 		})
@@ -120,17 +124,17 @@ function App() {
 				sessionStorage.clear();
 				window.location.reload();
 				setLoggedIn(false);
-				history.push("/LoginPage");
+				navigate("/LoginPage");
 			}
 		})
 	}
 
-	function reloadLogin() {
+	const reloadLogin = () => {
 		let tokenPW = sessionStorage.getItem("tokenPW");
 		let tokenUser = sessionStorage.getItem("tokenUser");
 		setLoading(true);
 		if (tokenPW === null && tokenUser === null) {
-			history.push("/LoginPage");
+			navigate("/LoginPage");
 			setLoading(false);
 			setLoggedIn(false);
 		} else {
@@ -156,7 +160,7 @@ function App() {
 		})
 		.catch(function (error) {
 			console.log(error);
-			history.push("/LoginPage");
+			navigate("/LoginPage");
 			setLoggedIn(false);
 		});
 	}}
@@ -183,52 +187,112 @@ function App() {
 						isLoggedIn={isLoggedIn}
 						projectSideNavRef={projectSideNavRef}
 						/>
-					<Switch>
-						<Route path={'/'} exact>
-							<HomePage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-								reloadLogin={reloadLogin}
-							/>
-						</Route>
-						<Route path={"/projects/:projectId"} exact>
-							<ProjectPage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-								projectSideNavRef={projectSideNavRef}
-							/>
-						</Route>
-						<Route path={"/AddProjectPage"} exact>
-							<AddProjectPage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-							/>
-						</Route>
-						<Route path={"/EditProject/:projectId"} exact>
-							<EditProjectPage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-							/>
-						</Route>
-						<Route path={"/ProfilePage"} exact>
-							<ProfilePage
-								user={user}
-								role={role}
-								confirmRole={confirmRole}
-							/>
-						</Route>
-						<Route path={"/RegisterUserPage"} exact>
-							<RegisterUserPage
-								user={user}
-								role={role}
-								confirmAdmin={confirmAdmin}
-							/>
-						</Route>
-					</Switch>
+					<Routes>
+						<Route 
+							path='/' exact 
+							element={
+								<HomePage
+									user={user}
+									role={role}
+									confirmRole={confirmRole} 
+								/>
+							} 
+						/>
+						<Route 
+							path="/:projectId/:bugId" exact
+							element={
+								<BugPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/> 
+							}
+						/>
+						<Route 
+							path="/projects/:projectId" 
+							exact 
+							element={
+								<ProjectPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole} 
+									projectSideNavRef={projectSideNavRef}
+								/>
+							} 
+						/>
+						<Route 
+							path="/projects/:projectId/sprints" 
+							exact 
+							element={
+								<SprintsPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/>
+							} 
+						/>
+						<Route 
+							path="/AddProjectPage" exact 
+							element={
+								<AddProjectPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole} 
+									projectSideNavRef={projectSideNavRef}
+								/>
+							} 
+						/>
+						<Route 
+							path="/EditProject/:projectId" exact
+							element={
+								<EditProjectPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/>
+							}
+						/>
+						<Route 
+							path='/:projectId/AddBugPage' exact
+							element={
+								<AddBugPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/>
+							}
+						/>
+						<Route 
+							path='/:projectId/details' exact
+							element={
+								<DetailsPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/>
+							}
+						/>
+						<Route 
+							path="/ProfilePage" exact
+							element={
+								<ProfilePage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/>
+							}
+						/>
+						<Route 
+							path="/RegisterUserPage" exact
+							element={
+								<RegisterUserPage
+									user={user}
+									role={role}
+									confirmAdmin={confirmAdmin}
+								/>
+							}
+						/> 
+					</Routes>
 				</>
 			}
 		</>

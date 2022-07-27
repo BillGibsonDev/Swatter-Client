@@ -1,30 +1,50 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // images
-import X from '../../../assets/icons/whiteX.png';
-import Edit from "../../../assets/icons/editIconWhite.png";
-// router
-import { Link } from 'react-router-dom';
+import Edit from "../assets/icons/editIconWhite.png";
 
-export default function DetailsSection({
+// router
+import { Link, useParams } from 'react-router-dom';
+
+export default function DetailsPage({
     user, 
     role, 
-    project, 
-    toggleDetails, 
-    detailsSectionRef
 }) {
 
+    const { projectId } = useParams();
+
+    const [ project, setProject ] = useState([]);
+    const [ rerender, setRerender ] = useState(false);
+    const [ isLoading, setLoading ] = useState(true);
+
+
+    useEffect(() =>{
+        const getProject = () =>{
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setProject(response.data);
+                setLoading(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+       getProject(projectId);
+    }, [ projectId, rerender ]);
+
     return (
-        <StyledDetails ref={detailsSectionRef} style={{display: "none"}}>
+        <StyledDetails>
             <div className="links-wrapper">
                 <div className="breadcrumbs">
                     <Link to={`/`}>Home</Link><span>/</span>
-                    <Link to={`/`}>{project.projectTitle}</Link><span>/</span>
+                    <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link><span>/</span>
                     <p>Details</p>
                 </div>
-                <button className="exit-btn" id="exit-btn" onClick={() => {toggleDetails()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             </div>
             <div className="title-container">
                 <h1>{project.projectTitle}</h1>
@@ -45,64 +65,22 @@ export default function DetailsSection({
 }
 
 const StyledDetails = styled.div`
-    display: none;
     height: 100%;
-    width: 100%;
-    position: absolute;
-    background: ${pallette.accentColor};
-    border-radius: 12px;
-    padding: 2%;
-    left: -50px;
-    z-index: 3;
-    justify-content: center;
-    align-items: center;
-    @media (max-width: 1440px){
-        width: 100%;
-        left: -15px;
-    }
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
     @media (max-width: 834px){
         top: 0;
         left: -80px;
         margin: 0;
-        width: 100vw;
+        width: 100%;
         height: 100%;
         border-radius: 0;
     }
     @media (max-width: 428px){
         left: -60px;
         padding: 10px;
-    }
-    .exit-btn {
-        background: none;
-        border: none;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        #exit-btn-icon {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .tooltiptext {
-            visibility: hidden;
-            width: 100%;
-            min-width: 160px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1000;
-            top: 0;
-            right: 105%;
-        }
-    }
-    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
     }
     .breadcrumbs {
         display: flex;
@@ -111,7 +89,7 @@ const StyledDetails = styled.div`
         @media (max-width: 428px){
             display: none;
         }
-        a, button {
+        a {
             border: none;
             background: none;
             font-size: 16px;

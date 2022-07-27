@@ -14,8 +14,6 @@ export default function BugTable({
     completedBugs,
     setRerender, 
     rerender,
-    setSectionProjectId,
-    setSectionBugId, 
     projectId,
     project,
     toggleBug
@@ -35,8 +33,6 @@ export default function BugTable({
                             openBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
@@ -48,7 +44,6 @@ export default function BugTable({
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
                                         user={user}
-                                        toggleBug={toggleBug}
                                         sprint={bug.sprint}
                                         project={project}
                                         rerender={rerender}
@@ -66,9 +61,6 @@ export default function BugTable({
                                     <Bug
                                         rerender={rerender}
                                         setRerender={setRerender}
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
@@ -95,9 +87,6 @@ export default function BugTable({
                                     <Bug
                                         rerender={rerender}
                                         setRerender={setRerender}
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
@@ -124,9 +113,6 @@ export default function BugTable({
                                     <Bug
                                         rerender={rerender}
                                         setRerender={setRerender}
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}

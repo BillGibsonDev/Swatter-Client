@@ -3,28 +3,21 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
-
-// images
-import X from '../../../assets/icons/whiteX.png';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // router
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // components
-import Loader from '../../../loaders/Loader';
+import Loader from '../loaders/Loader';
 
-export default function AddBugSection({
+export default function AddBugPage({
     user, 
     role, 
-    confirmRole, 
-    projectId, 
-    addbugSectionRef, 
-    toggleAddBug,
-    rerender,
-    setRerender, 
-    project
+    confirmRole
 }) {
+
+    const { projectId } = useParams();
 
     const [ title, setTitle ] = useState("");
     const [ thumbnail, setThumbnail ] = useState("");
@@ -35,17 +28,25 @@ export default function AddBugSection({
     const [ tag, setTag ] = useState("");
     const [ isLoading, setLoading ] = useState(false);
     const [ sprint, setSprint ] = useState('');
-    const [ options, setOptions ] = useState([])
+    const [ options, setOptions ] = useState([]);
+    const [ rerender, setRerender ] = useState(false);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setOptions(project.sprints);
-        }, 2000);
-    }, [project])
+    useEffect(() =>{
+        const getProject = (projectId) => {
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setOptions(response.data.sprints)
+                setLoading(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+       getProject(projectId);
+    }, [ projectId, rerender ]); 
     
-
-    function addBug() {
-        setLoading(true)
+    const addBug = () => {
+        setLoading(true);
         axios.post(`${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`, {
             projectId: projectId,
             title: title,
@@ -57,6 +58,7 @@ export default function AddBugSection({
             tag: tag,
             role: role,
             sprint: sprint,
+            images: images,
         })
         .then(function(response) {
             if(response.data !== "Bug Created"){
@@ -65,21 +67,48 @@ export default function AddBugSection({
             } else {
                 setLoading(false);
                 alert('Bug Created!');
-                setRerender(!rerender);
             }
         })
     }
 
-    function unauthorized() {
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 
+    const [images, setImages] = useState([
+        { 
+            image: '', 
+            caption: '',
+        }
+    ]);
+
+    const handleAddFields = () => {
+        const values = [...images];
+        values.push({ image: '', caption: '' });
+        setImages(values);
+    };
+
+    const handleRemoveFields = index => {
+        const values = [...images];
+        values.splice(index, 1);
+        setImages(values);
+    };
+
+    const handleInputChange = (index, event) => {
+        const values = [...images];
+        if (event.target.name === "image") {
+            values[index].image = event.target.value;
+        } else if(event.target.name === "caption") {
+            values[index].caption = event.target.value;
+        }
+        setImages(values);
+    };
+
     return (
-        <StyledAddBug ref={addbugSectionRef} style={{display: "none"}}> 
-            <button id="exit-btn" onClick={() => {toggleAddBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+        <StyledAddBug> 
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
-                <button onClick={() =>{toggleAddBug()}}>Project</button><span>/</span>
+                <Link to={`/projects/${projectId}`}>Project</Link><span>/</span>
                 <p>Add Bug</p>
             </div>
             <h1>Add a Bug</h1>
@@ -193,6 +222,42 @@ export default function AddBugSection({
                         />
                     </label> 
                     {
+                    images.map((image, index) => {
+                        return (
+                            <section id="paragraph-section" key={index}>
+                                <div className="info-container">
+                                    <div className="input-container">
+                                        <label>Image
+                                            <input
+                                                type="text"
+                                                id="image"
+                                                name="image"
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                        <label>Caption
+                                            <input
+                                                type="text"
+                                                id="caption"
+                                                name="caption"
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                    </div>
+                                </div>
+                                <div className="button-container">
+                                    <button onClick={handleAddFields}>Add Image</button>
+                                    {
+                                        images.length === 1 ? (
+                                            <button>Remove</button>
+                                        ):(
+                                            <button onClick={handleRemoveFields}>Remove</button>
+                                        )
+                                    }
+                                </div>
+                            </section>
+                        )
+                    })
+                }
+                    {
                         role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
                         ? <button onClick={()=>{confirmRole(); addBug();}}>Add</button>
                         : <button onClick={unauthorized}>Add</button>
@@ -204,22 +269,12 @@ export default function AddBugSection({
 }
 
 const StyledAddBug = styled.div`
-    display: none;
+    display: flex;
     flex-direction: column;
     min-height: 96vh;
     height: 100%;
-    width: 79vw;
+    width: 70%;
     margin: 0 auto;
-    position: absolute;
-    z-index: 100;
-    background: ${pallette.accentColor};
-    border-radius: 12px;
-    padding: 2%;
-    left: -50px;
-    @media (max-width: 1440px){
-        width: 100%;
-        left: -15px;
-    }
     @media (max-width: 834px){
         top: 0;
         left: -80px;
@@ -232,38 +287,6 @@ const StyledAddBug = styled.div`
         left: -60px;
         padding: 10px;
     }
-    #exit-btn {
-        background: none;
-        border: none;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        #exit-btn-icon {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .tooltiptext {
-            visibility: hidden;
-            width: 100%;
-            min-width: 160px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1000;
-            top: 0;
-            right: 105%;
-        }
-    }
-    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
-    }
     .breadcrumbs {
         display: flex;
         align-items: center;
@@ -271,7 +294,7 @@ const StyledAddBug = styled.div`
         @media (max-width: 428px){
             display: none;
         }
-        a, button {
+        a {
             border: none;
             background: none;
             font-size: 16px;

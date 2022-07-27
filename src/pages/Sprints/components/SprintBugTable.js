@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
 // components
-import Bug from './Bug.js';
+import Bug from '../../ProjectPage/components/Bug.js';
 
 export default function SprintBugTable({ 
     user, 
@@ -13,18 +13,9 @@ export default function SprintBugTable({
     underwayBugs, 
     reviewBugs, 
     completedBugs,
-    setRerender, 
-    rerender,
-    bugSectionRef,
-    setSectionProjectId,
-    setSectionBugId, 
     projectId,
-    project,
-    toggleBug,
-    searchSprint
+    project
 }) {
-
-    console.log
 
     return (
         <StyledBugTable>
@@ -40,14 +31,13 @@ export default function SprintBugTable({
                             openBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
+                                        project={project}
                                         projectTitle={project.projectTitle}
-                                        projectId = {projectId}
+                                        projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail = {bug.thumbnail}
-                                        description = {bug.description}
+                                        thumbnail={bug.thumbnail}
+                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -55,7 +45,6 @@ export default function SprintBugTable({
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
                                         user={user}
-                                        toggleBug={toggleBug}
                                     />
                                 )
                             })
@@ -67,15 +56,13 @@ export default function SprintBugTable({
                             underwayBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
+                                        project={project}
                                         projectTitle={project.projectTitle}
-                                        projectId = {projectId}
+                                        projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail = {bug.thumbnail}
-                                        description = {bug.description}
+                                        thumbnail={bug.thumbnail}
+                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -94,15 +81,13 @@ export default function SprintBugTable({
                             reviewBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
+                                        project={project}
                                         projectTitle={project.projectTitle}
                                         projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail = {bug.thumbnail}
-                                        description = {bug.description}
+                                        thumbnail={bug.thumbnail}
+                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}
@@ -121,15 +106,13 @@ export default function SprintBugTable({
                             completedBugs.slice().reverse().map((bug, key) => {
                                 return (
                                     <Bug
-                                        setSectionProjectId={setSectionProjectId}
-                                        setSectionBugId={setSectionBugId}
-                                        toggleBug={toggleBug}
+                                        project={project}
                                         projectTitle={project.projectTitle}
-                                        projectId = {projectId}
+                                        projectId={projectId}
                                         bugId={bug._id}
                                         title={bug.title}
-                                        thumbnail = {bug.thumbnail}
-                                        description = {bug.description}
+                                        thumbnail={bug.thumbnail}
+                                        description={bug.description}
                                         priority={bug.priority}
                                         author={bug.author}
                                         status={bug.status}

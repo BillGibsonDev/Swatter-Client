@@ -9,7 +9,7 @@ import * as pallette from '../styled/ThemeVariables.js';
 import X from '../assets/icons/whiteX.png';
 
 // router
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 // components
 import Loader from '../loaders/Loader';
@@ -17,7 +17,7 @@ import Loader from '../loaders/Loader';
 export default function EditProjectPage({user, role, confirmRole}) {
 
     const { projectId } = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [ project, setProject ] = useState([]);
     const [ isLoading, setLoading ] = useState(false);
@@ -47,7 +47,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
                     setLoading(false);
                     alert("Server Error - Project not updated")
                 } else {
-                    history.push("/");
+                    navigate("/");
                     setLoading(false);
                     alert('Project Deleted!');
                 }

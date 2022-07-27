@@ -13,14 +13,18 @@ import AddBug from '../../../assets/icons/plus.png';
 import Comments from '../../../assets/icons/comments.png';
 import Sprints from '../../../assets/icons/sprint.png';
 
+// router
+import { Link, useParams } from 'react-router-dom';
+
+
 export const ProjectSideNav = ({
     project, 
-    toggleComments, 
-    toggleAddBugs,
-    toggleSprints, 
-    projectSideNavRef,
-    toggleDetails
+    toggleComments,
+    projectSideNavRef
 }) => {
+
+    const { projectId } = useParams();
+
 
     const [ screenWidth, setScreenWidth ] = useState(0)
 
@@ -45,12 +49,12 @@ export const ProjectSideNav = ({
                 </h5>
             </div>
             <div className="menu-wrapper">
-                <button onClick={() => { toggleSprints()}} ><img src={Sprints} alt="" />Sprints</button>
+                <Link to={`/projects/${projectId}/sprints`} ><img src={Sprints} alt="" />Sprints</Link>
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
                 <button onClick={()=> { toggleComments()}}><img src={Comments} alt="" />Comments</button>
-                <button onClick={()=> { toggleAddBugs()}}><img src={AddBug} alt="" />Add Bug</button>
-                <button onClick={()=> { toggleDetails()}}><img src={Details} alt="" />Details</button>
+                <Link to={`/${projectId}/AddBugPage`} ><img src={AddBug} alt="" />Add Bug</Link>
+                <Link to={`/${projectId}/details`} ><img src={Details} alt="" />Details</Link>
             </div>
         </div>
     </StyledSideNav>

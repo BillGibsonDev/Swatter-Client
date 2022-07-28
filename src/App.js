@@ -22,6 +22,8 @@ import DetailsPage from "./pages/DetailsPage";
 
 // react router
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { ProjectSideNav } from "./pages/ProjectPage/components/ProjectSideNav";
+import EditBugPage from "./pages/EditBugPage";
 
 function App() {
 
@@ -186,7 +188,7 @@ function App() {
 						logout={logout}
 						isLoggedIn={isLoggedIn}
 						projectSideNavRef={projectSideNavRef}
-						/>
+					/>
 					<Routes>
 						<Route 
 							path='/' exact 
@@ -202,6 +204,16 @@ function App() {
 							path="/:projectId/:bugId" exact
 							element={
 								<BugPage
+									user={user}
+									role={role}
+									confirmRole={confirmRole}
+								/> 
+							}
+						/>
+						<Route 
+							path="/:projectId/:bugId/edit" exact
+							element={
+								<EditBugPage
 									user={user}
 									role={role}
 									confirmRole={confirmRole}

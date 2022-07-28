@@ -11,6 +11,9 @@ import BugPageLoader from '../loaders/BugPageLoader';
 // router
 import { Link, useParams } from 'react-router-dom';
 
+// images
+import EditIcon from '../assets/icons/editIconWhite.png';
+
 export default function BugPage({
     user, 
     role, 
@@ -54,6 +57,15 @@ export default function BugPage({
         getBug(projectId, bugId);
     }, [ projectId, bugId, project, isLoading, rerender ]);
 
+    const handleModal = (index) => {
+        let modal = document.getElementById(index);
+        if(modal.style.display === "block"){
+            modal.style.display = "none";
+        } else {
+            modal.style.display = "block";
+        }
+    }
+
     return (
         <StyledBugSection>
             <div className="breadcrumbs">
@@ -69,7 +81,10 @@ export default function BugPage({
                 isLoading === true 
                 ? <BugPageLoader />
                 :<div className="bug-wrapper">
-                    <h1>{bug.title}</h1>
+                    <div className="title-container">
+                        <h1>{bug.title}</h1>
+                        <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt="edit bug link" /></Link>
+                    </div>
                     <div className="bug-container">
                         <div className="info-container">
                             <h2><span>Creator: </span>{bug.author}</h2>
@@ -93,28 +108,34 @@ export default function BugPage({
                     <img src={bug.thumbnail} alt=""/>
                 </div>
             }
-                {
-                    images === undefined || images.length === 0
-                    ? <>
-                        <h1>No Images Yet</h1>
-                    </>
-                    : <div className="images-wrapper">
-                        { 
-                            images.map((image, index) => {
-                                return (
-                                    <>
-                                        <img src={image.image} alt="" key={index}/>
-                                        <div id="modal">
-                                            <span className="close-btn">&times;</span>
-                                            <img className="modal-image" src={image.image} alt={image.caption} />
-                                            <p id="caption">{image.caption}</p>
-                                        </div>
-                                    </>
-                                )
-                            })
-                        }
-                    </div>
-                }
+            <h2>Images:</h2>
+            {
+                images === undefined || images.length === 0
+                ? <><h2>None</h2></>
+                : <div className="images-wrapper">
+                    { 
+                        images.map((image, index) => {
+                            return (
+                                <div key={index}>
+                                    <div className="image-container">
+                                        <img src={image.image} onClick={() => { handleModal(index)}} alt={image.caption}/>
+                                        {
+                                            image.caption.length > 50 
+                                            ? <p>{image.caption.slice(0, 50)}...</p>
+                                            : <p>{image.caption}</p>
+                                        }
+                                    </div>
+                                    <div className="modal" id={index}>
+                                        <span className="close-button" onClick={() => {handleModal(index)}}>&times;</span>
+                                        <img className="modal-image" src={image.image} alt={image.caption} />
+                                        <p id="caption">{image.caption}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
         </StyledBugSection >
     )
 }
@@ -124,12 +145,13 @@ const StyledBugSection = styled.div`
     width: 70%;
     margin: 30px auto auto auto;
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        width: 100%;
+        width: 90%;
+        margin: 30px 0 auto auto;
     }
     @media (max-width: 428px){
+        width: 85%;
         padding: 10px;
+        margin: 0 0 auto auto;
     }
     .breadcrumbs {
         display: flex;
@@ -168,12 +190,25 @@ const StyledBugSection = styled.div`
         flex-direction: column;
         width: 100%;
         margin: auto;
-        h1 {
-            color: white;
-            font-size: 30px;
-            margin: 10px 0;
-            @media (max-width: 450px){
-                font-size: 20px;
+        .title-container {
+            display: flex;
+            align-items: center;
+            h1 {
+                color: white;
+                font-size: 30px;
+                margin: 10px 50px 10px 0;
+                @media (max-width: 450px){
+                    font-size: 20px;
+                }
+            }
+            a {
+                cursor: pointer;
+                height: 30px;
+                width: 30px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
         .bug-container {
@@ -191,8 +226,11 @@ const StyledBugSection = styled.div`
                     display: flex;
                     flex-direction: column;
                     width: 90%;
-                    margin: 10px 0;
+                    margin: 4px 0;
                     font-weight: 400;
+                    @media (max-width: 450px){
+                        font-size: 12px;
+                    }
                     span {
                         color: #cecece;
                         font-weight: 400;
@@ -216,55 +254,85 @@ const StyledBugSection = styled.div`
             display: flex;
             flex-direction: column;
             margin: 30px 0;
+            @media (max-width: 450px){
+                font-size: 12px;
+            }
             span {
                 color: ${pallette.helperGrey}
             }
         }
     }
+    h2 {
+        color: white;
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 20px;
+    }
     .images-wrapper {
         display: flex;
-        justify-content: space-between;
-        flex-grow: 1;
+        grid-gap: 20px;
+        margin: 0 0 20px 0;
+        width: 50%;
+        height: auto;
+        overflow-x: scroll;
+        @media (max-width: 850px){
+            width: 90%;
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            height: 200px;
             img {
+                cursor: pointer;
                 width: 100%;
                 height: 100%;
-                border-radius: 12px 12px 0 0;
             }
-        /* The Modal (background) */
-        #modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
+            p {
+                min-height: 50px;
+                font-size: 12px;
+                text-align: center;
+                color: white;
+                background: #2c272771;
+            }
+        }
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            padding-top: 100px; 
             left: 0;
             top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-
-
-        /* Modal Content (Image) */
-        .modal-image {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-
-        /* Caption of Modal Image (Image Text) - Same Width as the Image */
-        #caption {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        text-align: center;
-        color: #ccc;
-        padding: 10px 0;
-        height: 150px;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.9); 
+            .modal-image {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+                }
+            #caption {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+                text-align: center;
+                color: ${pallette.helperGrey};
+                padding: 10px 0;
+                height: 150px;
+            }
+            .close-button {
+                position: absolute;
+                top: 15px;
+                right: 35px;
+                color: #f1f1f1;
+                font-size: 40px;
+                font-weight: bold;
+                cursor: pointer;
+            }
         }
     }
-}
-        
 `;

@@ -11,12 +11,11 @@ import BugPageLoader from '../loaders/BugPageLoader';
 // router
 import { Link, useParams } from 'react-router-dom';
 
-export default function BugPage({
+export default function EditBugPage({
     user, 
     role, 
     rerender,
-    setRerender,
-    project
+    setRerender
 }) {
 
     const { projectId, bugId } = useParams();
@@ -52,9 +51,7 @@ export default function BugPage({
         setImages(bug.images);
         getSprints(projectId);
         getBug(projectId, bugId);
-    }, [ projectId, bugId, project, isLoading, rerender ]);
-
-    console.log(options)
+    }, [ projectId, bugId, isLoading, rerender ]);
 
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);
@@ -254,35 +251,35 @@ export default function BugPage({
                     </>
                     : <>
                         { 
-                   images.map((image, index) => {
-                        return (
-                            <div id="paragraph-section" key={index}>
-                                <div className="info-container">
-                                    <div className="input-container">
-                                        <img className="preview-image" id="image" src={image.image} alt="" />
-                                        <label>Image
-                                            <input
-                                                type="text"
-                                                id="image"
-                                                name="image"
-                                                defaultValue={image.image}
-                                                onChange={event => handleInputChange(index, event)}
-                                        /></label>
-                                        <label>Caption
-                                            <input
-                                                type="text"
-                                                id="caption"
-                                                name="caption"
-                                                defaultValue={image.caption}
-                                                onChange={event => handleInputChange(index, event)}
-                                        /></label>
+                            images.map((image, index) => {
+                                return (
+                                    <div id="paragraph-section" key={index}>
+                                        <div className="info-container">
+                                            <div className="input-container">
+                                                <img className="preview-image" id="image" src={image.image} alt="" />
+                                                <label>Image
+                                                    <input
+                                                        type="text"
+                                                        id="image"
+                                                        name="image"
+                                                        defaultValue={image.image}
+                                                        onChange={event => handleInputChange(index, event)}
+                                                /></label>
+                                                <label>Caption
+                                                    <input
+                                                        type="text"
+                                                        id="caption"
+                                                        name="caption"
+                                                        defaultValue={image.caption}
+                                                        onChange={event => handleInputChange(index, event)}
+                                                /></label>
+                                            </div>
+                                        </div>
+                                        <button  id="delete" onClick={(e) => { removeImage(image._id); handleRemoveFields(); }}>Remove</button>
                                     </div>
-                                </div>
-                                <button  id="delete" onClick={(e) => { removeImage(image._id); handleRemoveFields(); }}>Remove</button>
-                            </div>
-                        )
-                    })
-                }
+                                )
+                            })
+                        }
                     </>
                 }
                 <button onClick={handleAddFields}>Add Image</button>

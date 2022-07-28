@@ -49,9 +49,10 @@ export const SprintForm = ({
 
     return (
         <StyledSprintForm ref={sprintForm} style={{display: "none"}}>
-            <h2>New Sprint</h2>
-            <button id="exit-btn" onClick={() => {toggleSprintForm()}}>&times;<span className="tooltiptext">Close</span></button>
-            <label>Title 
+            <div className="title-container">
+                <h1>New Sprint</h1>
+                <button id="exit-btn" onClick={() => {toggleSprintForm()}}>&times;<span className="tooltiptext">Close</span></button>
+            </div><label>Title 
                 <input 
                     type="text"
                     id="title"
@@ -121,8 +122,47 @@ const StyledSprintForm = styled.div`
     z-index: 1003;
     background: grey;
     border-radius: 8px;
-    h2 {
-        margin: 10px auto;
+    .title-container {
+        display: flex;
+        width: 95%;
+        justify-content: space-between;
+        align-items: center;
+        margin: auto;
+        h1 {
+            color: #ffffff;
+        }
+        #exit-btn {
+            background: none;
+            border: none;
+            font-size: 40px;
+            color: white;
+            position: relative;
+            cursor: pointer;
+                #exit-btn-icon {
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                }
+                .tooltiptext {
+                    visibility: hidden;
+                    width: 100%;
+                    min-width: 160px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1000;
+                    top: 25%;
+                    right: 105%;
+                    font-size: 20px;
+                }
+            }
+        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
+        }
     }
     label {
         display: flex;

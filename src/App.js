@@ -26,8 +26,6 @@ import EditBugPage from "./pages/EditBugPage";
 
 function App() {
 
-	const projectSideNavRef = useRef();
-
 	const [ password, setPassword ] = useState('');
 	const [ user, setUser] = useState('');
   	const [ username, setUsername] = useState('');
@@ -186,7 +184,6 @@ function App() {
 						role={role}
 						logout={logout}
 						isLoggedIn={isLoggedIn}
-						projectSideNavRef={projectSideNavRef}
 					/>
 					<Routes>
 						<Route 
@@ -226,8 +223,7 @@ function App() {
 								<ProjectPage
 									user={user}
 									role={role}
-									confirmRole={confirmRole} 
-									projectSideNavRef={projectSideNavRef}
+									confirmRole={confirmRole}
 								/>
 							} 
 						/>
@@ -248,8 +244,7 @@ function App() {
 								<AddProjectPage
 									user={user}
 									role={role}
-									confirmRole={confirmRole} 
-									projectSideNavRef={projectSideNavRef}
+									confirmRole={confirmRole}
 								/>
 							} 
 						/>

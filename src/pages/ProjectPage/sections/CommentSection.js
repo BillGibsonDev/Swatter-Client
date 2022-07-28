@@ -147,6 +147,7 @@ const StyledCommentSection = styled.div`
         background: ${pallette.accentColor};
         @media (max-width: 428px){
             width: 90%;
+            justify-content: flex-start;
         }
         .title-container {
             display: flex;
@@ -203,6 +204,13 @@ const StyledCommentSection = styled.div`
                 width: 500px;
                 max-height: 50px;
                 font-size: 12px;
+                @media (max-width: 834px){
+                    width: 300px;
+                }
+                @media (max-width: 428px){
+                    width: 200px;
+                    height: 30px;
+                }
             }
             button {
                 margin: 0;

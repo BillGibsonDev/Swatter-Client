@@ -221,45 +221,45 @@ export default function AddBugPage({
                         />
                     </label> 
                     {
-                    images.map((image, index) => {
-                        return (
-                            <section id="paragraph-section" key={index}>
-                                <div className="info-container">
-                                    <div className="input-container">
-                                        <label>Image
-                                            <input
-                                                type="text"
-                                                id="image"
-                                                name="image"
-                                                onChange={event => handleInputChange(index, event)}
-                                        /></label>
-                                        <label>Caption
-                                            <input
-                                                type="text"
-                                                id="caption"
-                                                name="caption"
-                                                onChange={event => handleInputChange(index, event)}
-                                        /></label>
+                        images.map((image, index) => {
+                            return (
+                                <section id="paragraph-section" key={index}>
+                                    <div className="info-container">
+                                        <div className="input-container">
+                                            <label>Image
+                                                <input
+                                                    type="text"
+                                                    id="image"
+                                                    name="image"
+                                                    onChange={event => handleInputChange(index, event)}
+                                            /></label>
+                                            <label>Caption
+                                                <input
+                                                    type="text"
+                                                    id="caption"
+                                                    name="caption"
+                                                    onChange={event => handleInputChange(index, event)}
+                                            /></label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="button-container">
-                                    <button onClick={handleAddFields}>Add Image</button>
-                                    {
-                                        images.length === 1 ? (
-                                            <button>Remove</button>
-                                        ):(
-                                            <button onClick={handleRemoveFields}>Remove</button>
-                                        )
-                                    }
-                                </div>
-                            </section>
-                        )
-                    })
-                }
+                                    <div className="buttons-container">
+                                        <button onClick={handleAddFields}>Add Image</button>
+                                        {
+                                            images.length === 1 ? (
+                                                <button id="remove-button">Remove</button>
+                                            ):(
+                                                <button id="remove-button" onClick={handleRemoveFields}>Remove</button>
+                                            )
+                                        }
+                                    </div>
+                                </section>
+                            )
+                        })
+                    }
                     {
                         role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
-                        ? <button onClick={()=>{confirmRole(); addBug();}}>Add</button>
-                        : <button onClick={unauthorized}>Add</button>
+                        ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); addBug();}}>Add Bug</button>
+                        : <button style={{marginTop: '40px'}} onClick={unauthorized}>Add Bug</button>
                     }
                 </div>
             }
@@ -275,15 +275,12 @@ const StyledAddBug = styled.div`
     width: 70%;
     margin: 0 auto;
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        padding: 10px;
-        width: 100vw;
+        width: 80%;
         height: 100%;
         border-radius: 0;
     }
     @media (max-width: 428px){
-        left: -60px;
+        margin-left: 60px;
         padding: 10px;
     }
     .breadcrumbs {
@@ -373,6 +370,16 @@ const StyledAddBug = styled.div`
             textarea {
                 padding: 10px;
                 background: ${pallette.helperGrey};
+            }
+        }
+        .buttons-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            #remove-button {
+                background: none;
+                border: red 1px solid;
+                color: red;
             }
         }
         button {

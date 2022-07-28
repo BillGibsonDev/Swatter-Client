@@ -78,16 +78,10 @@ const StyledDetails = styled.div`
     display: flex;
     flex-direction: column;
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
+        width: 80%;
     }
     @media (max-width: 428px){
-        left: -60px;
-        padding: 10px;
+        margin: 20px auto auto 60px;
     }
     .breadcrumbs {
         display: flex;
@@ -176,6 +170,10 @@ const StyledDetails = styled.div`
                 margin: 10px 0;
                 font-size: 18px;
                 color: white;
+                @media (max-width: 428px){
+                    font-size: 14px;
+                    margin: 20px 0;
+                }
                 span {
                     color: ${pallette.helperGrey};
                 }

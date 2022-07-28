@@ -289,12 +289,11 @@ const StyledBugSection = styled.div`
     width: 70%;
     margin: 30px auto auto auto;
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
         width: 100%;
     }
     @media (max-width: 428px){
-        padding: 10px;
+        width: 80%;
+        margin-left: 60px;
     }
     .breadcrumbs {
         display: flex;
@@ -436,12 +435,21 @@ const StyledBugSection = styled.div`
             margin: 20px 0;
             height: 300px;
             width: 100%;
+            @media (max-width: 428px){
+                flex-direction: column;
+            }
             img {
                 width: 40%;
                 height: 100%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
             }
             .input-container {
                 width: 50%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
                 label {
                     display: flex;
                     color: white;

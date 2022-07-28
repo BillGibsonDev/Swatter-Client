@@ -175,6 +175,9 @@ const StyledBugSection = styled.div`
         .title-container {
             display: flex;
             align-items: center;
+            @media (max-width: 450px){
+                justify-content: space-between;
+            }
             h1 {
                 color: white;
                 font-size: 30px;
@@ -192,10 +195,17 @@ const StyledBugSection = styled.div`
                 padding: 4px 10px;
                 border-radius: 8px;
                 margin-left: 20px;
+                @media (max-width: 450px){
+                    font-size: 16px;
+                }
                 img {
                     margin-right: 4px;
                     height: 20px;
                     width: 20px;
+                    @media (max-width: 450px){
+                        height: 16px;
+                        width: 16px;
+                    }
                 }
                 &:hover {
                     background: black;
@@ -226,7 +236,7 @@ const StyledBugSection = styled.div`
                         font-weight: 400;
                         font-size: 12px;
                         @media (max-width: 450px){
-                            font-size: 12px;
+                            font-size: 10px;
                         }
                     }
                 }
@@ -276,6 +286,9 @@ const StyledBugSection = styled.div`
         overflow-x: auto;
         @media (max-width: 850px){
             width: 90%;
+        }
+        @media (max-width: 450px){
+            width: 100%;
         }
         .image-container {
             display: flex;

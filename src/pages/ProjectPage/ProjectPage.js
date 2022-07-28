@@ -22,9 +22,10 @@ import arrowRight from '../../assets/icons/arrowRight.png';
 // router
 import { useParams } from 'react-router-dom';
 
-export default function ProjectPage({ user, role, confirmRole, projectSideNavRef }) {
+export default function ProjectPage({ user, role, confirmRole }) {
 
     const commentSectionRef = useRef();
+    const projectSideNavRef = useRef();
 
     const { projectId, bugId } = useParams();
 
@@ -68,7 +69,6 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         }
     }
 
-    
     const toggleSideNav = () => {
         setRerender(!rerender);
         let section = projectSideNavRef.current;
@@ -90,6 +90,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
             <button id="arrow-button" onClick={() => { handleArrow(); toggleSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
             <ProjectSideNav
                 project={project}
+                projectSideNavRef={projectSideNavRef}
                 toggleComments={toggleComments}
             />
             {
@@ -150,6 +151,7 @@ const StyledProjectPage = styled.div`
     @media (max-width: 834px){
         width: 900px;
         max-width: 85vw;
+        margin-left: 70px;
     }
     @media (max-width: 820px){
         width: 760px;
@@ -159,6 +161,7 @@ const StyledProjectPage = styled.div`
     }
     @media (max-width: 428px){
         width: 360px;
+        margin-left: 60px;
     }
     @media (max-width: 414px){
         width: 340px;

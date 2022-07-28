@@ -22,7 +22,6 @@ import DetailsPage from "./pages/DetailsPage";
 
 // react router
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { ProjectSideNav } from "./pages/ProjectPage/components/ProjectSideNav";
 import EditBugPage from "./pages/EditBugPage";
 
 function App() {

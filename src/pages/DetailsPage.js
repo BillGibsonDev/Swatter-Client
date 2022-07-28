@@ -11,20 +11,21 @@ import Edit from "../assets/icons/editIconWhite.png";
 // router
 import { Link, useParams } from 'react-router-dom';
 
-export default function DetailsPage({
-    user, 
-    role, 
-}) {
+// loaders
+import '../loaders/Loader.js';
+import Loader from '../loaders/Loader.js';
+
+export default function DetailsPage() {
 
     const { projectId } = useParams();
 
     const [ project, setProject ] = useState([]);
-    const [ rerender, setRerender ] = useState(false);
     const [ isLoading, setLoading ] = useState(true);
 
 
     useEffect(() =>{
-        const getProject = () =>{
+        const getProject = () => {
+            setLoading(true);
             axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
             .then(function (response){
                 setProject(response.data);
@@ -35,31 +36,37 @@ export default function DetailsPage({
             });
         }
        getProject(projectId);
-    }, [ projectId, rerender ]);
+    }, [ projectId ]);
 
     return (
         <StyledDetails>
-            <div className="links-wrapper">
-                <div className="breadcrumbs">
-                    <Link to={`/`}>Home</Link><span>/</span>
-                    <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link><span>/</span>
-                    <p>Details</p>
-                </div>
-            </div>
-            <div className="title-container">
-                <h1>{project.projectTitle}</h1>
-                <Link id="edit-btn" to={`/EditProject/${project._id}`}><img id="edit-btn-icon" src={Edit} alt="" /><span className="tooltiptext">Edit Project</span></Link>
-            </div>
-            <div className="info-container">
-                <div className="container">
-                    <h6><span>Type:</span> {project.projectType}</h6>
-                    <h6><span>Description:</span> {project.description}</h6>
-                </div>
-                <div className="container">
-                    <h6><span>Lead:</span> {project.projectLead}</h6>
-                    <h6><span>Started:</span> {project.startDate}</h6>
-                </div>
-            </div>
+            { 
+                isLoading
+                ? <Loader />
+                :<>
+                    <div className="links-wrapper">
+                        <div className="breadcrumbs">
+                            <Link to={`/`}>Home</Link><span>/</span>
+                            <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link><span>/</span>
+                            <p>Details</p>
+                        </div>
+                    </div>
+                    <div className="title-container">
+                        <h1>{project.projectTitle}</h1>
+                        <Link id="edit-btn" to={`/EditProject/${project._id}`}><img id="edit-btn-icon" src={Edit} alt="" /><span className="tooltiptext">Edit Project</span></Link>
+                    </div>
+                    <div className="info-container">
+                        <div className="container">
+                            <h6><span>Type:</span> {project.projectType}</h6>
+                            <h6><span>Description:</span> {project.description}</h6>
+                        </div>
+                        <div className="container">
+                            <h6><span>Lead:</span> {project.projectLead}</h6>
+                            <h6><span>Started:</span> {project.startDate}</h6>
+                        </div>
+                    </div>
+                </>
+            }
         </StyledDetails>
     ) 
 }
@@ -67,7 +74,7 @@ export default function DetailsPage({
 const StyledDetails = styled.div`
     height: 100%;
     width: 70%;
-    margin: auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
     @media (max-width: 834px){

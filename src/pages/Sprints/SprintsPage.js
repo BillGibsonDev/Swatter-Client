@@ -55,15 +55,13 @@ export default function SprintsPage({
                 setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"));
                 setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"));
                 setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"));
-                setOptions(response.data.sprints)
+                setOptions(response.data.sprints);
+                handleEndDate(response.data.sprints[0].endDate);
                 setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             });
-        }
-        if(project.sprints){
-            handleEndDate(project.sprints[0].endDate);
         }
        getProject(projectId);
     }, [ projectId, rerender ]); 

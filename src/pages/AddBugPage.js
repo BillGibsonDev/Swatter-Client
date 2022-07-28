@@ -29,7 +29,6 @@ export default function AddBugPage({
     const [ isLoading, setLoading ] = useState(false);
     const [ sprint, setSprint ] = useState('');
     const [ options, setOptions ] = useState([]);
-    const [ rerender, setRerender ] = useState(false);
 
     useEffect(() =>{
         const getProject = (projectId) => {
@@ -43,7 +42,7 @@ export default function AddBugPage({
             });
         }
        getProject(projectId);
-    }, [ projectId, rerender ]); 
+    }, [ projectId ]); 
     
     const addBug = () => {
         setLoading(true);

@@ -7,7 +7,7 @@ export default function Loader() {
     return (
         <StyledLoader>
             <div className="loader"></div>
-            <h2>Standby...</h2>
+            <h2>Loading...</h2>
         </StyledLoader>
     )
 }
@@ -22,7 +22,6 @@ const StyledLoader = styled.div`
     position: relative;
     flex-direction: column;
     z-index: 99;
-    background: white;
     .loader {
         opacity: 80%;
         border: 16px dashed #000000;

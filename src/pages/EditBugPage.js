@@ -9,14 +9,14 @@ import * as pallette from '../styled/ThemeVariables.js';
 import BugPageLoader from '../loaders/BugPageLoader';
 
 // router
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export default function EditBugPage({
     user, 
     role, 
-    rerender,
-    setRerender
 }) {
+
+    const navigate = useNavigate();
 
     const { projectId, bugId } = useParams();
 
@@ -25,6 +25,7 @@ export default function EditBugPage({
     const [ isLoading, setLoading ] = useState(true);
     const [ options, setOptions ] = useState([]);
     const [ images, setImages ] = useState([]);
+    const [ rerender, setRerender ] = useState(true);
 
     useEffect(() => {
         const getSprints = () => {
@@ -42,13 +43,13 @@ export default function EditBugPage({
                 setBug(response.data[0].bugs[0]);
                 setOptions(response.data);
                 setAuthor(response.data[0].bugs[0].author);
+                setImages(response.data[0].bugs[0].images)
                 setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             });
         }
-        setImages(bug.images);
         getSprints(projectId);
         getBug(projectId, bugId);
     }, [ projectId, bugId, isLoading, rerender ]);
@@ -77,8 +78,8 @@ export default function EditBugPage({
                 alert("Server Error - Bug not updated")
             } else {
                 setLoading(false);
-                alert('Bug Updated!');
                 setRerender(!rerender);
+                alert('Bug Updated!');
             }
         })
     }
@@ -95,7 +96,7 @@ export default function EditBugPage({
                 } else {
                     setLoading(false);
                     alert('Bug Deleted');
-                    setRerender(!rerender);
+                    navigate(`/projects/${projectId}`)
                 }
             })
         }
@@ -105,34 +106,20 @@ export default function EditBugPage({
         alert("You do not have permissions to do that!")
     }
 
-    const removeImage = ( imageId ) => {
-        setLoading(true);
-        axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}/${imageId}`)
-        .then(function(response) {
-            if(response.data !== "Image Deleted"){
-                setLoading(false);
-                alert("Server Error - Image not updated")
-            } else {
-                setLoading(false);
-                alert('Image Deleted');
-                setRerender(!rerender);
-            }
-        })
-    }
-
     const handleAddFields = () => {
         const values = [...images];
         values.push({ caption: '', image: ''});
         setImages(values);
     };
 
-    const handleRemoveFields = index => {
+    const handleRemoveFields = (index) => {
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
-        const values = [...images];
-        values.splice(index, 1);
-        setImages(values);
-    }};
+            const values = [...images];
+            values.splice(index, 1);
+            setImages(values);
+        }
+    };
 
   const handleInputChange = (index, event) => {
     const values = [...images];
@@ -244,45 +231,42 @@ export default function EditBugPage({
                     <img src={bug.thumbnail} alt=""/>
                 </div>
             }
-                {
-                    images === undefined 
-                    ? <>
-                        <h1>No Images Yet</h1>
-                    </>
-                    : <>
-                        { 
-                            images.map((image, index) => {
-                                return (
-                                    <div id="paragraph-section" key={index}>
-                                        <div className="info-container">
-                                            <div className="input-container">
-                                                <img className="preview-image" id="image" src={image.image} alt="" />
-                                                <label>Image
-                                                    <input
-                                                        type="text"
-                                                        id="image"
-                                                        name="image"
-                                                        defaultValue={image.image}
-                                                        onChange={event => handleInputChange(index, event)}
-                                                /></label>
-                                                <label>Caption
-                                                    <input
-                                                        type="text"
-                                                        id="caption"
-                                                        name="caption"
-                                                        defaultValue={image.caption}
-                                                        onChange={event => handleInputChange(index, event)}
-                                                /></label>
-                                            </div>
-                                        </div>
-                                        <button  id="delete" onClick={(e) => { removeImage(image._id); handleRemoveFields(); }}>Remove</button>
+            <h2>Images:</h2>
+            {
+                images === undefined 
+                ? <> <h1>No Images Yet</h1> </>
+                : <div className="images-wrapper">
+                    { 
+                        images.map((image, index) => {
+                            return (
+                                <div className="image-container" key={index}>
+                                    <img className="preview-image" id="image" src={image.image} alt={image.caption} />
+                                    <div className="input-container">
+                                        <label>Image
+                                            <input
+                                                type="text"
+                                                id="image"
+                                                name="image"
+                                                defaultValue={image.image}
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                        <label>Caption
+                                            <input
+                                                type="text"
+                                                id="caption"
+                                                name="caption"
+                                                defaultValue={image.caption}
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                        <button id="delete" onClick={() => { handleRemoveFields(index); }}>Remove</button>
                                     </div>
-                                )
-                            })
-                        }
-                    </>
-                }
-                <button onClick={handleAddFields}>Add Image</button>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <button onClick={handleAddFields}>Add Image</button>
             <div className="button-container">
                 {
                     author === user || role === process.env.REACT_APP_ADMIN_SECRET 
@@ -436,6 +420,50 @@ const StyledBugSection = styled.div`
             background: ${pallette.helperGrey};
         }
     }
+    h2 {
+        color: white;
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+    .images-wrapper {
+        display: flex;
+        flex-direction: column;
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            height: 300px;
+            width: 100%;
+            img {
+                width: 40%;
+                height: 100%;
+            }
+            .input-container {
+                width: 50%;
+                label {
+                    display: flex;
+                    color: white;
+                    flex-direction: column;
+                    margin: 10px 0;
+                    font-size: ${pallette.labelSize};
+                    @media (max-width: 750px){
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px){
+                        margin: 10px 0;
+                    }
+                    input {
+                        width: 100%;
+                        height: 30px;
+                        padding: 2px;
+                        background: ${pallette.helperGrey};
+                    }
+                }
+            }
+        }
+    }
     .button-container {
         display: flex;
         align-items: center;
@@ -465,9 +493,5 @@ const StyledBugSection = styled.div`
                 transform: scale(1.05);
             }
         }
-    }
-    .preview-image {
-        height: 200px;
-        width: 200px;
     }
 `;

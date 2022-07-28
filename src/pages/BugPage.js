@@ -16,46 +16,28 @@ import EditIcon from '../assets/icons/editIconWhite.png';
 
 export default function BugPage({
     user, 
-    role, 
-    rerender,
-    setRerender,
-    project
+    role,
 }) {
 
     const { projectId, bugId } = useParams();
-
-    const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);
-    const [ options, setOptions ] = useState([]);
     const [ images, setImages ] = useState([]);
 
     useEffect(() => {
-        const getSprints = () => {
-            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-            .then(function (response){
-                setOptions(response.data.sprints);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        }
         const getBug = (projectId, bugId) => {
             axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
             .then(function (response){
                 setBug(response.data[0].bugs[0]);
-                setOptions(response.data);
-                setAuthor(response.data[0].bugs[0].author);
+                setImages(response.data[0].bugs[0].images);
                 setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             });
         }
-        setImages(bug.images);
-        getSprints(projectId);
         getBug(projectId, bugId);
-    }, [ projectId, bugId, project, isLoading, rerender ]);
+    }, [ projectId, bugId, isLoading ]);
 
     const handleModal = (index) => {
         let modal = document.getElementById(index);
@@ -83,17 +65,12 @@ export default function BugPage({
                 :<div className="bug-wrapper">
                     <div className="title-container">
                         <h1>{bug.title}</h1>
-                        <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt="edit bug link" /></Link>
+                        <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt="edit bug link" />Edit</Link>
                     </div>
-                    <div className="bug-container">
-                        <div className="info-container">
-                            <h2><span>Creator: </span>{bug.author}</h2>
-                            <h2><span>Created: </span>{bug.date}</h2>
-                            <h2><span>Updated: </span>{bug.lastUpdate}</h2>
-                        </div>
+                    <div className="info-wrapper">
                         <div className="info-container">
                             <h3><span>Tag: </span> {bug.tag}</h3>
-                            <h3><span>Priority: </span> {bug.priority}</h3>
+                            <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
                             <h3><span>Status: </span> {bug.status}</h3>
                             <h3><span>Sprint: </span> 
                                 {
@@ -103,6 +80,11 @@ export default function BugPage({
                                 }
                             </h3>
                         </div>
+                        <div className="info-container">
+                            <h2><span>Creator: </span>{bug.author}</h2>
+                            <h2><span>Created: </span>{bug.date}</h2>
+                            <h2><span>Updated: </span>{bug.lastUpdate}</h2>
+                        </div>
                     </div>
                     <p><span>Description: </span> {bug.description}</p>
                     <img src={bug.thumbnail} alt=""/>
@@ -111,7 +93,7 @@ export default function BugPage({
             <h2>Images:</h2>
             {
                 images === undefined || images.length === 0
-                ? <><h2>None</h2></>
+                ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
                 : <div className="images-wrapper">
                     { 
                         images.map((image, index) => {
@@ -126,7 +108,7 @@ export default function BugPage({
                                         }
                                     </div>
                                     <div className="modal" id={index}>
-                                        <span className="close-button" onClick={() => {handleModal(index)}}>&times;</span>
+                                        <button className="close-button" onClick={() => {handleModal(index)}}>&times;</button>
                                         <img className="modal-image" src={image.image} alt={image.caption} />
                                         <p id="caption">{image.caption}</p>
                                     </div>
@@ -196,24 +178,32 @@ const StyledBugSection = styled.div`
             h1 {
                 color: white;
                 font-size: 30px;
-                margin: 10px 50px 10px 0;
+                margin: 10px 0;
                 @media (max-width: 450px){
                     font-size: 20px;
                 }
             }
             a {
+                display: flex;
+                align-items: center;
                 cursor: pointer;
-                height: 30px;
-                width: 30px;
+                color: white;
+                font-size: 20px;
+                padding: 4px 10px;
+                border-radius: 8px;
+                margin-left: 20px;
                 img {
-                    width: 100%;
-                    height: 100%;
+                    margin-right: 4px;
+                    height: 20px;
+                    width: 20px;
+                }
+                &:hover {
+                    background: black;
                 }
             }
         }
-        .bug-container {
+        .info-wrapper {
             display: flex;
-        
             .info-container, .selector-container {
                 width: 50%;
                 margin: 10px 0;
@@ -246,6 +236,15 @@ const StyledBugSection = styled.div`
                         margin-right: 6px;
                     }
                 }
+                .Standard {
+                    color: lightgreen;
+                }
+                .Medium {
+                    color: yellow;
+                }
+                .High {
+                    color: red;
+                }
             }
         }
         p {
@@ -263,7 +262,7 @@ const StyledBugSection = styled.div`
         }
     }
     h2 {
-        color: white;
+        color: ${pallette.helperGrey};
         font-size: 16px;
         font-weight: 400;
         margin-top: 20px;
@@ -272,24 +271,24 @@ const StyledBugSection = styled.div`
         display: flex;
         grid-gap: 20px;
         margin: 0 0 20px 0;
-        width: 50%;
+        width: 70%;
         height: auto;
-        overflow-x: scroll;
+        overflow-x: auto;
         @media (max-width: 850px){
             width: 90%;
         }
         .image-container {
             display: flex;
             flex-direction: column;
-            width: 200px;
-            height: 200px;
+            width: 300px;
+            height: 300px;
             img {
                 cursor: pointer;
                 width: 100%;
-                height: 100%;
+                height: 80%;
             }
             p {
-                min-height: 50px;
+                min-height: 20%;
                 font-size: 12px;
                 text-align: center;
                 color: white;
@@ -332,6 +331,8 @@ const StyledBugSection = styled.div`
                 font-size: 40px;
                 font-weight: bold;
                 cursor: pointer;
+                background: none;
+                border: none;
             }
         }
     }

@@ -62,7 +62,7 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         setRerender(!rerender);
         let section = commentSectionRef.current;
         if (section.style.display === "none") {
-            section.style.display = "block";
+            section.style.display = "flex";
         } else {
             section.style.display = "none";
         }

@@ -41,10 +41,11 @@ const GlobalStyles = createGlobalStyle`
         color: #ffffff;
         border: 2px solid red;
         background: none;
+        transition: 0.2s;
+        cursor: pointer;
         &:hover {
             color: #ff0000;
-            transform: scale(1.05);
-            transition: 0.2s;
+            transform: scale(1.02);
         }
     }
 `;

@@ -5,11 +5,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables.js';
 
-// images
-import X from '../assets/icons/whiteX.png';
-
 // router
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 // components
 import Loader from '../loaders/Loader';
@@ -17,7 +14,7 @@ import Loader from '../loaders/Loader';
 export default function EditProjectPage({user, role, confirmRole}) {
 
     const { projectId } = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [ project, setProject ] = useState([]);
     const [ isLoading, setLoading ] = useState(false);
@@ -47,7 +44,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
                     setLoading(false);
                     alert("Server Error - Project not updated")
                 } else {
-                    history.push("/");
+                    navigate("/");
                     setLoading(false);
                     alert('Project Deleted!');
                 }
@@ -98,12 +95,9 @@ export default function EditProjectPage({user, role, confirmRole}) {
 
     return (
         <StyledProjectPage>
-            <div className="links-wrapper">
-                <div className="breadcrumbs">
-                    <Link to={`/`}>Home</Link><span>/</span>
-                    <Link to={`/`}>Edit Project</Link>
-                </div>
-                <Link id="exit-btn" to="/"><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></Link>
+            <div className="breadcrumbs">
+                <Link to={`/`}>Home</Link><span>/</span>
+                <Link to={`/`}>Edit Project</Link>
             </div>
             <h1>Edit Project</h1>
             {
@@ -244,44 +238,6 @@ const StyledProjectPage = styled.div`
     @media (max-width: 428px){
         margin-left: 65px;
         width: 80vw;
-    }
-    .links-wrapper {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        #exit-btn {
-            background: none;
-            border: none;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            @media (max-width: 428px){
-                margin-left: auto;
-            }
-            #exit-btn-icon {
-                width: 30px;
-                height: 30px;
-                cursor: pointer;
-            }
-            .tooltiptext {
-                visibility: hidden;
-                width: 100%;
-                min-width: 160px;
-                background-color: black;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 5px 0;
-                position: absolute;
-                z-index: 1000;
-                top: 0;
-                right: 105%;
-            }
-        }
-        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-            visibility: visible;
-            transition-delay: 1s;
-        }
     }
     .breadcrumbs {
         display: flex;

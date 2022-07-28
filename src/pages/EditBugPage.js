@@ -3,51 +3,56 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
+import * as pallette from '../styled/ThemeVariables.js';
 
 // components
-import BugPageLoader from '../../../loaders/BugPageLoader';
+import BugPageLoader from '../loaders/BugPageLoader';
 
 // router
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-// images
-import X from '../../../assets/icons/whiteX.png';
-
-export default function BugSection({
+export default function EditBugPage({
     user, 
     role, 
-    toggleBug, 
-    sectionProjectId,
-    sectionBugId,
-    bugSectionRef,
-    rerender,
-    setRerender,
-    project
 }) {
+
+    const navigate = useNavigate();
+
+    const { projectId, bugId } = useParams();
 
     const [ author , setAuthor ] = useState("");
     const [ bug, setBug ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);
-    const [ options, setOptions ] = useState([])
+    const [ options, setOptions ] = useState([]);
+    const [ images, setImages ] = useState([]);
+    const [ rerender, setRerender ] = useState(true);
 
     useEffect(() => {
-        const getBug = (sectionProjectId, sectionBugId) => {
-            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${sectionProjectId}/${sectionBugId}`)
+        const getSprints = () => {
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setOptions(response.data.sprints);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        const getBug = (projectId, bugId) => {
+            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
             .then(function (response){
                 setBug(response.data[0].bugs[0]);
+                setOptions(response.data);
                 setAuthor(response.data[0].bugs[0].author);
+                setImages(response.data[0].bugs[0].images)
                 setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             });
         }
-        setOptions(project.sprints);
-        if(sectionBugId && sectionProjectId){
-            getBug(sectionProjectId, sectionBugId);
-        }
-    }, [ sectionProjectId, sectionBugId, project, isLoading ]);
+        getSprints(projectId);
+        getBug(projectId, bugId);
+    }, [ projectId, bugId, isLoading, rerender ]);
 
     const [ status, setStatus ] = useState(bug.status);
     const [ description, setDescription ] = useState(bug.description);
@@ -55,16 +60,17 @@ export default function BugSection({
     const [ tag, setTag ] = useState(bug.tag);
     const [ sprint, setSprint ] = useState(bug.sprint);
 
-    function updateBug() {
+    const updateBug = () => {
         setLoading(true);
-        axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${sectionProjectId}/${sectionBugId}`, {
+        axios.post(`${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`, {
             description: description,
             status: status,
             tag: tag,
             priority: priority,
-            projectId: sectionProjectId,
+            projectId: projectId,
             bugId: bug._id,
             sprint: sprint,
+            images: images,
         })
         .then(function(response) {
             if(response.data !== "Bug Updated"){
@@ -72,17 +78,17 @@ export default function BugSection({
                 alert("Server Error - Bug not updated")
             } else {
                 setLoading(false);
-                alert('Bug Updated!');
                 setRerender(!rerender);
+                alert('Bug Updated!');
             }
         })
     }
 
-    function deleteBug(){
+    const deleteBug = () => {
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
             setLoading(true);
-            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${sectionProjectId}/${sectionBugId}`)
+            axios.post(`${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`)
             .then(function(response) {
                 if(response.data !== "Bug Deleted"){
                     setLoading(false);
@@ -90,22 +96,46 @@ export default function BugSection({
                 } else {
                     setLoading(false);
                     alert('Bug Deleted');
-                    setRerender(!rerender);
+                    navigate(`/projects/${projectId}`)
                 }
             })
         }
     }
 
-    function unauthorized(){
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 
+    const handleAddFields = () => {
+        const values = [...images];
+        values.push({ caption: '', image: ''});
+        setImages(values);
+    };
+
+    const handleRemoveFields = (index) => {
+        const result = window.confirm("Are you sure you want to delete?");
+        if(result === true){
+            const values = [...images];
+            values.splice(index, 1);
+            setImages(values);
+        }
+    };
+
+  const handleInputChange = (index, event) => {
+    const values = [...images];
+    if (event.target.id === "image") {
+      values[index].image = event.target.value;
+    } else if(event.target.id === "caption") {
+      values[index].caption = event.target.value;
+    }
+    setImages(values);
+  };
+
     return (
-        <StyledBugSection ref={bugSectionRef} style={{display: "none"}}>
-            <button id="exit-btn" onClick={() => { setRerender(!rerender); toggleBug()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+        <StyledBugSection>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
-                <button onClick={() =>{toggleBug()}}>Project</button><span>/</span>
+                <Link to={`/projects/${projectId}`}>Project</Link><span>/</span>
                 {
                     bug === undefined
                     ? <></>
@@ -201,6 +231,42 @@ export default function BugSection({
                     <img src={bug.thumbnail} alt=""/>
                 </div>
             }
+            <h2>Images:</h2>
+            {
+                images === undefined 
+                ? <> <h1>No Images Yet</h1> </>
+                : <div className="images-wrapper">
+                    { 
+                        images.map((image, index) => {
+                            return (
+                                <div className="image-container" key={index}>
+                                    <img className="preview-image" id="image" src={image.image} alt={image.caption} />
+                                    <div className="input-container">
+                                        <label>Image
+                                            <input
+                                                type="text"
+                                                id="image"
+                                                name="image"
+                                                defaultValue={image.image}
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                        <label>Caption
+                                            <input
+                                                type="text"
+                                                id="caption"
+                                                name="caption"
+                                                defaultValue={image.caption}
+                                                onChange={event => handleInputChange(index, event)}
+                                        /></label>
+                                        <button id="delete" onClick={() => { handleRemoveFields(index); }}>Remove</button>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <button onClick={handleAddFields}>Add Image</button>
             <div className="button-container">
                 {
                     author === user || role === process.env.REACT_APP_ADMIN_SECRET 
@@ -219,63 +285,15 @@ export default function BugSection({
 }
 
 const StyledBugSection = styled.div`
-    display: none;
     height: 100%;
-    width: 100%;
-    margin: 0 auto;
-    position: absolute;
-    z-index: 1000;
-    background: ${pallette.accentColor};
-    border-radius: 12px;
-    padding: 2%;
-    left: -50px;
-    @media (max-width: 1440px){
-        width: 100%;
-        left: -15px;
-    }
+    width: 70%;
+    margin: 30px auto auto auto;
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        margin: 0;
-        width: 100vw;
-        height: 100%;
-        border-radius: 0;
+        width: 100%;
     }
     @media (max-width: 428px){
-        left: -60px;
-        padding: 10px;
-    }
-    #exit-btn {
-        background: none;
-        border: none;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        #exit-btn-icon {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .tooltiptext {
-            visibility: hidden;
-            width: 100%;
-            min-width: 160px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1000;
-            top: 0;
-            right: 105%;
-        }
-    }
-    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
+        width: 80%;
+        margin-left: 60px;
     }
     .breadcrumbs {
         display: flex;
@@ -284,7 +302,7 @@ const StyledBugSection = styled.div`
         @media (max-width: 428px){
             display: none;
         }
-        a, button {
+        a {
             border: none;
             background: none;
             font-size: 16px;
@@ -399,6 +417,59 @@ const StyledBugSection = styled.div`
         textarea {
             padding: 10px;
             background: ${pallette.helperGrey};
+        }
+    }
+    h2 {
+        color: white;
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+    .images-wrapper {
+        display: flex;
+        flex-direction: column;
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            height: 300px;
+            width: 100%;
+            @media (max-width: 428px){
+                flex-direction: column;
+            }
+            img {
+                width: 40%;
+                height: 100%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
+            }
+            .input-container {
+                width: 50%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
+                label {
+                    display: flex;
+                    color: white;
+                    flex-direction: column;
+                    margin: 10px 0;
+                    font-size: ${pallette.labelSize};
+                    @media (max-width: 750px){
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px){
+                        margin: 10px 0;
+                    }
+                    input {
+                        width: 100%;
+                        height: 30px;
+                        padding: 2px;
+                        background: ${pallette.helperGrey};
+                    }
+                }
+            }
         }
     }
     .button-container {

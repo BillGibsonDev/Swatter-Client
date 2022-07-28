@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
+// router
+import { Link } from 'react-router-dom';
+
 // images
 import BugPicture from '../../../assets/icons/bugWhite.png';
 import Feature from '../../../assets/icons/featureYaleBlue.png';
@@ -24,9 +27,6 @@ export default function Bug({
     tag,
     lastUpdate,
     user,
-	toggleBug,
-	setSectionProjectId,
-	setSectionBugId,
 	sprint, 
 	project,
 	rerender
@@ -46,8 +46,10 @@ export default function Bug({
 
 	const [ currentDate ] = compareDate.split(",");
 	const [ bugDate, bugTime ] = lastUpdate.split(",");
+
     return (
-        <StyledBug className={status} onClick={() => { setSectionProjectId(projectId); setSectionBugId(bugId); toggleBug();}}>
+        <StyledBug className={status}>
+			<Link to={`/${projectId}/${bugId}`}>
 			<div className="top-container">
 				<h2 id="title">{title}</h2>
 			</div>
@@ -104,11 +106,12 @@ export default function Bug({
 					: <h2 id="author" className={author}>{author}</h2>
 				}
 			</div>
+			</Link>
         </StyledBug>
     )
 }
 
-const StyledBug = styled.div `
+const StyledBug = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;

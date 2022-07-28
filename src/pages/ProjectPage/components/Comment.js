@@ -55,8 +55,8 @@ export default function Comment({
     }
 
     return (
-        <StyledComment>
-            <div className="comment-wrapper">
+        <StyledComment style={ author === user ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`} : { margin: "10px auto 10px 5%", background: 'white'} }>
+            <div className="comment-wrapper" >
                 <div className="comment-title-container">
                     <h3 id={author}>{author}
                         <span>
@@ -67,16 +67,20 @@ export default function Comment({
                             }
                         </span>
                     </h3>
-                    <div className="dropdown">
-                        <button className="dropbtn"><img src={Menu} alt="" /></button>
-                        <div className="dropdown-content">
-                            {
-                                author === user || role === process.env.REACT_APP_ADMIN_SECRET 
-                                ? <button onClick={deleteComment}>Delete</button>
-                                : <button onClick={unauthorized}>Delete</button>
-                            }
+                    {
+                        author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                        ? <div className="dropdown">
+                            <button className="dropbtn"><img src={Menu} alt="" /></button>
+                            <div className="dropdown-content">
+                                {
+                                    author === user || role === process.env.REACT_APP_ADMIN_SECRET 
+                                    ? <button onClick={deleteComment}>Delete</button>
+                                    : <button onClick={unauthorized}>Delete</button>
+                                }
+                            </div>
                         </div>
-                    </div>
+                        : <></>
+                    }
                 </div>
                 <p>{comments}</p>
             </div>
@@ -86,8 +90,10 @@ export default function Comment({
 
 const StyledComment = styled.div`
     display: flex;
-    width: 95%;
-    margin: 2% auto;
+    max-width: 60%;
+    width: auto;
+    height: auto;
+    margin: 10px auto;
     background: #ffffff;
     border-radius: 4px;
     box-shadow: 3px 3px 3px #5252528d;
@@ -104,12 +110,12 @@ const StyledComment = styled.div`
             align-items: center;
             margin-bottom: 10px;
             h3 {
-                font-size: 14px;
+                font-size: 12px;
                 display: flex;
                 align-items: center;
                 span {
                     margin-left: 10px;
-                    font-size: 11px;
+                    font-size: 10px;
                     color: #575757;
                 }
                 
@@ -132,6 +138,8 @@ const StyledComment = styled.div`
                 .dropdown-content {
                     display: none;
                     position: absolute;
+                    right: 90%;
+                    top: 0;
                     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                     z-index: 1;
                     background: ${pallette.helperGrey};
@@ -159,10 +167,8 @@ const StyledComment = styled.div`
             color: #0dbe7a;
         }
         p {
-            font-size: ${pallette.paraSize};
-            @media (max-width: 700px){
-                font-size: 14px;
-            }
+            font-size: 12px;
+            font-weight: 400;
         }
     }
 `;

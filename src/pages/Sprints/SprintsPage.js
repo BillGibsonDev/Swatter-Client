@@ -1,43 +1,32 @@
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables';
+import * as pallette from '../../styled/ThemeVariables';
 
 // components
-import SprintBugTable from '../components/BugTable.js';
-import { Searchbar } from '../forms/Searchbar';
-import { SprintForm } from '../forms/SprintForm.js';
-import { EditSprintForm } from '../forms/EditSprintForm.js';
+import SprintBugTable from './components/SprintBugTable.js';
+import { SprintForm } from './forms/SprintForm.js';
+import { EditSprintForm } from './forms/EditSprintForm.js';
 
 // images
-import X from '../../../assets/icons/whiteX.png';
-import Edit from "../../../assets/icons/editIconWhite.png";
+import Edit from "../../assets/icons/editIconWhite.png";
 
 // loaders
-import ProjectPageLoader from '../../../loaders/ProjectPageLoader';
+import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 
-export default function SprintSection({ 
+// router
+import { useParams } from 'react-router-dom';
+
+
+export default function SprintsPage({ 
     user, 
     role, 
-    confirmRole, 
-    projectId, 
-    sprintSectionRef, 
-    toggleBug,
-    rerender,
-    setRerender,
-    bugs,
-    openBugs, 
-    underwayBugs, 
-    reviewBugs, 
-    completedBugs,
-    bugSectionRef,
-    setSectionProjectId,
-    setSectionBugId,
-    project,
-    isLoading,
-    toggleSprints
+    confirmRole
 }) {
+
+    const { projectId } = useParams();
 
     const sprintForm = useRef();
     const editSprintForm = useRef();
@@ -45,14 +34,37 @@ export default function SprintSection({
     const [ searchSprint, setSearchSprint ] = useState(false);
     const [ options, setOptions ] = useState([])
 
-    useEffect(() => {
-        setTimeout(() => {
-            setOptions(project.sprints);
-        }, 1000);
-        if(project.sprints){
-            handleEndDate(project.sprints[0].endDate);
+    const [ bugs, setBugs ] = useState([]);
+    const [ project, setProject ] = useState([]);
+    const [ rerender, setRerender ] = useState(false);
+    const [ isLoading, setLoading ] = useState(true);
+
+    // data states
+    const [ openBugs, setOpenBugs] = useState([]);
+    const [ underwayBugs, setUnderwayBugs ] = useState([]);
+    const [ reviewBugs, setReviewBugs ] = useState([]);
+    const [ completedBugs, setCompletedBugs ] = useState([]);
+
+    useEffect(() =>{
+        const getProject = (projectId) =>{
+            axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+            .then(function (response){
+                setProject(response.data);
+                setBugs(response.data.bugs);
+                setOpenBugs(response.data.bugs.filter(bugs => bugs.status === "Open"));
+                setUnderwayBugs(response.data.bugs.filter(bugs => bugs.status === "Underway"));
+                setReviewBugs(response.data.bugs.filter(bugs => bugs.status === "Reviewing"));
+                setCompletedBugs(response.data.bugs.filter(bugs => bugs.status === "Completed"));
+                setOptions(response.data.sprints);
+                handleEndDate(response.data.sprints[0].endDate);
+                setLoading(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         }
-    }, [project, searchSprint]) 
+       getProject(projectId);
+    }, [ projectId, rerender ]); 
 
     const toggleSprintForm = () => {
         let section = sprintForm.current;
@@ -78,7 +90,7 @@ export default function SprintSection({
     }
 
     return (
-        <StyledSprintSection ref={sprintSectionRef} style={{display: "none"}}>
+        <StyledSprintSection>
             <div className="button-wrapper">
                 <button onClick={() => {toggleSprintForm()}}>New Sprint</button>
                 { 
@@ -99,7 +111,6 @@ export default function SprintSection({
                         }
                     </select>
                 }
-                <button id="exit-btn" onClick={() => { toggleSprints()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
             </div>
             <div className="sprint-list-wrapper">
                 {
@@ -108,24 +119,25 @@ export default function SprintSection({
                     : <>
                         { 
                             project.sprints.filter(sprint => sprint.title === searchSprint).map((sprint, key) =>{
-                            return (
-                                <div className="title-wrapper" key={key}>
-                                    <div className="title-container">
-                                        <h4>{sprint.title}</h4>
-                                        <button onClick={() => {toggleEditSprintForm()}}><img id="edit-button" src={Edit} alt="" /><span className="tooltiptext">Edit Sprint</span></button>
+                                return (
+                                    <div className="title-wrapper" key={key}>
+                                        <div className="title-container">
+                                            <h4>{sprint.title}</h4>
+                                            <button onClick={() => {toggleEditSprintForm()}}><img id="edit-button" src={Edit} alt="" /><span className="tooltiptext">Edit Sprint</span></button>
+                                        </div>
+                                        <h5 id="status"><span>Status: </span>{sprint.status}</h5>
+                                        <div className="info-container">
+                                            <h5><span>Updated:</span> {sprint.updated}</h5>
+                                            {
+                                                sprint.endDate === "" 
+                                                ? <></>
+                                                : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
+                                            }
+                                        </div>
                                     </div>
-                                    <h5 id="status"><span>Status: </span>{sprint.status}</h5>
-                                    <div className="info-container">
-                                        <h5><span>Updated:</span> {sprint.updated}</h5>
-                                        {
-                                            sprint.endDate === "" 
-                                            ? <></>
-                                            : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })
+                        }
                     </>
                 }
             </div>
@@ -157,7 +169,6 @@ export default function SprintSection({
                 isLoading === true 
                 ? <ProjectPageLoader />
                 : <div className="sprint-bug-table-wrapper">
-                    <Searchbar />
                     { 
                         bugs === undefined 
                         ? <div className="undefined">
@@ -173,12 +184,8 @@ export default function SprintSection({
                                 underwayBugs={underwayBugs.filter(underwayBugs =>  underwayBugs.sprint === searchSprint)}
                                 reviewBugs={reviewBugs.filter(reviewBugs =>  reviewBugs.sprint === searchSprint)}
                                 completedBugs={completedBugs.filter(completedBugs =>  completedBugs.sprint === searchSprint)}
-                                setSectionProjectId={setSectionProjectId}
-                                setSectionBugId={setSectionBugId}
                                 projectId={projectId}
                                 project={project}
-                                toggleBug={toggleBug}
-                                bugSectionRef={bugSectionRef}
                                 searchSprint={searchSprint}
                             />
                         </>
@@ -190,63 +197,18 @@ export default function SprintSection({
 }
 
 const StyledSprintSection = styled.div`
-    display: none;
     height: 100%;
+    max-height: 100vh;
     width: 100%;
+    max-width: 80vw;
     margin: 0 auto;
-    position: absolute;
-    z-index: 101;
-    background: ${pallette.accentColor};
-    border-radius: 12px;
     padding: 2%;
-    left: -50px;
-    @media (max-width: 1440px){
-        width: 100%;
-        left: -15px;
-    }
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        margin: 0;
-        width: 100vw;
+        width: 100%;
         height: 100%;
-        border-radius: 0;
     }
     @media (max-width: 428px){
-        left: -60px;
-        padding: 10px;
-    }
-    #exit-btn {
-        background: none;
-        border: none;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        #exit-btn-icon {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-        .tooltiptext {
-            visibility: hidden;
-            width: 100%;
-            min-width: 160px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1000;
-            top: 0;
-            right: 105%;
-        }
-    }
-    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
+        margin-left: 60px;
     }
     .undefined {
         background: white;

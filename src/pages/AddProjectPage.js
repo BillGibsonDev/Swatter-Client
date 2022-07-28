@@ -5,9 +5,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables.js';
 
-// images
-import X from '../assets/icons/whiteX.png';
-
 // router
 import { Link } from 'react-router-dom';
 
@@ -73,12 +70,9 @@ export default function AddProjectPage({user, role, confirmRole}) {
 
     return (
         <StyledProjectPage>
-            <div className="links-wrapper">
-                <div className="breadcrumbs">
-                    <Link to={`/`}>Home</Link><span>/</span>
-                    <Link to={`/`}>Add Project</Link>
-                </div>
-                <Link id="exit-btn" to="/"><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></Link>
+            <div className="breadcrumbs">
+                <Link to={`/`}>Home</Link><span>/</span>
+                <Link to={`/`}>Add Project</Link>
             </div>
             <h1>Start a Project</h1>
             {
@@ -206,44 +200,6 @@ const StyledProjectPage = styled.div`
     @media (max-width: 428px){
         margin-left: 65px;
         width: 80vw;
-    }
-    .links-wrapper {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        #exit-btn {
-            background: none;
-            border: none;
-            width: 30px;
-            height: 30px;
-            position: relative;
-            @media (max-width: 428px){
-                margin-left: auto;
-            }
-            #exit-btn-icon {
-                width: 30px;
-                height: 30px;
-                cursor: pointer;
-            }
-            .tooltiptext {
-                visibility: hidden;
-                width: 100%;
-                min-width: 160px;
-                background-color: black;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 5px 0;
-                position: absolute;
-                z-index: 1000;
-                top: 0;
-                right: 105%;
-            }
-        }
-        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-            visibility: visible;
-            transition-delay: 1s;
-        }
     }
     .breadcrumbs {
         display: flex;

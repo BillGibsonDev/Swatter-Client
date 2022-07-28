@@ -15,24 +15,17 @@ import ProjectPageLoader from '../../loaders/ProjectPageLoader';
 
 // pop out sections
 import CommentSection from './sections/CommentSection';
-import BugSection from './sections/BugSection';
-import AddBugSection from './sections/AddBugSection';
-import SprintSection from './sections/SprintSection.js';
 
 // images
 import arrowRight from '../../assets/icons/arrowRight.png';
 
 // router
 import { useParams } from 'react-router-dom';
-import DetailsSection from './sections/DetailsSection.js';
 
-export default function ProjectPage({ user, role, confirmRole, projectSideNavRef }) {
+export default function ProjectPage({ user, role, confirmRole }) {
 
     const commentSectionRef = useRef();
-    const bugSectionRef = useRef();
-    const addbugSectionRef = useRef();
-    const sprintSectionRef = useRef();
-    const detailsSectionRef = useRef(); 
+    const projectSideNavRef = useRef();
 
     const { projectId, bugId } = useParams();
 
@@ -46,10 +39,6 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
     const [ underwayBugs, setUnderwayBugs ] = useState([]);
     const [ reviewBugs, setReviewBugs ] = useState([]);
     const [ completedBugs, setCompletedBugs ] = useState([]);
-
-    // bug section states
-    const [ sectionBugId, setSectionBugId ] = useState();
-    const [ sectionProjectId, setSectionProjectId ] = useState();
 
     useEffect(() =>{
         function getProject(){
@@ -74,35 +63,10 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         setRerender(!rerender);
         let section = commentSectionRef.current;
         if (section.style.display === "none") {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
-    }
-
-    const toggleBug = () => {
-        setRerender(!rerender);
-        let section = bugSectionRef.current;
-        if (section.style.display === "none") {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
-    }
-
-    const toggleAddBug = () => {
-        setRerender(!rerender)
-        let section = addbugSectionRef.current;
-        if (section.style.display === "none") {
             section.style.display = "flex";
         } else {
             section.style.display = "none";
         }
-    }
-
-    const handleArrow = () => {
-        let element = document.getElementById("arrow");
-        element.classList.toggle("rotate");
     }
 
     const toggleSideNav = () => {
@@ -115,24 +79,9 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
         }
     }
 
-    const toggleSprints = () => {
-        setRerender(!rerender);
-        let section = sprintSectionRef.current;
-        if (section.style.display === "none") {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
-    }
-
-    const toggleDetails = () => {
-        setRerender(!rerender);
-        let section = detailsSectionRef.current;
-        if (section.style.display === "none") {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
+    const handleArrow = () => {
+        let element = document.getElementById("arrow");
+        element.classList.toggle("rotate");
     }
 
 
@@ -141,11 +90,8 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
             <button id="arrow-button" onClick={() => { handleArrow(); toggleSideNav();}}><img id="arrow" src={arrowRight} alt="" /><span className="tooltiptext">Project Menu</span></button>
             <ProjectSideNav
                 project={project}
-                toggleComments={toggleComments}
-                toggleAddBugs={toggleAddBug}
                 projectSideNavRef={projectSideNavRef}
-                toggleSprints={toggleSprints}
-                toggleDetails={toggleDetails}
+                toggleComments={toggleComments}
             />
             {
                 isLoading === true 
@@ -167,12 +113,8 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                                 underwayBugs={underwayBugs}
                                 reviewBugs={reviewBugs}
                                 completedBugs={completedBugs}
-                                setSectionProjectId={setSectionProjectId}
-                                setSectionBugId={setSectionBugId}
                                 projectId={projectId}
                                 project={project}
-                                toggleBug={toggleBug}
-                                bugSectionRef={bugSectionRef}
                             />
                         </>
                     }
@@ -188,62 +130,8 @@ export default function ProjectPage({ user, role, confirmRole, projectSideNavRef
                         setRerender={setRerender}
                         rerender={rerender}
                     />
-                    <BugSection
-                        toggleBug={toggleBug}
-                        user={user}
-                        role={role}
-                        sectionProjectId={sectionProjectId}
-                        sectionBugId={sectionBugId}
-                        bugSectionRef={bugSectionRef}
-                        setRerender={setRerender}
-                        rerender={rerender}
-                        project={project}
-                    />
-                    <AddBugSection
-                        toggleAddBug={toggleAddBug}
-                        user={user}
-                        role={role}
-                        projectId={projectId}
-                        project={project}
-                        addbugSectionRef={addbugSectionRef}
-                        confirmRole={confirmRole}
-                        setRerender={setRerender}
-                        rerender={rerender}
-                    />
-                    <SprintSection
-                        bugs={bugs}
-                        setSectionProjectId={setSectionProjectId}
-                        setSectionBugId={setSectionBugId}
-                        projectId={projectId}
-                        project={project}
-                        toggleBug={toggleBug}
-                        bugSectionRef={bugSectionRef}
-                        toggleAddBug={toggleAddBug}
-                        user={user}
-                        role={role}
-                        sprintSectionRef={sprintSectionRef}
-                        confirmRole={confirmRole}
-                        setRerender={setRerender}
-                        rerender={rerender}
-                        openBugs={openBugs}
-                        reviewBugs={reviewBugs}
-                        underwayBugs={underwayBugs}
-                        completedBugs={completedBugs}
-                        toggleSprints={toggleSprints}
-                    />
-                    <DetailsSection 
-                        project={project}
-                        user={user}
-                        role={role}
-                        confirmRole={confirmRole}
-                        setRerender={setRerender}
-                        rerender={rerender}
-                        toggleDetails={toggleDetails}
-                        detailsSectionRef={detailsSectionRef}
-                    />
                 </>
             }
-            
         </StyledProjectPage>
     )
 }
@@ -261,9 +149,9 @@ const StyledProjectPage = styled.div`
         margin-left: 300px;
     }
     @media (max-width: 834px){
-        margin-left: 80px;
         width: 900px;
         max-width: 85vw;
+        margin-left: 70px;
     }
     @media (max-width: 820px){
         width: 760px;
@@ -272,11 +160,10 @@ const StyledProjectPage = styled.div`
         width: 710px;
     }
     @media (max-width: 428px){
-        margin-left: 60px;
         width: 360px;
+        margin-left: 60px;
     }
     @media (max-width: 414px){
-        margin-left: 60px;
         width: 340px;
     }
     @media (max-width: 390px){

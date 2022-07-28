@@ -5,9 +5,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
-// images
-import X from '../../../assets/icons/whiteX.png';
-
 export const EditSprintForm = ({
     projectId,
     editSprintForm,
@@ -90,8 +87,10 @@ export const EditSprintForm = ({
 
     return (
         <StyledSprintForm ref={editSprintForm} style={{display: "none"}}>
-            <h2>Edit Sprint</h2>
-            <button id="exit-btn" onClick={() => {toggleEditSprintForm()}}><img id="exit-btn-icon" src={X} alt="Exit" /><span className="tooltiptext">Close</span></button>
+            <div className="title-container">
+                <h1>Edit Sprint</h1>
+                <button id="exit-btn" onClick={() => {toggleEditSprintForm()}}>&times;<span className="tooltiptext">Close</span></button>
+            </div>
             <label>Title 
                 <input 
                     type="text"
@@ -173,31 +172,47 @@ const StyledSprintForm = styled.div`
     z-index: 1003;
     background: grey;
     border-radius: 8px;
-    h2 {
-        margin: 10px auto;
-    }
-    #exit-btn-icon {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
-    .tooltiptext {
-        visibility: hidden;
-        width: 100%;
-        min-width: 160px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        position: absolute;
-        z-index: 1000;
-        top: 0;
-        right: 105%;
-    }
-    #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
+    .title-container {
+        display: flex;
+        width: 95%;
+        justify-content: space-between;
+        align-items: center;
+        margin: auto;
+        h1 {
+            color: #ffffff;
+        }
+        #exit-btn {
+            background: none;
+            border: none;
+            font-size: 40px;
+            color: white;
+            position: relative;
+            cursor: pointer;
+                #exit-btn-icon {
+                    width: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                }
+                .tooltiptext {
+                    visibility: hidden;
+                    width: 100%;
+                    min-width: 160px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1000;
+                    top: 25%;
+                    right: 105%;
+                    font-size: 20px;
+                }
+            }
+        #exit-btn:hover .tooltiptext, #exit-btn:active .tooltiptext {
+            visibility: visible;
+            transition-delay: 1s;
+        }
     }
     label {
         display: flex;

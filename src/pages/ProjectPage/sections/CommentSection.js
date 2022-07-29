@@ -48,11 +48,15 @@ export default function ProjectsPage({user, role, toggleComments, commentSection
             } else {
                 setLoading(false);
                 document.getElementById("comment").value = "";
+                let container =  document.getElementById("comment-container");
+                setTimeout(function(){
+                    container.scrollTo(0, document.body.scrollHeight);
+                }, 1000);
             }
         })
     }
 
-    function unauthorized(){
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 
@@ -66,7 +70,7 @@ export default function ProjectsPage({user, role, toggleComments, commentSection
                 { 
                     comments.length === 0 || comments === []
                     ? <h1 style={{color: "white", textAlign: 'center', fontSize: '20px'}}>No comments yet..</h1>
-                    : <div className="comment-container">
+                    : <div className="comment-container" id='comment-container'>
                         {
                             comments.map((comment, key) => {
                                 return (
@@ -145,9 +149,14 @@ const StyledCommentSection = styled.div`
         flex-direction: column;
         justify-content: center;
         background: ${pallette.accentColor};
-        @media (max-width: 428px){
-            width: 90%;
+        @media (max-width:834px){
+            width: 80%;
+            height: 50%;
             justify-content: flex-start;
+        }
+        @media (max-width: 428px){
+            width: 100%;
+            height: 100%;
         }
         .title-container {
             display: flex;
@@ -195,6 +204,11 @@ const StyledCommentSection = styled.div`
             margin: 20px auto;
             display: flex;
             justify-content: center;
+            @media (max-width: 428px){
+                position: absolute;
+                bottom: 0;
+                left: 10%;
+            }
             textarea {
                 border-radius: 4px 0 0 4px;
                 background: #d6d6d6;
@@ -208,7 +222,7 @@ const StyledCommentSection = styled.div`
                     width: 300px;
                 }
                 @media (max-width: 428px){
-                    width: 200px;
+                    width: 250px;
                     height: 30px;
                 }
             }
@@ -232,6 +246,9 @@ const StyledCommentSection = styled.div`
         .comment-container {
             max-height: 65vh;
             overflow-y: auto;
+            @media (max-width: 428px){
+                max-height: 80%;
+            }
         }
     }
 `;

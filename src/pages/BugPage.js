@@ -14,10 +14,7 @@ import { Link, useParams } from 'react-router-dom';
 // images
 import EditIcon from '../assets/icons/editIconWhite.png';
 
-export default function BugPage({
-    user, 
-    role,
-}) {
+export default function BugPage() {
 
     const { projectId, bugId } = useParams();
     const [ bug, setBug ] = useState([]);
@@ -60,7 +57,7 @@ export default function BugPage({
                 }
             </div>
             {
-                isLoading === true 
+                isLoading 
                 ? <BugPageLoader />
                 :<div className="bug-wrapper">
                     <div className="title-container">
@@ -100,7 +97,7 @@ export default function BugPage({
                             return (
                                 <div key={index}>
                                     <div className="image-container">
-                                        <img src={image.image} onClick={() => { handleModal(index)}} alt={image.caption}/>
+                                        <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
                                         {
                                             image.caption.length > 50 
                                             ? <p>{image.caption.slice(0, 50)}...</p>
@@ -108,7 +105,7 @@ export default function BugPage({
                                         }
                                     </div>
                                     <div className="modal" id={index}>
-                                        <button className="close-button" onClick={() => {handleModal(index)}}>&times;</button>
+                                        <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
                                         <img className="modal-image" src={image.image} alt={image.caption} />
                                         <p id="caption">{image.caption}</p>
                                     </div>
@@ -214,30 +211,29 @@ const StyledBugSection = styled.div`
         }
         .info-wrapper {
             display: flex;
+            @media (max-width: 450px){
+                flex-direction: column;
+            }
             .info-container, .selector-container {
                 width: 50%;
                 margin: 10px 0;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                @media (max-width: 450px){
+                    width: 90%;
+                }
                 h2, h3 {
                     color: white;
                     font-size: 14px;
                     display: flex;
                     flex-direction: column;
-                    width: 90%;
                     margin: 4px 0;
                     font-weight: 400;
-                    @media (max-width: 450px){
-                        font-size: 12px;
-                    }
                     span {
                         color: #cecece;
                         font-weight: 400;
                         font-size: 12px;
-                        @media (max-width: 450px){
-                            font-size: 10px;
-                        }
                     }
                 }
                 h3 {

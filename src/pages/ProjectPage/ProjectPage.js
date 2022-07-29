@@ -11,7 +11,7 @@ import { ProjectSideNav } from './components/ProjectSideNav';
 import { Searchbar } from './forms/Searchbar';
 
 // loaders
-import ProjectPageLoader from '../../loaders/ProjectPageLoader';
+import Loader from '../../loaders/Loader';
 
 // pop out sections
 import CommentSection from './sections/CommentSection';
@@ -94,8 +94,8 @@ export default function ProjectPage({ user, role, confirmRole }) {
                 toggleComments={toggleComments}
             />
             {
-                isLoading === true 
-                ? <ProjectPageLoader />
+                isLoading 
+                ? <Loader />
                 : <div className="bug-table-wrapper">
                     <Searchbar />
                     { 

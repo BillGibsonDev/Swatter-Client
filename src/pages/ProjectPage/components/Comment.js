@@ -125,11 +125,13 @@ const StyledComment = styled.div`
                 display: inline-block;
                 .dropbtn {
                     color: white;
-                    padding: 4px;
                     font-size: 16px;
                     border: none;
                     background: none;
                     cursor: pointer;
+                    padding: 0;
+                    height: 25px;
+                    width: 25px;
                     img {
                         height: 25px;
                         width: 25px;

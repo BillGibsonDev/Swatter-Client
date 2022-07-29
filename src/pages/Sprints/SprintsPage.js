@@ -14,7 +14,7 @@ import { EditSprintForm } from './forms/EditSprintForm.js';
 import Edit from "../../assets/icons/editIconWhite.png";
 
 // loaders
-import ProjectPageLoader from '../../loaders/ProjectPageLoader';
+import Loader from '../../loaders/Loader';
 
 // router
 import { useParams } from 'react-router-dom';
@@ -167,7 +167,7 @@ export default function SprintsPage({
             }
             {
                 isLoading === true 
-                ? <ProjectPageLoader />
+                ? <Loader />
                 : <div className="sprint-bug-table-wrapper">
                     { 
                         bugs === undefined 

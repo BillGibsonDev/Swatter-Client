@@ -16,7 +16,6 @@ import Sprints from '../../../assets/icons/sprint.png';
 // router
 import { Link, useParams } from 'react-router-dom';
 
-
 export const ProjectSideNav = ({
     project, 
     toggleComments,
@@ -24,7 +23,6 @@ export const ProjectSideNav = ({
 }) => {
 
     const { projectId } = useParams();
-
 
     const [ screenWidth, setScreenWidth ] = useState(0)
 

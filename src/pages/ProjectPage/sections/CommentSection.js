@@ -21,7 +21,7 @@ export default function ProjectsPage({user, role, toggleComments, commentSection
     const [ isLoading, setLoading ] = useState(false);
 
     useEffect(() =>{
-        function getProject(){
+        const getProject = () => {
             axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
             .then(function (response){
                 setComments(response.data.comments)
@@ -34,7 +34,7 @@ export default function ProjectsPage({user, role, toggleComments, commentSection
         setAuthor(user);
     }, [ projectId, bugId, user, isLoading ]);
 
-    function sendComment() {
+    const sendComment = () => {
         setLoading(true);
         axios.post(`${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`, {
             projectId: projectId,

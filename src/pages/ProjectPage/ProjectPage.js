@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-//import * as pallette from '../../styled/ThemeVariables';
 
 // components
 import BugTable from './components/BugTable.js';
@@ -41,7 +40,7 @@ export default function ProjectPage({ user, role, confirmRole }) {
     const [ completedBugs, setCompletedBugs ] = useState([]);
 
     useEffect(() =>{
-        function getProject(){
+        const getProject = () => {
             axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
             .then(function (response){
                 setProject(response.data);

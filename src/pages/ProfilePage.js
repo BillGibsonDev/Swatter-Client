@@ -1,4 +1,3 @@
-
 // styled
 import styled from 'styled-components';
 
@@ -8,9 +7,9 @@ export default function ProfilePage({user, role}) {
         <StyledProfilePage>
             <h1>Profile</h1>
             {
-                user === null ? (
-                    <h1>You are signed out</h1>
-                ) : (
+                user === null 
+                ? <h1>You are signed out</h1>
+                : 
                     <>
                         <div className="user-container">
                             <h2><span>Username: </span>{user}</h2>
@@ -27,7 +26,6 @@ export default function ProfilePage({user, role}) {
                             }
                         </div>
                     </>
-                )
             }
         </StyledProfilePage>
     )

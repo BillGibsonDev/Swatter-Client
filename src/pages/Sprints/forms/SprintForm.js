@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-//import * as pallette from '../../styled/ThemeVariables';
 
 export const SprintForm = ({
     projectId, 
@@ -21,7 +20,7 @@ export const SprintForm = ({
     const [ color, setColor ] = useState('');
     const [ status, setStatus ] = useState('');
 
-    function unauthorized() {
+    const unauthorized = () => {
         alert("You do not have permissions to do that!");
     }
 
@@ -52,7 +51,8 @@ export const SprintForm = ({
             <div className="title-container">
                 <h1>New Sprint</h1>
                 <button id="exit-btn" onClick={() => {toggleSprintForm()}}>&times;<span className="tooltiptext">Close</span></button>
-            </div><label>Title 
+            </div>
+            <label>Title 
                 <input 
                     type="text"
                     id="title"
@@ -170,11 +170,9 @@ const StyledSprintForm = styled.div`
         select, input, textarea {
             margin-left: 6px;
             padding: 2px 4px;
-        
         }
     }
     button {
         cursor: pointer;
     }
-
 `;

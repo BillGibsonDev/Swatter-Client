@@ -113,7 +113,8 @@ export default function AddBugPage({
             <h1>Add a Bug</h1>
             {
                 user === null ? <h1>You are signed out</h1>
-                : isLoading === true ? <Loader />
+                : isLoading 
+                ? <Loader />
                 : <div className="form-wrapper">
                     <div className="container-wrapper">
                         <div className="left-container">
@@ -245,11 +246,9 @@ export default function AddBugPage({
                                     <div className="buttons-container">
                                         <button onClick={handleAddFields}>Add Image</button>
                                         {
-                                            images.length === 1 ? (
-                                                <button id="remove-button">Remove</button>
-                                            ):(
-                                                <button id="remove-button" onClick={handleRemoveFields}>Remove</button>
-                                            )
+                                            images.length === 1 
+                                            ? <button id="remove-button">Remove</button>
+                                            : <button id="remove-button" onClick={handleRemoveFields}>Remove</button>
                                         }
                                     </div>
                                 </section>

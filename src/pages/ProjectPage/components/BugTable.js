@@ -15,8 +15,7 @@ export default function BugTable({
     setRerender, 
     rerender,
     projectId,
-    project,
-    toggleBug
+    project
 }) {
 
     return (

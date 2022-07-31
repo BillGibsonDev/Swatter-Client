@@ -19,7 +19,6 @@ import Loader from '../../loaders/Loader';
 // router
 import { useParams } from 'react-router-dom';
 
-
 export default function SprintsPage({ 
     user, 
     role, 

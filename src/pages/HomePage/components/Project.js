@@ -146,5 +146,4 @@ const StyledProject = styled.div`
             }
         }
     }
-    
 `;

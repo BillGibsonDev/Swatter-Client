@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-//import * as pallette from '../../styled/ThemeVariables';
 
 // components
 import Project from './components/Project.js';
@@ -15,7 +14,7 @@ export default function HomePage({user, role, confirmRole}) {
     const [ isLoading, setLoading ] = useState(true)
 
     useEffect(() =>{
-        function getProjects(){
+        const getProjects = () => {
             axios.get(`${process.env.REACT_APP_GET_PROJECTS_URL}`)
             .then(function (response){
                 setProjects(response.data)

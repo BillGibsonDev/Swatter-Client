@@ -13,7 +13,7 @@ import Profile from '../assets/icons/profileWhite.png';
 import Home from '../assets/icons/homeWhite.png';
 import Register from '../assets/icons/taskIcon.png';
 
-export default function Nav({logout, user, role, confirmAdmin}) {
+export default function Nav({logout, role, confirmAdmin}) {
 
     return (
         <StyledNav>

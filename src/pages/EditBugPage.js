@@ -145,7 +145,7 @@ export default function EditBugPage({
             {
                 isLoading === true 
                 ? <BugPageLoader />
-                :<div className="bug-container">
+                : <div className="bug-container">
                     <h1>{bug.title}</h1>
                     <div className="info-wrapper">
                         <div className="info-container">
@@ -234,7 +234,7 @@ export default function EditBugPage({
             <h2>Images:</h2>
             {
                 images === undefined 
-                ? <> <h1>No Images Yet</h1> </>
+                ? <><h1>No Images Yet</h1></>
                 : <div className="images-wrapper">
                     { 
                         images.map((image, index) => {

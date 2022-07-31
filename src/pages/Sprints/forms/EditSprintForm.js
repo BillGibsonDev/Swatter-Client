@@ -20,7 +20,7 @@ export const EditSprintForm = ({
     const [ sprint, setSprint ] = useState([]);
     const [ sprintId, setSprintId ] = useState(false);
 
-    function unauthorized() {
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 

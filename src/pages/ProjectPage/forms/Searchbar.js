@@ -7,7 +7,7 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 // images
 import SearchIcon from '../../../assets/images/bugMicroYaleBlue.png'
 
-export const Searchbar = ({project}) => {
+export const Searchbar = () => {
 
   return (
     <StyledSearchbar>

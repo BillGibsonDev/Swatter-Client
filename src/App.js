@@ -168,7 +168,7 @@ function App() {
 		<>
 			<GlobalStyles />
 			{ 
-				isLoggedIn === false 
+				!isLoggedIn 
 				? <>
 					<LoginPage 
 						login={login}
@@ -180,10 +180,8 @@ function App() {
 				</>
 				: <>
 					<Nav 
-						user={user}
 						role={role}
 						logout={logout}
-						isLoggedIn={isLoggedIn}
 					/>
 					<Routes>
 						<Route 

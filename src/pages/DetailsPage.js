@@ -22,7 +22,6 @@ export default function DetailsPage() {
     const [ project, setProject ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);
 
-
     useEffect(() =>{
         const getProject = () => {
             setLoading(true);

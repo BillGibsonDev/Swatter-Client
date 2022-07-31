@@ -33,7 +33,7 @@ export default function Comment({
 	const [ currentDate ] = compareDate.split(",");
 	const [ commentDate, commentTime ] = date.split(",");
 
-    function deleteComment(){
+    const deleteComment = () => {
         setLoading(true);
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
@@ -50,7 +50,7 @@ export default function Comment({
         }
     }
 
-    function unauthorized(){
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 
@@ -118,7 +118,6 @@ const StyledComment = styled.div`
                     font-size: 10px;
                     color: #575757;
                 }
-                
             }
             .dropdown {
                 position: relative;

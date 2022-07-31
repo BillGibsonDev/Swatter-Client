@@ -89,7 +89,7 @@ export default function BugPage() {
             }
             <h2>Images:</h2>
             {
-                images === undefined || images.length === 0
+                images === undefined || images.length === 0 
                 ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
                 : <div className="images-wrapper">
                     { 
@@ -97,10 +97,16 @@ export default function BugPage() {
                             return (
                                 <div key={index}>
                                     <div className="image-container">
-                                        <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
+                                        {
+                                            image.image === "" 
+                                            ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
+                                            : <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
+                                        }
                                         {
                                             image.caption.length > 50 
                                             ? <p>{image.caption.slice(0, 50)}...</p>
+                                            : image.image === "" && image.caption === "" ? <></>
+                                            : image.caption.length === 0 ? <p>No Caption</p>
                                             : <p>{image.caption}</p>
                                         }
                                     </div>
@@ -297,6 +303,7 @@ const StyledBugSection = styled.div`
                 height: 80%;
             }
             p {
+                padding-top: 6px;
                 min-height: 20%;
                 font-size: 12px;
                 text-align: center;

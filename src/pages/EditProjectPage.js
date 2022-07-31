@@ -20,7 +20,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
     const [ isLoading, setLoading ] = useState(false);
 
     useEffect(() =>{
-        function getProject(){
+        const getProject = () => {
             axios.get(`${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
             .then(function (response){
                 setProject(response.data)
@@ -34,7 +34,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
         getProject(projectId);
     }, [ projectId, user]);
 
-    function deleteProject(){
+    const deleteProject = () => {
         const result = window.confirm("Are you sure you want to delete?");
         if(result === true){
             setLoading(true);
@@ -63,7 +63,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
     const [ projectLead, setProjectLead ] = useState(project.projectLead);
     const [ projectType, setProjectType ] = useState(project.projectType);
 
-    function editProject() {
+    const editProject = () => {
         confirmRole(role);
         setLoading(true);
         axios.post(`${process.env.REACT_APP_UPDATE_PROJECT_URL}/${projectId}`, {
@@ -89,7 +89,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
         })
     }
 
-    function unauthorized() {
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 
@@ -103,7 +103,7 @@ export default function EditProjectPage({user, role, confirmRole}) {
             {
                 user === null 
                 ? <h1>You are signed out</h1>
-                : isLoading === true ? <Loader/>
+                : isLoading ? <Loader/>
                 : <div className="form-wrapper">
                     <div className="top-form-container">
                         <label>Title

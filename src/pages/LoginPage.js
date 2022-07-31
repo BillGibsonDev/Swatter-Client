@@ -13,14 +13,15 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 			<h1>Swatter</h1>
 			<h2>Project Management</h2>
 			{
-				isLoading === true ? (
+				isLoading 
+				? 
 					<div className="loading-container">
 						<div className="loader">
 							<img src={BugImage} alt="" />
 						</div>
 							<h2>Signing In...</h2>
 					</div>
-				) : (
+				: 
 					<form className="form-wrapper">
 						<label>Username</label>
 						<input 
@@ -38,7 +39,6 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 						/>
 						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</StyledButton>
 					</form>
-				)
 			}
 			<div className="guest-container">
 				<h4>For Guests - (View Only)</h4>

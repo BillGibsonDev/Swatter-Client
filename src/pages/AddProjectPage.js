@@ -26,7 +26,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
     const [ projectType, setProjectType ] = useState("");
 
     useEffect(() => {
-        function handleDate(){
+        const handleDate = () => {
             const current = new Date();
             const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
             setStartDate(date);
@@ -35,7 +35,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
         setAuthor(user);
     }, [user]);
 
-    function addProject() {
+    const addProject = () => {
         confirmRole(role);
         setLoading(true);
         axios.post(`${process.env.REACT_APP_ADD_PROJECT_URL}`, {
@@ -64,7 +64,7 @@ export default function AddProjectPage({user, role, confirmRole}) {
         })
     }
 
-    function unauthorized() {
+    const unauthorized = () => {
         alert("You do not have permissions to do that!")
     }
 

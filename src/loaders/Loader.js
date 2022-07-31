@@ -13,23 +13,28 @@ export default function Loader() {
 }
 
 const StyledLoader = styled.div`
-    opacity: 80%;
-    border: 16px dashed #000000;
-    border-radius: 50%;
-    width: 250px;
-    height: 250px;
-    animation: spin 4s linear infinite;
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 200px;
-    left: 30%;
-    @media (max-width: 834px){
-        left: 40%;
-    }
-    @media (max-width: 428px){
-        left: 15%;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    .loader {
+        opacity: 80%;
+        border: 16px dashed #000000;
+        border-radius: 50%;
+        width: 250px;
+        height: 250px;
+        animation: spin 4s linear infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
     }
     h2 {
         position: relative;

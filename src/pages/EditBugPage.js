@@ -265,7 +265,7 @@ export default function EditBugPage({
                     }
                 </div>
             }
-            <button onClick={handleAddFields}>Add Image</button>
+            <button onClick={() => { handleAddFields() }}>Add Image</button>
             <div className="button-container">
                 {
                     author === user || role === process.env.REACT_APP_ADMIN_SECRET 

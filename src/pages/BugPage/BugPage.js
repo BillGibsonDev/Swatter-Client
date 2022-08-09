@@ -21,6 +21,7 @@ import EditIcon from '../../assets/icons/editIconWhite.png';
 export default function BugPage({role, user, confirmRole}) {
 
     const { projectId, bugId } = useParams();
+    
     const [ bug, setBug ] = useState([]);
     const [ isLoading, setLoading ] = useState(true);
     const [ images, setImages ] = useState([]);

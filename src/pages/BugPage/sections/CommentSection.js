@@ -96,7 +96,6 @@ export default function CommentSection({user, role, bugId, projectId}) {
                         onChange={(event) => {
                             setAddComment(event.target.value);
                         }}
-
                     />
                     {
                         role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET

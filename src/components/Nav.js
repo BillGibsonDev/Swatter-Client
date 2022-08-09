@@ -25,7 +25,7 @@ export default function Nav({logout, role, confirmAdmin}) {
                     ? <Link onClick={confirmAdmin} to="/RegisterUserPage"><img src={Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
                     : <></>
                 }
-                <Link id="add-button" to={'/AddProjectPage'}><img src={Add} alt="Add Project"/><span className="tooltiptext">Add Project</span></Link>
+                <Link id="add-button" to={'/CreateProjectPage'}><img src={Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
                 <Link to="/"><img src={Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
             </div>
             <div className="bottom-container">
@@ -101,7 +101,7 @@ const StyledNav = styled.div`
                 border-radius: 6px;
                 padding: 5px 0;
                 position: absolute;
-                z-index: 4;
+                z-index: 2000;
                 top: 0;
                 left: 105%;
             }

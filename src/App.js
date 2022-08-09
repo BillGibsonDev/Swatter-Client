@@ -12,11 +12,11 @@ import HomePage from './pages/HomePage/HomePage.js';
 import ProjectPage from './pages/ProjectPage/ProjectPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from "./pages/LoginPage";
-import AddProjectPage from "./pages/AddProjectPage";
+import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
 import EditProjectPage from "./pages/EditProjectPage";
 import BugPage from "./pages/BugPage/BugPage.js";
-import AddBugPage from "./pages/AddBugPage.js";
+import CreateBugPage from "./pages/CreateBugPage.js";
 import SprintsPage from "./pages/Sprints/SprintsPage.js";
 import DetailsPage from "./pages/DetailsPage";
 
@@ -236,9 +236,9 @@ function App() {
 							} 
 						/>
 						<Route 
-							path="/AddProjectPage" exact 
+							path="/CreateProjectPage" exact 
 							element={
-								<AddProjectPage
+								<CreateProjectPage
 									user={user}
 									role={role}
 									confirmRole={confirmRole}
@@ -256,9 +256,9 @@ function App() {
 							}
 						/>
 						<Route 
-							path='/:projectId/AddBugPage' exact
+							path='/:projectId/CreateBugPage' exact
 							element={
-								<AddBugPage
+								<CreateBugPage
 									user={user}
 									role={role}
 									confirmRole={confirmRole}

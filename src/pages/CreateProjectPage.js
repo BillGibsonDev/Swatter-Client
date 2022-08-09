@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 // components
 import Loader from '../loaders/Loader';
 
-export default function AddProjectPage({user, role, confirmRole}) {
+export default function CreateProjectPage({user, role, confirmRole}) {
 
     const [ projectTitle, setProjectTitle] = useState("");
     const [ startDate, setStartDate] = useState("");

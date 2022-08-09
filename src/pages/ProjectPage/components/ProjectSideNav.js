@@ -51,7 +51,7 @@ export const ProjectSideNav = ({
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
                 <button onClick={()=> { toggleComments()}}><img src={Comments} alt="" />Comments</button>
-                <Link to={`/${projectId}/AddBugPage`} ><img src={AddBug} alt="" />Add Bug</Link>
+                <Link to={`/${projectId}/CreateBugPage`} ><img src={AddBug} alt="" />Create Bug</Link>
                 <Link to={`/${projectId}/details`} ><img src={Details} alt="" />Details</Link>
             </div>
         </div>

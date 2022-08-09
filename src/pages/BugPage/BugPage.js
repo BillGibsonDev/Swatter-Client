@@ -3,18 +3,22 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables.js';
+import * as pallette from '../../styled/ThemeVariables.js';
 
-// components
-import BugPageLoader from '../loaders/BugPageLoader';
+// sections
+import ImageSection from './sections/ImageSection.js';
+import CommentSection from './sections/CommentSection.js';
+
+// loaders
+import BugPageLoader from '../../loaders/BugPageLoader';
 
 // router
 import { Link, useParams } from 'react-router-dom';
 
 // images
-import EditIcon from '../assets/icons/editIconWhite.png';
+import EditIcon from '../../assets/icons/editIconWhite.png';
 
-export default function BugPage() {
+export default function BugPage({role, user, confirmRole}) {
 
     const { projectId, bugId } = useParams();
     const [ bug, setBug ] = useState([]);
@@ -43,6 +47,20 @@ export default function BugPage() {
         } else {
             modal.style.display = "block";
         }
+    }
+
+    const handleTabs = (e, section) => {
+        let i;
+        let tabs = document.getElementsByClassName("bug-page-tabs")
+        for (i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = "none";
+        }
+        let tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(section).style.display = "block";
+        e.currentTarget.className += " active";
     }
 
     return (
@@ -83,42 +101,23 @@ export default function BugPage() {
                             <h2><span>Updated: </span>{bug.lastUpdate}</h2>
                         </div>
                     </div>
-                    <p><span>Description: </span> {bug.description}</p>
-                    <img src={bug.thumbnail} alt=""/>
-                </div>
-            }
-            <h2>Images:</h2>
-            {
-                images === undefined || images.length === 0 
-                ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
-                : <div className="images-wrapper">
-                    { 
-                        images.map((image, index) => {
-                            return (
-                                <div key={index}>
-                                    <div className="image-container">
-                                        {
-                                            image.image === "" 
-                                            ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
-                                            : <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
-                                        }
-                                        {
-                                            image.caption.length > 50 
-                                            ? <p>{image.caption.slice(0, 50)}...</p>
-                                            : image.image === "" && image.caption === "" ? <></>
-                                            : image.caption.length === 0 ? <p>No Caption</p>
-                                            : <p>{image.caption}</p>
-                                        }
-                                    </div>
-                                    <div className="modal" id={index}>
-                                        <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
-                                        <img className="modal-image" src={image.image} alt={image.caption} />
-                                        <p id="caption">{image.caption}</p>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
+                    <p id="description"><span>Description: </span> {bug.description}</p>
+                    <div className="button-container">
+                        <button className='tablinks active' onClick={(e) => { handleTabs(e, 'comments')}}>Comments</button>
+                        <button className='tablinks' onClick={(e) => { handleTabs(e, 'images')}}>Images</button>
+                    </div>
+                    <ImageSection 
+                        images={images}
+                        handleModal={handleModal}
+                    />
+                    <CommentSection
+                        bugId={bugId}
+                        projectId={projectId}
+                        role={role}
+                        user={user}
+                        confirmRole={confirmRole}
+                        setLoading={setLoading}
+                    />
                 </div>
             }
         </StyledBugSection >
@@ -217,6 +216,8 @@ const StyledBugSection = styled.div`
         }
         .info-wrapper {
             display: flex;
+            width: 100%;
+            height: 100%;
             @media (max-width: 450px){
                 flex-direction: column;
             }
@@ -259,97 +260,39 @@ const StyledBugSection = styled.div`
                 }
             }
         }
-        p {
+        #description {
             color: white;
             font-size: 16px;
             display: flex;
             flex-direction: column;
-            margin: 30px 0;
+            margin: 50px 0;
+            border-top: 2px solid grey;
+            border-bottom: 2px solid grey;
+            padding: 50px 0;
             @media (max-width: 450px){
-                font-size: 12px;
+                font-size: 14px;
             }
             span {
                 color: ${pallette.helperGrey}
             }
         }
     }
-    h2 {
-        color: ${pallette.helperGrey};
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 20px;
-    }
-    .images-wrapper {
-        display: flex;
-        grid-gap: 20px;
-        margin: 0 0 20px 0;
-        width: 70%;
-        height: auto;
-        overflow-x: auto;
-        @media (max-width: 850px){
-            width: 90%;
+    .button-container {
+        border-bottom: 2px solid white;
+        width: 80%;
+        button {
+            border: 1px solid ${pallette.helperGrey};
+            font-size: 16px;
+            border-radius: 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            cursor: pointer;
+            padding: 8px 12px;
         }
-        @media (max-width: 450px){
-            width: 100%;
-        }
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-            height: 300px;
-            img {
-                cursor: pointer;
-                width: 100%;
-                height: 80%;
-            }
-            p {
-                padding-top: 6px;
-                min-height: 20%;
-                font-size: 12px;
-                text-align: center;
-                color: white;
-                background: #2c272771;
-            }
-        }
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
-            padding-top: 100px; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.9); 
-            .modal-image {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-                }
-            #caption {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-                text-align: center;
-                color: ${pallette.helperGrey};
-                padding: 10px 0;
-                height: 150px;
-            }
-            .close-button {
-                position: absolute;
-                top: 15px;
-                right: 35px;
-                color: #f1f1f1;
-                font-size: 40px;
-                font-weight: bold;
-                cursor: pointer;
-                background: none;
-                border: none;
-            }
+        .active {
+            background: black;
+            color: white;
         }
     }
+
 `;

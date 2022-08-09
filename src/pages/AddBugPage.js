@@ -20,7 +20,6 @@ export default function AddBugPage({
     const { projectId } = useParams();
 
     const [ title, setTitle ] = useState("");
-    const [ thumbnail, setThumbnail ] = useState("");
     const [ status, setStatus ] = useState("");
     const [ description, setDescription ] = useState("");
     const [ author, setAuthor ] = useState(user);
@@ -50,7 +49,6 @@ export default function AddBugPage({
             projectId: projectId,
             title: title,
             description: description,
-            thumbnail: thumbnail,
             status: status,
             author: author,
             priority: priority,
@@ -138,14 +136,25 @@ export default function AddBugPage({
                                     }}
                                 />
                             </label>
-                            <label>Image
-                                <input 
-                                    type="text"
-                                    id="thumbnail"
-                                    onChange={(event) => {
-                                        setThumbnail(event.target.value);
-                                    }} 
-                                />
+                            <label>Sprint:
+                                {
+                                    options === undefined 
+                                    ?<></>    
+                                    :<select
+                                        id="sprint"
+                                        onChange={(event) => {
+                                            setSprint(event.target.value);
+                                        }}>
+                                            <option value="">None</option>
+                                        {
+                                            options.map((sprint, key) => {
+                                                return(
+                                                    <option key={key} value={`${sprint.title}`}>{sprint.title}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                }
                             </label>
                         </div>
                         <div className="right-container">
@@ -188,26 +197,6 @@ export default function AddBugPage({
                                     <option value="Task">Task</option>
                                 </select>
                             </label>
-                            <label>Sprint:
-                                {
-                                    options === undefined 
-                                    ?<></>    
-                                    :<select
-                                        id="sprint"
-                                        onChange={(event) => {
-                                            setSprint(event.target.value);
-                                        }}>
-                                            <option value="">None</option>
-                                        {
-                                            options.map((sprint, key) => {
-                                                return(
-                                                    <option key={key} value={`${sprint.title}`}>{sprint.title}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                }
-                            </label>
                         </div>
                     </div>
                     <label>Description
@@ -244,7 +233,7 @@ export default function AddBugPage({
                                         </div>
                                     </div>
                                     <div className="buttons-container">
-                                        <button onClick={handleAddFields}>Add Image</button>
+                                        <button onClick={handleAddFields}>Another Image</button>
                                         {
                                             images.length === 1 
                                             ? <button id="remove-button">Remove</button>
@@ -257,8 +246,8 @@ export default function AddBugPage({
                     }
                     {
                         role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
-                        ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); addBug();}}>Add Bug</button>
-                        : <button style={{marginTop: '40px'}} onClick={unauthorized}>Add Bug</button>
+                        ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); addBug();}}>Save Bug</button>
+                        : <button style={{marginTop: '40px'}} onClick={unauthorized}>Save Bug</button>
                     }
                 </div>
             }

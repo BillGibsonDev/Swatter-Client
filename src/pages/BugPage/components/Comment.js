@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
+// functions
+import { unauthorized } from '../../../functions/unauthorized.js';
+
 // images
 import Menu from '../../../assets/icons/dotMenu.png';
 
@@ -50,10 +53,6 @@ export default function Comment({
         }
     }
 
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
-    }
-
     return (
         <StyledComment style={ author === user ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`} : { margin: "10px auto 10px 5%", background: 'white'} }>
             <div className="comment-wrapper" >
@@ -74,8 +73,8 @@ export default function Comment({
                             <div className="dropdown-content">
                                 {
                                     author === user || role === process.env.REACT_APP_ADMIN_SECRET 
-                                    ? <button onClick={deleteComment}>Delete</button>
-                                    : <button onClick={unauthorized}>Delete</button>
+                                    ? <button onClick={() => { deleteComment() }}>Delete</button>
+                                    : <button onClick={() => { unauthorized() }}>Delete</button>
                                 }
                             </div>
                         </div>

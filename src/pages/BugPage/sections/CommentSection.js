@@ -35,6 +35,7 @@ export default function CommentSection({user, role, bugId, projectId}) {
     const sendComment = () => {
         setLoading(true);
         if(addComment === ''){
+            setLoading(false);
             alert("No Comment Entered!");
         } else {
             axios.post(`${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`, {
@@ -53,6 +54,7 @@ export default function CommentSection({user, role, bugId, projectId}) {
                     let container =  document.getElementById("bug-comment-container");
                     setTimeout(function(){
                         container.scrollTo(0, document.body.scrollHeight);
+                        setAddComment("");
                     }, 1000);
                 }
             })

@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
+// functions
+import { unauthorized } from '../../../functions/unauthorized.js';
+
 export const EditSprintForm = ({
     projectId,
     editSprintForm,
@@ -19,10 +22,6 @@ export const EditSprintForm = ({
 
     const [ sprint, setSprint ] = useState([]);
     const [ sprintId, setSprintId ] = useState(false);
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
-    }
 
     useEffect(() => {
         if(searchSprint){
@@ -150,8 +149,8 @@ export const EditSprintForm = ({
                         <button id="delete" onClick={()=>{confirmRole(); toggleEditSprintForm(); handleDeleteSprint();}}>Delete</button>
                     </>
                     : <>
-                        <button onClick={unauthorized}>Save</button>
-                        <button id="delete" onClick={unauthorized}>Delete</button>
+                        <button onClick={() => { unauthorized() }}>Save</button>
+                        <button id="delete" onClick={() => { unauthorized() }}>Delete</button>
                     </>
                 }
             </div>

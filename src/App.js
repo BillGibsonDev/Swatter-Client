@@ -44,7 +44,6 @@ function App() {
 			tokenPW = password;
 			tokenUser = username;
 		}
-		// Update session storage
 		sessionStorage.setItem("tokenPW", tokenPW);
 		sessionStorage.setItem("tokenUser", tokenUser);
 	}

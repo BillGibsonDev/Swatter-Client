@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables.js'
 
+// functions
+import { unauthorized } from '../../../functions/unauthorized.js';
+
 // components
 import Comment from '../components/Comment';
 
@@ -54,10 +57,6 @@ export default function CommentSection({user, role, toggleComments, commentSecti
                 }, 1000);
             }
         })
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     return (

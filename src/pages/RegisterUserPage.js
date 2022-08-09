@@ -71,8 +71,8 @@ export default function RegisterUserPage({role, confirmAdmin}) {
 				</label>
 				{
 					role === process.env.REACT_APP_ADMIN_SECRET 
-					? <button type="submit" onClick={()=>{registerUser();}}>Create User</button>
-					: <button onClick={unauthorized}>Create User</button>
+					? <button type="submit" onClick={()=>{ registerUser() }}>Create User</button>
+					: <button onClick={() => {unauthorized() }}>Create User</button>
 				}
 			</div>
 		</StyledRegister>

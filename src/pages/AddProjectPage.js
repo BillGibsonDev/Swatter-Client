@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables.js';
 
+// functions
+import { unauthorized } from '../functions/unauthorized.js';
+
 // router
 import { Link } from 'react-router-dom';
 
@@ -62,10 +65,6 @@ export default function AddProjectPage({user, role, confirmRole}) {
         .catch(function(response){
             console.log(response);
         })
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     return (
@@ -171,8 +170,8 @@ export default function AddProjectPage({user, role, confirmRole}) {
             }
             {
                 role === process.env.REACT_APP_GUEST_SECRET 
-                ? <button className="start-button" onClick={unauthorized}>Start</button>
-                : <button className="start-button" onClick={addProject}>Start</button>
+                ? <button className="start-button" onClick={() => { unauthorized()}}>Start</button>
+                : <button className="start-button" onClick={() => { addProject() }}>Start</button>
             }
         </StyledProjectPage>
     ) 

@@ -5,6 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables.js';
 
+// functions
+import { unauthorized } from '../functions/unauthorized.js';
+
 // components
 import BugPageLoader from '../loaders/BugPageLoader';
 
@@ -100,10 +103,6 @@ export default function EditBugPage({
                 }
             })
         }
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     const handleAddFields = () => {
@@ -275,8 +274,8 @@ export default function EditBugPage({
                         <button  id="delete" onClick={() => { deleteBug();}}>Delete</button>
                     </>
                     : <>
-                        <button onClick={unauthorized}>Save</button>
-                        <button id="delete" onClick={unauthorized}>Delete</button>
+                        <button onClick={() => { unauthorized()}}>Save</button>
+                        <button id="delete" onClick={() => { unauthorized()}}>Delete</button>
                     </>
                 }
             </div>

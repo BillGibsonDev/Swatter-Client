@@ -4,6 +4,9 @@ import axios from 'axios';
 // styled
 import styled from 'styled-components';
 
+// functions
+import { unauthorized } from '../../../functions/unauthorized.js';
+
 export const SprintForm = ({
     projectId, 
     sprintForm,
@@ -19,10 +22,6 @@ export const SprintForm = ({
     const [ endDate, setEndDate ] = useState('');
     const [ color, setColor ] = useState('');
     const [ status, setStatus ] = useState('');
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!");
-    }
 
     const handleSprintForm = () => {
         axios.post(`${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`, {
@@ -103,7 +102,7 @@ export const SprintForm = ({
             {
                 role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
                 ? <button onClick={()=>{confirmRole(); handleSprintForm();}}>Save</button>
-                : <button onClick={unauthorized}>Save</button>
+                : <button onClick={() => { unauthorized() }}>Save</button>
             }
         </StyledSprintForm>
     )

@@ -64,7 +64,7 @@ export default function BugPage({role, user, confirmRole}) {
     }
 
     return (
-        <StyledBugSection>
+        <StyledBugPage>
             <div className="breadcrumbs">
                 <Link to={`/`}>Home</Link><span>/</span>
                 <Link to={`/projects/${projectId}`}>Project</Link><span>/</span>
@@ -77,7 +77,7 @@ export default function BugPage({role, user, confirmRole}) {
             {
                 isLoading 
                 ? <BugPageLoader />
-                :<div className="bug-wrapper">
+                : <div className="bug-wrapper">
                     <div className="title-container">
                         <h1>{bug.title}</h1>
                         <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt="edit bug link" />Edit</Link>
@@ -120,17 +120,16 @@ export default function BugPage({role, user, confirmRole}) {
                     />
                 </div>
             }
-        </StyledBugSection >
+        </StyledBugPage>
     )
 }
 
-const StyledBugSection = styled.div`
+const StyledBugPage = styled.div`
     height: 100%;
     width: 70%;
-    margin: 30px auto auto auto;
+    margin: 30px auto;
     @media (max-width: 834px){
         width: 90%;
-        margin: 30px 0 auto auto;
     }
     @media (max-width: 428px){
         width: 85%;

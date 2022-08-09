@@ -8,6 +8,9 @@ import * as pallette from '../styled/ThemeVariables.js';
 // router
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
+// functions
+import { unauthorized } from '../functions/unauthorized.js';
+
 // components
 import Loader from '../loaders/Loader';
 
@@ -87,10 +90,6 @@ export default function EditProjectPage({user, role, confirmRole}) {
                 alert('Project Updated!');
             }
         })
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     return (
@@ -204,13 +203,13 @@ export default function EditProjectPage({user, role, confirmRole}) {
             <div className="button-container">
                 {
                     role === process.env.REACT_APP_GUEST_SECRET 
-                    ? <button onClick={unauthorized}>Update</button>
-                    : <button onClick={editProject}>Update</button>
+                    ? <button onClick={() => { unauthorized() }}>Update</button>
+                    : <button onClick={() => { editProject() }}>Update</button>
                 }
                 {
                     author === user || role === process.env.REACT_APP_ADMIN 
-                    ? <button  id="delete" onClick={deleteProject}>Delete</button>
-                    : <button onClick={unauthorized}>Delete</button>
+                    ? <button  id="delete" onClick={() => { deleteProject() }}>Delete</button>
+                    : <button onClick={() => { unauthorized() }}>Delete</button>
                 }
             </div>
         </StyledProjectPage>

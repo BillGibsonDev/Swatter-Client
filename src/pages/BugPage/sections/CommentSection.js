@@ -8,6 +8,9 @@ import * as pallette from '../../../styled/ThemeVariables.js'
 // components
 import Comment from '../components/Comment';
 
+// functions
+import { unauthorized } from '../../../functions/unauthorized.js';
+
 export default function CommentSection({user, role, bugId, projectId}) {
 
     const [ addComment, setAddComment] = useState('');
@@ -54,10 +57,6 @@ export default function CommentSection({user, role, bugId, projectId}) {
                 }
             })
         }
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     return (

@@ -8,6 +8,9 @@ import * as pallette from '../styled/ThemeVariables.js';
 // router
 import { Link, useParams } from 'react-router-dom';
 
+// functions
+import { unauthorized } from '../functions/unauthorized.js';
+
 // components
 import Loader from '../loaders/Loader';
 
@@ -66,10 +69,6 @@ export default function AddBugPage({
                 alert('Bug Created!');
             }
         })
-    }
-
-    const unauthorized = () => {
-        alert("You do not have permissions to do that!")
     }
 
     const [images, setImages] = useState([
@@ -246,8 +245,8 @@ export default function AddBugPage({
                     }
                     {
                         role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
-                        ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); addBug();}}>Save Bug</button>
-                        : <button style={{marginTop: '40px'}} onClick={unauthorized}>Save Bug</button>
+                        ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); addBug();}}>Save</button>
+                        : <button style={{marginTop: '40px'}} onClick={() => unauthorized()}>Save</button>
                     }
                 </div>
             }

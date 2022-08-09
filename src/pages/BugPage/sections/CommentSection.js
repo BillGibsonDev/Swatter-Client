@@ -8,15 +8,17 @@ import * as pallette from '../../../styled/ThemeVariables.js'
 // components
 import Comment from '../components/Comment';
 
+// loader
+import Loader from '../../../loaders/Loader.js';
+
 // functions
 import { unauthorized } from '../../../functions/unauthorized.js';
 
-export default function CommentSection({user, role, bugId, projectId}) {
+export default function CommentSection({ user, role, bugId, projectId, setLoading }) {
 
     const [ addComment, setAddComment] = useState('');
     const [ addAuthor ] = useState(user);
     const [ comments, setComments ] = useState([]);
-    const [ isLoading, setLoading ] = useState(false);
 
     useEffect(() => {
         const getComments = (projectId, bugId) => {
@@ -30,7 +32,7 @@ export default function CommentSection({user, role, bugId, projectId}) {
             });
         }
         getComments(projectId, bugId);
-    }, [ projectId, bugId, isLoading]);
+    }, [ projectId, bugId ]);
 
     const sendComment = () => {
         setLoading(true);
@@ -51,7 +53,7 @@ export default function CommentSection({user, role, bugId, projectId}) {
                 } else {
                     setLoading(false);
                     document.getElementById("comment").value = "";
-                    let container =  document.getElementById("bug-comment-container");
+                    let container = document.getElementById("bug-comment-container");
                     setTimeout(function(){
                         container.scrollTo(0, document.body.scrollHeight);
                         setAddComment("");
@@ -67,7 +69,8 @@ export default function CommentSection({user, role, bugId, projectId}) {
                 { 
                     comments.length === 0
                     ? <h2>No comments yet..</h2>
-                    : <div className="comment-container" id="bug-comment-container">
+                    : 
+                    <div className="comment-container" id="bug-comment-container">
                         {
                             comments.map((comment, key) => {
                                 return (

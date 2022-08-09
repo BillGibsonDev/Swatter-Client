@@ -5,8 +5,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import * as pallette from '../../styled/ThemeVariables.js';
 
-// components
+// sections
 import ImageSection from './sections/ImageSection.js';
+import CommentSection from './sections/CommentSection.js';
 
 // loaders
 import BugPageLoader from '../../loaders/BugPageLoader';
@@ -17,7 +18,7 @@ import { Link, useParams } from 'react-router-dom';
 // images
 import EditIcon from '../../assets/icons/editIconWhite.png';
 
-export default function BugPage() {
+export default function BugPage({role, user, confirmRole}) {
 
     const { projectId, bugId } = useParams();
     const [ bug, setBug ] = useState([]);
@@ -46,6 +47,20 @@ export default function BugPage() {
         } else {
             modal.style.display = "block";
         }
+    }
+
+    const handleTabs = (e, section) => {
+        let i;
+        let tabs = document.getElementsByClassName("bug-page-tabs")
+        for (i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = "none";
+        }
+        let tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(section).style.display = "block";
+        e.currentTarget.className += " active";
     }
 
     return (
@@ -86,15 +101,25 @@ export default function BugPage() {
                             <h2><span>Updated: </span>{bug.lastUpdate}</h2>
                         </div>
                     </div>
-                    <p><span>Description: </span> {bug.description}</p>
-                    <img src={bug.thumbnail} alt=""/>
+                    <p id="description"><span>Description: </span> {bug.description}</p>
+                    <div className="button-container">
+                        <button className='tablinks active' onClick={(e) => { handleTabs(e, 'comments')}}>Comments</button>
+                        <button className='tablinks' onClick={(e) => { handleTabs(e, 'images')}}>Images</button>
+                    </div>
+                    <ImageSection 
+                        images={images}
+                        handleModal={handleModal}
+                    />
+                    <CommentSection
+                        bugId={bugId}
+                        projectId={projectId}
+                        role={role}
+                        user={user}
+                        confirmRole={confirmRole}
+                        setLoading={setLoading}
+                    />
                 </div>
             }
-            <ImageSection 
-                images={images}
-                handleModal={handleModal}
-            />
-            
         </StyledBugSection >
     )
 }
@@ -191,6 +216,8 @@ const StyledBugSection = styled.div`
         }
         .info-wrapper {
             display: flex;
+            width: 100%;
+            height: 100%;
             @media (max-width: 450px){
                 flex-direction: column;
             }
@@ -233,18 +260,39 @@ const StyledBugSection = styled.div`
                 }
             }
         }
-        p {
+        #description {
             color: white;
             font-size: 16px;
             display: flex;
             flex-direction: column;
-            margin: 30px 0;
+            margin: 50px 0;
+            border-top: 2px solid grey;
+            border-bottom: 2px solid grey;
+            padding: 50px 0;
             @media (max-width: 450px){
-                font-size: 12px;
+                font-size: 14px;
             }
             span {
                 color: ${pallette.helperGrey}
             }
         }
     }
+    .button-container {
+        border-bottom: 2px solid white;
+        width: 80%;
+        button {
+            border: 1px solid ${pallette.helperGrey};
+            font-size: 16px;
+            border-radius: 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            cursor: pointer;
+            padding: 8px 12px;
+        }
+        .active {
+            background: black;
+            color: white;
+        }
+    }
+
 `;

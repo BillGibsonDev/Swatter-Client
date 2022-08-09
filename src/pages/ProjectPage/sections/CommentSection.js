@@ -11,7 +11,7 @@ import Comment from '../components/Comment';
 // router
 import { useParams } from 'react-router-dom';
 
-export default function ProjectsPage({user, role, toggleComments, commentSectionRef}) {
+export default function CommentSection({user, role, toggleComments, commentSectionRef}) {
 
     const { projectId, bugId } = useParams();
 

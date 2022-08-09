@@ -119,18 +119,14 @@ export default function ProjectPage({ user, role, confirmRole }) {
                     }
                 </div>
             }
-            {
-                <>
-                    <CommentSection
-                        toggleComments={toggleComments}
-                        user={user}
-                        role={role}
-                        commentSectionRef={commentSectionRef}
-                        setRerender={setRerender}
-                        rerender={rerender}
-                    />
-                </>
-            }
+            <CommentSection
+                toggleComments={toggleComments}
+                user={user}
+                role={role}
+                commentSectionRef={commentSectionRef}
+                setRerender={setRerender}
+                rerender={rerender}
+            />
         </StyledProjectPage>
     )
 }

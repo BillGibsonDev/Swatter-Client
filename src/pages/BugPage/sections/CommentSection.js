@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // styled
@@ -8,33 +8,52 @@ import * as pallette from '../../../styled/ThemeVariables.js'
 // components
 import Comment from '../components/Comment';
 
-export default function ProjectsPage({user, role, bugId, projectId, comments}) {
+export default function CommentSection({user, role, bugId, projectId}) {
 
     const [ addComment, setAddComment] = useState('');
-    const [ addAuthor, setAuthor] = useState(user);
+    const [ addAuthor ] = useState(user);
+    const [ comments, setComments ] = useState([]);
     const [ isLoading, setLoading ] = useState(false);
+
+    useEffect(() => {
+        const getComments = (projectId, bugId) => {
+            axios.get(`${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+            .then(function (response){
+                setComments(response.data[0].bugs[0].comments);
+                setLoading(false);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+        getComments(projectId, bugId);
+    }, [ projectId, bugId, isLoading]);
 
     const sendComment = () => {
         setLoading(true);
-        axios.post(`${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/${bugId}comments`, {
-            projectId: projectId,
-            bugId: bugId,
-            comment: addComment,
-            author: addAuthor,
-        })
-        .then(function(response) {
-            if(response.data !== "Comment Created"){
-                setLoading(false);
-                alert("Server Error - Comment not created!");
-            } else {
-                setLoading(false);
-                document.getElementById("comment").value = "";
-                let container =  document.getElementById("comment-container");
-                setTimeout(function(){
-                    container.scrollTo(0, document.body.scrollHeight);
-                }, 1000);
-            }
-        })
+        if(addComment === ''){
+            alert("No Comment Entered!");
+        } else {
+            axios.post(`${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`, {
+                projectId: projectId,
+                bugId: bugId,
+                comment: addComment,
+                author: addAuthor,
+            })
+            .then(function(response) {
+                if(response.data !== "Comment created!"){
+                    setLoading(false);
+                    alert("Server Error - Comment not created!");
+                } else {
+                    setLoading(false);
+                    document.getElementById("comment").value = "";
+                    let container =  document.getElementById("bug-comment-container");
+                    setTimeout(function(){
+                        container.scrollTo(0, document.body.scrollHeight);
+                    }, 1000);
+                }
+            })
+        }
     }
 
     const unauthorized = () => {
@@ -42,114 +61,101 @@ export default function ProjectsPage({user, role, bugId, projectId, comments}) {
     }
 
     return (
-        <StyledCommentSection >
-            { 
-                comments.length === 0 || comments === []
-                ? <h1 style={{color: "white", textAlign: 'center', fontSize: '20px'}}>No comments yet..</h1>
-                : <div className="comment-container" id='comment-container'>
+        <StyledBugCommentSection className='bug-page-tabs active' id="comments">
+            <div className="comment-section-wrapper">
+                { 
+                    comments.length === 0
+                    ? <h2>No comments yet..</h2>
+                    : <div className="comment-container" id="bug-comment-container">
+                        {
+                            comments.map((comment, key) => {
+                                return (
+                                    <Comment
+                                        date={comment.date}
+                                        author={comment.author}
+                                        comments={comment.comment}
+                                        commentId={comment._id}
+                                        bugId={bugId}
+                                        user={user}
+                                        projectId={projectId}
+                                        key={key}
+                                        role={role}
+                                        setLoading={setLoading}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
+                }
+                <div className="comment-maker">
+                    <textarea 
+                        placeholder='Add a comment'
+                        name="comment" 
+                        id="comment" 
+                        required
+                        cols={200}
+                        onChange={(event) => {
+                            setAddComment(event.target.value);
+                        }}
+
+                    />
                     {
-                        comments.map((comment, key) => {
-                            return (
-                                <Comment
-                                    date={comment.date}
-                                    author={comment.author}
-                                    comments={comment.comment}
-                                    commentId={comment._id}
-                                    user={user}
-                                    projectId={projectId}
-                                    key={key}
-                                    role={role}
-                                    setLoading={setLoading}
-                                />
-                            )
-                        })
+                        role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET
+                        ? <button onClick={()=> { sendComment();}}>Send</button>
+                        : <button onClick={()=> { unauthorized();}}>Send</button>
                     }
                 </div>
-            }
-            <div className="comment-maker">
-                <textarea 
-                    placeholder='Add a comment'
-                    name="comment" 
-                    id="comment" 
-                    required
-                    onChange={(event) => {
-                        setAddComment(event.target.value);
-                    }}
-
-                />
-                {
-                    role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET
-                    ? <button onClick={()=> { sendComment();}}>Send</button>
-                    : <button onClick={()=> { unauthorized();}}>Send</button>
-                }
             </div>
-            
-        </StyledCommentSection>
+        </StyledBugCommentSection>
     )
 }
 
-const StyledCommentSection = styled.div`
-    display: none;
-    width: 100%;
-    margin: 0 auto;
+const StyledBugCommentSection = styled.div`
+    width: 40%;
+    margin: 20px 0;
     height: 100%;
     min-height: 30vh;
-    border: 2px white solid;
-    position: absolute;
-    background: #0000007d;
-    z-index: 100;
-    border-radius: 12px;
-    left: -50px;
-    justify-content: center;
-    align-items: center;
     @media (max-width: 1440px){
-        width: 100%;
-        left: -15px;
     }
     @media (max-width: 834px){
-        top: 0;
-        left: -80px;
-        margin: 0;
-        width: 100vw;
-        height: 100%;
-        border-radius: 0;
+        width: 70%;
     }
     @media (max-width: 428px){
-        left: -60px;
-        padding: 10px;
+        width: 100%;
     }
     .comment-section-wrapper {
         display: flex;
-        width: 60%;
-        border-radius: 12px;
+        width: 100%;
+        height: 100%;
+        min-height: 30vh;
         flex-direction: column;
-        justify-content: center;
-        background: ${pallette.accentColor};
-        @media (max-width:834px){
-            width: 80%;
-            height: 50%;
-            justify-content: flex-start;
+        align-items: center;
+        h2 {
+            color: ${pallette.helperGrey};
+            font-size: 16px;
+            font-weight: 400;
+            margin-right: auto;
         }
-        @media (max-width: 428px){
+        .comment-container {
             width: 100%;
-            height: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            @media (max-width: 428px){
+                max-height: 40vh;
+            }
         }
         .comment-maker {
-            margin: 20px auto;
+            margin: 20px 0;
             display: flex;
             justify-content: center;
-            @media (max-width: 428px){
-                position: absolute;
-                bottom: 0;
-                left: 10%;
-            }
             textarea {
                 border-radius: 4px 0 0 4px;
                 background: #d6d6d6;
                 padding: 6px;
                 min-height: 20px;
                 height: auto;
-                width: 500px;
+                width: 100%;
+                max-width: 500px;
                 max-height: 50px;
                 font-size: 12px;
                 @media (max-width: 834px){
@@ -175,13 +181,9 @@ const StyledCommentSection = styled.div`
                     background: #000000;
                     color: white;
                 }
-            }
-        }
-        .comment-container {
-            max-height: 65vh;
-            overflow-y: auto;
-            @media (max-width: 428px){
-                max-height: 80%;
+                @media (max-width: 428px){
+                    width: 80px;
+                }
             }
         }
     }

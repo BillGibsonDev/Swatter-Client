@@ -8,7 +8,6 @@ import * as pallette from '../../../styled/ThemeVariables';
 // images
 import Menu from '../../../assets/icons/dotMenu.png';
 
-
 export default function Comment({
     comments,
     author,
@@ -17,7 +16,8 @@ export default function Comment({
     commentId,
     projectId,
     role,
-    setLoading
+    setLoading,
+    bugId
 }) {
 
     const [ compareDate, setCompareDate] = useState("");
@@ -36,10 +36,10 @@ export default function Comment({
     const deleteComment = () => {
         setLoading(true);
         const result = window.confirm("Are you sure you want to delete?");
-        if(result === true){
-            axios.post(`${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+        if(result){
+            axios.post(`${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
             .then(function(response) {
-                if(response.data !== "Comment Deleted"){
+                if(response.data !== "Comment Deleted!"){
                     setLoading(false);
                     alert("Server Error - Comment not deleted");
                 } else {
@@ -90,7 +90,7 @@ export default function Comment({
 
 const StyledComment = styled.div`
     display: flex;
-    max-width: 60%;
+    max-width: 80%;
     width: auto;
     height: auto;
     margin: 10px auto;
@@ -99,6 +99,9 @@ const StyledComment = styled.div`
     box-shadow: 3px 3px 3px #5252528d;
     position: relative;
     justify-content: space-around;
+    @media (max-width: 450px){
+        max-width: 80%;
+    }
     .comment-wrapper {
         width: 95%;
         margin: 10px auto;

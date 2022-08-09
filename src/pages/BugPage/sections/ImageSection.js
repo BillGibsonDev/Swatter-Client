@@ -5,11 +5,10 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 export default function ImageSection({ images, handleModal }) {
 
     return (
-        <StyledImageSection>
-            <h2>Images:</h2>
+        <StyledImageSection className='bug-page-tabs' id="images">
             {
                 images === undefined || images.length === 0 
-                ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
+                ? <h2>No Images</h2>
                 : <div className="images-wrapper">
                     { 
                         images.map((image, index) => {
@@ -18,7 +17,7 @@ export default function ImageSection({ images, handleModal }) {
                                     <div className="image-container">
                                         {
                                             image.image === "" 
-                                            ? <><h2 style={{color: "white", marginTop: '6px'}}>None</h2></>
+                                            ? <h2>No Images</h2>
                                             : <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
                                         }
                                         {
@@ -45,21 +44,22 @@ export default function ImageSection({ images, handleModal }) {
 }
 
 const StyledImageSection = styled.div`
+    display: none;
     height: 100%;
     width: 100%;
-    margin: 30px auto auto auto;
+    margin: 20px auto auto auto;
+    border: 1px soild ${pallette.helperGrey};
     @media (max-width: 834px){
         width: 90%;
-        margin: 30px 0 auto auto;
     }
     @media (max-width: 428px){
-        margin: 0 0 auto auto;
+        margin: 0;
     }
     h2 {
         color: ${pallette.helperGrey};
-        font-size: 16px;
-        font-weight: 400;
-        margin-top: 20px;
+            font-size: 16px;
+            font-weight: 400;
+            margin-right: auto;
     }
     .images-wrapper {
         display: flex;

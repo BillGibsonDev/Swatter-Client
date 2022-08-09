@@ -25,7 +25,6 @@ export default function HomePage({user, role, confirmRole}) {
             });
         }
         getProjects();
-        console.log(window.innerWidth)
     }, []);
 
     return (

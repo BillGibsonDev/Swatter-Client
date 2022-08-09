@@ -8,9 +8,6 @@ import * as pallette from '../../../styled/ThemeVariables.js'
 // components
 import Comment from '../components/Comment';
 
-// loader
-import Loader from '../../../loaders/Loader.js';
-
 // functions
 import { unauthorized } from '../../../functions/unauthorized.js';
 
@@ -32,7 +29,7 @@ export default function CommentSection({ user, role, bugId, projectId, setLoadin
             });
         }
         getComments(projectId, bugId);
-    }, [ projectId, bugId ]);
+    }, [ projectId, bugId, setLoading ]);
 
     const sendComment = () => {
         setLoading(true);

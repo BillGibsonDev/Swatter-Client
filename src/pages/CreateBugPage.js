@@ -237,7 +237,7 @@ export default function CreateBugPage({
                             )
                         })
                     }
-                    <button onClick={() => { handleAddFields() }}>Add Image</button>
+                    <button className="add-images-button" onClick={() => { handleAddFields() }}>Add Image</button>
                     {
                         role === process.env.REACT_APP_USER_SECRET || role === process.env.REACT_APP_ADMIN_SECRET 
                         ? <button style={{marginTop: '40px'}} onClick={()=>{confirmRole(); createBug();}}>Save</button>
@@ -353,6 +353,55 @@ const StyledAddBug = styled.div`
                 padding: 10px;
                 background: ${pallette.helperGrey};
             }
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            height: 300px;
+            width: 100%;
+            @media (max-width: 428px){
+                flex-direction: column;
+            }
+            img {
+                width: 40%;
+                height: 100%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
+            }
+            .input-container {
+                width: 50%;
+                @media (max-width: 428px){
+                    width: 90%;
+                }
+                label {
+                    display: flex;
+                    color: white;
+                    flex-direction: column;
+                    margin: 10px 0;
+                    font-size: ${pallette.labelSize};
+                    @media (max-width: 750px){
+                        font-size: 14px;
+                    }
+                    @media (max-width: 450px){
+                        margin: 10px 0;
+                    }
+                    input {
+                        width: 100%;
+                        height: 30px;
+                        padding: 2px;
+                        background: ${pallette.helperGrey};
+                    }
+                }
+            }
+        }
+        .add-images-button {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            font-size: 16px;
         }
         .buttons-container {
             display: flex;

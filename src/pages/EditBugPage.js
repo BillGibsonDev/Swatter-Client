@@ -265,7 +265,7 @@ export default function EditBugPage({
                     }
                 </div>
             }
-            <button onClick={() => { handleAddFields() }}>Add Image</button>
+            <button className="add-images-button" onClick={() => { handleAddFields() }}>Add Image</button>
             <div className="button-container">
                 {
                     author === user || role === process.env.REACT_APP_ADMIN_SECRET 
@@ -286,7 +286,7 @@ export default function EditBugPage({
 const StyledBugSection = styled.div`
     height: 100%;
     width: 70%;
-    margin: 30px auto auto auto;
+    margin: 30px auto;
     @media (max-width: 834px){
         width: 100%;
     }
@@ -469,6 +469,17 @@ const StyledBugSection = styled.div`
                     }
                 }
             }
+        }
+    }
+    .add-images-button {
+        background: none;
+        border: 2px solid white;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 6px;
+        &:hover {
+            background: black;
         }
     }
     .button-container {

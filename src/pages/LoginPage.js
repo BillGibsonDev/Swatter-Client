@@ -22,7 +22,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 							<h2>Signing In...</h2>
 					</div>
 				: 
-					<form className="form-wrapper">
+					<div className="form-wrapper">
 						<label>Username</label>
 						<input 
 							type="text" 
@@ -38,7 +38,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 							}}
 						/>
 						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</StyledButton>
-					</form>
+					</div>
 			}
 			<div className="guest-container">
 				<h4>For Guests - (View Only)</h4>

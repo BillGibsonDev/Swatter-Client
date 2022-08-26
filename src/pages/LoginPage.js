@@ -32,7 +32,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 						/>
 						<label>Password</label>
 						<input 
-							type="password" 
+							type="text" 
 							onChange={(event) => {
 								setPassword(event.target.value);
 							}}

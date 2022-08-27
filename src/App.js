@@ -64,11 +64,11 @@ function App() {
       )
       .then(function (response) {
         setUser(username);
-        setLoggedIn(true);
         setLoading(false);
         handleTokens();
         navigate("/");
         if (response.data === "LOGGED IN") {
+          setLoggedIn(true);
           axios
             .post(
               `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SET_ROLE_URL}`,
@@ -83,7 +83,6 @@ function App() {
         } else {
           localStorage.clear();
           sessionStorage.clear();
-          alert("Wrong Username or Password");
         }
       })
       .catch(function (error) {

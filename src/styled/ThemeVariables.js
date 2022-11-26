@@ -7,6 +7,6 @@ export const titleColor = "#ffffff";
 // font sizes
 export const titleSize = "30px";
 export const subtitleSize = "20px";
-export const labelSize = "16px";
-export const optionSize = "16px";
-export const paraSize = "16px";
+export const labelSize = "1em";
+export const optionSize = "1em";
+export const paraSize = "1em";

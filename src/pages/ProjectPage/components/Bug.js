@@ -7,15 +7,8 @@ import * as pallette from '../../../styled/ThemeVariables';
 // router
 import { Link } from 'react-router-dom';
 
-// images
-import BugPicture from '../../../assets/icons/bugWhite.png';
-import Feature from '../../../assets/icons/featureYaleBlue.png';
-import Enhancement from '../../../assets/icons/cog.png';
-import arrowRed from "../../../assets/icons/arrowRed.png";
-import arrowYellow from "../../../assets/icons/arrowYellow.png";
-import arrowGreen from '../../../assets/icons/arrowGreen.png';
-import Task from '../../../assets/icons/taskIcon.png';
-import Redesign from '../../../assets/icons/designWHITE.png';
+// icons
+import * as icons from '../../../assets/IconImports.js';
 
 export default function Bug({
     projectId,
@@ -68,15 +61,15 @@ export default function Bug({
 					{(() => {
 						switch (tag) {
 							case "Bug":
-								return (<img src={BugPicture} alt=""/>)
+								return (<img src={icons.BugPicture} alt=""/>)
 							case "Feature":
-								return (<img src={Feature} alt=""/>)
+								return (<img src={icons.Feature} alt=""/>)
 							case "Enhancement":
-								return (<img src={Enhancement} alt=""/>)
+								return (<img src={icons.Enhancement} alt=""/>)
 							case "Task":
-								return (<img src={Task} alt=""/>)
+								return (<img src={icons.Task} alt=""/>)
 							case "Redesign":
-								return (<img src={Redesign} alt=""/>)
+								return (<img src={icons.Redesign} alt=""/>)
 							default:
 								return (
 									<h2>{tag}</h2>
@@ -87,11 +80,11 @@ export default function Bug({
 					{(() => {
 						switch (priority) {
 							case "Standard":
-								return (<img src={arrowGreen} alt=""/>)
+								return (<img src={icons.ArrowGreen} alt=""/>)
 							case "Medium":
-								return (<img className="yellow-arrow" src={arrowYellow} alt=""/>)
+								return (<img className="yellow-arrow" src={icons.ArrowYellow} alt=""/>)
 							case "High":
-								return (<img className="red-arrow" src={arrowRed} alt=""/>)
+								return (<img className="red-arrow" src={icons.ArrowRed} alt=""/>)
 							default:
 								return (
 									<h2>{priority}</h2>

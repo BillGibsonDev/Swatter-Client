@@ -7,6 +7,8 @@ import * as pallette from "../../styled/ThemeVariables";
 
 // components
 import SprintBugTable from "./components/SprintBugTable.js";
+
+// forms
 import { SprintForm } from "./forms/SprintForm.js";
 import { EditSprintForm } from "./forms/EditSprintForm.js";
 

@@ -5,13 +5,8 @@ import styled from 'styled-components'
 import * as pallette from '../../../styled/ThemeVariables.js';
 
 // images
-import DefaultImage from '../../../assets/icons/cubeBlack.png';
-import Repo from '../../../assets/icons/code.png';
-import Globe from '../../../assets/icons/globe.png';
-import Details from '../../../assets/icons/panel.png';
-import AddBug from '../../../assets/icons/plus.png';
-import Comments from '../../../assets/icons/comments.png';
-import Sprints from '../../../assets/icons/sprint.png';
+import * as icons from '../../../assets/IconImports.js';
+import * as images from '../../../assets/ImageImports.js';
 
 // router
 import { Link, useParams } from 'react-router-dom';
@@ -39,7 +34,7 @@ export const ProjectSideNav = ({
             <div className="title-container">
                 {
                     project.projectImage === "" 
-                    ? <img id="default" src={DefaultImage} alt="" />
+                    ? <img id="default" src={images.DefaultImage} alt="" />
                     : <img src={project.projectImage} alt="" />
                 }
                 <h5>{project.projectTitle} 
@@ -47,12 +42,12 @@ export const ProjectSideNav = ({
                 </h5>
             </div>
             <div className="menu-wrapper">
-                <Link to={`/projects/${projectId}/sprints`} ><img src={Sprints} alt="" />Sprints</Link>
-                <a href={project.repository} target="_blank" rel="noreferrer"><img src={Repo} alt="" />Repository</a>
-                <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={Globe} alt="" />Project Link</a>
-                <button onClick={()=> { toggleComments()}}><img src={Comments} alt="" />Comments</button>
-                <Link to={`/${projectId}/CreateBugPage`} ><img src={AddBug} alt="" />Create Bug</Link>
-                <Link to={`/${projectId}/details`} ><img src={Details} alt="" />Details</Link>
+                <Link to={`/projects/${projectId}/sprints`} ><img src={icons.Sprints} alt="" />Sprints</Link>
+                <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="" />Repository</a>
+                <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="" />Project Link</a>
+                <button onClick={()=> { toggleComments()}}><img src={icons.Comments} alt="" />Comments</button>
+                <Link to={`/${projectId}/CreateBugPage`} ><img src={icons.AddBug} alt="" />Create Bug</Link>
+                <Link to={`/${projectId}/details`} ><img src={icons.Details} alt="" />Details</Link>
             </div>
         </div>
     </StyledSideNav>

@@ -1,5 +1,3 @@
-import React from 'react'
-
 // styled 
 import styled from 'styled-components'
 import * as pallette from '../../../styled/ThemeVariables.js';

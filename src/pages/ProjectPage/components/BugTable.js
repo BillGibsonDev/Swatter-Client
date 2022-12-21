@@ -23,7 +23,7 @@ export default function BugTable({
             { 
                 bugs === undefined 
                 ? <div className="undefined">
-                    <h1>You've havent entered any bugs</h1>
+                    <h1>You've haven't entered any bugs</h1>
                 </div>
                 : <>
                     <div className="bugs-container">
@@ -176,7 +176,7 @@ const StyledBugTable = styled.div`
             display: flex;
             &:hover {
                 background: #000000;
-                border: 1px black solid;
+                border: 1px #ffffff63 solid;
             }
         }
     }

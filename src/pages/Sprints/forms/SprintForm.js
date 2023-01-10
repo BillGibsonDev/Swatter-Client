@@ -14,7 +14,6 @@ export const SprintForm = ({
   rerender,
   setRerender,
   role,
-  confirmRole,
 }) => {
   const [title, setTitle] = useState("");
   const [goal, setGoal] = useState("");
@@ -119,7 +118,6 @@ export const SprintForm = ({
       role === process.env.REACT_APP_ADMIN_SECRET ? (
         <button
           onClick={() => {
-            confirmRole();
             handleSprintForm();
           }}
         >

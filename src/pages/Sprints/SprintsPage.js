@@ -21,7 +21,7 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
-export default function SprintsPage({ user, role, confirmRole }) {
+export default function SprintsPage({ user, role }) {
   const { projectId } = useParams();
 
   const sprintForm = useRef();
@@ -176,7 +176,6 @@ export default function SprintsPage({ user, role, confirmRole }) {
         sprintForm={sprintForm}
         setRerender={setRerender}
         rerender={rerender}
-        confirmRole={confirmRole}
         role={role}
       />
       {searchSprint === undefined && project.sprints === undefined ? (
@@ -190,7 +189,6 @@ export default function SprintsPage({ user, role, confirmRole }) {
           rerender={rerender}
           project={project}
           searchSprint={searchSprint}
-          confirmRole={confirmRole}
           role={role}
         />
       )}

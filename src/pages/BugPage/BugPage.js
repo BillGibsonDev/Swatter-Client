@@ -18,7 +18,7 @@ import { Link, useParams } from "react-router-dom";
 // images
 import EditIcon from "../../assets/icons/editIconWhite.png";
 
-export default function BugPage({ role, user, confirmRole }) {
+export default function BugPage({ role, user }) {
   const { projectId, bugId } = useParams();
 
   const [bug, setBug] = useState([]);
@@ -148,7 +148,6 @@ export default function BugPage({ role, user, confirmRole }) {
             projectId={projectId}
             role={role}
             user={user}
-            confirmRole={confirmRole}
             setLoading={setLoading}
           />
         </div>

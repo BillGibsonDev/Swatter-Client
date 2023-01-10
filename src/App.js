@@ -80,7 +80,7 @@ function App() {
           password: password,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         setUser(username);
         setLoading(false);
         handleTokens(response.data);

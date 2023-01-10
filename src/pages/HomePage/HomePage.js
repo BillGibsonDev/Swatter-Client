@@ -8,7 +8,7 @@ import styled from "styled-components";
 import Project from "./components/Project.js";
 import HomePageLoader from "../../loaders/HomePageLoader";
 
-export default function HomePage({ user, role, confirmRole }) {
+export default function HomePage({ user, role }) {
   const [projects, setProjects] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -51,7 +51,6 @@ export default function HomePage({ user, role, confirmRole }) {
                     key={key}
                     user={user}
                     role={role}
-                    confirmRole={confirmRole}
                   />
                 );
               })}

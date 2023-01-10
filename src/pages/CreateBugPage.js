@@ -14,7 +14,7 @@ import { unauthorized } from "../functions/unauthorized.js";
 // components
 import Loader from "../loaders/Loader";
 
-export default function CreateBugPage({ user, role, confirmRole }) {
+export default function CreateBugPage({ user, role }) {
   const { projectId } = useParams();
 
   const [title, setTitle] = useState("");
@@ -280,7 +280,6 @@ export default function CreateBugPage({ user, role, confirmRole }) {
             <button
               style={{ marginTop: "40px" }}
               onClick={() => {
-                confirmRole();
                 createBug();
               }}
             >

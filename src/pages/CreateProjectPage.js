@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 // components
 import Loader from "../loaders/Loader";
 
-export default function CreateProjectPage({ user, role, confirmRole }) {
+export default function CreateProjectPage({ user, role }) {
   const [projectTitle, setProjectTitle] = useState("");
   const [startDate, setStartDate] = useState("");
   const [author, setAuthor] = useState(user);
@@ -40,7 +40,6 @@ export default function CreateProjectPage({ user, role, confirmRole }) {
   }, [user]);
 
   const addProject = () => {
-    confirmRole(role);
     setLoading(true);
     axios
       .post(

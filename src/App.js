@@ -35,16 +35,9 @@ function App() {
   const navigate = useNavigate();
 
   const handleTokens = () => {
-    let tokenPW = sessionStorage.getItem("tokenPW");
-    let tokenUser = sessionStorage.getItem("tokenUser");
-    if (tokenPW === null) {
-      navigate("/LoginPage");
-    } else {
-      tokenPW = password;
-      tokenUser = username;
-    }
-    sessionStorage.setItem("tokenPW", tokenPW);
-    sessionStorage.setItem("tokenUser", tokenUser);
+    let token = sessionStorage.getItem("token");
+    sessionStorage.setItem("token", token);
+    localStorage.setItem("token", token)
   };
 
   useEffect(() => {
@@ -63,27 +56,24 @@ function App() {
         }
       )
       .then(function (response) {
+        console.log(response.data)
         setUser(username);
         setLoading(false);
         handleTokens();
-        navigate("/");
-        if (response.data === "LOGGED IN") {
-          setLoggedIn(true);
-          axios
-            .post(
-              `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SET_ROLE_URL}`,
-              {
-                username: username,
-                password: password,
-              }
-            )
-            .then((response) => {
-              setRole(response.data);
-            });
-        } else {
-          localStorage.clear();
-          sessionStorage.clear();
-        }
+        axios
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/validateTokens`,
+            {
+              token: `${response.data}`
+            }
+          )
+          .then((response) => {
+            console.log(response)
+            if(response){
+              navigate("/");
+              setLoggedIn(true);
+            }
+          });
       })
       .catch(function (error) {
         console.log(error);
@@ -212,7 +202,10 @@ function App() {
         </>
       ) : (
         <>
-          <Nav role={role} logout={logout} />
+          <Nav 
+            role={role} 
+            logout={logout} 
+          />
           <Routes>
             <Route
               path='/'

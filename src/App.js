@@ -34,16 +34,42 @@ function App() {
 
   const navigate = useNavigate();
 
-  const handleTokens = () => {
-    let token = sessionStorage.getItem("token");
+  const handleTokens = (token) => {
     sessionStorage.setItem("token", token);
-    localStorage.setItem("token", token)
+    localStorage.setItem("token", token);
   };
 
   useEffect(() => {
-    reloadLogin();
-    // eslint-disable-next-line
+    let token = localStorage.getItem("token");
+    handlePageReload(token);
   }, []);
+
+  const handlePageReload = (token) => {
+    setLoading(true);
+    setLoggedIn(false);
+    setTimeout(() => {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`,
+      {
+        token: token
+      }
+    )
+      .then((response) => {
+        console.log(response)
+        if(response.status === 200){
+          setLoggedIn(true);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        localStorage.clear();
+        sessionStorage.clear();
+        setLoggedIn(false);
+        setLoading(false);
+      });
+    }, 1000)
+  }
+
 
   const login = () => {
     setLoading(true);
@@ -56,10 +82,9 @@ function App() {
         }
       )
       .then(function (response) {
-        console.log(response.data)
         setUser(username);
         setLoading(false);
-        handleTokens();
+        handleTokens(response.data);
         axios
           .post(
             `${process.env.REACT_APP_BASE_URL}/validateTokens`,
@@ -73,14 +98,23 @@ function App() {
               navigate("/");
               setLoggedIn(true);
             }
+          })
+          .catch((error) => {
+            console.log(error);
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("Wrong Username or Password");
+            setLoading(false);
+            setLoggedIn(false);
           });
-      })
-      .catch(function (error) {
+        })
+      .catch((error) => {
         console.log(error);
         localStorage.clear();
         sessionStorage.clear();
         alert("Wrong Username or Password");
         setLoading(false);
+        setLoggedIn(false);
       });
   };
 
@@ -133,58 +167,6 @@ function App() {
           navigate("/LoginPage");
         }
       });
-  };
-
-  const reloadLogin = () => {
-    let tokenPW = sessionStorage.getItem("tokenPW");
-    let tokenUser = sessionStorage.getItem("tokenUser");
-    setLoading(true);
-    if (tokenPW === null && tokenUser === null) {
-      navigate("/LoginPage");
-      setLoading(false);
-      setLoggedIn(false);
-    } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
-          {
-            username: tokenUser,
-            password: tokenPW,
-          }
-        )
-        .then(function (response) {
-          let tokenPW = sessionStorage.getItem("tokenPW");
-          let tokenUser = sessionStorage.getItem("tokenUser");
-          setUser(tokenUser);
-          setLoading(false);
-          if (response.data === "LOGGED IN") {
-            axios
-              .post(
-                `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SET_ROLE_URL}`,
-                {
-                  username: tokenUser,
-                  password: tokenPW,
-                }
-              )
-              .then((response) => {
-                setLoggedIn(true);
-                setRole(response.data);
-              });
-          } else {
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/LoginPage");
-            setLoggedIn(false);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          localStorage.clear();
-          sessionStorage.clear();
-          navigate("/LoginPage");
-          setLoggedIn(false);
-        });
-    }
   };
 
   return (

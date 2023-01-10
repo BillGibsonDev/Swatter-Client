@@ -21,7 +21,7 @@ import arrowRight from "../../assets/icons/arrowRight.png";
 // router
 import { useParams } from "react-router-dom";
 
-export default function ProjectPage({ user, role, confirmRole }) {
+export default function ProjectPage({ user, role }) {
   const commentSectionRef = useRef();
   const projectSideNavRef = useRef();
 

@@ -14,7 +14,7 @@ import { unauthorized } from "../functions/unauthorized.js";
 // components
 import Loader from "../loaders/Loader";
 
-export default function EditProjectPage({ user, role, confirmRole }) {
+export default function EditProjectPage({ user, role }) {
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -72,7 +72,6 @@ export default function EditProjectPage({ user, role, confirmRole }) {
   const [projectType, setProjectType] = useState(project.projectType);
 
   const editProject = () => {
-    confirmRole(role);
     setLoading(true);
     axios
       .post(

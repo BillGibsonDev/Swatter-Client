@@ -17,7 +17,6 @@ export const EditSprintForm = ({
   project,
   searchSprint,
   role,
-  confirmRole,
 }) => {
   const [sprint, setSprint] = useState([]);
   const [sprintId, setSprintId] = useState(false);
@@ -172,7 +171,6 @@ export const EditSprintForm = ({
           <>
             <button
               onClick={() => {
-                confirmRole();
                 handleUpdateSprint();
               }}
             >
@@ -181,7 +179,6 @@ export const EditSprintForm = ({
             <button
               id='delete'
               onClick={() => {
-                confirmRole();
                 toggleEditSprintForm();
                 handleDeleteSprint();
               }}

@@ -19,10 +19,10 @@ import BugPage from "./pages/BugPage/BugPage.js";
 import CreateBugPage from "./pages/CreateBugPage.js";
 import SprintsPage from "./pages/Sprints/SprintsPage.js";
 import DetailsPage from "./pages/DetailsPage";
+import EditBugPage from "./pages/EditBugPage";
 
 // react router
 import { Route, Routes, useNavigate } from "react-router-dom";
-import EditBugPage from "./pages/EditBugPage";
 
 function App() {
   const [password, setPassword] = useState("");
@@ -34,23 +34,41 @@ function App() {
 
   const navigate = useNavigate();
 
-  const handleTokens = () => {
-    let tokenPW = sessionStorage.getItem("tokenPW");
-    let tokenUser = sessionStorage.getItem("tokenUser");
-    if (tokenPW === null) {
-      navigate("/LoginPage");
-    } else {
-      tokenPW = password;
-      tokenUser = username;
-    }
-    sessionStorage.setItem("tokenPW", tokenPW);
-    sessionStorage.setItem("tokenUser", tokenUser);
+  const handleTokens = (token) => {
+    sessionStorage.setItem("token", token);
+    localStorage.setItem("token", token);
   };
 
   useEffect(() => {
-    reloadLogin();
-    // eslint-disable-next-line
-  }, []);
+    let token = localStorage.getItem("token");
+      const handlePageReload = (token) => {
+        setTimeout(() => {
+          axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`,
+          {
+            token: token
+          }
+        )
+          .then((response) => {
+            if(response.status === 200){
+              setRole(response.data);
+              setLoggedIn(true);
+              setLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            setLoggedIn(false);
+            setLoading(false);
+            localStorage.clear();
+            sessionStorage.clear();
+            navigate("/LoginPage");
+          });
+        }, 1000);
+      }
+    if(token){
+      handlePageReload(token);
+    }
+  }, [ navigate ]);
 
   const login = () => {
     setLoading(true);
@@ -62,145 +80,60 @@ function App() {
           password: password,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         setUser(username);
         setLoading(false);
-        handleTokens();
-        navigate("/");
-        if (response.data === "LOGGED IN") {
-          setLoggedIn(true);
-          axios
-            .post(
-              `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SET_ROLE_URL}`,
-              {
-                username: username,
-                password: password,
-              }
-            )
-            .then((response) => {
-              setRole(response.data);
-            });
-        } else {
-          localStorage.clear();
-          sessionStorage.clear();
-        }
-      })
-      .catch(function (error) {
+        handleTokens(response.data);
+        axios
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/validateTokens`,
+            {
+              token: `${response.data}`
+            }
+          )
+          .then((res) => {
+            if(res.status === 200){
+              navigate("/");
+              setLoggedIn(true);
+              setRole(res.data);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            localStorage.clear();
+            sessionStorage.clear();
+            alert("Wrong Username or Password");
+            setLoading(false);
+            setLoggedIn(false);
+            navigate("/LoginPage");
+          });
+        })
+      .catch((error) => {
         console.log(error);
         localStorage.clear();
         sessionStorage.clear();
         alert("Wrong Username or Password");
         setLoading(false);
+        setLoggedIn(false);
+        navigate("/LoginPage");
       });
   };
 
   const logout = () => {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.reload();
     setLoggedIn(false);
     setUser("");
     setPassword("");
     setUsername("");
     navigate("/LoginPage");
-  };
-
-  const confirmAdmin = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADMIN_CONFIRM_URL}`,
-        {
-          role: role,
-        }
-      )
-      .then(function (response) {
-        if (response.data !== "Role Confirmed") {
-          alert("You do not have this permission!");
-          localStorage.clear();
-          sessionStorage.clear();
-          window.location.reload();
-          setLoggedIn(false);
-          navigate("/LoginPage");
-        }
-      });
-  };
-
-  const confirmRole = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ROLE_CONFIRM_URL}`,
-        {
-          role: role,
-        }
-      )
-      .then(function (response) {
-        if (response.data !== "Role Confirmed") {
-          alert("Role was not confirmed");
-          localStorage.clear();
-          sessionStorage.clear();
-          window.location.reload();
-          setLoggedIn(false);
-          navigate("/LoginPage");
-        }
-      });
-  };
-
-  const reloadLogin = () => {
-    let tokenPW = sessionStorage.getItem("tokenPW");
-    let tokenUser = sessionStorage.getItem("tokenUser");
-    setLoading(true);
-    if (tokenPW === null && tokenUser === null) {
-      navigate("/LoginPage");
-      setLoading(false);
-      setLoggedIn(false);
-    } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
-          {
-            username: tokenUser,
-            password: tokenPW,
-          }
-        )
-        .then(function (response) {
-          let tokenPW = sessionStorage.getItem("tokenPW");
-          let tokenUser = sessionStorage.getItem("tokenUser");
-          setUser(tokenUser);
-          setLoading(false);
-          if (response.data === "LOGGED IN") {
-            axios
-              .post(
-                `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SET_ROLE_URL}`,
-                {
-                  username: tokenUser,
-                  password: tokenPW,
-                }
-              )
-              .then((response) => {
-                setLoggedIn(true);
-                setRole(response.data);
-              });
-          } else {
-            localStorage.clear();
-            sessionStorage.clear();
-            navigate("/LoginPage");
-            setLoggedIn(false);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          localStorage.clear();
-          sessionStorage.clear();
-          navigate("/LoginPage");
-          setLoggedIn(false);
-        });
-    }
+    setLoading(false);
   };
 
   return (
     <>
       <GlobalStyles />
-      {!isLoggedIn ? (
+      {!isLoggedIn ? 
         <>
           <LoginPage
             login={login}
@@ -210,22 +143,25 @@ function App() {
             isLoading={isLoading}
           />
         </>
-      ) : (
+      : 
         <>
-          <Nav role={role} logout={logout} />
+          <Nav 
+            role={role} 
+            logout={logout} 
+          />
           <Routes>
             <Route
               path='/'
               exact
               element={
-                <HomePage user={user} role={role} confirmRole={confirmRole} />
+                <HomePage user={user} role={role} />
               }
             />
             <Route
               path='/:projectId/:bugId'
               exact
               element={
-                <BugPage user={user} role={role} confirmRole={confirmRole} />
+                <BugPage user={user} role={role} />
               }
             />
             <Route
@@ -235,7 +171,6 @@ function App() {
                 <EditBugPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -246,7 +181,6 @@ function App() {
                 <ProjectPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -257,7 +191,6 @@ function App() {
                 <SprintsPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -268,7 +201,6 @@ function App() {
                 <CreateProjectPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -279,7 +211,6 @@ function App() {
                 <EditProjectPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -290,7 +221,6 @@ function App() {
                 <CreateBugPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -301,7 +231,6 @@ function App() {
                 <DetailsPage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -312,7 +241,6 @@ function App() {
                 <ProfilePage
                   user={user}
                   role={role}
-                  confirmRole={confirmRole}
                 />
               }
             />
@@ -323,13 +251,12 @@ function App() {
                 <RegisterUserPage
                   user={user}
                   role={role}
-                  confirmAdmin={confirmAdmin}
                 />
               }
             />
           </Routes>
         </>
-      )}
+      }
     </>
   );
 }

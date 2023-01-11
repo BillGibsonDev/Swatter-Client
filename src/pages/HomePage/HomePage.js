@@ -8,7 +8,10 @@ import styled from "styled-components";
 import Project from "./components/Project.js";
 import HomePageLoader from "../../loaders/HomePageLoader";
 
-export default function HomePage({ user, role }) {
+// redux
+import { connect } from "react-redux";
+
+const HomePage = ({ user }) => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -49,8 +52,8 @@ export default function HomePage({ user, role }) {
                     author={project.author}
                     projectImage={project.projectImage}
                     key={key}
-                    user={user}
-                    role={role}
+                    
+                    
                   />
                 );
               })}
@@ -119,3 +122,11 @@ const StyledHomePage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(HomePage);

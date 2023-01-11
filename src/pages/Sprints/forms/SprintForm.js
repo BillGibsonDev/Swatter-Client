@@ -7,14 +7,18 @@ import styled from "styled-components";
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
 
-export const SprintForm = ({
+// redux
+import { connect } from "react-redux";
+
+const SprintForm = ({
   projectId,
   sprintForm,
   toggleSprintForm,
   rerender,
   setRerender,
-  role,
+  user
 }) => {
+
   const [title, setTitle] = useState("");
   const [goal, setGoal] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -114,8 +118,8 @@ export const SprintForm = ({
           }}
         />
       </label>
-      {role === process.env.REACT_APP_USER_SECRET ||
-      role === process.env.REACT_APP_ADMIN_SECRET ? (
+      {user.role === process.env.REACT_APP_USER_SECRET ||
+      user.role === process.env.REACT_APP_ADMIN_SECRET ? (
         <button
           onClick={() => {
             handleSprintForm();
@@ -206,3 +210,11 @@ const StyledSprintForm = styled.div`
     cursor: pointer;
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(SprintForm);

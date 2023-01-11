@@ -8,16 +8,18 @@ import * as pallette from "../../../styled/ThemeVariables";
 // images
 import Menu from "../../../assets/icons/dotMenu.png";
 
-export default function Comment({
+// redux
+import { connect } from "react-redux";
+
+const Comment = ({
   comments,
   author,
   date,
   user,
   commentId,
   projectId,
-  role,
   setLoading,
-}) {
+}) => {
   const [compareDate, setCompareDate] = useState("");
 
   useEffect(() => {
@@ -74,14 +76,14 @@ export default function Comment({
             {author}
             <span>{currentDate === commentDate ? commentTime : date}</span>
           </h3>
-          {author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
+          {author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? (
             <div className='dropdown'>
               <button className='dropbtn'>
                 <img src={Menu} alt='' />
               </button>
               <div className='dropdown-content'>
-                {author === user ||
-                role === process.env.REACT_APP_ADMIN_SECRET ? (
+                {author === user.username ||
+                user.role === process.env.REACT_APP_ADMIN_SECRET ? (
                   <button onClick={deleteComment}>Delete</button>
                 ) : (
                   <button onClick={unauthorized}>Delete</button>
@@ -191,3 +193,11 @@ const StyledComment = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Comment);

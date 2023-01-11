@@ -1,28 +1,30 @@
 // styled
 import styled from 'styled-components';
 
-export default function ProfilePage({user, role}) {
+// redux
+import { connect } from 'react-redux';
+
+const ProfilePage =({ user }) => {
 
     return (
         <StyledProfilePage>
             <h1>Profile</h1>
             {
-                user === null 
+                user.role === undefined
                 ? <h1>You are signed out</h1>
                 : 
                     <>
                         <div className="user-container">
-                            <h2><span>Username: </span>{user}</h2>
+                            <h2><span>Username: </span>{user.username}</h2>
                             {
-                                role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                    <h2><span>Role: </span>Admin</h2>
-                                ) : role === process.env.REACT_APP_USER_SECRET ? (
-                                    <h2><span>Role: </span>User</h2>
-                                ) : role === process.env.REACT_APP_GUEST_SECRET ? (
-                                    <h2><span>Role: </span>Guest</h2>
-                                ) : (
-                                    <span>{role}</span>
-                                )
+                                user.role === process.env.REACT_APP_ADMIN_SECRET 
+                                ? <h2><span>Role: </span>Admin</h2>
+                                : user.role === process.env.REACT_APP_USER_SECRET 
+                                ? <h2><span>Role: </span>User</h2>
+                                : user.role === process.env.REACT_APP_GUEST_SECRET 
+                                ? <h2><span>Role: </span>Guest</h2>
+                                : <span>{user.role}</span>
+                                
                             }
                         </div>
                     </>
@@ -74,3 +76,11 @@ const StyledProfilePage = styled.div`
         }
     }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProfilePage);

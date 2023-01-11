@@ -14,13 +14,16 @@ import { unauthorized } from "../functions/unauthorized.js";
 // components
 import Loader from "../loaders/Loader";
 
-export default function CreateBugPage({ user, role }) {
+// redux
+import { connect } from "react-redux";
+
+const CreateBugPage = ({ user }) => {
   const { projectId } = useParams();
 
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
-  const [author, setAuthor] = useState(user);
+  const [author, setAuthor] = useState(user.username);
   const [priority, setPriority] = useState("");
   const [tag, setTag] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -57,7 +60,7 @@ export default function CreateBugPage({ user, role }) {
           author: author,
           priority: priority,
           tag: tag,
-          role: role,
+          role: user.role,
           sprint: sprint,
           images: images,
         }
@@ -134,7 +137,7 @@ export default function CreateBugPage({ user, role }) {
                 Created By
                 <input
                   readOnly
-                  defaultValue={user}
+                  defaultValue={user.username}
                   type='text'
                   id='author'
                   onChange={(event) => {
@@ -275,8 +278,8 @@ export default function CreateBugPage({ user, role }) {
           >
             Add Image
           </button>
-          {role === process.env.REACT_APP_USER_SECRET ||
-          role === process.env.REACT_APP_ADMIN_SECRET ? (
+          {user.role === process.env.REACT_APP_USER_SECRET ||
+          user.role === process.env.REACT_APP_ADMIN_SECRET ? (
             <button
               style={{ marginTop: "40px" }}
               onClick={() => {
@@ -497,3 +500,11 @@ const StyledAddBug = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(CreateBugPage);

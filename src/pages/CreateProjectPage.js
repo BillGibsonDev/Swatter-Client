@@ -14,10 +14,13 @@ import { Link } from "react-router-dom";
 // components
 import Loader from "../loaders/Loader";
 
-export default function CreateProjectPage({ user, role }) {
+// redux
+import { connect } from "react-redux";
+
+const CreateProjectPage = ({ user }) => {
   const [projectTitle, setProjectTitle] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [author, setAuthor] = useState(user);
+  const [author, setAuthor] = useState(user.username);
   const [projectLink, setProjectLink] = useState("");
   const [projectImage, setProjectImage] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -181,7 +184,7 @@ export default function CreateProjectPage({ user, role }) {
           </div>
         </div>
       )}
-      {role === process.env.REACT_APP_GUEST_SECRET ? (
+      {user.role === process.env.REACT_APP_GUEST_SECRET ? (
         <button
           className='start-button'
           onClick={() => {
@@ -334,3 +337,11 @@ const StyledProjectPage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(CreateProjectPage);

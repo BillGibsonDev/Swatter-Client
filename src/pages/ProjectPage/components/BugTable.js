@@ -42,7 +42,7 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                         sprint={bug.sprint}
                                         project={project}
                                         rerender={rerender}
@@ -70,7 +70,7 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                         sprint={bug.sprint}
                                         project={project}
                                     />
@@ -96,7 +96,7 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                         sprint={bug.sprint}
                                         project={project}
                                     />
@@ -122,7 +122,7 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                         sprint={bug.sprint}
                                         project={project}
                                     />

@@ -1,20 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as pallette from "../styled/ThemeVariables.js";
 
-export default function RegisterUserPage({ role, confirmAdmin }) {
+// redux
+import { connect } from "react-redux";
+
+const RegisterUserPage = ({ user }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [userRole, setUserRole] = useState("");
-
-  useEffect(() => {
-    confirmAdmin(role);
-    setUserRole(process.env.REACT_APP_GUEST_SECRET);
-  }, [role, confirmAdmin, userRole]);
 
   const registerUser = () => {
     if (password !== confirm) {
@@ -26,7 +23,7 @@ export default function RegisterUserPage({ role, confirmAdmin }) {
           {
             username: username,
             password: password,
-            role: role,
+            role: user.role,
             userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
           }
         )
@@ -75,7 +72,7 @@ export default function RegisterUserPage({ role, confirmAdmin }) {
             }}
           />
         </label>
-        {role === process.env.REACT_APP_ADMIN_SECRET ? (
+        {user.role === process.env.REACT_APP_ADMIN_SECRET ? (
           <button
             type='submit'
             onClick={() => {
@@ -170,3 +167,11 @@ const StyledRegister = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(RegisterUserPage);

@@ -1,5 +1,9 @@
+// styles
 import styled from 'styled-components';
 import * as pallette from '../styled/ThemeVariables';
+
+// redux
+import { connect } from 'react-redux';
 
 // router
 import { Link } from 'react-router-dom';
@@ -7,16 +11,15 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icon from '../assets/IconImports.js';
 
-export default function Nav({logout, role, confirmAdmin}) {
-
+const Nav = ({user, logout}) => {
     return (
         <StyledNav>
             <div className="top-container">
                 <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
                 <Link to="/"><img src={icon.Search} alt="Search" /><span className="tooltiptext">Search</span></Link>
                 {
-                    role === process.env.REACT_APP_ADMIN_SECRET 
-                    ? <Link onClick={confirmAdmin} to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
+                    user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <Link to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
                     : <></>
                 }
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
@@ -120,3 +123,11 @@ const StyledNav = styled.div`
         height: 30px;
     }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Nav);

@@ -21,7 +21,7 @@ import arrowRight from "../../assets/icons/arrowRight.png";
 // router
 import { useParams } from "react-router-dom";
 
-export default function ProjectPage({ user, role }) {
+export const ProjectPage = () => {
   const commentSectionRef = useRef();
   const projectSideNavRef = useRef();
 
@@ -124,7 +124,7 @@ export default function ProjectPage({ user, role }) {
               <BugTable
                 setRerender={setRerender}
                 rerender={rerender}
-                user={user}
+                
                 bugs={bugs}
                 openBugs={openBugs}
                 underwayBugs={underwayBugs}
@@ -139,8 +139,8 @@ export default function ProjectPage({ user, role }) {
       )}
       <CommentSection
         toggleComments={toggleComments}
-        user={user}
-        role={role}
+        
+        
         commentSectionRef={commentSectionRef}
         setRerender={setRerender}
         rerender={rerender}

@@ -8,7 +8,10 @@ import * as pallette from "../../../styled/ThemeVariables";
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
 
-export const EditSprintForm = ({
+// redux
+import { connect } from "react-redux";
+
+const EditSprintForm = ({
   projectId,
   editSprintForm,
   toggleEditSprintForm,
@@ -16,7 +19,7 @@ export const EditSprintForm = ({
   setRerender,
   project,
   searchSprint,
-  role,
+  user
 }) => {
   const [sprint, setSprint] = useState([]);
   const [sprintId, setSprintId] = useState(false);
@@ -166,8 +169,8 @@ export const EditSprintForm = ({
         />
       </label>
       <div className='button-container'>
-        {role === process.env.REACT_APP_USER_SECRET ||
-        role === process.env.REACT_APP_ADMIN_SECRET ? (
+        {user.role === process.env.REACT_APP_USER_SECRET ||
+        user.role === process.env.REACT_APP_ADMIN_SECRET ? (
           <>
             <button
               onClick={() => {
@@ -305,3 +308,11 @@ const StyledSprintForm = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditSprintForm);

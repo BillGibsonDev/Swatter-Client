@@ -5,9 +5,10 @@ import * as pallette from '../../../styled/ThemeVariables';
 // components
 import Bug from '../../ProjectPage/components/Bug.js';
 
-export default function SprintBugTable({ 
-    user, 
-    role, 
+// redux
+import { connect } from 'react-redux';
+
+const SprintBugTable = ({ 
     bugs,
     openBugs, 
     underwayBugs, 
@@ -15,7 +16,7 @@ export default function SprintBugTable({
     completedBugs,
     projectId,
     project
-}) {
+}) => {
 
     return (
         <StyledBugTable>
@@ -44,7 +45,7 @@ export default function SprintBugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                     />
                                 )
                             })
@@ -69,7 +70,7 @@ export default function SprintBugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                     />
                                 )
                             })
@@ -94,7 +95,7 @@ export default function SprintBugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                     />
                                 )
                             })
@@ -119,7 +120,7 @@ export default function SprintBugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        user={user}
+                                        
                                     />
                                 )
                             })
@@ -176,3 +177,11 @@ const StyledBugTable = styled.div`
         }
     }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(SprintBugTable);

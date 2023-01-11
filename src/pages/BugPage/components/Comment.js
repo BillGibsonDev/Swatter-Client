@@ -11,17 +11,19 @@ import { unauthorized } from "../../../functions/unauthorized.js";
 // images
 import Menu from "../../../assets/icons/dotMenu.png";
 
-export default function Comment({
+// redux
+import { connect } from "react-redux";
+
+const Comment = ({
   comments,
   author,
   date,
   user,
   commentId,
   projectId,
-  role,
   setLoading,
   bugId,
-}) {
+}) => {
   const [compareDate, setCompareDate] = useState("");
 
   useEffect(() => {
@@ -60,11 +62,8 @@ export default function Comment({
   return (
     <StyledComment
       style={
-        author === user
-          ? {
-              margin: "10px 5% 10px auto",
-              background: `${pallette.helperGrey}`,
-            }
+        author === user.username
+          ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
           : { margin: "10px auto 10px 5%", background: "white" }
       }
     >
@@ -74,35 +73,22 @@ export default function Comment({
             {author}
             <span>{currentDate === commentDate ? commentTime : date}</span>
           </h3>
-          {author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
-            <div className='dropdown'>
-              <button className='dropbtn'>
-                <img src={Menu} alt='' />
-              </button>
-              <div className='dropdown-content'>
-                {author === user ||
-                role === process.env.REACT_APP_ADMIN_SECRET ? (
-                  <button
-                    onClick={() => {
-                      deleteComment();
-                    }}
-                  >
-                    Delete
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      unauthorized();
-                    }}
-                  >
-                    Delete
-                  </button>
-                )}
+          {
+            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? 
+              <div className='dropdown'>
+                <button className='dropbtn'>
+                  <img src={Menu} alt='Menu' />
+                </button>
+                <div className='dropdown-content'>
+                  {
+                  author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <button onClick={() => { deleteComment(); }}>Delete</button>
+                    : <button onClick={() => { unauthorized(); }}>Delete</button>
+                  }
+                </div>
               </div>
-            </div>
-          ) : (
-            <></>
-          )}
+            : <></>
+          }
         </div>
         <p>{comments}</p>
       </div>
@@ -206,3 +192,11 @@ const StyledComment = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Comment);

@@ -14,7 +14,10 @@ import { unauthorized } from "../functions/unauthorized.js";
 // components
 import Loader from "../loaders/Loader";
 
-export default function EditProjectPage({ user, role }) {
+// redux
+import { connect } from "react-redux";
+
+const EditProjectPage = ({ user }) => {
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -220,7 +223,7 @@ export default function EditProjectPage({ user, role }) {
         </div>
       )}
       <div className='button-container'>
-        {role === process.env.REACT_APP_GUEST_SECRET ? (
+        {user.role === process.env.REACT_APP_GUEST_SECRET ? (
           <button
             onClick={() => {
               unauthorized();
@@ -237,7 +240,7 @@ export default function EditProjectPage({ user, role }) {
             Update
           </button>
         )}
-        {author === user || role === process.env.REACT_APP_ADMIN ? (
+        {author === user.username || user.role === process.env.REACT_APP_ADMIN ? (
           <button
             id='delete'
             onClick={() => {
@@ -383,3 +386,11 @@ const StyledProjectPage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditProjectPage);

@@ -28,6 +28,9 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { handleUser } from './redux/actions/user.js';
 
+//functions
+import { handleTokens } from "./functions/handleTokens";
+
 function App() {
   
   const [password, setPassword] = useState("");
@@ -39,17 +42,11 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const handleTokens = (token, username) => {
-    sessionStorage.setItem("token", token);
-    localStorage.setItem("token", token);
-    sessionStorage.setItem("username", username);
-    localStorage.setItem("username", username);
-  };
-
   useEffect(() => {
     let token = localStorage.getItem("token");
     let username = localStorage.getItem("username");
     const handlePageReload = (token) => {
+      setLoading(true);
       setTimeout(() => {
         axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`,
         {
@@ -57,7 +54,13 @@ function App() {
         }
       )
         .then((response) => {
-          if(response.status === 200){
+          if(response.data === 'Token Not Valid'){
+            setLoggedIn(false);
+            setLoading(false);
+            localStorage.clear();
+            sessionStorage.clear();
+            navigate("/LoginPage");
+          } else {
             setLoggedIn(true);
             setLoading(false);
             dispatch(handleUser(username, response.data));
@@ -95,7 +98,7 @@ function App() {
           .post(
             `${process.env.REACT_APP_BASE_URL}/validateTokens`,
             {
-              token: `${response.data}`
+              token: response.data
             }
           )
           .then((res) => {

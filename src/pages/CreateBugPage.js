@@ -137,7 +137,7 @@ const CreateBugPage = ({ user }) => {
                 Created By
                 <input
                   readOnly
-                  defaultValue={user}
+                  defaultValue={user.username}
                   type='text'
                   id='author'
                   onChange={(event) => {

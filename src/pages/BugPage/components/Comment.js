@@ -63,10 +63,7 @@ const Comment = ({
     <StyledComment
       style={
         author === user.username
-          ? {
-              margin: "10px 5% 10px auto",
-              background: `${pallette.helperGrey}`,
-            }
+          ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
           : { margin: "10px auto 10px 5%", background: "white" }
       }
     >
@@ -76,35 +73,22 @@ const Comment = ({
             {author}
             <span>{currentDate === commentDate ? commentTime : date}</span>
           </h3>
-          {author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-            <div className='dropdown'>
-              <button className='dropbtn'>
-                <img src={Menu} alt='' />
-              </button>
-              <div className='dropdown-content'>
-                {author === user.username ||
-                user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-                  <button
-                    onClick={() => {
-                      deleteComment();
-                    }}
-                  >
-                    Delete
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      unauthorized();
-                    }}
-                  >
-                    Delete
-                  </button>
-                )}
+          {
+            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? 
+              <div className='dropdown'>
+                <button className='dropbtn'>
+                  <img src={Menu} alt='Menu' />
+                </button>
+                <div className='dropdown-content'>
+                  {
+                  author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    ? <button onClick={() => { deleteComment(); }}>Delete</button>
+                    : <button onClick={() => { unauthorized(); }}>Delete</button>
+                  }
+                </div>
               </div>
-            </div>
-          ) : (
-            <></>
-          )}
+            : <></>
+          }
         </div>
         <p>{comments}</p>
       </div>

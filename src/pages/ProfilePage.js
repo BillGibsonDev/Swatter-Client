@@ -10,22 +10,21 @@ const ProfilePage =({ user }) => {
         <StyledProfilePage>
             <h1>Profile</h1>
             {
-                user === null 
+                user.role === undefined
                 ? <h1>You are signed out</h1>
                 : 
                     <>
                         <div className="user-container">
                             <h2><span>Username: </span>{user}</h2>
                             {
-                                user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-                                    <h2><span>Role: </span>Admin</h2>
-                                ) : user.role === process.env.REACT_APP_USER_SECRET ? (
-                                    <h2><span>Role: </span>User</h2>
-                                ) : user.role === process.env.REACT_APP_GUEST_SECRET ? (
-                                    <h2><span>Role: </span>Guest</h2>
-                                ) : (
-                                    <span>{user.role}</span>
-                                )
+                                user.role === process.env.REACT_APP_ADMIN_SECRET 
+                                ? <h2><span>Role: </span>Admin</h2>
+                                : user.role === process.env.REACT_APP_USER_SECRET 
+                                ? <h2><span>Role: </span>User</h2>
+                                : user.role === process.env.REACT_APP_GUEST_SECRET 
+                                ? <h2><span>Role: </span>Guest</h2>
+                                : <span>{user.role}</span>
+                                
                             }
                         </div>
                     </>

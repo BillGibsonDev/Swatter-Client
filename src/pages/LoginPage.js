@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { StyledButton } from '../styled/StyledButton';
 import * as pallette from '../styled/ThemeVariables';
 
-export default function LoginPage({login, setUsername, setPassword, handleTokens, isLoading }) {
+export default function LoginPage({login, setUsername, setPassword, isLoading }) {
 
 	return (
 		<StyledLoginPage>
@@ -37,7 +37,7 @@ export default function LoginPage({login, setUsername, setPassword, handleTokens
 								setPassword(event.target.value);
 							}}
 						/>
-						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); handleTokens(); }}>Sign In</StyledButton>
+						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
 					</form>
 			}
 			<div className="guest-container">

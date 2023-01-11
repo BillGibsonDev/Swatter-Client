@@ -18,7 +18,10 @@ import { Link, useParams } from "react-router-dom";
 // images
 import EditIcon from "../../assets/icons/editIconWhite.png";
 
-export default function BugPage({ role, user }) {
+// redux
+import { connect } from "react-redux";
+
+const BugPage = ({ user }) => {
   const { projectId, bugId } = useParams();
 
   const [bug, setBug] = useState([]);
@@ -146,8 +149,8 @@ export default function BugPage({ role, user }) {
           <CommentSection
             bugId={bugId}
             projectId={projectId}
-            role={role}
-            user={user}
+            
+            
             setLoading={setLoading}
           />
         </div>
@@ -328,3 +331,11 @@ const StyledBugPage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(BugPage);

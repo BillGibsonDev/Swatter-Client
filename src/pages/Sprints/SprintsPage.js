@@ -9,8 +9,8 @@ import * as pallette from "../../styled/ThemeVariables";
 import SprintBugTable from "./components/SprintBugTable.js";
 
 // forms
-import { SprintForm } from "./forms/SprintForm.js";
-import { EditSprintForm } from "./forms/EditSprintForm.js";
+import SprintForm from "./forms/SprintForm.js";
+import EditSprintForm from "./forms/EditSprintForm.js";
 
 // images
 import Edit from "../../assets/icons/editIconWhite.png";
@@ -21,7 +21,7 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
-export default function SprintsPage({ user, role }) {
+export const SprintsPage = () => {
   const { projectId } = useParams();
 
   const sprintForm = useRef();
@@ -96,6 +96,7 @@ export default function SprintsPage({ user, role }) {
     return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
   };
 
+  console.log(project.sprints)
   return (
     <StyledSprintSection>
       <div className='button-wrapper'>
@@ -176,7 +177,7 @@ export default function SprintsPage({ user, role }) {
         sprintForm={sprintForm}
         setRerender={setRerender}
         rerender={rerender}
-        role={role}
+        
       />
       {searchSprint === undefined && project.sprints === undefined ? (
         <></>
@@ -189,7 +190,7 @@ export default function SprintsPage({ user, role }) {
           rerender={rerender}
           project={project}
           searchSprint={searchSprint}
-          role={role}
+          
         />
       )}
       {isLoading === true ? (
@@ -205,7 +206,7 @@ export default function SprintsPage({ user, role }) {
               <SprintBugTable
                 setRerender={setRerender}
                 rerender={rerender}
-                user={user}
+                
                 bugs={bugs}
                 openBugs={openBugs.filter(
                   (openBugs) => openBugs.sprint === searchSprint

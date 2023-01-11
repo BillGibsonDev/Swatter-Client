@@ -14,7 +14,10 @@ import BugPageLoader from "../loaders/BugPageLoader";
 // router
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-export default function EditBugPage({ user, role }) {
+// redux
+import { connect } from "react-redux";
+
+const EditBugPage = ({ user }) => {
   const navigate = useNavigate();
 
   const { projectId, bugId } = useParams();
@@ -315,7 +318,7 @@ export default function EditBugPage({ user, role }) {
         Add Image
       </button>
       <div className='button-container'>
-        {author === user || role === process.env.REACT_APP_ADMIN_SECRET ? (
+        {author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? (
           <>
             <button
               onClick={() => {
@@ -590,3 +593,11 @@ const StyledBugSection = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditBugPage);

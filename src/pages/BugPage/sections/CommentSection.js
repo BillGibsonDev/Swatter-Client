@@ -11,15 +11,17 @@ import Comment from "../components/Comment";
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
 
-export default function CommentSection({
+// redux
+import { connect } from "react-redux";
+
+const CommentSection = ({
   user,
-  role,
   bugId,
   projectId,
   setLoading,
-}) {
+}) => {
   const [addComment, setAddComment] = useState("");
-  const [addAuthor] = useState(user);
+  const [addAuthor] = useState(user.username);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -87,10 +89,10 @@ export default function CommentSection({
                   comments={comment.comment}
                   commentId={comment._id}
                   bugId={bugId}
-                  user={user}
+                  
                   projectId={projectId}
                   key={key}
-                  role={role}
+                  
                   setLoading={setLoading}
                 />
               );
@@ -108,7 +110,7 @@ export default function CommentSection({
               setAddComment(event.target.value);
             }}
           />
-          {role !== process.env.REACT_APP_ADMIN_SECRET ||
+          {user.role !== process.env.REACT_APP_ADMIN_SECRET ||
           process.env.REACT_APP_USER_SECRET ? (
             <button
               onClick={() => {
@@ -210,3 +212,11 @@ const StyledBugCommentSection = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(CommentSection);

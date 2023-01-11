@@ -14,12 +14,14 @@ import Comment from "../components/Comment";
 // router
 import { useParams } from "react-router-dom";
 
-export default function CommentSection({
-  user,
-  role,
+//redux
+import { connect } from "react-redux";
+
+const CommentSection = ({
   toggleComments,
   commentSectionRef,
-}) {
+  user
+}) => {
   const { projectId, bugId } = useParams();
 
   const [comments, setComments] = useState([]);
@@ -97,10 +99,10 @@ export default function CommentSection({
                   author={comment.author}
                   comments={comment.comment}
                   commentId={comment._id}
-                  user={user}
+                  
                   projectId={projectId}
                   key={key}
-                  role={role}
+                  
                   setLoading={setLoading}
                 />
               );
@@ -117,7 +119,7 @@ export default function CommentSection({
               setAddComment(event.target.value);
             }}
           />
-          {role !== process.env.REACT_APP_ADMIN_SECRET ||
+          {user.role !== process.env.REACT_APP_ADMIN_SECRET ||
           process.env.REACT_APP_USER_SECRET ? (
             <button
               onClick={() => {
@@ -282,3 +284,11 @@ const StyledCommentSection = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(CommentSection);

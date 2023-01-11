@@ -1,7 +1,10 @@
 // styled
 import styled from 'styled-components';
 
-export default function ProfilePage({user, role}) {
+// redux
+import { connect } from 'react-redux';
+
+const ProfilePage =({ user }) => {
 
     return (
         <StyledProfilePage>
@@ -14,14 +17,14 @@ export default function ProfilePage({user, role}) {
                         <div className="user-container">
                             <h2><span>Username: </span>{user}</h2>
                             {
-                                role === process.env.REACT_APP_ADMIN_SECRET ? (
+                                user.role === process.env.REACT_APP_ADMIN_SECRET ? (
                                     <h2><span>Role: </span>Admin</h2>
-                                ) : role === process.env.REACT_APP_USER_SECRET ? (
+                                ) : user.role === process.env.REACT_APP_USER_SECRET ? (
                                     <h2><span>Role: </span>User</h2>
-                                ) : role === process.env.REACT_APP_GUEST_SECRET ? (
+                                ) : user.role === process.env.REACT_APP_GUEST_SECRET ? (
                                     <h2><span>Role: </span>Guest</h2>
                                 ) : (
-                                    <span>{role}</span>
+                                    <span>{user.role}</span>
                                 )
                             }
                         </div>
@@ -74,3 +77,11 @@ const StyledProfilePage = styled.div`
         }
     }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProfilePage);

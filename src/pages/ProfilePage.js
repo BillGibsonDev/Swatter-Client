@@ -15,7 +15,7 @@ const ProfilePage =({ user }) => {
                 : 
                     <>
                         <div className="user-container">
-                            <h2><span>Username: </span>{user}</h2>
+                            <h2><span>Username: </span>{user.username}</h2>
                             {
                                 user.role === process.env.REACT_APP_ADMIN_SECRET 
                                 ? <h2><span>Role: </span>Admin</h2>

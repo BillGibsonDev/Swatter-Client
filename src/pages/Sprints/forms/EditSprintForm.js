@@ -86,7 +86,7 @@ const EditSprintForm = ({
     if (result === true) {
       axios
         .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`
+          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
         )
         .then(function (response) {
           if (response.data !== "Sprint Deleted") {
@@ -102,14 +102,7 @@ const EditSprintForm = ({
     <StyledSprintForm ref={editSprintForm} style={{ display: "none" }}>
       <div className='title-container'>
         <h1>Edit Sprint</h1>
-        <button
-          id='exit-btn'
-          onClick={() => {
-            toggleEditSprintForm();
-          }}
-        >
-          &times;<span className='tooltiptext'>Close</span>
-        </button>
+        <button id='exit-btn' onClick={() => { toggleEditSprintForm(); }}>&times;<span className='tooltiptext'>Close</span></button>
       </div>
       <label>
         Title

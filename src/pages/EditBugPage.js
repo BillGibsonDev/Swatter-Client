@@ -221,9 +221,9 @@ const EditBugPage = ({ user }) => {
               </label>
               <label>
                 Sprint:
-                <select
-                  id='sprint'
-                  defaultValue={bug.sprint}
+                <select 
+                  id='sprint' 
+                  defaultValue={bug.sprint} 
                   onChange={(event) => {
                     setSprint(event.target.value);
                   }}
@@ -259,21 +259,14 @@ const EditBugPage = ({ user }) => {
         </div>
       )}
       <h2>Images:</h2>
-      {images === undefined ? (
-        <>
-          <h1>No Images Yet</h1>
-        </>
-      ) : (
+      {images === undefined 
+      ? <h1>No Images Yet</h1>
+      : 
         <div className='images-wrapper'>
           {images.map((image, index) => {
             return (
               <div className='image-container' key={index}>
-                <img
-                  className='preview-image'
-                  id='image'
-                  src={image.image}
-                  alt={image.caption}
-                />
+                <img className='preview-image' id='image' src={image.image} alt={image.caption}/>
                 <div className='input-container'>
                   <label>
                     Image
@@ -295,67 +288,27 @@ const EditBugPage = ({ user }) => {
                       onChange={(event) => handleInputChange(index, event)}
                     />
                   </label>
-                  <button
-                    id='delete'
-                    onClick={() => {
-                      handleRemoveFields(index);
-                    }}
-                  >
-                    Remove
-                  </button>
+                  <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove</button>
                 </div>
               </div>
             );
           })}
         </div>
-      )}
-      <button
-        className='add-images-button'
-        onClick={() => {
-          handleAddFields();
-        }}
-      >
-        Add Image
-      </button>
+      }
+      <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
       <div className='button-container'>
-        {author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? (
+        {
+          author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+          ? <>
+              <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
+              <button id='delete'onClick={() => { deleteBug(); }}>Delete</button>
+            </>
+          : 
           <>
-            <button
-              onClick={() => {
-                updateBug();
-                setRerender(!rerender);
-              }}
-            >
-              Save
-            </button>
-            <button
-              id='delete'
-              onClick={() => {
-                deleteBug();
-              }}
-            >
-              Delete
-            </button>
+            <button onClick={() => { unauthorized(); }}>Save</button>
+            <button id='delete'  onClick={() => { unauthorized(); }}>Delete</button>
           </>
-        ) : (
-          <>
-            <button
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Save
-            </button>
-            <button
-              id='delete'
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Delete
-            </button>
-          </>
-        )}
+        }
       </div>
     </StyledBugSection>
   );

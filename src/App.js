@@ -42,6 +42,8 @@ function App() {
 
   const dispatch = useDispatch();
 
+  onbeforeunload = (event) => { logout(); };
+
   useEffect(() => {
     let token = localStorage.getItem("token");
     let username = localStorage.getItem("username");

@@ -111,11 +111,11 @@ const EditProjectPage = ({ user }) => {
         <Link to={`/`}>Edit Project</Link>
       </div>
       <h1>Edit Project</h1>
-      {user === null ? (
-        <h1>You are signed out</h1>
-      ) : isLoading ? (
-        <Loader />
-      ) : (
+      {
+        user === null 
+        ? <h1>You are signed out</h1>
+        : isLoading ? <Loader />
+        :
         <div className='form-wrapper'>
           <div className='top-form-container'>
             <label>
@@ -155,7 +155,7 @@ const EditProjectPage = ({ user }) => {
               Repository
               <input
                 type='text'
-                id='repositiory'
+                id='repository'
                 defaultValue={project.repository}
                 onChange={(event) => {
                   setRepository(event.target.value);
@@ -221,43 +221,18 @@ const EditProjectPage = ({ user }) => {
             </label>
           </div>
         </div>
-      )}
+      }
       <div className='button-container'>
-        {user.role === process.env.REACT_APP_GUEST_SECRET ? (
-          <button
-            onClick={() => {
-              unauthorized();
-            }}
-          >
-            Update
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              editProject();
-            }}
-          >
-            Update
-          </button>
-        )}
-        {author === user.username || user.role === process.env.REACT_APP_ADMIN ? (
-          <button
-            id='delete'
-            onClick={() => {
-              deleteProject();
-            }}
-          >
-            Delete
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              unauthorized();
-            }}
-          >
-            Delete
-          </button>
-        )}
+        {
+          user.role === process.env.REACT_APP_GUEST_SECRET 
+          ? <button onClick={() => { unauthorized(); }}> Update</button>
+          : <button onClick={() => { editProject(); }}>Update</button>
+        }
+        {
+          author === user.username || user.role === process.env.REACT_APP_ADMIN 
+          ? <button id='delete' onClick={() => { deleteProject(); }}>Delete</button>
+          : <button onClick={() => { unauthorized(); }}>Delete</button>
+        }
       </div>
     </StyledProjectPage>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -10,12 +10,14 @@ import { unauthorized } from "../../../functions/unauthorized.js";
 
 // components
 import Comment from "../components/Comment";
+import { Alert } from "../../../components/Alert.js";
 
 // router
 import { useParams } from "react-router-dom";
 
 //redux
 import { connect } from "react-redux";
+import { handleAlert } from "../../../functions/handleAlert.js";
 
 const CommentSection = ({
   toggleComments,
@@ -24,9 +26,12 @@ const CommentSection = ({
 }) => {
   const { projectId, bugId } = useParams();
 
+  const AlertRef = useRef();
+
+  const [ message, setMessage ] = useState('')
   const [comments, setComments] = useState([]);
   const [addComment, setAddComment] = useState("");
-  const [addAuthor, setAuthor] = useState(user);
+  const [addAuthor ] = useState(user.username);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,62 +40,72 @@ const CommentSection = ({
         .get(
           `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
         )
-        .then(function (response) {
+        .then((response) => {
           setComments(response.data.comments);
         })
-        .catch(function (error) {
-          throw error;
+        .catch((err) => {
+          console.log(err);
         });
     };
     getProject(projectId);
-    setAuthor(user);
   }, [projectId, bugId, user, isLoading]);
 
   const sendComment = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`,
+    if (addComment === "") {
+      setLoading(false);
+      setMessage("No Comment Entered!");
+      handleAlert(AlertRef);
+    } else {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`,
         {
           projectId: projectId,
           comment: addComment,
           author: addAuthor,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         if (response.data !== "Comment Created") {
           setLoading(false);
-          alert("Server Error - Comment not created!");
+          setMessage("Server Error - Comment not created!");
+          handleAlert(AlertRef);
         } else {
           setLoading(false);
           document.getElementById("comment").value = "";
           let container = document.getElementById("comment-container");
-          setTimeout(function () {
+          setTimeout(() => {
             container.scrollTo(0, document.body.scrollHeight);
           }, 1000);
         }
-      });
+        setAddComment('');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        setMessage("Server Error - Comment not created!");
+        handleAlert(AlertRef);
+      })
+    }
   };
 
   return (
     <StyledCommentSection ref={commentSectionRef} style={{ display: "none" }}>
+      <Alert
+        message={message}
+        AlertRef={AlertRef}
+      />
       <div className='comment-section-wrapper'>
         <div className='title-container'>
           <h1>Comments</h1>
-          <button
-            id='exit-btn'
-            onClick={() => {
-              toggleComments();
-            }}
-          >
+          <button id='exit-btn' onClick={() => { toggleComments(); }}>
             &times;<span className='tooltiptext'>Close</span>
           </button>
         </div>
-        {comments.length === 0 || comments === [] ? (
-          <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
-            No comments yet..
-          </h1>
-        ) : (
+        {comments.length === 0 || comments === [] 
+        ? <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
+          No comments yet..
+        </h1>
+        :
           <div className='comment-container' id='comment-container'>
             {comments.map((comment, key) => {
               return (
@@ -99,16 +114,14 @@ const CommentSection = ({
                   author={comment.author}
                   comments={comment.comment}
                   commentId={comment._id}
-                  
                   projectId={projectId}
                   key={key}
-                  
                   setLoading={setLoading}
                 />
               );
             })}
           </div>
-        )}
+        }
         <div className='comment-maker'>
           <textarea
             placeholder='Add a comment'
@@ -119,24 +132,11 @@ const CommentSection = ({
               setAddComment(event.target.value);
             }}
           />
-          {user.role !== process.env.REACT_APP_ADMIN_SECRET ||
-          process.env.REACT_APP_USER_SECRET ? (
-            <button
-              onClick={() => {
-                sendComment();
-              }}
-            >
-              Send
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Send
-            </button>
-          )}
+          {
+            user.role !== process.env.REACT_APP_ADMIN_SECRET ||process.env.REACT_APP_USER_SECRET 
+            ? <button onClick={() => { sendComment(); }}>Send</button>
+            : <button onClick={() => { unauthorized(); }}>Send</button>
+          }
         </div>
       </div>
     </StyledCommentSection>
@@ -157,6 +157,7 @@ const StyledCommentSection = styled.div`
   left: -50px;
   justify-content: center;
   align-items: center;
+  padding: 16px;
   @media (max-width: 1440px) {
     width: 100%;
     left: -15px;
@@ -233,30 +234,19 @@ const StyledCommentSection = styled.div`
       }
     }
     .comment-maker {
-      margin: 20px auto;
+      margin: 10px;
       display: flex;
       justify-content: center;
-      @media (max-width: 428px) {
-        position: absolute;
-        bottom: 0;
-        left: 10%;
-      }
       textarea {
         border-radius: 4px 0 0 4px;
         background: #d6d6d6;
         padding: 6px;
         min-height: 20px;
         height: auto;
-        width: 500px;
+        max-width: 500px;
+        width: 100%;
         max-height: 50px;
         font-size: 12px;
-        @media (max-width: 834px) {
-          width: 300px;
-        }
-        @media (max-width: 428px) {
-          width: 250px;
-          height: 30px;
-        }
       }
       button {
         margin: 0;

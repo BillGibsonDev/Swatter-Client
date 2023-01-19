@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -7,8 +7,10 @@ import * as pallette from "../../../styled/ThemeVariables.js";
 
 // components
 import Comment from "../components/Comment";
+import { Alert } from "../../../components/Alert";
 
 // functions
+import { handleAlert } from "../../../functions/handleAlert";
 import { unauthorized } from "../../../functions/unauthorized.js";
 
 // redux
@@ -20,6 +22,10 @@ const CommentSection = ({
   projectId,
   setLoading,
 }) => {
+
+  const AlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [addComment, setAddComment] = useState("");
   const [addAuthor] = useState(user.username);
   const [comments, setComments] = useState([]);
@@ -45,41 +51,51 @@ const CommentSection = ({
     setLoading(true);
     if (addComment === "") {
       setLoading(false);
-      alert("No Comment Entered!");
+      setMessage("No Comment Entered!");
+      handleAlert(AlertRef);
     } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`,
-          {
-            projectId: projectId,
-            bugId: bugId,
-            comment: addComment,
-            author: addAuthor,
-          }
-        )
-        .then(function (response) {
-          if (response.data !== "Comment created!") {
-            setLoading(false);
-            alert("Server Error - Comment not created!");
-          } else {
-            setLoading(false);
-            document.getElementById("comment").value = "";
-            let container = document.getElementById("bug-comment-container");
-            setTimeout(function () {
-              container.scrollTo(0, document.body.scrollHeight);
-              setAddComment("");
-            }, 1000);
-          }
-        });
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`,
+        {
+          projectId: projectId,
+          bugId: bugId,
+          comment: addComment,
+          author: addAuthor,
+        }
+      )
+      .then((response) => {
+        if (response.data !== "Comment created!") {
+          setLoading(false);
+          setMessage("Server Error - Comment not created!");
+          handleAlert(AlertRef);
+        } else {
+          setLoading(false);
+          document.getElementById("comment").value = "";
+          let container = document.getElementById("bug-comment-container");
+          setTimeout(function () {
+            container.scrollTo(0, document.body.scrollHeight);
+            setAddComment("");
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        setMessage("Server Error - Comment not created!");
+        handleAlert(AlertRef);
+      });
     }
   };
 
   return (
     <StyledBugCommentSection className='bug-page-tabs active' id='comments'>
+      <Alert
+        message={message}
+        AlertRef={AlertRef}
+      />
       <div className='comment-section-wrapper'>
-        {comments.length === 0 ? (
-          <h2>No comments yet..</h2>
-        ) : (
+        {comments.length === 0 
+        ? <h2>No comments yet..</h2>
+        : 
           <div className='comment-container' id='bug-comment-container'>
             {comments.map((comment, key) => {
               return (
@@ -89,16 +105,14 @@ const CommentSection = ({
                   comments={comment.comment}
                   commentId={comment._id}
                   bugId={bugId}
-                  
                   projectId={projectId}
                   key={key}
-                  
                   setLoading={setLoading}
                 />
               );
             })}
           </div>
-        )}
+        }
         <div className='comment-maker'>
           <textarea
             placeholder='Add a comment'
@@ -110,24 +124,11 @@ const CommentSection = ({
               setAddComment(event.target.value);
             }}
           />
-          {user.role !== process.env.REACT_APP_ADMIN_SECRET ||
-          process.env.REACT_APP_USER_SECRET ? (
-            <button
-              onClick={() => {
-                sendComment();
-              }}
-            >
-              Send
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Send
-            </button>
-          )}
+          {
+            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
+            ? <button onClick={() => { sendComment(); }}>Send</button>
+            : <button onClick={() => { unauthorized(); }}>Send</button>
+          }
         </div>
       </div>
     </StyledBugCommentSection>

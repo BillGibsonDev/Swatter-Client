@@ -81,9 +81,11 @@ const EditSprintForm = ({
       )
       .then((response) => {
         if (response.data !== "Sprint Updated") {
-          alert("Server Error - Sprint not updated");
+          setMessage("Server Error - Sprint not updated");
+          handleAlert(AlertRef);
         } else {
-          alert("Sprint Updated!");
+          setMessage(`Sprint Updated!`);
+          handleAlert(AlertRef);
           setRerender(!rerender);
         }
       })
@@ -184,44 +186,19 @@ const EditSprintForm = ({
       </label>
       <div className='button-container'>
         {user.role === process.env.REACT_APP_USER_SECRET ||
-        user.role === process.env.REACT_APP_ADMIN_SECRET ? (
+        user.role === process.env.REACT_APP_ADMIN_SECRET ? 
           <>
-            <button
-              onClick={() => {
-                handleUpdateSprint();
-              }}
-            >
-              Save
-            </button>
-            <button
-              id='delete'
-              onClick={() => {
-                toggleEditSprintForm();
-                handleDeleteSprint();
-              }}
-            >
+            <button onClick={() => { handleUpdateSprint(); }}>Save</button>
+            <button id='delete' onClick={() => { toggleEditSprintForm(); handleDeleteSprint();}}>
               Delete
             </button>
           </>
-        ) : (
+        : 
           <>
-            <button
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Save
-            </button>
-            <button
-              id='delete'
-              onClick={() => {
-                unauthorized();
-              }}
-            >
-              Delete
-            </button>
+            <button onClick={() => { unauthorized(); }}>Save</button>
+            <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
           </>
-        )}
+        }
       </div>
     </StyledSprintForm>
   );

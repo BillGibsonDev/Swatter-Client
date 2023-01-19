@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import * as palette from '../styled/ThemeVariables.js';
 
-export const DeleteAlert = ({ DeleteAlertRef, handleDeleteAlert, title, deleteFunction }) => {
+// functions
+import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
+
+export const DeleteAlert = ({ DeleteAlertRef, title, deleteFunction }) => {
   return (
     <StyledAlert ref={DeleteAlertRef}>
         <div className="alert-container">
@@ -40,6 +43,7 @@ const StyledAlert = styled.div`
         border: 20px solid black;
         box-shadow: 6px 6px 10px #00000090;
         h1 {
+            font-size: 1em;
             color: black;
             @media(max-width: 650px){
                 font-size: 1.5em;

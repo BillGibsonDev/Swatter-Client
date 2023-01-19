@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -16,11 +16,16 @@ import Loader from "../loaders/Loader";
 
 // redux
 import { connect } from "react-redux";
+import { Alert } from "../components/Alert.js";
 
 const CreateProjectPage = ({ user }) => {
+
+  const AlertRef = useRef();
+  
+  const [ message, setMessage ] = useState('');
+
   const [projectTitle, setProjectTitle] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [author, setAuthor] = useState(user.username);
   const [projectLink, setProjectLink] = useState("");
   const [projectImage, setProjectImage] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -33,14 +38,21 @@ const CreateProjectPage = ({ user }) => {
   useEffect(() => {
     const handleDate = () => {
       const current = new Date();
-      const date = `${
-        current.getMonth() + 1
-      }/${current.getDate()}/${current.getFullYear()}`;
+      const date = `${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
       setStartDate(date);
     };
     handleDate();
-    setAuthor(user);
   }, [user]);
+
+  const handleAlert = () => {
+    const AlertComponent = AlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
+    }
+  }
 
   const addProject = () => {
     setLoading(true);
@@ -50,7 +62,7 @@ const CreateProjectPage = ({ user }) => {
         {
           projectTitle: projectTitle,
           startDate: startDate,
-          author: author,
+          author: user.username,
           projectLink: projectLink,
           projectImage: projectImage,
           repository: repository,
@@ -60,33 +72,39 @@ const CreateProjectPage = ({ user }) => {
           projectType: projectType,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         if (response.data !== "Project Created") {
           setLoading(false);
-          alert("Server Error - Project not created");
+          setMessage("Server Error - Project not created");
+          handleAlert();
         } else {
           setLoading(false);
-          alert("Project Started!");
+          setMessage(`${projectTitle} Project Started!`);
+          handleAlert();
         }
       })
-      .catch(function (response) {
-        console.log(response);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   return (
     <StyledProjectPage>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
       <div className='breadcrumbs'>
         <Link to={`/`}>Home</Link>
         <span>/</span>
         <Link to={`/`}>Add Project</Link>
       </div>
       <h1>Start a Project</h1>
-      {user === null ? (
-        <h1>You are signed out</h1>
-      ) : isLoading === true ? (
-        <Loader />
-      ) : (
+      {
+        user === null ? <h1>You are signed out</h1>
+        : isLoading ? <Loader />
+        : 
         <div className='form-wrapper'>
           <div className='top-form-container'>
             <label>
@@ -123,7 +141,7 @@ const CreateProjectPage = ({ user }) => {
               Repository
               <input
                 type='text'
-                id='repositiory'
+                id='repository'
                 onChange={(event) => {
                   setRepository(event.target.value);
                 }}
@@ -183,26 +201,12 @@ const CreateProjectPage = ({ user }) => {
             </label>
           </div>
         </div>
-      )}
-      {user.role === process.env.REACT_APP_GUEST_SECRET ? (
-        <button
-          className='start-button'
-          onClick={() => {
-            unauthorized();
-          }}
-        >
-          Start
-        </button>
-      ) : (
-        <button
-          className='start-button'
-          onClick={() => {
-            addProject();
-          }}
-        >
-          Start
-        </button>
-      )}
+      }
+      {
+        user.role === process.env.REACT_APP_GUEST_SECRET 
+        ? <button className='start-button' onClick={() => { unauthorized(); }}>Start</button>
+        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
+      }
     </StyledProjectPage>
   );
 }

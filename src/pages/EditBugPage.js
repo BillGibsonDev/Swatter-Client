@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -10,6 +10,8 @@ import { unauthorized } from "../functions/unauthorized.js";
 
 // components
 import BugPageLoader from "../loaders/BugPageLoader";
+import { DeleteAlert } from "../components/DeleteAlert.js";
+import { Alert } from '../components/Alert.js';
 
 // router
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -18,9 +20,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 const EditBugPage = ({ user }) => {
+
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+
   const navigate = useNavigate();
 
   const { projectId, bugId } = useParams();
+
+  const [ message, setMessage ] = useState('');
 
   const [author, setAuthor] = useState("");
   const [bug, setBug] = useState([]);
@@ -28,6 +36,25 @@ const EditBugPage = ({ user }) => {
   const [options, setOptions] = useState([]);
   const [images, setImages] = useState([]);
   const [rerender, setRerender] = useState(true);
+
+  const handleAlert = () => {
+    const AlertComponent = AlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
+    }
+  }
+
+  const handleDeleteAlert = () => {
+    const AlertComponent = DeleteAlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+    }
+  }
 
   useEffect(() => {
     const getSprints = () => {
@@ -86,35 +113,38 @@ const EditBugPage = ({ user }) => {
       )
       .then(function (response) {
         if (response.data !== "Bug Updated") {
+          setMessage(`Server Error - Bug Not Updated!`);
           setLoading(false);
-          alert("Server Error - Bug not updated");
+          handleAlert();
         } else {
+          setMessage(`Bug updated!`);
           setLoading(false);
-          setRerender(!rerender);
-          alert("Bug Updated!");
+          handleAlert();
         }
       });
   };
 
   const deleteBug = () => {
-    const result = window.confirm("Are you sure you want to delete?");
-    if (result === true) {
-      setLoading(true);
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`
-        )
-        .then(function (response) {
-          if (response.data !== "Bug Deleted") {
-            setLoading(false);
-            alert("Server Error - Bug not deleted");
-          } else {
-            setLoading(false);
-            alert("Bug Deleted");
-            navigate(`/projects/${projectId}`);
-          }
-        });
-    }
+    setLoading(true);
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`
+      )
+    .then((response) => {
+      if (response.data !== "Bug Deleted") {
+        setMessage(`Server Error - Bug Not Deleted!`);
+        setLoading(false);
+        handleAlert();
+      } else {
+        setMessage(`Bug Deleted!`);
+        setLoading(false);
+        handleAlert();
+        navigate(`/projects/${projectId}`);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   };
 
   const handleAddFields = () => {
@@ -144,6 +174,17 @@ const EditBugPage = ({ user }) => {
 
   return (
     <StyledBugSection>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        handleDeleteAlert={handleDeleteAlert}
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteBug}
+        title={bug.title}
+      />
       <div className='breadcrumbs'>
         <Link to={`/`}>Home</Link>
         <span>/</span>
@@ -151,9 +192,9 @@ const EditBugPage = ({ user }) => {
         <span>/</span>
         {bug === undefined ? <></> : <p>{bug.title}</p>}
       </div>
-      {isLoading === true ? (
-        <BugPageLoader />
-      ) : (
+      {isLoading ? <BugPageLoader />
+      : 
+        
         <div className='bug-container'>
           <h1>{bug.title}</h1>
           <div className='info-wrapper'>
@@ -257,7 +298,7 @@ const EditBugPage = ({ user }) => {
           </label>
           <img src={bug.thumbnail} alt='' />
         </div>
-      )}
+      }
       <h2>Images:</h2>
       {images === undefined 
       ? <h1>No Images Yet</h1>

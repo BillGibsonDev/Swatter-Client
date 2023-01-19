@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -13,12 +13,17 @@ import { unauthorized } from "../functions/unauthorized.js";
 
 // components
 import Loader from "../loaders/Loader";
+import { Alert } from "../components/Alert.js";
 
 // redux
 import { connect } from "react-redux";
 
 const CreateBugPage = ({ user }) => {
   const { projectId } = useParams();
+
+  const AlertRef = useRef();
+  
+  const [ message, setMessage ] = useState('');
 
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
@@ -47,6 +52,16 @@ const CreateBugPage = ({ user }) => {
     getProject(projectId);
   }, [projectId]);
 
+  const handleAlert = () => {
+    const AlertComponent = AlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
+    }
+  }
+
   const createBug = () => {
     setLoading(true);
     axios
@@ -68,10 +83,11 @@ const CreateBugPage = ({ user }) => {
       .then(function (response) {
         if (response.data !== "Bug Created") {
           setLoading(false);
-          alert("Server Error - Bug not created");
+          setMessage("Server Error - Bug not created");
         } else {
           setLoading(false);
-          alert("Bug Created!");
+          setMessage(`${tag} Added!`);
+          handleAlert();
         }
       });
   };
@@ -107,6 +123,11 @@ const CreateBugPage = ({ user }) => {
 
   return (
     <StyledAddBug>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
       <div className='breadcrumbs'>
         <Link to={`/`}>Home</Link>
         <span>/</span>

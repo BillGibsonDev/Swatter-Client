@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -13,14 +13,22 @@ import { unauthorized } from "../functions/unauthorized.js";
 
 // components
 import Loader from "../loaders/Loader";
+import { DeleteAlert } from "../components/DeleteAlert.js";
+import { Alert } from '../components/Alert.js';
 
 // redux
 import { connect } from "react-redux";
 
 const EditProjectPage = ({ user }) => {
+
   const { projectId } = useParams();
+  
   const navigate = useNavigate();
 
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [project, setProject] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -38,34 +46,50 @@ const EditProjectPage = ({ user }) => {
           console.log(error);
         });
     };
-    setAuthor(user);
     getProject(projectId);
   }, [projectId, user]);
 
-  const deleteProject = () => {
-    const result = window.confirm("Are you sure you want to delete?");
-    if (result === true) {
-      setLoading(true);
-      axios
-        .delete(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          if (response.data !== "Project Deleted") {
-            setLoading(false);
-            alert("Server Error - Project not updated");
-          } else {
-            navigate("/");
-            setLoading(false);
-            alert("Project Deleted!");
-          }
-        });
+  const handleAlert = () => {
+    const AlertComponent = AlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+      //setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
     }
+  }
+
+  const handleDeleteAlert = () => {
+    const AlertComponent = DeleteAlertRef.current;
+    if(AlertComponent.style.display === 'block'){ 
+      AlertComponent.style.display = 'none';
+    } else {
+      AlertComponent.style.display = 'block';
+    }
+  }
+
+  const deleteProject = () => {
+    setLoading(true);
+    axios
+      .delete(
+        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`
+      )
+    .then(function (response) {
+      if (response.data !== "Project Deleted") {
+        setMessage(`Server Error - Project not deleted!`);
+        setLoading(false);
+        handleAlert();
+      } else {
+        setMessage(`Project deleted!`);
+        setLoading(false);
+        handleAlert();
+        navigate("/");
+      }
+    });
   };
 
   const [projectTitle, setProjectTitle] = useState(project.projectTitle);
   const [startDate, setStartDate] = useState(project.startDate);
-  const [author, setAuthor] = useState(user);
   const [projectLink, setProjectLink] = useState(project.projectLink);
   const [projectImage, setProjectImage] = useState(project.projectImage);
   const [projectKey, setProjectKey] = useState(project.projectKey);
@@ -82,7 +106,6 @@ const EditProjectPage = ({ user }) => {
         {
           projectTitle: projectTitle,
           startDate: startDate,
-          author: author,
           projectLink: projectLink,
           projectImage: projectImage,
           repository: repository,
@@ -94,17 +117,30 @@ const EditProjectPage = ({ user }) => {
       )
       .then(function (response) {
         if (response.data !== "Project Updated") {
+          setMessage('Server Error - Project not updated');
           setLoading(false);
-          alert("Server Error - Project not updated");
+          handleAlert();
         } else {
+          setMessage(`${project.projectTitle} updated!`);
           setLoading(false);
-          alert("Project Updated!");
+          handleAlert();
         }
       });
   };
 
   return (
     <StyledProjectPage>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        handleDeleteAlert={handleDeleteAlert}
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteProject}
+        title={project.projectTitle}
+      />
       <div className='breadcrumbs'>
         <Link to={`/`}>Home</Link>
         <span>/</span>
@@ -229,8 +265,8 @@ const EditProjectPage = ({ user }) => {
           : <button onClick={() => { editProject(); }}>Update</button>
         }
         {
-          author === user.username || user.role === process.env.REACT_APP_ADMIN 
-          ? <button id='delete' onClick={() => { deleteProject(); }}>Delete</button>
+          user.role === process.env.REACT_APP_ADMIN_SECRET
+          ? <button id='delete' onClick={() => { handleDeleteAlert(); }}>Delete</button>
           : <button onClick={() => { unauthorized(); }}>Delete</button>
         }
       </div>

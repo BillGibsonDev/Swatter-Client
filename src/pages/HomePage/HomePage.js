@@ -34,9 +34,9 @@ const HomePage = ({ user }) => {
 
   return (
     <StyledHomePage>
-      {isLoading === true ? (
+      {isLoading ? 
         <HomePageLoader />
-      ) : (
+      : 
         <>
           <div className='projects-container'>
             {projects
@@ -52,14 +52,12 @@ const HomePage = ({ user }) => {
                     author={project.author}
                     projectImage={project.projectImage}
                     key={key}
-                    
-                    
                   />
                 );
               })}
           </div>
         </>
-      )}
+      }
     </StyledHomePage>
   );
 }

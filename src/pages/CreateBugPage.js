@@ -42,11 +42,11 @@ const CreateBugPage = ({ user }) => {
         .get(
           `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
         )
-        .then(function (response) {
+        .then((response) => {
           setOptions(response.data.sprints);
           setLoading(false);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     };

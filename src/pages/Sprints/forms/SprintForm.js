@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -6,9 +6,13 @@ import styled from "styled-components";
 
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
+import { handleAlert } from "../../../functions/handleAlert.js";
 
 // redux
 import { connect } from "react-redux";
+
+// components
+import { Alert } from "../../../components/Alert.js";
 
 const SprintForm = ({
   projectId,
@@ -19,6 +23,9 @@ const SprintForm = ({
   user
 }) => {
 
+  const AlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [title, setTitle] = useState("");
   const [goal, setGoal] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -38,21 +45,28 @@ const SprintForm = ({
           status: status,
         }
       )
-      .then(function (response) {
-        if (response.data !== "Sprint Created") {
-          alert("Server Error - Sprint not created");
-        } else {
-          alert("Sprint Created!");
-          setRerender(!rerender);
-        }
-      })
-      .catch(function (response) {
-        console.log(response);
-      });
+    .then((response) => {
+      if (response.data !== "Sprint Created") {
+        setMessage("Server Error - Sprint not created");
+        handleAlert(AlertRef);
+      } else {
+        setMessage("Sprint Created!");
+        handleAlert(AlertRef);
+        setRerender(!rerender);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
     <StyledSprintForm ref={sprintForm} style={{ display: "none" }}>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
       <div className='title-container'>
         <h1>New Sprint</h1>
         <button

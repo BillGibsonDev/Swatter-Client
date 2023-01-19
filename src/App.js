@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styles
@@ -6,6 +6,7 @@ import GlobalStyles from "./GlobalStyles";
 
 // components
 import Nav from "./components/Nav";
+import { Alert } from "./components/Alert";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
@@ -30,9 +31,13 @@ import { handleUser } from './redux/actions/user.js';
 
 //functions
 import { handleTokens } from "./functions/handleTokens";
+import { handleAlert } from "./functions/handleAlert";
 
 function App() {
   
+  const AlertRef = useRef();
+
+  const [ message, setMessage ] = useState('')
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -84,6 +89,10 @@ function App() {
   }, [ navigate, dispatch ]);
 
   const login = () => {
+    if(!password || !username){
+      setMessage("Enter A Username or Password");
+      handleAlert(AlertRef);
+    } else {
     setLoading(true);
     axios
       .post(
@@ -114,7 +123,8 @@ function App() {
             console.log(error);
             localStorage.clear();
             sessionStorage.clear();
-            alert("Wrong Username or Password");
+            setMessage("Wrong Username or Password");
+            handleAlert(AlertRef);
             setLoading(false);
             setLoggedIn(false);
             navigate("/LoginPage");
@@ -124,11 +134,13 @@ function App() {
         console.log(error);
         localStorage.clear();
         sessionStorage.clear();
-        alert("Wrong Username or Password");
+        setMessage("Wrong Username or Password");
+        handleAlert(AlertRef);
         setLoading(false);
         setLoggedIn(false);
         navigate("/LoginPage");
       });
+    }
   };
 
   const logout = () => {
@@ -146,11 +158,19 @@ function App() {
       <GlobalStyles />
       {!isLoggedIn ? 
         <>
+          <Alert
+            message={message}
+            handleAlert={handleAlert}
+            AlertRef={AlertRef}
+          />
           <LoginPage
             login={login}
             setUsername={setUsername}
             setPassword={setPassword}
             isLoading={isLoading}
+            message={message}
+            handleAlert={handleAlert}
+            AlertRef={AlertRef}
           />
         </>
       : 

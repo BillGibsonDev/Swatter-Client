@@ -3,7 +3,7 @@ import * as palette from '../styled/ThemeVariables.js';
 
 export const Alert = ({AlertRef, handleAlert, message}) => {
   return (
-    <StyledAlert ref={AlertRef} onClick={() => { handleAlert()}}>
+    <StyledAlert ref={AlertRef} onClick={() => { handleAlert(AlertRef)}}>
         <div className="alert-container">
             <h1>{message}</h1>
             <button>Okay</button>

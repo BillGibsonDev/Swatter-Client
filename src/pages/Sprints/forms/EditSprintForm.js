@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -7,9 +7,15 @@ import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
+import { handleAlert } from "../../../functions/handleAlert.js";
+import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
 
 // redux
 import { connect } from "react-redux";
+
+// components
+import { Alert } from "../../../components/Alert";
+import { DeleteAlert } from "../../../components/DeleteAlert";
 
 const EditSprintForm = ({
   projectId,
@@ -21,6 +27,11 @@ const EditSprintForm = ({
   searchSprint,
   user
 }) => {
+
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [sprint, setSprint] = useState([]);
   const [sprintId, setSprintId] = useState(false);
 
@@ -68,7 +79,7 @@ const EditSprintForm = ({
           status: status,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         if (response.data !== "Sprint Updated") {
           alert("Server Error - Sprint not updated");
         } else {
@@ -76,30 +87,40 @@ const EditSprintForm = ({
           setRerender(!rerender);
         }
       })
-      .catch(function (response) {
-        console.log(response);
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   const handleDeleteSprint = () => {
-    const result = window.confirm("Are you sure you want to delete?");
-    if (result === true) {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
-        )
-        .then(function (response) {
-          if (response.data !== "Sprint Deleted") {
-            alert("Server Error - Sprint not deleted");
-          } else {
-            alert("Sprint Deleted");
-          }
-        });
-    }
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
+      )
+    .then(function (response) {
+      if (response.data !== "Sprint Deleted") {
+        setMessage("Server Error - Sprint Not Deleted!");
+        handleAlert(AlertRef);
+      } else {
+        setMessage(`${sprint.title} Deleted!`);
+        handleAlert(AlertRef);
+      }
+    });
   };
 
   return (
     <StyledSprintForm ref={editSprintForm} style={{ display: "none" }}>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        handleDeleteAlert={handleDeleteAlert}
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={handleDeleteSprint}
+        title={sprint.title}
+      />
       <div className='title-container'>
         <h1>Edit Sprint</h1>
         <button id='exit-btn' onClick={() => { toggleEditSprintForm(); }}>&times;<span className='tooltiptext'>Close</span></button>

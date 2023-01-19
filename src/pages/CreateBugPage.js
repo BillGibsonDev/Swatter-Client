@@ -10,6 +10,7 @@ import { Link, useParams } from "react-router-dom";
 
 // functions
 import { unauthorized } from "../functions/unauthorized.js";
+import { handleAlert } from "../functions/handleAlert.js";
 
 // components
 import Loader from "../loaders/Loader";
@@ -41,26 +42,16 @@ const CreateBugPage = ({ user }) => {
         .get(
           `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
         )
-        .then(function (response) {
+        .then((response) => {
           setOptions(response.data.sprints);
           setLoading(false);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     };
     getProject(projectId);
   }, [projectId]);
-
-  const handleAlert = () => {
-    const AlertComponent = AlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
-    }
-  }
 
   const createBug = () => {
     setLoading(true);
@@ -84,10 +75,11 @@ const CreateBugPage = ({ user }) => {
         if (response.data !== "Bug Created") {
           setLoading(false);
           setMessage("Server Error - Bug not created");
+          handleAlert(AlertRef);
         } else {
           setLoading(false);
-          setMessage(`${tag} Added!`);
-          handleAlert();
+          setMessage(`Bug Added!`);
+          handleAlert(AlertRef);
         }
       });
   };
@@ -136,11 +128,9 @@ const CreateBugPage = ({ user }) => {
         <p>Create Bug</p>
       </div>
       <h1>Create Bug</h1>
-      {user === null ? (
-        <h1>You are signed out</h1>
-      ) : isLoading ? (
-        <Loader />
-      ) : (
+      {user === null ? <h1>You are signed out</h1>
+      : isLoading ? <Loader />
+      : 
         <div className='form-wrapper'>
           <div className='container-wrapper'>
             <div className='left-container'>
@@ -300,7 +290,7 @@ const CreateBugPage = ({ user }) => {
             Add Image
           </button>
           {user.role === process.env.REACT_APP_USER_SECRET ||
-          user.role === process.env.REACT_APP_ADMIN_SECRET ? (
+          user.role === process.env.REACT_APP_ADMIN_SECRET ? 
             <button
               style={{ marginTop: "40px" }}
               onClick={() => {
@@ -309,16 +299,16 @@ const CreateBugPage = ({ user }) => {
             >
               Save
             </button>
-          ) : (
+          : 
             <button
               style={{ marginTop: "40px" }}
               onClick={() => unauthorized()}
             >
               Save
             </button>
-          )}
+          }
         </div>
-      )}
+      }
     </StyledAddBug>
   );
 }

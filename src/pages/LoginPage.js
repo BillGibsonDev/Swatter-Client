@@ -1,5 +1,5 @@
 // images
-import BugImage from '../assets/icons/bugYaleBlue.png'
+import BugImage from '../assets/icons/bugYaleBlue.png';
 
 // styled
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 						<label>Username</label>
 						<input 
 							type="text" 
+							required
 							onChange={(event) => {
 								setUsername(event.target.value);
 							}}
@@ -33,6 +34,7 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 						<label>Password</label>
 						<input 
 							type="password" 
+							required
 							onChange={(event) => {
 								setPassword(event.target.value);
 							}}

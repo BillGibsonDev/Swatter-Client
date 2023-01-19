@@ -7,6 +7,7 @@ import * as pallette from "../styled/ThemeVariables.js";
 
 // functions
 import { unauthorized } from "../functions/unauthorized.js";
+import { handleAlert } from "../functions/handleAlert.js";
 
 // router
 import { Link } from "react-router-dom";
@@ -44,16 +45,6 @@ const CreateProjectPage = ({ user }) => {
     handleDate();
   }, [user]);
 
-  const handleAlert = () => {
-    const AlertComponent = AlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
-    }
-  }
-
   const addProject = () => {
     setLoading(true);
     axios
@@ -76,11 +67,11 @@ const CreateProjectPage = ({ user }) => {
         if (response.data !== "Project Created") {
           setLoading(false);
           setMessage("Server Error - Project not created");
-          handleAlert();
+          handleAlert(AlertRef);
         } else {
           setLoading(false);
           setMessage(`${projectTitle} Project Started!`);
-          handleAlert();
+          handleAlert(AlertRef);
         }
       })
       .catch((err) => {

@@ -10,6 +10,8 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 
 // functions
 import { unauthorized } from "../functions/unauthorized.js";
+import { handleAlert } from "../functions/handleAlert.js";
+import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
 
 // components
 import Loader from "../loaders/Loader";
@@ -49,25 +51,6 @@ const EditProjectPage = ({ user }) => {
     getProject(projectId);
   }, [projectId, user]);
 
-  const handleAlert = () => {
-    const AlertComponent = AlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-      //setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
-    }
-  }
-
-  const handleDeleteAlert = () => {
-    const AlertComponent = DeleteAlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-    }
-  }
-
   const deleteProject = () => {
     setLoading(true);
     axios
@@ -78,11 +61,11 @@ const EditProjectPage = ({ user }) => {
       if (response.data !== "Project Deleted") {
         setMessage(`Server Error - Project not deleted!`);
         setLoading(false);
-        handleAlert();
+        handleAlert(AlertRef);
       } else {
         setMessage(`Project deleted!`);
         setLoading(false);
-        handleAlert();
+        handleAlert(AlertRef);
         navigate("/");
       }
     });
@@ -119,11 +102,11 @@ const EditProjectPage = ({ user }) => {
         if (response.data !== "Project Updated") {
           setMessage('Server Error - Project not updated');
           setLoading(false);
-          handleAlert();
+          handleAlert(AlertRef);
         } else {
           setMessage(`${project.projectTitle} updated!`);
           setLoading(false);
-          handleAlert();
+          handleAlert(AlertRef);
         }
       });
   };
@@ -266,7 +249,7 @@ const EditProjectPage = ({ user }) => {
         }
         {
           user.role === process.env.REACT_APP_ADMIN_SECRET
-          ? <button id='delete' onClick={() => { handleDeleteAlert(); }}>Delete</button>
+          ? <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
           : <button onClick={() => { unauthorized(); }}>Delete</button>
         }
       </div>

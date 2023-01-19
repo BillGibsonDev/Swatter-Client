@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -8,14 +8,26 @@ import * as pallette from "../styled/ThemeVariables.js";
 // redux
 import { connect } from "react-redux";
 
+// components
+import { Alert } from "../components/Alert.js";
+
+// functions
+import { unauthorized } from "../functions/unauthorized.js";
+import { handleAlert } from "../functions/handleAlert.js";
+
 const RegisterUserPage = ({ user }) => {
+
+  const AlertRef = useRef();
+
+  const [ message, setMessage ] = useState('')
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
 
   const registerUser = () => {
     if (password !== confirm) {
-      alert("Passwords don't match");
+      setMessage("Passwords Do not Match!");
+      handleAlert(AlertRef);
     } else {
       axios
         .post(
@@ -29,20 +41,23 @@ const RegisterUserPage = ({ user }) => {
         )
         .then(function (response) {
           if (response.data !== "USER REGISTERED") {
-            alert("Server Error - User was not created");
+            setMessage("Server Error - User Not Created");
+            handleAlert(AlertRef);
           } else {
-            alert("User Created!");
+            setMessage("User Created!");
+            handleAlert(AlertRef);
           }
         });
     }
   };
-
-  const unauthorized = () => {
-    alert("You do not have permissions to do that!");
-  };
-
+  
   return (
     <StyledRegister>
+      <Alert
+        message={message}
+        handleAlert={handleAlert}
+        AlertRef={AlertRef}
+      />
       <h1>Register User</h1>
       <div className='form-wrapper'>
         <label>
@@ -72,24 +87,11 @@ const RegisterUserPage = ({ user }) => {
             }}
           />
         </label>
-        {user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-          <button
-            type='submit'
-            onClick={() => {
-              registerUser();
-            }}
-          >
-            Create User
-          </button>
-        ) : (
-          <button
-            onClick={() => {
-              unauthorized();
-            }}
-          >
-            Create User
-          </button>
-        )}
+        {
+          user.role === process.env.REACT_APP_ADMIN_SECRET 
+          ? <button type='submit' onClick={() => { registerUser(); }}> Create User</button>
+          : <button onClick={() => { unauthorized(); }}>Create User</button>
+        }
       </div>
     </StyledRegister>
   );

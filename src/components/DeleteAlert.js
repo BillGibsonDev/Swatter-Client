@@ -7,8 +7,8 @@ export const DeleteAlert = ({ DeleteAlertRef, handleDeleteAlert, title, deleteFu
         <div className="alert-container">
             <h1>Are you sure you want to delete {title}?</h1>
             <div className="button-container">
-                <button id="yes-btn" onClick={() => { deleteFunction(); handleDeleteAlert()}}>Yes</button>
-                <button id="no-btn" onClick={() => { handleDeleteAlert()}}>No</button>
+                <button id="yes-btn" onClick={() => { deleteFunction(); handleDeleteAlert(DeleteAlertRef)}}>Yes</button>
+                <button id="no-btn" onClick={() => { handleDeleteAlert(DeleteAlertRef)}}>No</button>
             </div>
         </div>
     </StyledAlert>

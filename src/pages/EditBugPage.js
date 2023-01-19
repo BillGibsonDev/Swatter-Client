@@ -7,6 +7,8 @@ import * as pallette from "../styled/ThemeVariables.js";
 
 // functions
 import { unauthorized } from "../functions/unauthorized.js";
+import { handleAlert } from "../functions/handleAlert.js";
+import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
 
 // components
 import BugPageLoader from "../loaders/BugPageLoader";
@@ -36,25 +38,6 @@ const EditBugPage = ({ user }) => {
   const [options, setOptions] = useState([]);
   const [images, setImages] = useState([]);
   const [rerender, setRerender] = useState(true);
-
-  const handleAlert = () => {
-    const AlertComponent = AlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-      setTimeout(() => {AlertComponent.style.display = 'none'}, 1500);
-    }
-  }
-
-  const handleDeleteAlert = () => {
-    const AlertComponent = DeleteAlertRef.current;
-    if(AlertComponent.style.display === 'block'){ 
-      AlertComponent.style.display = 'none';
-    } else {
-      AlertComponent.style.display = 'block';
-    }
-  }
 
   useEffect(() => {
     const getSprints = () => {
@@ -115,11 +98,11 @@ const EditBugPage = ({ user }) => {
         if (response.data !== "Bug Updated") {
           setMessage(`Server Error - Bug Not Updated!`);
           setLoading(false);
-          handleAlert();
+          handleAlert(AlertRef);
         } else {
           setMessage(`Bug updated!`);
           setLoading(false);
-          handleAlert();
+          handleAlert(AlertRef);
         }
       });
   };
@@ -134,11 +117,11 @@ const EditBugPage = ({ user }) => {
       if (response.data !== "Bug Deleted") {
         setMessage(`Server Error - Bug Not Deleted!`);
         setLoading(false);
-        handleAlert();
+        handleAlert(AlertRef);
       } else {
         setMessage(`Bug Deleted!`);
         setLoading(false);
-        handleAlert();
+        handleAlert(AlertRef);
         navigate(`/projects/${projectId}`);
       }
     })
@@ -342,7 +325,7 @@ const EditBugPage = ({ user }) => {
           author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
           ? <>
               <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
-              <button id='delete'onClick={() => { deleteBug(); }}>Delete</button>
+              <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
             </>
           : 
           <>

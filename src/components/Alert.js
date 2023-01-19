@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import * as palette from '../styled/ThemeVariables.js';
 
-export const Alert = ({AlertRef, handleAlert, message}) => {
+// functions
+import { handleAlert } from "../functions/handleAlert.js";
+
+export const Alert = ({AlertRef, message}) => {
   return (
     <StyledAlert ref={AlertRef} onClick={() => { handleAlert(AlertRef)}}>
         <div className="alert-container">

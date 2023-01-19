@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -7,6 +7,12 @@ import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
+import { handleAlert } from "../../../functions/handleAlert";
+import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
+
+// components
+import { Alert } from "../../../components/Alert";
+import { DeleteAlert } from "../../../components/DeleteAlert";
 
 // images
 import Menu from "../../../assets/icons/dotMenu.png";
@@ -24,14 +30,17 @@ const Comment = ({
   setLoading,
   bugId,
 }) => {
+
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [compareDate, setCompareDate] = useState("");
 
   useEffect(() => {
     const handleDate = () => {
       const currentDate = new Date();
-      setCompareDate(
-        currentDate.toLocaleString("en-US", { timeZone: "America/New_York" })
-      );
+      setCompareDate(currentDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
     };
     handleDate();
   }, []);
@@ -41,32 +50,43 @@ const Comment = ({
 
   const deleteComment = () => {
     setLoading(true);
-    const result = window.confirm("Are you sure you want to delete?");
-    if (result) {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`
-        )
-        .then(function (response) {
-          if (response.data !== "Comment Deleted!") {
-            setLoading(false);
-            alert("Server Error - Comment not deleted");
-          } else {
-            setLoading(false);
-            alert("Comment Deleted!");
-          }
-        });
-    }
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
+    .then(function (response) {
+      if (response.data !== "Comment Deleted!") {
+        setMessage("Server Error - Comment not deleted");
+        handleAlert(AlertRef);
+        setLoading(false);
+      } else {
+        setMessage("Comment Deleted!");
+        handleAlert(AlertRef);
+        setLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setMessage("Server Error - Comment not deleted");
+      handleAlert(AlertRef);
+      setLoading(false);
+    });
   };
 
   return (
     <StyledComment
       style={
         author === user.username
-          ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
-          : { margin: "10px auto 10px 5%", background: "white" }
+        ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
+        : { margin: "10px auto 10px 5%", background: "white" }
       }
     >
+      <Alert
+        message={message}
+        AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+      />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
           <h3 id={author}>
@@ -74,15 +94,15 @@ const Comment = ({
             <span>{currentDate === commentDate ? commentTime : date}</span>
           </h3>
           {
-            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? 
-              <div className='dropdown'>
+            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            ? <div className='dropdown'>
                 <button className='dropbtn'>
                   <img src={Menu} alt='Menu' />
                 </button>
                 <div className='dropdown-content'>
                   {
                   author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
-                    ? <button onClick={() => { deleteComment(); }}>Delete</button>
+                    ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
                     : <button onClick={() => { unauthorized(); }}>Delete</button>
                   }
                 </div>

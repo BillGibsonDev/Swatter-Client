@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -11,6 +11,15 @@ import Menu from "../../../assets/icons/dotMenu.png";
 // redux
 import { connect } from "react-redux";
 
+// components
+import { DeleteAlert } from "../../../components/DeleteAlert";
+import { Alert } from "../../../components/Alert";
+
+// functions
+import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
+import { handleAlert } from "../../../functions/handleAlert";
+import { unauthorized } from "../../../functions/unauthorized";
+
 const Comment = ({
   comments,
   author,
@@ -20,6 +29,11 @@ const Comment = ({
   projectId,
   setLoading,
 }) => {
+
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+
+  const [ message, setMessage ] = useState('');
   const [compareDate, setCompareDate] = useState("");
 
   useEffect(() => {
@@ -37,62 +51,57 @@ const Comment = ({
 
   const deleteComment = () => {
     setLoading(true);
-    const result = window.confirm("Are you sure you want to delete?");
-    if (result === true) {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`
-        )
-        .then(function (response) {
-          if (response.data !== "Comment Deleted") {
-            setLoading(false);
-            alert("Server Error - Comment not deleted");
-          } else {
-            setLoading(false);
-            alert("Comment Deleted!");
-          }
-        });
-    }
-  };
-
-  const unauthorized = () => {
-    alert("You do not have permissions to do that!");
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`
+      )
+    .then(function (response) {
+      if (response.data !== "Comment Deleted") {
+        setLoading(false);
+        setMessage('Server Error - Comment Not Deleted')
+        handleAlert(AlertRef);
+      } else {
+        setLoading(false);
+        setMessage("Comment Deleted!");
+        handleAlert(AlertRef);
+      }
+    });
   };
 
   return (
     <StyledComment
       style={
-        author === user
-          ? {
-              margin: "10px 5% 10px auto",
-              background: `${pallette.helperGrey}`,
-            }
-          : { margin: "10px auto 10px 5%", background: "white" }
+        author === user.username
+        ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
+        : { margin: "10px auto 10px 5%", background: "white" }
       }
     >
+      <Alert
+        message={message}
+        AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+      />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={author}>
-            {author}
-            <span>{currentDate === commentDate ? commentTime : date}</span>
-          </h3>
-          {author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-            <div className='dropdown'>
-              <button className='dropbtn'>
-                <img src={Menu} alt='' />
-              </button>
+          <h3 id={author}>{author}<span>{currentDate === commentDate ? commentTime : date}</span></h3>
+          {
+            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            ? <div className='dropdown'>
+              <button className='dropbtn'><img src={Menu} alt='' /></button>
               <div className='dropdown-content'>
-                {author === user.username ||
-                user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-                  <button onClick={deleteComment}>Delete</button>
-                ) : (
-                  <button onClick={unauthorized}>Delete</button>
-                )}
+                {  
+                  author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                  ? <button onClick={() => handleDeleteAlert(DeleteAlertRef)}>Delete</button>
+                  : <button onClick={unauthorized}>Delete</button>
+                }
               </div>
             </div>
-          ) : (
-            <></>
-          )}
+           :<></>
+          }
         </div>
         <p>{comments}</p>
       </div>

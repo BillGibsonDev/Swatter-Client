@@ -84,64 +84,37 @@ const BugPage = ({ user }) => {
         <div className='bug-wrapper'>
           <div className='title-container'>
             <h1>{bug.title}</h1>
-            <Link to={`/${projectId}/${bugId}/edit`}>
-              <img src={EditIcon} alt='edit bug link' />
+            <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt='edit bug link' />
               Edit
             </Link>
           </div>
           <div className='info-wrapper'>
             <div className='info-container'>
-              <h3>
-                <span>Tag: </span> {bug.tag}
-              </h3>
-              <h3 className={bug.priority}>
-                <span>Priority: </span> {bug.priority}
-              </h3>
-              <h3>
-                <span>Status: </span> {bug.status}
-              </h3>
-              <h3>
-                <span>Sprint: </span>
-                {bug.sprint === undefined || bug.sprint === "" ? (
-                  <>None</>
-                ) : (
-                  <>{bug.sprint}</>
-                )}
+              <h3><span>Tag: </span> {bug.tag}</h3>
+              <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
+              <h3><span>Status: </span> {bug.status}</h3>
+              <h3><span>Sprint: </span>
+                {
+                  bug.sprint === undefined || bug.sprint === ""
+                  ? <>None</>
+                  : <>{bug.sprint}</>
+                }
               </h3>
             </div>
             <div className='info-container'>
-              <h2>
-                <span>Creator: </span>
-                {bug.author}
-              </h2>
-              <h2>
-                <span>Created: </span>
-                {bug.date}
-              </h2>
-              <h2>
-                <span>Updated: </span>
-                {bug.lastUpdate}
-              </h2>
+              <h2><span>Creator: </span>{bug.author}</h2>
+              <h2><span>Created: </span>{bug.date}</h2>
+              <h2><span>Updated: </span>{bug.lastUpdate}</h2>
             </div>
           </div>
           <p id='description'>
             <span>Description: </span> {bug.description}
           </p>
           <div className='button-container'>
-            <button
-              className='tablinks active'
-              onClick={(e) => {
-                handleTabs(e, "comments");
-              }}
-            >
+            <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>
               Comments
             </button>
-            <button
-              className='tablinks'
-              onClick={(e) => {
-                handleTabs(e, "images");
-              }}
-            >
+            <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>
               Images
             </button>
           </div>
@@ -149,8 +122,6 @@ const BugPage = ({ user }) => {
           <CommentSection
             bugId={bugId}
             projectId={projectId}
-            
-            
             setLoading={setLoading}
           />
         </div>

@@ -24,17 +24,14 @@ export default function DetailsPage() {
   useEffect(() => {
     const getProject = () => {
       setLoading(true);
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          setProject(response.data);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setProject(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     };
     getProject(projectId);
   }, [projectId]);

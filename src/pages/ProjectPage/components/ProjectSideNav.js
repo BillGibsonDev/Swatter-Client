@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // styled 
-import styled from 'styled-components'
+import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables.js';
 
 // images
@@ -19,11 +19,11 @@ export const ProjectSideNav = ({
 
     const { projectId } = useParams();
 
-    const [ screenWidth, setScreenWidth ] = useState(0)
+    const [ screenWidth, setScreenWidth ] = useState(0);
 
     useEffect(() => {
       const handleScreenWidth = () => {
-        setScreenWidth(window.innerWidth)
+        setScreenWidth(window.innerWidth);
       }
       handleScreenWidth();
     }, [])
@@ -34,20 +34,20 @@ export const ProjectSideNav = ({
             <div className="title-container">
                 {
                     project.projectImage === "" 
-                    ? <img id="default" src={images.DefaultImage} alt="" />
-                    : <img src={project.projectImage} alt="" />
+                    ? <img id="default" src={images.DefaultImage} alt={project.projectTitle} />
+                    : <img src={project.projectImage} alt={project.projectTitle} />
                 }
                 <h5>{project.projectTitle} 
                     <span>{project.projectType}</span>
                 </h5>
             </div>
             <div className="menu-wrapper">
-                <Link to={`/projects/${projectId}/sprints`} ><img src={icons.Sprints} alt="" />Sprints</Link>
-                <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="" />Repository</a>
-                <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="" />Project Link</a>
-                <button onClick={()=> { toggleComments()}}><img src={icons.Comments} alt="" />Comments</button>
-                <Link to={`/${projectId}/CreateBugPage`} ><img src={icons.AddBug} alt="" />Create Bug</Link>
-                <Link to={`/${projectId}/details`} ><img src={icons.Details} alt="" />Details</Link>
+                <Link to={`/projects/${projectId}/sprints`} ><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
+                <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
+                <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Project Link</a>
+                <button onClick={()=> { toggleComments()}}><img src={icons.Comments} alt="Comments" />Comments</button>
+                <Link to={`/${projectId}/CreateBugPage`} ><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
+                <Link to={`/${projectId}/details`} ><img src={icons.Details} alt="Details" />Details</Link>
             </div>
         </div>
     </StyledSideNav>

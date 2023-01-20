@@ -9,7 +9,7 @@ import Nav from "./components/Nav";
 import { Alert } from "./components/Alert";
 
 // pages
-import HomePage from "./pages/HomePage/HomePage.js";
+import { HomePage } from "./pages/HomePage/HomePage.js";
 import { ProjectPage } from "./pages/ProjectPage/ProjectPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
@@ -55,11 +55,7 @@ function App() {
     const handlePageReload = (token) => {
       setLoading(true);
       setTimeout(() => {
-        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`,
-        {
-          token: token
-        }
-      )
+        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: token })
         .then((response) => {
           if(response.data === 'Token Not Valid'){
             setLoggedIn(false);
@@ -93,10 +89,8 @@ function App() {
       setMessage("Enter A Username or Password");
       handleAlert(AlertRef);
     } else {
-    setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
         {
           username: username,
           password: password,
@@ -105,13 +99,7 @@ function App() {
       .then((response) => {
         setLoading(false);
         handleTokens(response.data, username);
-        axios
-          .post(
-            `${process.env.REACT_APP_BASE_URL}/validateTokens`,
-            {
-              token: response.data
-            }
-          )
+        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: response.data })
           .then((res) => {
             if(res.status === 200){
               setLoggedIn(true);

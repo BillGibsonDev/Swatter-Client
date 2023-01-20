@@ -83,32 +83,30 @@ const EditProjectPage = ({ user }) => {
 
   const editProject = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_PROJECT_URL}/${projectId}`,
-        {
-          projectTitle: projectTitle,
-          startDate: startDate,
-          projectLink: projectLink,
-          projectImage: projectImage,
-          repository: repository,
-          description: description,
-          projectKey: projectKey,
-          projectLead: projectLead,
-          projectType: projectType,
-        }
-      )
-      .then(function (response) {
-        if (response.data !== "Project Updated") {
-          setMessage('Server Error - Project not updated');
-          setLoading(false);
-          handleAlert(AlertRef);
-        } else {
-          setMessage(`${project.projectTitle} updated!`);
-          setLoading(false);
-          handleAlert(AlertRef);
-        }
-      });
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_PROJECT_URL}/${projectId}`,
+      {
+        projectTitle: projectTitle,
+        startDate: startDate,
+        projectLink: projectLink,
+        projectImage: projectImage,
+        repository: repository,
+        description: description,
+        projectKey: projectKey,
+        projectLead: projectLead,
+        projectType: projectType,
+      }
+    )
+    .then(function (response) {
+      if (response.data !== "Project Updated") {
+        setMessage('Server Error - Project not updated');
+        setLoading(false);
+        handleAlert(AlertRef);
+      } else {
+        setMessage(`${project.projectTitle} updated!`);
+        setLoading(false);
+        handleAlert(AlertRef);
+      }
+    });
   };
 
   return (

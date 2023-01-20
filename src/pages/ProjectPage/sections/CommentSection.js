@@ -36,16 +36,13 @@ const CommentSection = ({
 
   useEffect(() => {
     const getProject = () => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then((response) => {
-          setComments(response.data.comments);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setComments(response.data.comments);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     };
     getProject(projectId);
   }, [projectId, bugId, user, isLoading]);
@@ -133,7 +130,7 @@ const CommentSection = ({
             }}
           />
           {
-            user.role !== process.env.REACT_APP_ADMIN_SECRET ||process.env.REACT_APP_USER_SECRET 
+            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
             ? <button onClick={() => { sendComment(); }}>Send</button>
             : <button onClick={() => { unauthorized(); }}>Send</button>
           }

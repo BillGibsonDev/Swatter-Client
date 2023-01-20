@@ -9,7 +9,7 @@ export const Searchbar = () => {
 
   return (
     <StyledSearchbar>
-        <img src={SearchIcon} alt="" />
+        <img src={SearchIcon} alt="Search" />
         <input type="text" placeholder='Search Bugs'/>
     </StyledSearchbar>
   )

@@ -47,36 +47,34 @@ const CreateProjectPage = ({ user }) => {
 
   const addProject = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_PROJECT_URL}`,
-        {
-          projectTitle: projectTitle,
-          startDate: startDate,
-          author: user.username,
-          projectLink: projectLink,
-          projectImage: projectImage,
-          repository: repository,
-          description: description,
-          projectKey: projectKey,
-          projectLead: projectLead,
-          projectType: projectType,
-        }
-      )
-      .then((response) => {
-        if (response.data !== "Project Created") {
-          setLoading(false);
-          setMessage("Server Error - Project not created");
-          handleAlert(AlertRef);
-        } else {
-          setLoading(false);
-          setMessage(`${projectTitle} Project Started!`);
-          handleAlert(AlertRef);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_PROJECT_URL}`,
+      {
+        projectTitle: projectTitle,
+        startDate: startDate,
+        author: user.username,
+        projectLink: projectLink,
+        projectImage: projectImage,
+        repository: repository,
+        description: description,
+        projectKey: projectKey,
+        projectLead: projectLead,
+        projectType: projectType,
+      }
+    )
+    .then((response) => {
+      if (response.data !== "Project Created") {
+        setLoading(false);
+        setMessage("Server Error - Project not created");
+        handleAlert(AlertRef);
+      } else {
+        setLoading(false);
+        setMessage(`${projectTitle} Project Started!`);
+        handleAlert(AlertRef);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -100,95 +98,41 @@ const CreateProjectPage = ({ user }) => {
           <div className='top-form-container'>
             <label>
               Title
-              <input
-                type='text'
-                id='title'
-                onChange={(event) => {
-                  setProjectTitle(event.target.value);
-                }}
-              />
+              <input type='text' id='title' onChange={(event) => { setProjectTitle(event.target.value); }} />
             </label>
             <label>
               Key
-              <input
-                type='text'
-                id='key'
-                onChange={(event) => {
-                  setProjectKey(event.target.value);
-                }}
-              />
+              <input type='text' id='key' onChange={(event) => { setProjectKey(event.target.value); }} />
             </label>
             <label>
               URL
-              <input
-                type='text'
-                id='projectLink'
-                onChange={(event) => {
-                  setProjectLink(event.target.value);
-                }}
-              />
+              <input type='text' id='projectLink' onChange={(event) => { setProjectLink(event.target.value); }} />
             </label>
             <label>
               Repository
-              <input
-                type='text'
-                id='repository'
-                onChange={(event) => {
-                  setRepository(event.target.value);
-                }}
-              />
+              <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
             </label>
             <label>
               Lead
-              <input
-                type='text'
-                id='projectLead'
-                onChange={(event) => {
-                  setProjectLead(event.target.value);
-                }}
-              />
+              <input type='text' id='projectLead' onChange={(event) => { setProjectLead(event.target.value); }}/>
             </label>
           </div>
           <div className='bottom-form-container'>
             <label>
               Date
-              <input
-                type='text'
-                id='date'
-                onChange={(event) => {
-                  setStartDate(event.target.value);
-                }}
-              />
+              <input type='text' id='date' onChange={(event) => { setStartDate(event.target.value); }} />
             </label>
             <label>
               Project Type
-              <input
-                type='text'
-                id='projectType'
-                onChange={(event) => {
-                  setProjectType(event.target.value);
-                }}
-              />
+              <input type='text' id='projectType' onChange={(event) => { setProjectType(event.target.value); }} />
             </label>
             <label>
               Description
-              <input
-                type='text'
-                id='description'
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
-              />
+              <input type='text' id='description' onChange={(event) => { setDescription(event.target.value); }} />
             </label>
             <label>
               Image
-              <input
-                type='text'
-                id='image'
-                onChange={(event) => {
-                  setProjectImage(event.target.value);
-                }}
-              />
+              <input type='text' id='image' onChange={(event) => { setProjectImage(event.target.value); }} />
             </label>
           </div>
         </div>

@@ -39,9 +39,7 @@ const Comment = ({
   useEffect(() => {
     const handleDate = () => {
       const currentDate = new Date();
-      setCompareDate(
-        currentDate.toLocaleString("en-US", { timeZone: "America/New_York" })
-      );
+      setCompareDate(currentDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
     };
     handleDate();
   }, []);
@@ -51,11 +49,8 @@ const Comment = ({
 
   const deleteComment = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`
-      )
-    .then(function (response) {
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+    .then((response) => {
       if (response.data !== "Comment Deleted") {
         setLoading(false);
         setMessage('Server Error - Comment Not Deleted')
@@ -65,7 +60,10 @@ const Comment = ({
         setMessage("Comment Deleted!");
         handleAlert(AlertRef);
       }
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   };
 
   return (
@@ -91,7 +89,7 @@ const Comment = ({
           {
             author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <div className='dropdown'>
-              <button className='dropbtn'><img src={Menu} alt='' /></button>
+              <button className='dropbtn'><img src={Menu} alt='Menu' /></button>
               <div className='dropdown-content'>
                 {  
                   author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 

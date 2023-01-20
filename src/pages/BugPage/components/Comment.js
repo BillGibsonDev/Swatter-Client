@@ -89,10 +89,7 @@ const Comment = ({
       />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={author}>
-            {author}
-            <span>{currentDate === commentDate ? commentTime : date}</span>
-          </h3>
+          <h3 id={author}>{author}<span>{currentDate === commentDate ? commentTime : date}</span></h3>
           {
             author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <div className='dropdown'>
@@ -101,7 +98,7 @@ const Comment = ({
                 </button>
                 <div className='dropdown-content'>
                   {
-                  author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
                     ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
                     : <button onClick={() => { unauthorized(); }}>Delete</button>
                   }

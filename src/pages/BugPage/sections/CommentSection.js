@@ -36,11 +36,11 @@ const CommentSection = ({
         .get(
           `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`
         )
-        .then(function (response) {
+        .then((response) => {
           setComments(response.data[0].bugs[0].comments);
           setLoading(false);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     };

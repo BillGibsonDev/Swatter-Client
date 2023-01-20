@@ -21,9 +21,9 @@ const SprintBugTable = ({
     return (
         <StyledBugTable>
             { 
-                bugs === undefined 
+                !bugs 
                 ? <div className="undefined">
-                    <h1>You've havent entered any bugs</h1>
+                    <h1>You've haven't entered any bugs</h1>
                 </div>
                 : <>
                     <div className="bugs-container">

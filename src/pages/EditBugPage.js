@@ -41,32 +41,26 @@ const EditBugPage = ({ user }) => {
 
   useEffect(() => {
     const getSprints = () => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          setOptions(response.data.sprints);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then(function (response) {
+        setOptions(response.data.sprints);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     };
     const getBug = (projectId, bugId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`
-        )
-        .then(function (response) {
-          setBug(response.data[0].bugs[0]);
-          setOptions(response.data);
-          setAuthor(response.data[0].bugs[0].author);
-          setImages(response.data[0].bugs[0].images);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+      .then(function (response) {
+        setBug(response.data[0].bugs[0]);
+        setOptions(response.data);
+        setAuthor(response.data[0].bugs[0].author);
+        setImages(response.data[0].bugs[0].images);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     };
     getSprints(projectId);
     getBug(projectId, bugId);
@@ -80,39 +74,34 @@ const EditBugPage = ({ user }) => {
 
   const updateBug = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`,
-        {
-          description: description,
-          status: status,
-          tag: tag,
-          priority: priority,
-          projectId: projectId,
-          bugId: bug._id,
-          sprint: sprint,
-          images: images,
-        }
-      )
-      .then(function (response) {
-        if (response.data !== "Bug Updated") {
-          setMessage(`Server Error - Bug Not Updated!`);
-          setLoading(false);
-          handleAlert(AlertRef);
-        } else {
-          setMessage(`Bug updated!`);
-          setLoading(false);
-          handleAlert(AlertRef);
-        }
-      });
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`,
+      {
+        description: description,
+        status: status,
+        tag: tag,
+        priority: priority,
+        projectId: projectId,
+        bugId: bug._id,
+        sprint: sprint,
+        images: images,
+      }
+    )
+    .then(function (response) {
+      if (response.data !== "Bug Updated") {
+        setMessage(`Server Error - Bug Not Updated!`);
+        setLoading(false);
+        handleAlert(AlertRef);
+      } else {
+        setMessage(`Bug updated!`);
+        setLoading(false);
+        handleAlert(AlertRef);
+      }
+    });
   };
 
   const deleteBug = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`
-      )
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`)
     .then((response) => {
       if (response.data !== "Bug Deleted") {
         setMessage(`Server Error - Bug Not Deleted!`);
@@ -173,38 +162,22 @@ const EditBugPage = ({ user }) => {
         <span>/</span>
         <Link to={`/projects/${projectId}`}>Project</Link>
         <span>/</span>
-        {bug === undefined ? <></> : <p>{bug.title}</p>}
+        { !bug ? <></> : <p>{bug.title}</p> }
       </div>
       {isLoading ? <BugPageLoader />
       : 
-        
         <div className='bug-container'>
           <h1>{bug.title}</h1>
           <div className='info-wrapper'>
             <div className='info-container'>
-              <h2>
-                <span>Creator: </span>
-                {bug.author}
-              </h2>
-              <h2>
-                <span>Created: </span>
-                {bug.date}
-              </h2>
-              <h2>
-                <span>Updated: </span>
-                {bug.lastUpdate}
-              </h2>
+              <h2><span>Creator: </span>{bug.author}</h2>
+              <h2><span>Created: </span>{bug.date}</h2>
+              <h2><span>Updated: </span>{bug.lastUpdate}</h2>
             </div>
             <div className='selector-container'>
               <label>
                 Tag:
-                <select
-                  id='tag'
-                  defaultValue={bug.tag}
-                  onChange={(event) => {
-                    setTag(event.target.value);
-                  }}
-                >
+                <select id='tag' defaultValue={bug.tag} onChange={(event) => { setTag(event.target.value);}}>
                   <option value={bug.tag}>{bug.tag}</option>
                   <option value='Bug'>Bug</option>
                   <option value='Feature'>Feature</option>
@@ -214,13 +187,7 @@ const EditBugPage = ({ user }) => {
               </label>
               <label>
                 Priority:
-                <select
-                  id='priority'
-                  defaultValue={bug.priority}
-                  onChange={(event) => {
-                    setPriority(event.target.value);
-                  }}
-                >
+                <select id='priority' defaultValue={bug.priority} onChange={(event) => {setPriority(event.target.value); }}>
                   <option value={bug.priority}>{bug.priority}</option>
                   <option value='Standard'>Standard</option>
                   <option value='Medium'>Medium</option>
@@ -229,13 +196,7 @@ const EditBugPage = ({ user }) => {
               </label>
               <label>
                 Status:
-                <select
-                  id='status'
-                  defaultValue={bug.status}
-                  onChange={(event) => {
-                    setStatus(event.target.value);
-                  }}
-                >
+                <select id='status' defaultValue={bug.status} onChange={(event) => { setStatus(event.target.value); }}>
                   <option value={bug.status}>{bug.status}</option>
                   <option value='Open'>Open</option>
                   <option value='Underway'>Underway</option>
@@ -245,13 +206,7 @@ const EditBugPage = ({ user }) => {
               </label>
               <label>
                 Sprint:
-                <select 
-                  id='sprint' 
-                  defaultValue={bug.sprint} 
-                  onChange={(event) => {
-                    setSprint(event.target.value);
-                  }}
-                >
+                <select id='sprint' defaultValue={bug.sprint} onChange={(event) => { setSprint(event.target.value); }}>
                   <option value={bug.sprint}>{bug.sprint}</option>
                   {options.map((sprint, key) => {
                     return (
@@ -279,7 +234,7 @@ const EditBugPage = ({ user }) => {
               }}
             />
           </label>
-          <img src={bug.thumbnail} alt='' />
+          <img src={bug.thumbnail} alt={bug.title} />
         </div>
       }
       <h2>Images:</h2>
@@ -327,10 +282,9 @@ const EditBugPage = ({ user }) => {
               <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
               <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
             </>
-          : 
-          <>
+          : <>
             <button onClick={() => { unauthorized(); }}>Save</button>
-            <button id='delete'  onClick={() => { unauthorized(); }}>Delete</button>
+            <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
           </>
         }
       </div>

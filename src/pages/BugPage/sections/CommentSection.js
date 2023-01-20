@@ -32,17 +32,14 @@ const CommentSection = ({
 
   useEffect(() => {
     const getComments = (projectId, bugId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`
-        )
-        .then((response) => {
-          setComments(response.data[0].bugs[0].comments);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+      .then((response) => {
+        setComments(response.data[0].bugs[0].comments);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     };
     getComments(projectId, bugId);
   }, [projectId, bugId, setLoading]);

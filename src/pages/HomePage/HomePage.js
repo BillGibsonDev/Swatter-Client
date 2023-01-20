@@ -19,8 +19,8 @@ export const HomePage = () => {
         setProjects(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getProjects();

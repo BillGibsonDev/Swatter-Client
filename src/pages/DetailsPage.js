@@ -29,8 +29,8 @@ export default function DetailsPage() {
         setProject(response.data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getProject(projectId);
@@ -38,17 +38,15 @@ export default function DetailsPage() {
 
   return (
     <StyledDetails>
-      {isLoading ? (
-        <Loader />
-      ) : (
+      {
+        isLoading ? <Loader />
+       : 
         <>
           <div className='links-wrapper'>
             <div className='breadcrumbs'>
               <Link to={`/`}>Home</Link>
               <span>/</span>
-              <Link to={`/projects/${project._id}`}>
-                {project.projectTitle}
-              </Link>
+              <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link>
               <span>/</span>
               <p>Details</p>
             </div>
@@ -62,24 +60,16 @@ export default function DetailsPage() {
           </div>
           <div className='info-container'>
             <div className='container'>
-              <h6>
-                <span>Type:</span> {project.projectType}
-              </h6>
-              <h6>
-                <span>Description:</span> {project.description}
-              </h6>
+              <h6><span>Type:</span> {project.projectType}</h6>
+              <h6><span>Description:</span> {project.description}</h6>
             </div>
             <div className='container'>
-              <h6>
-                <span>Lead:</span> {project.projectLead}
-              </h6>
-              <h6>
-                <span>Started:</span> {project.startDate}
-              </h6>
+              <h6><span>Lead:</span> {project.projectLead}</h6>
+              <h6><span>Started:</span> {project.startDate}</h6>
             </div>
           </div>
         </>
-      )}
+      }
     </StyledDetails>
   );
 }

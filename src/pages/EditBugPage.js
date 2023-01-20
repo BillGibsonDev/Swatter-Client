@@ -42,11 +42,11 @@ const EditBugPage = ({ user }) => {
   useEffect(() => {
     const getSprints = () => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then(function (response) {
+      .then((response) => {
         setOptions(response.data.sprints);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     const getBug = (projectId, bugId) => {
@@ -58,8 +58,8 @@ const EditBugPage = ({ user }) => {
         setImages(response.data[0].bugs[0].images);
         setLoading(false);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getSprints(projectId);
@@ -86,7 +86,7 @@ const EditBugPage = ({ user }) => {
         images: images,
       }
     )
-    .then(function (response) {
+    .then((response) => {
       if (response.data !== "Bug Updated") {
         setMessage(`Server Error - Bug Not Updated!`);
         setLoading(false);
@@ -96,7 +96,13 @@ const EditBugPage = ({ user }) => {
         setLoading(false);
         handleAlert(AlertRef);
       }
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+      setMessage(`Server Error - Bug Not Updated!`);
+      setLoading(false);
+      handleAlert(AlertRef);
+    })
   };
 
   const deleteBug = () => {
@@ -116,6 +122,9 @@ const EditBugPage = ({ user }) => {
     })
     .catch((err) => {
       console.log(err);
+      setMessage(`Server Error - Bug Not Deleted!`);
+      setLoading(false);
+      handleAlert(AlertRef);
     })
   };
 

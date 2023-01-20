@@ -37,7 +37,7 @@ const RegisterUserPage = ({ user }) => {
           userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
         }
       )
-      .then(function (response) {
+      .then((response) => {
         if (response.data !== "USER REGISTERED") {
           setMessage("Server Error - User Not Created");
           handleAlert(AlertRef);
@@ -45,7 +45,12 @@ const RegisterUserPage = ({ user }) => {
           setMessage("User Created!");
           handleAlert(AlertRef);
         }
-      });
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("Server Error - User Not Created");
+        handleAlert(AlertRef);
+      })
     }
   };
   

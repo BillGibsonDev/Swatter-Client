@@ -43,8 +43,8 @@ const CreateBugPage = ({ user }) => {
         setOptions(response.data.sprints);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getProject(projectId);
@@ -66,7 +66,7 @@ const CreateBugPage = ({ user }) => {
         images: images,
       }
     )
-    .then(function (response) {
+    .then((response) => {
       if (response.data !== "Bug Created") {
         setLoading(false);
         setMessage("Server Error - Bug not created");
@@ -76,7 +76,13 @@ const CreateBugPage = ({ user }) => {
         setMessage(`Bug Added!`);
         handleAlert(AlertRef);
       }
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+      setMessage("Server Error - Bug not created");
+      handleAlert(AlertRef);
+    })
   };
 
   const [images, setImages] = useState([
@@ -143,18 +149,20 @@ const CreateBugPage = ({ user }) => {
               </label>
               <label>
                 Sprint:
-                { !options ? 
-                  <></>
-                : 
-                  <select id='sprint' onChange={(event) => { setSprint(event.target.value); }}>
-                    <option value=''>None</option>
-                    {options.map((sprint, key) => {
-                      return (
-                        <option key={key} value={`${sprint.title}`}>
-                          {sprint.title}
-                        </option>
-                      );
-                    })}
+                { 
+                  !options ? 
+                    <></>
+                  : <select id='sprint' onChange={(event) => { setSprint(event.target.value); }}>
+                      <option value=''>None</option>
+                      {
+                        options.map((sprint, key) => {
+                          return (
+                            <option key={key} value={`${sprint.title}`}>
+                              {sprint.title}
+                            </option>
+                          );
+                        })
+                      }
                   </select>
                 }
               </label>

@@ -43,26 +43,23 @@ export const SprintsPage = () => {
 
   useEffect(() => {
     const getProject = (projectId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          setProject(response.data);
-          setBugs(response.data.bugs);
-          setOpenBugs(response.data.bugs.filter((bugs) => bugs.status === "Open"));
-          setUnderwayBugs(response.data.bugs.filter((bugs) => bugs.status === "Underway"));
-          setReviewBugs(response.data.bugs.filter((bugs) => bugs.status === "Reviewing"));
-          setCompletedBugs(response.data.bugs.filter((bugs) => bugs.status === "Completed"));
-          setOptions(response.data.sprints);
-          if(response.data.sprints[0]){
-            handleEndDate(response.data.sprints[0].endDate);
-          }
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setProject(response.data);
+        setBugs(response.data.bugs);
+        setOpenBugs(response.data.bugs.filter((bugs) => bugs.status === "Open"));
+        setUnderwayBugs(response.data.bugs.filter((bugs) => bugs.status === "Underway"));
+        setReviewBugs(response.data.bugs.filter((bugs) => bugs.status === "Reviewing"));
+        setCompletedBugs(response.data.bugs.filter((bugs) => bugs.status === "Completed"));
+        setOptions(response.data.sprints);
+        if(response.data.sprints[0]){
+          handleEndDate(response.data.sprints[0].endDate);
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     };
     getProject(projectId);
   }, [projectId, rerender]);

@@ -36,28 +36,23 @@ const EditProjectPage = ({ user }) => {
 
   useEffect(() => {
     const getProject = () => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          setProject(response.data);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get( `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setProject(response.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
     };
     getProject(projectId);
   }, [projectId, user]);
 
   const deleteProject = () => {
     setLoading(true);
-    axios
-      .delete(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`
-      )
-    .then(function (response) {
+    axios.delete(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+    .then((response) => {
       if (response.data !== "Project Deleted") {
         setMessage(`Server Error - Project not deleted!`);
         setLoading(false);
@@ -68,7 +63,13 @@ const EditProjectPage = ({ user }) => {
         handleAlert(AlertRef);
         navigate("/");
       }
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+      setMessage(`Server Error - Project not deleted!`);
+      setLoading(false);
+      handleAlert(AlertRef);
+    })
   };
 
   const [projectTitle, setProjectTitle] = useState(project.projectTitle);
@@ -96,7 +97,7 @@ const EditProjectPage = ({ user }) => {
         projectType: projectType,
       }
     )
-    .then(function (response) {
+    .then((response) => {
       if (response.data !== "Project Updated") {
         setMessage('Server Error - Project not updated');
         setLoading(false);
@@ -106,7 +107,13 @@ const EditProjectPage = ({ user }) => {
         setLoading(false);
         handleAlert(AlertRef);
       }
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+      setMessage('Server Error - Project not updated');
+      setLoading(false);
+      handleAlert(AlertRef);
+    })
   };
 
   return (

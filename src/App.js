@@ -69,8 +69,8 @@ function App() {
             dispatch(handleUser(username, response.data));
           }
         })
-        .catch((error) => {
-          console.log(error)
+        .catch((err) => {
+          console.log(err)
           setLoggedIn(false);
           setLoading(false);
           localStorage.clear();
@@ -100,26 +100,26 @@ function App() {
         setLoading(false);
         handleTokens(response.data, username);
         axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: response.data })
-          .then((res) => {
-            if(res.status === 200){
-              setLoggedIn(true);
-              dispatch(handleUser(username, res.data));
-              navigate("/");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            localStorage.clear();
-            sessionStorage.clear();
-            setMessage("Wrong Username or Password");
-            handleAlert(AlertRef);
-            setLoading(false);
-            setLoggedIn(false);
-            navigate("/LoginPage");
-          });
+        .then((res) => {
+          if(res.status === 200){
+            setLoggedIn(true);
+            dispatch(handleUser(username, res.data));
+            navigate("/");
+          }
         })
-      .catch((error) => {
-        console.log(error);
+        .catch((err) => {
+          console.log(err);
+          localStorage.clear();
+          sessionStorage.clear();
+          setMessage("Wrong Username or Password");
+          handleAlert(AlertRef);
+          setLoading(false);
+          setLoggedIn(false);
+          navigate("/LoginPage");
+        });
+      })
+      .catch((err) => {
+        console.log(err);
         localStorage.clear();
         sessionStorage.clear();
         setMessage("Wrong Username or Password");
@@ -144,82 +144,39 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      {!isLoggedIn ? 
-        <>
-          <Alert
-            message={message}
-            handleAlert={handleAlert}
-            AlertRef={AlertRef}
-          />
-          <LoginPage
-            login={login}
-            setUsername={setUsername}
-            setPassword={setPassword}
-            isLoading={isLoading}
-            message={message}
-            handleAlert={handleAlert}
-            AlertRef={AlertRef}
-          />
-        </>
-      : 
+      {
+        !isLoggedIn ? 
+          <>
+            <Alert
+              message={message}
+              handleAlert={handleAlert}
+              AlertRef={AlertRef}
+            />
+            <LoginPage
+              login={login}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              isLoading={isLoading}
+              message={message}
+              handleAlert={handleAlert}
+              AlertRef={AlertRef}
+            />
+          </>
+        : 
         <>
           <Nav logout={logout} />
           <Routes>
-            <Route
-              path='/'
-              exact
-              element={ <HomePage /> }
-            />
-            <Route
-              path='/:projectId/:bugId'
-              exact
-              element={ <BugPage /> }
-            />
-            <Route
-              path='/:projectId/:bugId/edit'
-              exact
-              element={ <EditBugPage /> }
-            />
-            <Route
-              path='/projects/:projectId'
-              exact
-              element={ <ProjectPage /> }
-            />
-            <Route
-              path='/projects/:projectId/sprints'
-              exact
-              element={ <SprintsPage /> }
-            />
-            <Route
-              path='/CreateProjectPage'
-              exact
-              element={ <CreateProjectPage /> }
-            />
-            <Route
-              path='/EditProject/:projectId'
-              exact
-              element={ <EditProjectPage /> }
-            />
-            <Route
-              path='/:projectId/CreateBugPage'
-              exact
-              element={ <CreateBugPage /> }
-            />
-            <Route
-              path='/:projectId/details'
-              exact
-              element={ <DetailsPage /> }
-            />
-            <Route
-              path='/ProfilePage'
-              exact
-              element={ <ProfilePage /> }
-            />
-            <Route
-              path='/RegisterUserPage'
-              exact
-              element={ <RegisterUserPage /> }
-            />
+            <Route path='/' exact element={ <HomePage /> } />
+            <Route path='/:projectId/:bugId' exact element={ <BugPage /> }  />
+            <Route path='/:projectId/:bugId/edit' exact element={ <EditBugPage /> } />
+            <Route path='/projects/:projectId' exact element={ <ProjectPage /> } />
+            <Route path='/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
+            <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
+            <Route path='/EditProject/:projectId' exact element={ <EditProjectPage /> } />
+            <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />
+            <Route path='/:projectId/details' exact element={ <DetailsPage /> } />
+            <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
+            <Route path='/RegisterUserPage' exact element={ <RegisterUserPage /> } />
           </Routes>
         </>
       }

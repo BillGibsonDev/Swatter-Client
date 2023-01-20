@@ -50,8 +50,8 @@ export const ProjectPage = () => {
         setCompletedBugs( response.data.bugs.filter((bugs) => bugs.status === "Completed"));
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getProject(projectId);

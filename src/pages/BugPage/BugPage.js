@@ -36,8 +36,8 @@ const BugPage = ({ user }) => {
         setImages(response.data[0].bugs[0].images);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
       });
     };
     getBug(projectId, bugId);
@@ -73,7 +73,7 @@ const BugPage = ({ user }) => {
         <span>/</span>
         <Link to={`/projects/${projectId}`}>Project</Link>
         <span>/</span>
-        {bug === undefined ? <></> : <p>{bug.title}</p>}
+        {!bug ? <></> : <p>{bug.title}</p>}
       </div>
       {isLoading ? <BugPageLoader />
        : 

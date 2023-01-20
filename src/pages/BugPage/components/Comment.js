@@ -51,7 +51,7 @@ const Comment = ({
   const deleteComment = () => {
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
-    .then(function (response) {
+    .then((response) => {
       if (response.data !== "Comment Deleted!") {
         setMessage("Server Error - Comment not deleted");
         handleAlert(AlertRef);

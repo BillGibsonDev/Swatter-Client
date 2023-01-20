@@ -74,6 +74,9 @@ const CreateProjectPage = ({ user }) => {
     })
     .catch((err) => {
       console.log(err);
+      setLoading(false);
+      setMessage("Server Error - Project not created");
+      handleAlert(AlertRef);
     });
   };
 

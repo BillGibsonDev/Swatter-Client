@@ -67,87 +67,43 @@ const SprintForm = ({
       />
       <div className='title-container'>
         <h1>New Sprint</h1>
-        <button
-          id='exit-btn'
-          onClick={() => {
-            toggleSprintForm();
-          }}
-        >
+        <button id='exit-btn' onClick={() => { toggleSprintForm(); }}>
           &times;<span className='tooltiptext'>Close</span>
         </button>
       </div>
       <label>
         Title
-        <input
-          type='text'
-          id='title'
-          onChange={(event) => {
-            setTitle(event.target.value);
-          }}
-        />
+        <input type='text' id='title' onChange={(event) => { setTitle(event.target.value);}} />
       </label>
       <label>
         Goal
-        <textarea
-          type='text'
-          id='goal'
-          onChange={(event) => {
-            setGoal(event.target.value);
-          }}
-        />
+        <textarea type='text' id='goal' onChange={(event) => { setGoal(event.target.value); }} />
       </label>
       <label>
         Status
-        <select
-          name='status'
-          defaultValue={"Active"}
-          onChange={(event) => {
-            setStatus(event.target.value);
-          }}
-        >
+        <select name='status' defaultValue={"Active"} onChange={(event) => { setStatus(event.target.value);}}>
           <option value='Active'>Active</option>
           <option value='Completed'>Completed</option>
         </select>
       </label>
       <label>
         End Date
-        <input
-          type='date'
-          id='end-date'
-          onChange={(event) => {
-            setEndDate(event.target.value);
-          }}
-        />
+        <input type='date' id='end-date' onChange={(event) => { setEndDate(event.target.value); }}/>
       </label>
       <label>
         Color Code
-        <input
-          defaultValue={"#000000"}
-          type='text'
-          id='color-code'
+        <input defaultValue={"#000000"} type='text' id='color-code'
           onChange={(event) => {
             setColor(event.target.value);
           }}
         />
       </label>
-      {user.role === process.env.REACT_APP_USER_SECRET ||
-      user.role === process.env.REACT_APP_ADMIN_SECRET ? (
-        <button
-          onClick={() => {
-            handleSprintForm();
-          }}
-        >
-          Save
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            unauthorized();
-          }}
-        >
-          Save
-        </button>
-      )}
+      {
+        user.role === process.env.REACT_APP_USER_SECRET ||
+        user.role === process.env.REACT_APP_ADMIN_SECRET 
+        ? <button onClick={() => { handleSprintForm(); }}>Save</button>
+        : <button onClick={() => { unauthorized(); }}>Save</button>
+      }
     </StyledSprintForm>
   );
 };

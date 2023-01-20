@@ -43,16 +43,13 @@ const EditSprintForm = ({
       );
     }
     const handleSprint = (projectId, sprintId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`
-        )
-        .then(function (response) {
-          setSprint(response.data[0].sprints[0]);
-        })
-        .catch(function (response) {
-          console.log(response);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
+      .then((response) => {
+        setSprint(response.data[0].sprints[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     };
     if (sprintId) {
       handleSprint(projectId, sprintId);
@@ -66,32 +63,30 @@ const EditSprintForm = ({
   const [status, setStatus] = useState(sprint.status);
 
   const handleUpdateSprint = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`,
-        {
-          projectId: projectId,
-          sprintId: sprintId,
-          goal: goal,
-          title: title,
-          endDate: endDate,
-          color: color,
-          status: status,
-        }
-      )
-      .then((response) => {
-        if (response.data !== "Sprint Updated") {
-          setMessage("Server Error - Sprint not updated");
-          handleAlert(AlertRef);
-        } else {
-          setMessage(`Sprint Updated!`);
-          handleAlert(AlertRef);
-          setRerender(!rerender);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`,
+      {
+        projectId: projectId,
+        sprintId: sprintId,
+        goal: goal,
+        title: title,
+        endDate: endDate,
+        color: color,
+        status: status,
+      }
+    )
+    .then((response) => {
+      if (response.data !== "Sprint Updated") {
+        setMessage("Server Error - Sprint not updated");
+        handleAlert(AlertRef);
+      } else {
+        setMessage(`Sprint Updated!`);
+        handleAlert(AlertRef);
+        setRerender(!rerender);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   const handleDeleteSprint = () => {

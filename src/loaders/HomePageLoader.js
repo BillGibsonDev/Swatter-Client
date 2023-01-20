@@ -9,7 +9,7 @@ export default function HomePageLoader() {
     return (
         <StyledLoader>
             <div className="loading-wrapper">
-                <div className="loader"><img src={BugImage} alt="" /></div>
+                <div className="loader"><img src={BugImage} alt="Loading Page" /></div>
                 <h2>Loading...</h2>
             </div>
             <div className="skelton-bug"></div>

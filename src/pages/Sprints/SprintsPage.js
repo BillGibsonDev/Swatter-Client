@@ -94,24 +94,24 @@ export const SprintsPage = () => {
     <StyledSprintSection>
       <div className='button-wrapper'>
         <button onClick={() => { toggleSprintForm(); }}>New Sprint</button>
-        {options === undefined 
-        ? <></>
-        : 
-          <select
-            onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
-            <option value=''></option>
-            {options.map((sprint, key) => {
-              return (
-                <option key={key} id={sprint._id} value={`${sprint.title}`}>
-                  {sprint.title}
-                </option>
-              );
-            })}
-          </select>
+        {
+          !options
+          ? <></>
+          : 
+            <select  onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
+              <option value=''></option>
+              {options.map((sprint, key) => {
+                return (
+                  <option key={key} id={sprint._id} value={`${sprint.title}`}>
+                    {sprint.title}
+                  </option>
+                );
+              })}
+            </select>
         }
       </div>
       <div className='sprint-list-wrapper'>
-        {project.sprints === undefined 
+        {!project.sprints
         ? <></>
          : 
           <>
@@ -154,7 +154,7 @@ export const SprintsPage = () => {
         rerender={rerender}
         
       />
-      {searchSprint === undefined && project.sprints === undefined 
+      {!searchSprint && !project.sprints
       ? <></>
        : 
         <EditSprintForm
@@ -168,13 +168,12 @@ export const SprintsPage = () => {
           
         />
       }
-      {isLoading === true 
-      ? <Loader />
+      {isLoading ? <Loader />
       : 
         <div className='sprint-bug-table-wrapper'>
-          {bugs === undefined 
-          ? 
-            <div className='undefined'>
+          {
+          !bugs
+          ? <div className='undefined'>
               <h1>You've haven't entered any bugs</h1>
             </div>
           : 

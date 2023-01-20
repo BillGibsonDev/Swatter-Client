@@ -54,22 +54,22 @@ export default function Bug({
 						: bugDate
 					}
 				</h2>
-				<h2 id="sprint" style={{background: sprintColor[0] === undefined ? "" : sprintColor[0].color}}>{sprint}</h2>
+				<h2 id="sprint" style={{background: !sprintColor[0] ? "" : sprintColor[0].color}}>{sprint}</h2>
 			</div>
 			<div className="bottom-container">
 				<div className="status-icons-container">
 					{(() => {
 						switch (tag) {
 							case "Bug":
-								return (<img src={icons.BugPicture} alt=""/>)
+								return (<img src={icons.BugPicture} alt="Bug" />)
 							case "Feature":
-								return (<img src={icons.Feature} alt=""/>)
+								return (<img src={icons.Feature} alt="Feature" />)
 							case "Enhancement":
-								return (<img src={icons.Enhancement} alt=""/>)
+								return (<img src={icons.Enhancement} alt="Enhancement" />)
 							case "Task":
-								return (<img src={icons.Task} alt=""/>)
+								return (<img src={icons.Task} alt="Task" />)
 							case "Redesign":
-								return (<img src={icons.Redesign} alt=""/>)
+								return (<img src={icons.Redesign} alt="Redesign" />)
 							default:
 								return (
 									<h2>{tag}</h2>
@@ -80,11 +80,11 @@ export default function Bug({
 					{(() => {
 						switch (priority) {
 							case "Standard":
-								return (<img src={icons.ArrowGreen} alt=""/>)
+								return (<img src={icons.ArrowGreen} alt="Standard Priority"/>)
 							case "Medium":
-								return (<img className="yellow-arrow" src={icons.ArrowYellow} alt=""/>)
+								return (<img className="yellow-arrow" src={icons.ArrowYellow} alt="Medium Priority"/>)
 							case "High":
-								return (<img className="red-arrow" src={icons.ArrowRed} alt=""/>)
+								return (<img className="red-arrow" src={icons.ArrowRed} alt="high Priority"/>)
 							default:
 								return (
 									<h2>{priority}</h2>

@@ -12,22 +12,21 @@ const ProfilePage =({ user }) => {
             {
                 user.role === undefined
                 ? <h1>You are signed out</h1>
-                : 
-                    <>
-                        <div className="user-container">
-                            <h2><span>Username: </span>{user.username}</h2>
-                            {
-                                user.role === process.env.REACT_APP_ADMIN_SECRET 
-                                ? <h2><span>Role: </span>Admin</h2>
-                                : user.role === process.env.REACT_APP_USER_SECRET 
-                                ? <h2><span>Role: </span>User</h2>
-                                : user.role === process.env.REACT_APP_GUEST_SECRET 
-                                ? <h2><span>Role: </span>Guest</h2>
-                                : <span>{user.role}</span>
-                                
-                            }
-                        </div>
-                    </>
+                : <>
+                    <div className="user-container">
+                        <h2><span>Username: </span>{user.username}</h2>
+                        {
+                            user.role === process.env.REACT_APP_ADMIN_SECRET 
+                            ? <h2><span>Role: </span>Admin</h2>
+                            : user.role === process.env.REACT_APP_USER_SECRET 
+                            ? <h2><span>Role: </span>User</h2>
+                            : user.role === process.env.REACT_APP_GUEST_SECRET 
+                            ? <h2><span>Role: </span>Guest</h2>
+                            : <span>{user.role}</span>
+                            
+                        }
+                    </div>
+                </>
             }
         </StyledProfilePage>
     )

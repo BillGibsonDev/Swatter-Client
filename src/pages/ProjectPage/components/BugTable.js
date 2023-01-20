@@ -5,8 +5,7 @@ import * as pallette from '../../../styled/ThemeVariables';
 // components
 import Bug from './Bug.js';
 
-export default function BugTable({ 
-    user, 
+export default function BugTable({
     bugs,
     openBugs, 
     underwayBugs, 
@@ -21,7 +20,7 @@ export default function BugTable({
     return (
         <StyledBugTable>
             { 
-                bugs === undefined 
+                !bugs
                 ? <div className="undefined">
                     <h1>You've haven't entered any bugs</h1>
                 </div>
@@ -42,7 +41,6 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        
                                         sprint={bug.sprint}
                                         project={project}
                                         rerender={rerender}
@@ -70,7 +68,6 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        
                                         sprint={bug.sprint}
                                         project={project}
                                     />
@@ -122,7 +119,6 @@ export default function BugTable({
                                         tag={bug.tag}
                                         lastUpdate={bug.lastUpdate}
                                         key={key}
-                                        
                                         sprint={bug.sprint}
                                         project={project}
                                     />

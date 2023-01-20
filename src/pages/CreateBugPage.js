@@ -38,50 +38,45 @@ const CreateBugPage = ({ user }) => {
 
   useEffect(() => {
     const getProject = (projectId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then((response) => {
-          setOptions(response.data.sprints);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setOptions(response.data.sprints);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     };
     getProject(projectId);
   }, [projectId]);
 
   const createBug = () => {
     setLoading(true);
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`,
-        {
-          projectId: projectId,
-          title: title,
-          description: description,
-          status: status,
-          author: author,
-          priority: priority,
-          tag: tag,
-          role: user.role,
-          sprint: sprint,
-          images: images,
-        }
-      )
-      .then(function (response) {
-        if (response.data !== "Bug Created") {
-          setLoading(false);
-          setMessage("Server Error - Bug not created");
-          handleAlert(AlertRef);
-        } else {
-          setLoading(false);
-          setMessage(`Bug Added!`);
-          handleAlert(AlertRef);
-        }
-      });
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`,
+      {
+        projectId: projectId,
+        title: title,
+        description: description,
+        status: status,
+        author: author,
+        priority: priority,
+        tag: tag,
+        role: user.role,
+        sprint: sprint,
+        images: images,
+      }
+    )
+    .then(function (response) {
+      if (response.data !== "Bug Created") {
+        setLoading(false);
+        setMessage("Server Error - Bug not created");
+        handleAlert(AlertRef);
+      } else {
+        setLoading(false);
+        setMessage(`Bug Added!`);
+        handleAlert(AlertRef);
+      }
+    });
   };
 
   const [images, setImages] = useState([
@@ -128,7 +123,8 @@ const CreateBugPage = ({ user }) => {
         <p>Create Bug</p>
       </div>
       <h1>Create Bug</h1>
-      {user === null ? <h1>You are signed out</h1>
+      {
+      user === null ? <h1>You are signed out</h1>
       : isLoading ? <Loader />
       : 
         <div className='form-wrapper'>
@@ -136,37 +132,21 @@ const CreateBugPage = ({ user }) => {
             <div className='left-container'>
               <label>
                 Title
-                <input
-                  type='text'
-                  id='title'
-                  onChange={(event) => {
-                    setTitle(event.target.value);
-                  }}
-                />
+                <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
               </label>
               <label>
                 Created By
-                <input
-                  readOnly
-                  defaultValue={user.username}
-                  type='text'
-                  id='author'
-                  onChange={(event) => {
+                <input readOnly defaultValue={user.username} type='text' id='author' onChange={(event) => {
                     setAuthor(event.target.value);
                   }}
                 />
               </label>
               <label>
                 Sprint:
-                {options === undefined ? (
+                { !options ? 
                   <></>
-                ) : (
-                  <select
-                    id='sprint'
-                    onChange={(event) => {
-                      setSprint(event.target.value);
-                    }}
-                  >
+                : 
+                  <select id='sprint' onChange={(event) => { setSprint(event.target.value); }}>
                     <option value=''>None</option>
                     {options.map((sprint, key) => {
                       return (
@@ -176,18 +156,13 @@ const CreateBugPage = ({ user }) => {
                       );
                     })}
                   </select>
-                )}
+                }
               </label>
             </div>
             <div className='right-container'>
               <label>
                 Priority
-                <select
-                  id='status'
-                  onChange={(event) => {
-                    setPriority(event.target.value);
-                  }}
-                >
+                <select id='status' onChange={(event) => { setPriority(event.target.value); }}>
                   <option value=''></option>
                   <option value='Standard'>Standard</option>
                   <option value='Medium'>Medium</option>
@@ -196,12 +171,7 @@ const CreateBugPage = ({ user }) => {
               </label>
               <label>
                 Status
-                <select
-                  id='status'
-                  onChange={(event) => {
-                    setStatus(event.target.value);
-                  }}
-                >
+                <select id='status' onChange={(event) => { setStatus(event.target.value); }}>
                   <option value=''></option>
                   <option value='Open'>Open</option>
                   <option value='Underway'>Underway</option>
@@ -211,12 +181,7 @@ const CreateBugPage = ({ user }) => {
               </label>
               <label>
                 Tag
-                <select
-                  id='status'
-                  onChange={(event) => {
-                    setTag(event.target.value);
-                  }}
-                >
+                <select id='status' onChange={(event) => { setTag(event.target.value); }}>
                   <option value=''></option>
                   <option value='Bug'>Bug</option>
                   <option value='Enhancement'>Enhancement</option>
@@ -269,43 +234,17 @@ const CreateBugPage = ({ user }) => {
                       onChange={(event) => handleInputChange(index, event)}
                     />
                   </label>
-                  <button
-                    id='delete'
-                    onClick={() => {
-                      handleRemoveFields(index);
-                    }}
-                  >
-                    Remove
-                  </button>
+                  <button id='delete' onClick={() => { handleRemoveFields(index); }}>Remove</button>
                 </div>
               </div>
             );
           })}
-          <button
-            className='add-images-button'
-            onClick={() => {
-              handleAddFields();
-            }}
-          >
-            Add Image
-          </button>
-          {user.role === process.env.REACT_APP_USER_SECRET ||
-          user.role === process.env.REACT_APP_ADMIN_SECRET ? 
-            <button
-              style={{ marginTop: "40px" }}
-              onClick={() => {
-                createBug();
-              }}
-            >
-              Save
-            </button>
-          : 
-            <button
-              style={{ marginTop: "40px" }}
-              onClick={() => unauthorized()}
-            >
-              Save
-            </button>
+          <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
+          {
+            user.role === process.env.REACT_APP_USER_SECRET ||
+            user.role === process.env.REACT_APP_ADMIN_SECRET 
+            ? <button style={{ marginTop: "40px" }} onClick={() => { createBug(); }}>Save</button>
+            : <button style={{ marginTop: "40px" }} onClick={() => unauthorized()}>Save</button>
           }
         </div>
       }

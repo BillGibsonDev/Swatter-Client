@@ -7,7 +7,7 @@ export default function ImageSection({ images, handleModal }) {
     return (
         <StyledImageSection className='bug-page-tabs' id="images">
             {
-                images === undefined || images.length === 0 
+                !images|| images.length === 0 
                 ? <h2>No Images</h2>
                 : <div className="images-wrapper">
                     { 

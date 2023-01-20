@@ -23,7 +23,7 @@ export default function Project({
                 <Link to={`/projects/${projectId}`}>{title}</Link>
                 <div className="wrapper">
                     <h2>{date}</h2>
-                    <Link className="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="" /><span className="tooltiptext">Edit Project</span></Link>
+                    <Link className="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="Edit Project" /><span className="tooltiptext">Edit Project</span></Link>
                 </div>
             </div>
         </StyledProject>

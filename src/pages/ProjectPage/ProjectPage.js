@@ -40,30 +40,19 @@ export const ProjectPage = () => {
 
   useEffect(() => {
     const getProject = () => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`
-        )
-        .then(function (response) {
-          setProject(response.data);
-          setBugs(response.data.bugs);
-          setOpenBugs(
-            response.data.bugs.filter((bugs) => bugs.status === "Open")
-          );
-          setUnderwayBugs(
-            response.data.bugs.filter((bugs) => bugs.status === "Underway")
-          );
-          setReviewBugs(
-            response.data.bugs.filter((bugs) => bugs.status === "Reviewing")
-          );
-          setCompletedBugs(
-            response.data.bugs.filter((bugs) => bugs.status === "Completed")
-          );
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      .then((response) => {
+        setProject(response.data);
+        setBugs(response.data.bugs);
+        setOpenBugs(response.data.bugs.filter((bugs) => bugs.status === "Open"));
+        setUnderwayBugs(response.data.bugs.filter((bugs) => bugs.status === "Underway"));
+        setReviewBugs(response.data.bugs.filter((bugs) => bugs.status === "Reviewing"));
+        setCompletedBugs( response.data.bugs.filter((bugs) => bugs.status === "Completed"));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     };
     getProject(projectId);
   }, [projectId, bugId, rerender]);
@@ -95,14 +84,8 @@ export const ProjectPage = () => {
 
   return (
     <StyledProjectPage>
-      <button
-        id='arrow-button'
-        onClick={() => {
-          handleArrow();
-          toggleSideNav();
-        }}
-      >
-        <img id='arrow' src={arrowRight} alt='' />
+      <button id='arrow-button' onClick={() => { handleArrow(); toggleSideNav(); }}>
+        <img id='arrow' src={arrowRight} alt='Project Menu' />
         <span className='tooltiptext'>Project Menu</span>
       </button>
       <ProjectSideNav
@@ -110,21 +93,20 @@ export const ProjectPage = () => {
         projectSideNavRef={projectSideNavRef}
         toggleComments={toggleComments}
       />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className='bug-table-wrapper'>
-          <Searchbar />
-          {bugs === undefined ? (
-            <div className='undefined'>
-              <h1>You've havent entered any bugs</h1>
-            </div>
-          ) : (
+      {
+        isLoading ? <Loader />
+        : <div className='bug-table-wrapper'>
+            <Searchbar />
+          {
+            !bugs ? 
+              <div className='undefined'>
+                <h1>You've haven't entered any bugs</h1>
+              </div>
+            : 
             <>
               <BugTable
                 setRerender={setRerender}
                 rerender={rerender}
-                
                 bugs={bugs}
                 openBugs={openBugs}
                 underwayBugs={underwayBugs}
@@ -134,13 +116,11 @@ export const ProjectPage = () => {
                 project={project}
               />
             </>
-          )}
+          }
         </div>
-      )}
+      }
       <CommentSection
         toggleComments={toggleComments}
-        
-        
         commentSectionRef={commentSectionRef}
         setRerender={setRerender}
         rerender={rerender}

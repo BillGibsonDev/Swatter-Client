@@ -30,18 +30,15 @@ const BugPage = ({ user }) => {
 
   useEffect(() => {
     const getBug = (projectId, bugId) => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`
-        )
-        .then(function (response) {
-          setBug(response.data[0].bugs[0]);
-          setImages(response.data[0].bugs[0].images);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+      .then((response) => {
+        setBug(response.data[0].bugs[0]);
+        setImages(response.data[0].bugs[0].images);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     };
     getBug(projectId, bugId);
   }, [projectId, bugId, isLoading]);
@@ -78,24 +75,21 @@ const BugPage = ({ user }) => {
         <span>/</span>
         {bug === undefined ? <></> : <p>{bug.title}</p>}
       </div>
-      {isLoading ? (
-        <BugPageLoader />
-      ) : (
+      {isLoading ? <BugPageLoader />
+       : 
         <div className='bug-wrapper'>
           <div className='title-container'>
             <h1>{bug.title}</h1>
-            <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt='edit bug link' />
-              Edit
-            </Link>
+            <Link to={`/${projectId}/${bugId}/edit`}><img src={EditIcon} alt='edit bug link' />Edit</Link>
           </div>
           <div className='info-wrapper'>
             <div className='info-container'>
               <h3><span>Tag: </span> {bug.tag}</h3>
               <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
-              <h3><span>Status: </span> {bug.status}</h3>
+              <h3><span>Status: </span>{bug.status}</h3>
               <h3><span>Sprint: </span>
                 {
-                  bug.sprint === undefined || bug.sprint === ""
+                  !bug.sprint  || bug.sprint === ""
                   ? <>None</>
                   : <>{bug.sprint}</>
                 }
@@ -107,25 +101,15 @@ const BugPage = ({ user }) => {
               <h2><span>Updated: </span>{bug.lastUpdate}</h2>
             </div>
           </div>
-          <p id='description'>
-            <span>Description: </span> {bug.description}
-          </p>
+          <p id='description'><span>Description: </span> {bug.description}</p>
           <div className='button-container'>
-            <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>
-              Comments
-            </button>
-            <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>
-              Images
-            </button>
+            <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>Comments</button>
+            <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
           </div>
           <ImageSection images={images} handleModal={handleModal} />
-          <CommentSection
-            bugId={bugId}
-            projectId={projectId}
-            setLoading={setLoading}
-          />
+          <CommentSection bugId={bugId} projectId={projectId} setLoading={setLoading} />
         </div>
-      )}
+      }
     </StyledBugPage>
   );
 }

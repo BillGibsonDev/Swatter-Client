@@ -8,41 +8,32 @@ import styled from "styled-components";
 import Project from "./components/Project.js";
 import HomePageLoader from "../../loaders/HomePageLoader";
 
-// redux
-import { connect } from "react-redux";
-
-const HomePage = ({ user }) => {
+export const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const getProjects = () => {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECTS_URL}`
-        )
-        .then(function (response) {
-          setProjects(response.data);
-          setLoading(false);
-        })
-        .catch(function (error) {
-          throw error;
-        });
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECTS_URL}`)
+      .then((response) => {
+        setProjects(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     };
     getProjects();
   }, []);
 
   return (
     <StyledHomePage>
-      {isLoading ? 
-        <HomePageLoader />
-      : 
-        <>
+      {
+        isLoading ? <HomePageLoader />
+        : <>
           <div className='projects-container'>
-            {projects
-              .slice()
-              .reverse()
-              .map((project, key) => {
+            {
+              projects.slice().reverse().map((project, key) => {
                 return (
                   <Project
                     projects={projects}
@@ -54,7 +45,8 @@ const HomePage = ({ user }) => {
                     key={key}
                   />
                 );
-              })}
+              })
+            }
           </div>
         </>
       }
@@ -120,11 +112,3 @@ const StyledHomePage = styled.div`
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(HomePage);

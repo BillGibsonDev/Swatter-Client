@@ -33,18 +33,16 @@ const SprintForm = ({
   const [status, setStatus] = useState("");
 
   const handleSprintForm = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`,
-        {
-          projectId: projectId,
-          goal: goal,
-          title: title,
-          endDate: endDate,
-          color: color,
-          status: status,
-        }
-      )
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`,
+      {
+        projectId: projectId,
+        goal: goal,
+        title: title,
+        endDate: endDate,
+        color: color,
+        status: status,
+      }
+    )
     .then((response) => {
       if (response.data !== "Sprint Created") {
         setMessage("Server Error - Sprint not created");

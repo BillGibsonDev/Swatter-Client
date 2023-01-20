@@ -95,10 +95,7 @@ const EditSprintForm = ({
   };
 
   const handleDeleteSprint = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
-      )
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,)
     .then(function (response) {
       if (response.data !== "Sprint Deleted") {
         setMessage("Server Error - Sprint Not Deleted!");
@@ -185,16 +182,14 @@ const EditSprintForm = ({
         />
       </label>
       <div className='button-container'>
-        {user.role === process.env.REACT_APP_USER_SECRET ||
-        user.role === process.env.REACT_APP_ADMIN_SECRET ? 
-          <>
+        {
+          user.role === process.env.REACT_APP_USER_SECRET ||
+          user.role === process.env.REACT_APP_ADMIN_SECRET 
+          ? <>
             <button onClick={() => { handleUpdateSprint(); }}>Save</button>
-            <button id='delete' onClick={() => { toggleEditSprintForm(); handleDeleteSprint();}}>
-              Delete
-            </button>
+            <button id='delete' onClick={() => { toggleEditSprintForm(); handleDeleteSprint();}}> Delete</button>
           </>
-        : 
-          <>
+          : <>
             <button onClick={() => { unauthorized(); }}>Save</button>
             <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
           </>

@@ -14,33 +14,19 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 			<h2>Project Management</h2>
 			{
 				isLoading 
-				? 
-					<div className="loading-container">
-						<div className="loader">
-							<img src={BugImage} alt="" />
-						</div>
-							<h2>Signing In...</h2>
+				? <div className="loading-container">
+					<div className="loader">
+						<img src={BugImage} alt="Loading" />
 					</div>
-				: 
-					<form className="form-wrapper">
-						<label>Username</label>
-						<input 
-							type="text" 
-							required
-							onChange={(event) => {
-								setUsername(event.target.value);
-							}}
-						/>
-						<label>Password</label>
-						<input 
-							type="password" 
-							required
-							onChange={(event) => {
-								setPassword(event.target.value);
-							}}
-						/>
-						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
-					</form>
+					<h2>Signing In...</h2>
+				</div>
+				:  <form className="form-wrapper">
+					<label>Username</label>
+					<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
+					<label>Password</label>
+					<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
+					<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
+				</form>
 			}
 			<div className="guest-container">
 				<h4>For Guests - (View Only)</h4>

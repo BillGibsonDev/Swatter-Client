@@ -29,25 +29,23 @@ const RegisterUserPage = ({ user }) => {
       setMessage("Passwords Do not Match!");
       handleAlert(AlertRef);
     } else {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_REGISTER_URL}`,
-          {
-            username: username,
-            password: password,
-            role: user.role,
-            userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
-          }
-        )
-        .then(function (response) {
-          if (response.data !== "USER REGISTERED") {
-            setMessage("Server Error - User Not Created");
-            handleAlert(AlertRef);
-          } else {
-            setMessage("User Created!");
-            handleAlert(AlertRef);
-          }
-        });
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_REGISTER_URL}`,
+        {
+          username: username,
+          password: password,
+          role: user.role,
+          userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
+        }
+      )
+      .then(function (response) {
+        if (response.data !== "USER REGISTERED") {
+          setMessage("Server Error - User Not Created");
+          handleAlert(AlertRef);
+        } else {
+          setMessage("User Created!");
+          handleAlert(AlertRef);
+        }
+      });
     }
   };
   
@@ -62,30 +60,15 @@ const RegisterUserPage = ({ user }) => {
       <div className='form-wrapper'>
         <label>
           Username
-          <input
-            type='text'
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
+          <input type='text' onChange={(event) => { setUsername(event.target.value); }} />
         </label>
         <label>
           Password
-          <input
-            type='text'
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
+          <input type='text' onChange={(event) => { setPassword(event.target.value); }} />
         </label>
         <label>
           Retype Password
-          <input
-            type='text'
-            onChange={(event) => {
-              setConfirm(event.target.value);
-            }}
-          />
+          <input type='text' onChange={(event) => { setConfirm(event.target.value); }} />
         </label>
         {
           user.role === process.env.REACT_APP_ADMIN_SECRET 

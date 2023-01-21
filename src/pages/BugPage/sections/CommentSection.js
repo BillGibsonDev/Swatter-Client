@@ -90,25 +90,25 @@ const CommentSection = ({
         AlertRef={AlertRef}
       />
       <div className='comment-section-wrapper'>
-        {comments.length === 0 
-        ? <h2>No comments yet..</h2>
-        : 
-          <div className='comment-container' id='bug-comment-container'>
-            {comments.map((comment, key) => {
-              return (
-                <Comment
-                  date={comment.date}
-                  author={comment.author}
-                  comments={comment.comment}
-                  commentId={comment._id}
-                  bugId={bugId}
-                  projectId={projectId}
-                  key={key}
-                  setLoading={setLoading}
-                />
-              );
-            })}
-          </div>
+        {
+          comments.length === 0 
+          ? <h2>No comments yet..</h2>
+          : 
+            <div className='comment-container' id='bug-comment-container'>
+              {
+                comments.map((comment, index) => {
+                  return (
+                    <Comment
+                      comment={comment}
+                      bugId={bugId}
+                      projectId={projectId}
+                      key={index}
+                      setLoading={setLoading}
+                    />
+                  );
+                })
+              }
+            </div>
         }
         <div className='comment-maker'>
           <textarea

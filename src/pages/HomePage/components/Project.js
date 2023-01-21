@@ -10,20 +10,26 @@ import Edit from "../../../assets/icons/editIconWhite.png";
 import PlaceholderImage from '../../../assets/images/imagePlaceholder.png';
 
 export default function Project({
-    projectId, 
-    title, 
-    date, 
-    projectImage
+    project
 }) {
 
     return (
         <StyledProject>
-            <Link className='project-image-link' to={`/projects/${projectId}`}><img className="project-image" src={projectImage === "" || undefined ? PlaceholderImage : projectImage} alt="" /></Link>
+            <Link className='project-image-link' to={`/projects/${project._Id}`}>
+                <img 
+                    className="project-image" 
+                    src={project.projectImage === "" || undefined ? PlaceholderImage : project.projectImage} 
+                    alt={project.title} 
+                />
+            </Link>
             <div className="text-container">
-                <Link to={`/projects/${projectId}`}>{title}</Link>
+                <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link>
                 <div className="wrapper">
-                    <h2>{date}</h2>
-                    <Link className="edit-link" to={`/EditProject/${projectId}`}><img id="edit-button" src={Edit} alt="Edit Project" /><span className="tooltiptext">Edit Project</span></Link>
+                    <h2>{project.startDate}</h2>
+                    <Link className="edit-link" to={`/EditProject/${project._id}`}>
+                        <img id="edit-button" src={Edit} alt="Edit Project" />
+                        <span className="tooltiptext">Edit Project</span>
+                    </Link>
                 </div>
             </div>
         </StyledProject>
@@ -140,7 +146,9 @@ const StyledProject = styled.div`
                     }
                 }
             }
-            #edit-link:hover .tooltiptext, #edit-link:active .tooltiptext, #edit-link:focus .tooltiptext {
+            #edit-link:hover .tooltiptext, 
+            #edit-link:active .tooltiptext, 
+            #edit-link:focus .tooltiptext {
                 visibility: visible;
                 transition-delay: 1s;
             }

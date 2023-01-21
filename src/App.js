@@ -16,7 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
 import EditProjectPage from "./pages/EditProjectPage";
-import BugPage from "./pages/BugPage/BugPage.js";
+import { BugPage }from "./pages/BugPage/BugPage.js";
 import CreateBugPage from "./pages/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import DetailsPage from "./pages/DetailsPage";

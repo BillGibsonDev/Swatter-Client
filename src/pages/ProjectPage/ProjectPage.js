@@ -27,27 +27,15 @@ export const ProjectPage = () => {
 
   const { projectId, bugId } = useParams();
 
-  const [bugs, setBugs] = useState([]);
   const [project, setProject] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [isLoading, setLoading] = useState(true);
-
-  // data states
-  const [openBugs, setOpenBugs] = useState([]);
-  const [underwayBugs, setUnderwayBugs] = useState([]);
-  const [reviewBugs, setReviewBugs] = useState([]);
-  const [completedBugs, setCompletedBugs] = useState([]);
 
   useEffect(() => {
     const getProject = () => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
       .then((response) => {
         setProject(response.data);
-        setBugs(response.data.bugs);
-        setOpenBugs(response.data.bugs.filter((bugs) => bugs.status === "Open"));
-        setUnderwayBugs(response.data.bugs.filter((bugs) => bugs.status === "Underway"));
-        setReviewBugs(response.data.bugs.filter((bugs) => bugs.status === "Reviewing"));
-        setCompletedBugs( response.data.bugs.filter((bugs) => bugs.status === "Completed"));
         setLoading(false);
       })
       .catch((err) => {
@@ -56,16 +44,6 @@ export const ProjectPage = () => {
     };
     getProject(projectId);
   }, [projectId, bugId, rerender]);
-
-  const toggleComments = () => {
-    setRerender(!rerender);
-    let section = commentSectionRef.current;
-    if (section.style.display === "none") {
-      section.style.display = "flex";
-    } else {
-      section.style.display = "none";
-    }
-  };
 
   const toggleSideNav = () => {
     setRerender(!rerender);
@@ -91,14 +69,14 @@ export const ProjectPage = () => {
       <ProjectSideNav
         project={project}
         projectSideNavRef={projectSideNavRef}
-        toggleComments={toggleComments}
+        commentSectionRef={commentSectionRef}
       />
       {
         isLoading ? <Loader />
         : <div className='bug-table-wrapper'>
             <Searchbar />
           {
-            !bugs ? 
+            !project.bugs ? 
               <div className='undefined'>
                 <h1>You've haven't entered any bugs</h1>
               </div>
@@ -107,20 +85,14 @@ export const ProjectPage = () => {
               <BugTable
                 setRerender={setRerender}
                 rerender={rerender}
-                bugs={bugs}
-                openBugs={openBugs}
-                underwayBugs={underwayBugs}
-                reviewBugs={reviewBugs}
-                completedBugs={completedBugs}
-                projectId={projectId}
                 project={project}
+                bugs={project.bugs}
               />
             </>
           }
         </div>
       }
       <CommentSection
-        toggleComments={toggleComments}
         commentSectionRef={commentSectionRef}
         setRerender={setRerender}
         rerender={rerender}

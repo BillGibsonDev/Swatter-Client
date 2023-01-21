@@ -21,14 +21,11 @@ import Menu from "../../../assets/icons/dotMenu.png";
 import { connect } from "react-redux";
 
 const Comment = ({
-  comments,
-  author,
-  date,
-  user,
-  commentId,
+  comment,
   projectId,
   setLoading,
   bugId,
+  user
 }) => {
 
   const AlertRef = useRef();
@@ -46,11 +43,11 @@ const Comment = ({
   }, []);
 
   const [currentDate] = compareDate.split(",");
-  const [commentDate, commentTime] = date.split(",");
+  const [commentDate, commentTime] = comment.date.split(",");
 
   const deleteComment = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${comment._id}`)
     .then((response) => {
       if (response.data !== "Comment Deleted!") {
         setMessage("Server Error - Comment not deleted");
@@ -69,15 +66,17 @@ const Comment = ({
       setLoading(false);
     });
   };
+  
+  const handleCommentAuthor = (author) => {
+    if(author === user.username){
+      return { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`};
+    } else {
+      return { margin: "10px auto 10px 5%", background: "white" };
+    }
+  }
 
   return (
-    <StyledComment
-      style={
-        author === user.username
-        ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
-        : { margin: "10px auto 10px 5%", background: "white" }
-      }
-    >
+    <StyledComment style={handleCommentAuthor(comment.author)} >
       <Alert
         message={message}
         AlertRef={AlertRef}
@@ -89,16 +88,16 @@ const Comment = ({
       />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={author}>{author}<span>{currentDate === commentDate ? commentTime : date}</span></h3>
+          <h3 id={comment.author}>{comment.author}<span>{currentDate === commentDate ? commentTime : comment.date}</span></h3>
           {
-            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <div className='dropdown'>
                 <button className='dropbtn'>
                   <img src={Menu} alt='Menu' />
                 </button>
                 <div className='dropdown-content'>
                   {
-                    author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
                     ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
                     : <button onClick={() => { unauthorized(); }}>Delete</button>
                   }
@@ -107,7 +106,7 @@ const Comment = ({
             : <></>
           }
         </div>
-        <p>{comments}</p>
+        <p>{comment.comment}</p>
       </div>
     </StyledComment>
   );

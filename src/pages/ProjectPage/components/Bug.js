@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 // styled
 import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
@@ -11,92 +9,80 @@ import { Link } from 'react-router-dom';
 import * as icons from '../../../assets/IconImports.js';
 
 export default function Bug({
-    projectId,
-    bugId,
-    title,
-    priority,
-    author,
-    status,
-    tag,
-    lastUpdate,
     user,
-	sprint, 
 	project,
-	rerender
+	bug
 }) {
 
-	const [ compareDate, setCompareDate] = useState("");
-	const [ sprintColor, setSprintColor ] = useState("");
+	const handleDate = (bug) => {
+		let currentDate = new Date();
+		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
+		const [ bugDate, bugTime ] = bug.lastUpdate.split(",");
+		if(compareDate[0] === bugDate){
+			return bugTime;
+		} else {
+			return bugDate;
+		}
+	}
+	
+	const handleSprintColor = (project) => {
+		if(project.sprints.find(sprints => sprints.title === bug.sprint)){
+			let color = project.sprints.find(sprints => sprints.title === bug.sprint).color;
+			return color;
+		} else {
+			return '';
+		}
+	}
 
-	useEffect(() => {
-	  const handleDate = () => {
-		const currentDate = new Date();
-		setCompareDate( currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-	  }
-	  setSprintColor(project.sprints.filter(sprints => sprints.title === sprint))
-	  handleDate();
-	}, [project, sprint, rerender])
+	const handleTagImage = (tag) => {
+		switch (tag) {
+		case "Bug":
+			return icons.BugPicture;
+		case "Feature":
+			return icons.Feature;
+		case "Enhancement":
+			return icons.Enhancement;
+		case "Task":
+			return icons.Task;
+		case "Redesign":
+			return icons.Redesign;
+		default:
+			return '';
+		}
+	}
 
-	const [ currentDate ] = compareDate.split(",");
-	const [ bugDate, bugTime ] = lastUpdate.split(",");
+	const handleBugPriority = (priority) => {
+		switch (priority) {
+		case "Standard":
+			return icons.ArrowGreen;
+		case "Medium":
+			return icons.ArrowYellow;
+		case "High":
+			return icons.ArrowRed;
+		default:
+			return '';
+		};
+	}
 
     return (
-        <StyledBug className={status}>
-			<Link to={`/${projectId}/${bugId}`}>
+        <StyledBug className={bug.status}>
+			<Link to={`/${project._id}/${bug._id}`}>
 			<div className="top-container">
-				<h2 id="title">{title}</h2>
+				<h2 id="title">{bug.title}</h2>
 			</div>
 			<div className="center-container">
-				<h2 id="date">
-					{
-						currentDate === bugDate 
-						? bugTime
-						: bugDate
-					}
-				</h2>
-				<h2 id="sprint" style={{background: !sprintColor[0] ? "" : sprintColor[0].color}}>{sprint}</h2>
+				<h2 id="date">{handleDate(bug)}</h2>
+				<h2 id="sprint" style={{background: handleSprintColor(project)}}>{bug.sprint}</h2>
 			</div>
 			<div className="bottom-container">
 				<div className="status-icons-container">
-					{(() => {
-						switch (tag) {
-							case "Bug":
-								return (<img src={icons.BugPicture} alt="Bug" />)
-							case "Feature":
-								return (<img src={icons.Feature} alt="Feature" />)
-							case "Enhancement":
-								return (<img src={icons.Enhancement} alt="Enhancement" />)
-							case "Task":
-								return (<img src={icons.Task} alt="Task" />)
-							case "Redesign":
-								return (<img src={icons.Redesign} alt="Redesign" />)
-							default:
-								return (
-									<h2>{tag}</h2>
-								)
-							}	
-						}
-					)()}
-					{(() => {
-						switch (priority) {
-							case "Standard":
-								return (<img src={icons.ArrowGreen} alt="Standard Priority"/>)
-							case "Medium":
-								return (<img className="yellow-arrow" src={icons.ArrowYellow} alt="Medium Priority"/>)
-							case "High":
-								return (<img className="red-arrow" src={icons.ArrowRed} alt="high Priority"/>)
-							default:
-								return (
-									<h2>{priority}</h2>
-								)
-							}
-						}
-					)()}
+					<img src={handleTagImage(bug.tag)} alt={bug.tag} />
+					<img src={handleBugPriority(bug.priority)} alt={bug.priority} />
 				</div>
 				{
-					user === author 
-					? <h2 id="author" className={author}>You</h2>
-					: <h2 id="author" className={author}>{author}</h2>
+					user === bug.author 
+					? <h2 id="author" className={bug.author}>You</h2>
+					: <h2 id="author" className={bug.author}>{bug.author}</h2>
 				}
 			</div>
 			</Link>

@@ -18,10 +18,7 @@ import { Link, useParams } from "react-router-dom";
 // images
 import EditIcon from "../../assets/icons/editIconWhite.png";
 
-// redux
-import { connect } from "react-redux";
-
-const BugPage = ({ user }) => {
+export const BugPage = () => {
   const { projectId, bugId } = useParams();
 
   const [bug, setBug] = useState([]);
@@ -286,11 +283,3 @@ const StyledBugPage = styled.div`
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(BugPage);

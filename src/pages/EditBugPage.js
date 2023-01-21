@@ -31,7 +31,6 @@ const EditBugPage = ({ user }) => {
   const { projectId, bugId } = useParams();
 
   const [ message, setMessage ] = useState('');
-
   const [author, setAuthor] = useState("");
   const [bug, setBug] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -51,7 +50,7 @@ const EditBugPage = ({ user }) => {
     };
     const getBug = (projectId, bugId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
-      .then(function (response) {
+      .then((response) => {
         setBug(response.data[0].bugs[0]);
         setOptions(response.data);
         setAuthor(response.data[0].bugs[0].author);
@@ -247,40 +246,43 @@ const EditBugPage = ({ user }) => {
         </div>
       }
       <h2>Images:</h2>
-      {images === undefined 
+      {
+      !images 
       ? <h1>No Images Yet</h1>
       : 
         <div className='images-wrapper'>
-          {images.map((image, index) => {
-            return (
-              <div className='image-container' key={index}>
-                <img className='preview-image' id='image' src={image.image} alt={image.caption}/>
-                <div className='input-container'>
-                  <label>
-                    Image
-                    <input
-                      type='text'
-                      id='image'
-                      name='image'
-                      defaultValue={image.image}
-                      onChange={(event) => handleInputChange(index, event)}
-                    />
-                  </label>
-                  <label>
-                    Caption
-                    <input
-                      type='text'
-                      id='caption'
-                      name='caption'
-                      defaultValue={image.caption}
-                      onChange={(event) => handleInputChange(index, event)}
-                    />
-                  </label>
-                  <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove</button>
+          {
+            images.map((image, index) => {
+              return (
+                <div className='image-container' key={index}>
+                  <img className='preview-image' id='image' src={image.image} alt={image.caption}/>
+                  <div className='input-container'>
+                    <label>
+                      Image
+                      <input
+                        type='text'
+                        id='image'
+                        name='image'
+                        defaultValue={image.image}
+                        onChange={(event) => handleInputChange(index, event)}
+                      />
+                    </label>
+                    <label>
+                      Caption
+                      <input
+                        type='text'
+                        id='caption'
+                        name='caption'
+                        defaultValue={image.caption}
+                        onChange={(event) => handleInputChange(index, event)}
+                      />
+                    </label>
+                    <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove</button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          }
         </div>
       }
       <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>

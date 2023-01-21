@@ -19,8 +19,10 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { handleAlert } from "../../../functions/handleAlert.js";
 
+// functions
+import { toggleComments } from "../../../functions/toggleComments.js";
+
 const CommentSection = ({
-  toggleComments,
   commentSectionRef,
   user
 }) => {
@@ -94,29 +96,32 @@ const CommentSection = ({
       <div className='comment-section-wrapper'>
         <div className='title-container'>
           <h1>Comments</h1>
-          <button id='exit-btn' onClick={() => { toggleComments(); }}>
+          <button id='exit-btn' onClick={() => { toggleComments(commentSectionRef); }}>
             &times;<span className='tooltiptext'>Close</span>
           </button>
         </div>
-        {comments.length === 0 || comments === [] 
-        ? <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
-          No comments yet..
-        </h1>
-        :
-          <div className='comment-container' id='comment-container'>
-            {comments.map((comment, key) => {
-              return (
-                <Comment
-                  date={comment.date}
-                  author={comment.author}
-                  comments={comment.comment}
-                  commentId={comment._id}
-                  projectId={projectId}
-                  key={key}
-                  setLoading={setLoading}
-                />
-              );
-            })}
+        {
+          comments.length === 0 || comments === [] 
+          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
+            No comments yet..
+          </h1>
+          :
+            <div className='comment-container' id='comment-container'>
+              {
+                comments.map((comment, key) => {
+                  return (
+                    <Comment
+                      date={comment.date}
+                      author={comment.author}
+                      comments={comment.comment}
+                      commentId={comment._id}
+                      projectId={projectId}
+                      key={key}
+                      setLoading={setLoading}
+                    />
+                  );
+                })
+              }
           </div>
         }
         <div className='comment-maker'>
@@ -130,7 +135,7 @@ const CommentSection = ({
             }}
           />
           {
-            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
+            user.role === process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
             ? <button onClick={() => { sendComment(); }}>Send</button>
             : <button onClick={() => { unauthorized(); }}>Send</button>
           }

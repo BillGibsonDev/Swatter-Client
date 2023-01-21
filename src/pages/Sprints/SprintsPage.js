@@ -21,36 +21,27 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
+// functions
+import { toggleSprintForm } from "../../functions/toggleSprintForm";
+
 export const SprintsPage = () => {
   const { projectId } = useParams();
 
-  const sprintForm = useRef();
-  const editSprintForm = useRef();
+  const sprintFormRef = useRef();
+  const editSprintFormRef = useRef();
 
   const [searchSprint, setSearchSprint] = useState(false);
   const [options, setOptions] = useState([]);
-
-  const [bugs, setBugs] = useState([]);
   const [project, setProject] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
-  // data states
-  const [openBugs, setOpenBugs] = useState([]);
-  const [underwayBugs, setUnderwayBugs] = useState([]);
-  const [reviewBugs, setReviewBugs] = useState([]);
-  const [completedBugs, setCompletedBugs] = useState([]);
 
   useEffect(() => {
     const getProject = (projectId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
       .then((response) => {
         setProject(response.data);
-        setBugs(response.data.bugs);
-        setOpenBugs(response.data.bugs.filter((bugs) => bugs.status === "Open"));
-        setUnderwayBugs(response.data.bugs.filter((bugs) => bugs.status === "Underway"));
-        setReviewBugs(response.data.bugs.filter((bugs) => bugs.status === "Reviewing"));
-        setCompletedBugs(response.data.bugs.filter((bugs) => bugs.status === "Completed"));
         setOptions(response.data.sprints);
         if(response.data.sprints[0]){
           handleEndDate(response.data.sprints[0].endDate);
@@ -59,28 +50,11 @@ export const SprintsPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
     };
     getProject(projectId);
   }, [projectId, rerender]);
-
-  const toggleSprintForm = () => {
-    let section = sprintForm.current;
-    if (section.style.display === "none") {
-      section.style.display = "flex";
-    } else {
-      section.style.display = "none";
-    }
-  };
-
-  const toggleEditSprintForm = () => {
-    let section = editSprintForm.current;
-    if (section.style.display === "none") {
-      section.style.display = "flex";
-    } else {
-      section.style.display = "none";
-    }
-  };
 
   const handleEndDate = (x) => {
     let newArr = x.split(/[ -]+/);
@@ -90,104 +64,96 @@ export const SprintsPage = () => {
   return (
     <StyledSprintSection>
       <div className='button-wrapper'>
-        <button onClick={() => { toggleSprintForm(); }}>New Sprint</button>
+        <button onClick={() => { toggleSprintForm(sprintFormRef); }}>New Sprint</button>
         {
           !options
           ? <></>
           : 
             <select  onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
               <option value=''></option>
-              {options.map((sprint, key) => {
-                return (
-                  <option key={key} id={sprint._id} value={`${sprint.title}`}>
-                    {sprint.title}
-                  </option>
-                );
-              })}
+              {
+                options.map((sprint, key) => {
+                  return (
+                    <option key={key} id={sprint._id} value={`${sprint.title}`}>
+                      {sprint.title}
+                    </option>
+                  );
+                })
+              }
             </select>
         }
       </div>
       <div className='sprint-list-wrapper'>
-        {!project.sprints
-        ? <></>
-         : 
+        {
+          !project.sprints ? <></>
+          : 
           <>
             {
-              project.sprints
-                .filter((sprint) => sprint.title === searchSprint)
-                .map((sprint, key) => {
-                  return (
-                    <div className='title-wrapper' key={key}>
-                      <div className='title-container'>
-                        <h4>{sprint.title}</h4>
-                        <button onClick={() => { toggleEditSprintForm(); }} >
-                          <img id='edit-button' src={Edit} alt='' />
-                          <span className='tooltiptext'>Edit Sprint</span>
-                        </button>
-                      </div>
-                      <h5 id='status'><span>Status: </span>{sprint.status}</h5>
-                      <div className='info-container'>
-                        <h5>
-                          <span>Updated:</span> {sprint.updated}
-                        </h5>
-                        {
-                          sprint.endDate === "" 
-                          ? <></>
-                          : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
-                        }
-                      </div>
+              project.sprints.filter((sprint) => sprint.title === searchSprint).map((sprint, key) => {
+                return (
+                  <div className='title-wrapper' key={key}>
+                    <div className='title-container'>
+                      <h4>{sprint.title}</h4>
+                      <button onClick={() => { toggleSprintForm(editSprintFormRef); }} >
+                        <img id='edit-button' src={Edit} alt='' />
+                        <span className='tooltiptext'>Edit Sprint</span>
+                      </button>
                     </div>
-                  );
-                })
+                    <h5 id='status'><span>Status: </span>{sprint.status}</h5>
+                    <div className='info-container'>
+                      <h5>
+                        <span>Updated:</span> {sprint.updated}
+                      </h5>
+                      {
+                        sprint.endDate === "" 
+                        ? <></>
+                        : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
+                      }
+                    </div>
+                  </div>
+                );
+              })
             }
           </>
         }
       </div>
       <SprintForm
         projectId={projectId}
-        toggleSprintForm={toggleSprintForm}
-        sprintForm={sprintForm}
+        sprintFormRef={sprintFormRef}
         setRerender={setRerender}
         rerender={rerender}
-        
       />
-      {!searchSprint && !project.sprints
-      ? <></>
-       : 
-        <EditSprintForm
-          projectId={projectId}
-          toggleEditSprintForm={toggleEditSprintForm}
-          editSprintForm={editSprintForm}
-          setRerender={setRerender}
-          rerender={rerender}
-          project={project}
-          searchSprint={searchSprint}
-          
-        />
+      {
+        !searchSprint && !project.sprints
+        ? <></>
+        : 
+          <EditSprintForm
+            projectId={projectId}
+            editSprintFormRef={editSprintFormRef}
+            setRerender={setRerender}
+            rerender={rerender}
+            project={project}
+            searchSprint={searchSprint}
+          />
       }
-      {isLoading ? <Loader />
-      : 
-        <div className='sprint-bug-table-wrapper'>
-          {
-          !bugs
-          ? <div className='undefined'>
-              <h1>You've haven't entered any bugs</h1>
-            </div>
-          : 
-            <SprintBugTable
-              setRerender={setRerender}
-              rerender={rerender}
-              bugs={bugs}
-              openBugs={openBugs.filter((openBugs) => openBugs.sprint === searchSprint)}
-              underwayBugs={underwayBugs.filter((underwayBugs) => underwayBugs.sprint === searchSprint)}
-              reviewBugs={reviewBugs.filter((reviewBugs) => reviewBugs.sprint === searchSprint)}
-              completedBugs={completedBugs.filter((completedBugs) => completedBugs.sprint === searchSprint)}
-              projectId={projectId}
-              project={project}
-              searchSprint={searchSprint}
-            />
-          }
-        </div>
+      {
+        isLoading ? <Loader />
+        : 
+          <div className='sprint-bug-table-wrapper'>
+            {
+              !project.bugs
+              ? <div className='undefined'>
+                  <h1>You've haven't entered any bugs</h1>
+                </div>
+              : 
+                <SprintBugTable
+                  setRerender={setRerender}
+                  rerender={rerender}
+                  project={project}
+                  searchSprint={searchSprint}
+                />
+            }
+          </div>
       }
     </StyledSprintSection>
   );

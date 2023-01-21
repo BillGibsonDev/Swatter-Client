@@ -150,8 +150,7 @@ const CreateBugPage = ({ user }) => {
               <label>
                 Sprint:
                 { 
-                  !options ? 
-                    <></>
+                  !options ? <></>
                   : <select id='sprint' onChange={(event) => { setSprint(event.target.value); }}>
                       <option value=''>None</option>
                       {

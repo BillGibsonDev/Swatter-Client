@@ -6,6 +6,16 @@ import { connect } from 'react-redux';
 
 const ProfilePage =({ user }) => {
 
+    const handleUserRole = (role) => {
+        if( role === process.env.REACT_APP_ADMIN_SECRET ) {
+            return 'Admin';
+        } else if( role === process.env.REACT_APP_USER_SECRET){
+            return 'User';
+        } else {
+            return 'Guest';
+        }
+    }
+
     return (
         <StyledProfilePage>
             <h1>Profile</h1>
@@ -15,15 +25,7 @@ const ProfilePage =({ user }) => {
                 : <>
                     <div className="user-container">
                         <h2><span>Username: </span>{user.username}</h2>
-                        {
-                            user.role === process.env.REACT_APP_ADMIN_SECRET 
-                            ? <h2><span>Role: </span>Admin</h2>
-                            : user.role === process.env.REACT_APP_USER_SECRET 
-                            ? <h2><span>Role: </span>User</h2>
-                            : user.role === process.env.REACT_APP_GUEST_SECRET 
-                            ? <h2><span>Role: </span>Guest</h2>
-                            : <span>{user.role}</span>
-                        }
+                        <h2><span>Role: </span>{handleUserRole(user.role)}</h2>
                     </div>
                 </>
             }

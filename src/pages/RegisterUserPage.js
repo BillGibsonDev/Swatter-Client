@@ -20,9 +20,9 @@ const RegisterUserPage = ({ user }) => {
   const AlertRef = useRef();
 
   const [ message, setMessage ] = useState('')
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ confirm, setConfirm ] = useState("");
 
   const registerUser = () => {
     if (password !== confirm) {
@@ -77,7 +77,7 @@ const RegisterUserPage = ({ user }) => {
         </label>
         {
           user.role === process.env.REACT_APP_ADMIN_SECRET 
-          ? <button type='submit' onClick={() => { registerUser(); }}> Create User</button>
+          ? <button type='submit' onClick={() => { registerUser(); }}>Create User</button>
           : <button onClick={() => { unauthorized(); }}>Create User</button>
         }
       </div>

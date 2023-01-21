@@ -11,10 +11,13 @@ import * as images from '../../../assets/ImageImports.js';
 // router
 import { Link, useParams } from 'react-router-dom';
 
+// functions
+import { toggleComments } from '../../../functions/toggleComments.js';
+
 export const ProjectSideNav = ({
     project, 
-    toggleComments,
-    projectSideNavRef
+    projectSideNavRef,
+    commentSectionRef
 }) => {
 
     const { projectId } = useParams();
@@ -45,7 +48,7 @@ export const ProjectSideNav = ({
                 <Link to={`/projects/${projectId}/sprints`} ><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Project Link</a>
-                <button onClick={()=> { toggleComments()}}><img src={icons.Comments} alt="Comments" />Comments</button>
+                <button onClick={()=> { toggleComments(commentSectionRef)}}><img src={icons.Comments} alt="Comments" />Comments</button>
                 <Link to={`/${projectId}/CreateBugPage`} ><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
                 <Link to={`/${projectId}/details`} ><img src={icons.Details} alt="Details" />Details</Link>
             </div>

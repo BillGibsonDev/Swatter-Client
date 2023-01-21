@@ -7,6 +7,7 @@ import styled from "styled-components";
 // functions
 import { unauthorized } from "../../../functions/unauthorized.js";
 import { handleAlert } from "../../../functions/handleAlert.js";
+import { toggleSprintForm } from "../../../functions/toggleSprintForm.js";
 
 // redux
 import { connect } from "react-redux";
@@ -16,8 +17,7 @@ import { Alert } from "../../../components/Alert.js";
 
 const SprintForm = ({
   projectId,
-  sprintForm,
-  toggleSprintForm,
+  sprintFormRef,
   rerender,
   setRerender,
   user
@@ -51,6 +51,7 @@ const SprintForm = ({
         setMessage("Sprint Created!");
         handleAlert(AlertRef);
         setRerender(!rerender);
+        toggleSprintForm(sprintFormRef);
       }
     })
     .catch((err) => {
@@ -59,7 +60,7 @@ const SprintForm = ({
   };
 
   return (
-    <StyledSprintForm ref={sprintForm} style={{ display: "none" }}>
+    <StyledSprintForm ref={sprintFormRef} style={{ display: "none" }}>
       <Alert
         message={message}
         handleAlert={handleAlert}
@@ -67,7 +68,7 @@ const SprintForm = ({
       />
       <div className='title-container'>
         <h1>New Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleSprintForm(); }}>
+        <button id='exit-btn' onClick={() => { toggleSprintForm(sprintFormRef); }}>
           &times;<span className='tooltiptext'>Close</span>
         </button>
       </div>

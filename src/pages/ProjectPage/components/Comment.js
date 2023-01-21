@@ -53,7 +53,7 @@ const Comment = ({
     .then((response) => {
       if (response.data !== "Comment Deleted") {
         setLoading(false);
-        setMessage('Server Error - Comment Not Deleted')
+        setMessage('Server Error - Comment Not Deleted');
         handleAlert(AlertRef);
       } else {
         setLoading(false);
@@ -93,8 +93,8 @@ const Comment = ({
               <div className='dropdown-content'>
                 {  
                   author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
-                  ? <button onClick={() => handleDeleteAlert(DeleteAlertRef)}>Delete</button>
-                  : <button onClick={unauthorized}>Delete</button>
+                  ? <button onClick={() => handleDeleteAlert(DeleteAlertRef) }>Delete</button>
+                  : <button onClick={() => unauthorized() }>Delete</button>
                 }
               </div>
             </div>

@@ -249,7 +249,7 @@ const EditProjectPage = ({ user }) => {
       <div className='button-container'>
         {
           user.role === process.env.REACT_APP_GUEST_SECRET 
-          ? <button onClick={() => { unauthorized(); }}> Update</button>
+          ? <button onClick={() => { unauthorized(); }}>Update</button>
           : <button onClick={() => { editProject(); }}>Update</button>
         }
         {

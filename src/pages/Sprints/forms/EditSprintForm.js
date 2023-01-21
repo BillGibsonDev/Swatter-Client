@@ -17,10 +17,12 @@ import { connect } from "react-redux";
 import { Alert } from "../../../components/Alert";
 import { DeleteAlert } from "../../../components/DeleteAlert";
 
+// functions
+import { toggleSprintForm } from "../../../functions/toggleSprintForm";
+
 const EditSprintForm = ({
   projectId,
-  editSprintForm,
-  toggleEditSprintForm,
+  editSprintFormRef,
   rerender,
   setRerender,
   project,
@@ -103,7 +105,7 @@ const EditSprintForm = ({
   };
 
   return (
-    <StyledSprintForm ref={editSprintForm} style={{ display: "none" }}>
+    <StyledSprintForm ref={editSprintFormRef} style={{ display: "none" }}>
       <Alert
         message={message}
         handleAlert={handleAlert}
@@ -117,7 +119,7 @@ const EditSprintForm = ({
       />
       <div className='title-container'>
         <h1>Edit Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleEditSprintForm(); }}>&times;<span className='tooltiptext'>Close</span></button>
+        <button id='exit-btn' onClick={() => { toggleSprintForm(editSprintFormRef); }}>&times;<span className='tooltiptext'>Close</span></button>
       </div>
       <label>
         Title
@@ -182,7 +184,7 @@ const EditSprintForm = ({
           user.role === process.env.REACT_APP_ADMIN_SECRET 
           ? <>
             <button onClick={() => { handleUpdateSprint(); }}>Save</button>
-            <button id='delete' onClick={() => { toggleEditSprintForm(); handleDeleteSprint();}}> Delete</button>
+            <button id='delete' onClick={() => { toggleSprintForm(editSprintFormRef); handleDeleteSprint();}}> Delete</button>
           </>
           : <>
             <button onClick={() => { unauthorized(); }}>Save</button>

@@ -36,12 +36,7 @@ export const HomePage = () => {
               projects.slice().reverse().map((project, key) => {
                 return (
                   <Project
-                    projects={projects}
-                    projectId={project._id}
-                    title={project.projectTitle}
-                    date={project.startDate}
-                    author={project.author}
-                    projectImage={project.projectImage}
+                    project={project}
                     key={key}
                   />
                 );

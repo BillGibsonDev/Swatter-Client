@@ -57,8 +57,8 @@ const StyledLoader = styled.div`
         justify-content: center;
         align-items: center;
         img {
-            width: 80%;
-            height: 80%;
+            width: 60%;
+            height: 60%;
         }
     }
     h3 {

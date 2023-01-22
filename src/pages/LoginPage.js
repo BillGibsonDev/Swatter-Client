@@ -62,7 +62,7 @@ const StyledLoginPage = styled.div`
 		}
 		label {
 			font-weight: bold;
-			font-size: ${pallette.subtitleSize};
+			font-size: ${pallette.labelSize};
 		}
 		input {
 			width: 300px;

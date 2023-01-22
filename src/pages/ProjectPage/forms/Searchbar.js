@@ -1,16 +1,23 @@
 // styled 
-import styled from 'styled-components'
+import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables.js';
 
 // images
-import SearchIcon from '../../../assets/images/bugMicroYaleBlue.png'
+import SearchIcon from '../../../assets/images/bugMicroYaleBlue.png';
 
-export const Searchbar = () => {
+export const Searchbar = ({ setSearchPhrase }) => {
+
+    const handleClearForm = (e) => {
+        e.preventDefault();
+        setSearchPhrase('')
+        document.getElementById('search').value = ''
+    }
 
   return (
     <StyledSearchbar>
         <img src={SearchIcon} alt="Search" />
-        <input type="text" placeholder='Search Bugs'/>
+        <input type="text" id="search" placeholder='Search Bugs' onChange={(e) => { setSearchPhrase(e.target.value)}} />
+        <button onClick={(e) => {handleClearForm(e) }}>Clear</button>
     </StyledSearchbar>
   )
 }
@@ -40,6 +47,21 @@ const StyledSearchbar = styled.form`
         &:focus {
             outline: none;
             text-indent: 6px;
+        }
+    }
+    button {
+        background: white;
+        font-weight: 700;
+        font-size: .8em;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        width: 100px;
+        height: 28px;
+        &:hover{
+            color: white;
+            background: black;
         }
     }
 `;

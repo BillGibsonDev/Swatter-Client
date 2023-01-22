@@ -23,9 +23,9 @@ export default function BugTable({
                         bugStatuses.map((status, index) => {
                             return (
                                 <div className="bugs-container" key={index}>
-                                    <h5>{status} <span>{project.bugs.filter(bug => bug.status === status).length}</span></h5>
+                                    <h5>{status} <span>{project.bugs.filter(bug => bug.status === status).slice().reverse().length}</span></h5>
                                     {
-                                        project.bugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
+                                       project.bugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
                                             return (
                                                 <Bug
                                                     bug={bug}

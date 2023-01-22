@@ -8,11 +8,10 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icons from '../../../assets/IconImports.js';
 
-export default function Bug({
-    user,
-	project,
-	bug
-}) {
+// redux
+import { connect } from 'react-redux';
+
+const Bug = ({ user, project, bug }) => {
 
 	const handleDate = (bug) => {
 		let currentDate = new Date();
@@ -79,11 +78,7 @@ export default function Bug({
 					<img src={handleTagImage(bug.tag)} alt={bug.tag} />
 					<img src={handleBugPriority(bug.priority)} alt={bug.priority} />
 				</div>
-				{
-					user === bug.author 
-					? <h2 id="author" className={bug.author}>You</h2>
-					: <h2 id="author" className={bug.author}>{bug.author}</h2>
-				}
+			<h2 className={bug.author}>{bug.author}</h2>
 			</div>
 			</Link>
         </StyledBug>
@@ -101,71 +96,63 @@ const StyledBug = styled.div`
 	cursor: pointer;
 	border: 1px solid white;
 	background: ${pallette.accentColor};
-		#title {
-			color: #ffffff;
-		}
-		.center-container, .bottom-container, .top-container {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 90%;
-			height: 50%;
-			margin: 10px auto;
-			.status-icons-container {
-				img {
-					width: 25px;
-					&:first-child {
-						margin-right: 10px;
-					}
+	#title {
+		color: #ffffff;
+	}
+	.center-container, .bottom-container, .top-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 90%;
+		height: 50%;
+		margin: 10px auto;
+		.status-icons-container {
+			img {
+				width: 25px;
+				&:first-child {
+					margin-right: 10px;
 				}
 			}
-			h2 {
-				font-size: 14px;
-				font-weight: 400;
-			}
-			#date, #author {
-				color: #e4e4e4;
-				font-size: 12px;
-				font-weight: 400;
-			}
 		}
-		.center-container {
-			flex-direction: column;
-			#date, #sprint {
-				margin-right: auto;
-			}
-			#sprint {
-				margin-top: 6px;
-				color: white;
-				padding: 0 6px;
-				font-size: 12px;
-				border-radius: 4px;
-			}
+		h2 {
+			font-size: .8em;
+			font-weight: 400;
 		}
+		#date, #author {
+			color: #e4e4e4;
+			font-size: .6em;
+			font-weight: 400;
+		}
+	}
+	.center-container {
+		flex-direction: column;
+		#date, #sprint {
+			margin-right: auto;
+		}
+		#sprint {
+			margin-top: 6px;
+			color: white;
+			padding: 0 6px;
+			font-size: .6em;
+			border-radius: 4px;
+		}
+	}
 	.bottom-container {
 		margin-bottom: 0;
 	}
 	/* author colors */
 	.Gibby {
-		color: #008ee0;;
+		color: #8bd4ff;;
 	}
 	.Moose {
 		color: #0dbe7a;
 	}
-	/* status  styles*/
-	#Open {
-		color: #00cc00;
-	}
-	#Reviewing {
-		color: #ff4d4d;
-	}
-	#Underway {
-		color: #83b5ff;
-	}
-	#Completed {
-		color: #cccccc;
-	}
-	.red-arrow, .yellow-arrow {
-		transform: rotate(-90deg);
-	}
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Bug);

@@ -9,7 +9,6 @@ import * as pallette from "../styled/ThemeVariables.js";
 import { Link, useParams } from "react-router-dom";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
 
 // components
@@ -251,7 +250,7 @@ const CreateBugPage = ({ user }) => {
             user.role === process.env.REACT_APP_USER_SECRET ||
             user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <button style={{ marginTop: "40px" }} onClick={() => { createBug(); }}>Save</button>
-            : <button style={{ marginTop: "40px" }} onClick={() => unauthorized()}>Save</button>
+            : <button style={{ marginTop: "40px" }}>Save</button>
           }
         </div>
       }

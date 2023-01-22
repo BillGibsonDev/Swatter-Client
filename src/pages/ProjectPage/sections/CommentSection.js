@@ -5,9 +5,6 @@ import axios from "axios";
 import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables.js";
 
-// functions
-import { unauthorized } from "../../../functions/unauthorized.js";
-
 // components
 import Comment from "../components/Comment";
 import { Alert } from "../../../components/Alert.js";
@@ -102,21 +99,18 @@ const CommentSection = ({
         </div>
         {
           comments.length === 0 || comments === [] 
-          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
+          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>
             No comments yet..
           </h1>
           :
             <div className='comment-container' id='comment-container'>
               {
-                comments.map((comment, key) => {
+                comments.map((comment, index) => {
                   return (
                     <Comment
-                      date={comment.date}
-                      author={comment.author}
-                      comments={comment.comment}
-                      commentId={comment._id}
+                      comment={comment}
                       projectId={projectId}
-                      key={key}
+                      key={index}
                       setLoading={setLoading}
                     />
                   );
@@ -137,7 +131,7 @@ const CommentSection = ({
           {
             user.role === process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
             ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button onClick={() => { unauthorized(); }}>Send</button>
+            : <button>Send</button>
           }
         </div>
       </div>

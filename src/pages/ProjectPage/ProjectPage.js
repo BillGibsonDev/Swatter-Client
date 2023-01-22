@@ -15,21 +15,17 @@ import Loader from "../../loaders/Loader";
 // pop out sections
 import CommentSection from "./sections/CommentSection";
 
-// images
-import arrowRight from "../../assets/icons/arrowRight.png";
-
 // router
 import { useParams } from "react-router-dom";
 
-export const ProjectPage = () => {
+export const ProjectPage = ({projectSideNavRef}) => {
   const commentSectionRef = useRef();
-  const projectSideNavRef = useRef();
 
   const { projectId, bugId } = useParams();
 
-  const [project, setProject] = useState([]);
-  const [rerender, setRerender] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const [ project, setProject ] = useState([]);
+  const [ rerender, setRerender ] = useState(false);
+  const [ isLoading, setLoading ] = useState(true);
 
   useEffect(() => {
     const getProject = () => {
@@ -45,27 +41,8 @@ export const ProjectPage = () => {
     getProject(projectId);
   }, [projectId, bugId, rerender]);
 
-  const toggleSideNav = () => {
-    setRerender(!rerender);
-    let section = projectSideNavRef.current;
-    if (section.style.display === "none") {
-      section.style.display = "block";
-    } else {
-      section.style.display = "none";
-    }
-  };
-
-  const handleArrow = () => {
-    let element = document.getElementById("arrow");
-    element.classList.toggle("rotate");
-  };
-
   return (
     <StyledProjectPage>
-      <button id='arrow-button' onClick={() => { handleArrow(); toggleSideNav(); }}>
-        <img id='arrow' src={arrowRight} alt='Project Menu' />
-        <span className='tooltiptext'>Project Menu</span>
-      </button>
       <ProjectSideNav
         project={project}
         projectSideNavRef={projectSideNavRef}
@@ -140,46 +117,6 @@ const StyledProjectPage = styled.div`
   @media (max-width: 360px) {
     width: 295px;
   }
-  #arrow-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: none;
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    .tooltiptext {
-      visibility: hidden;
-      width: 100%;
-      min-width: 160px;
-      background-color: black;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px 0;
-      position: absolute;
-      z-index: 1000;
-      top: 0;
-      left: 105%;
-    }
-    @media (max-width: 834px) {
-      display: block;
-      left: -60px;
-    }
-    @media (max-width: 428px) {
-      left: -45px;
-    }
-    img {
-      transition: 0.2s;
-      width: 30px;
-      height: 30px;
-    }
-  }
-  #arrow-button:hover .tooltiptext,
-  #arrow-button:active .tooltiptext {
-    visibility: visible;
-    transition-delay: 1s;
-  }
   .undefined {
     background: white;
     width: 100%;
@@ -201,9 +138,5 @@ const StyledProjectPage = styled.div`
       display: none;
       width: none;
     }
-  }
-  .rotate {
-    transform: rotate(180deg);
-    transition: 0.2s;
   }
 `;

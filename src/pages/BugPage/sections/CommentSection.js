@@ -11,7 +11,6 @@ import { Alert } from "../../../components/Alert";
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert";
-import { unauthorized } from "../../../functions/unauthorized.js";
 
 // redux
 import { connect } from "react-redux";
@@ -26,9 +25,9 @@ const CommentSection = ({
   const AlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [addComment, setAddComment] = useState("");
-  const [addAuthor] = useState(user.username);
-  const [comments, setComments] = useState([]);
+  const [ addComment, setAddComment ] = useState("");
+  const [ addAuthor ] = useState(user.username);
+  const [ comments, setComments ] = useState([]);
 
   useEffect(() => {
     const getComments = (projectId, bugId) => {
@@ -124,7 +123,7 @@ const CommentSection = ({
           {
             user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
             ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button onClick={() => { unauthorized(); }}>Send</button>
+            : <button>Send</button>
           }
         </div>
       </div>

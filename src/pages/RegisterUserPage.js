@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
 
 const RegisterUserPage = ({ user }) => {
@@ -78,7 +77,7 @@ const RegisterUserPage = ({ user }) => {
         {
           user.role === process.env.REACT_APP_ADMIN_SECRET 
           ? <button type='submit' onClick={() => { registerUser(); }}>Create User</button>
-          : <button onClick={() => { unauthorized(); }}>Create User</button>
+          : <button>Create User</button>
         }
       </div>
     </StyledRegister>

@@ -15,7 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
-import EditProjectPage from "./pages/EditProjectPage";
+import { EditProjectPage } from "./pages/EditProjectPage/EditProjectPage.js";
 import { BugPage }from "./pages/BugPage/BugPage.js";
 import CreateBugPage from "./pages/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
@@ -36,6 +36,7 @@ import { handleAlert } from "./functions/handleAlert";
 function App() {
   
   const AlertRef = useRef();
+  const projectSideNavRef = useRef();
 
   const [ message, setMessage ] = useState('')
   const [password, setPassword] = useState("");
@@ -50,8 +51,8 @@ function App() {
   onbeforeunload = (event) => { logout(); };
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
-    let username = localStorage.getItem("username");
+    let token = sessionStorage.getItem("token");
+    let username = sessionStorage.getItem("username");
     const handlePageReload = (token) => {
       setLoading(true);
       setTimeout(() => {
@@ -60,7 +61,6 @@ function App() {
           if(response.data === 'Token Not Valid'){
             setLoggedIn(false);
             setLoading(false);
-            localStorage.clear();
             sessionStorage.clear();
             navigate("/LoginPage");
           } else {
@@ -73,7 +73,6 @@ function App() {
           console.log(err)
           setLoggedIn(false);
           setLoading(false);
-          localStorage.clear();
           sessionStorage.clear();
           navigate("/LoginPage");
         });
@@ -97,19 +96,18 @@ function App() {
         }
       )
       .then((response) => {
-        setLoading(false);
         handleTokens(response.data, username);
         axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: response.data })
         .then((res) => {
           if(res.status === 200){
             setLoggedIn(true);
+            setLoading(false);
             dispatch(handleUser(username, res.data));
             navigate("/");
           }
         })
         .catch((err) => {
           console.log(err);
-          localStorage.clear();
           sessionStorage.clear();
           setMessage("Wrong Username or Password");
           handleAlert(AlertRef);
@@ -120,7 +118,6 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        localStorage.clear();
         sessionStorage.clear();
         setMessage("Wrong Username or Password");
         handleAlert(AlertRef);
@@ -132,7 +129,6 @@ function App() {
   };
 
   const logout = () => {
-    localStorage.clear();
     sessionStorage.clear();
     setLoggedIn(false);
     setPassword("");
@@ -164,12 +160,12 @@ function App() {
           </>
         : 
         <>
-          <Nav logout={logout} />
+          <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
           <Routes>
             <Route path='/' exact element={ <HomePage /> } />
             <Route path='/:projectId/:bugId' exact element={ <BugPage /> }  />
             <Route path='/:projectId/:bugId/edit' exact element={ <EditBugPage /> } />
-            <Route path='/projects/:projectId' exact element={ <ProjectPage /> } />
+            <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
             <Route path='/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
             <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
             <Route path='/EditProject/:projectId' exact element={ <EditProjectPage /> } />

@@ -54,7 +54,7 @@ export default function DetailsPage() {
           <div className='title-container'>
             <h1>{project.projectTitle}</h1>
             <Link id='edit-btn' to={`/EditProject/${project._id}`}>
-              <img id='edit-btn-icon' src={Edit} alt='' />
+              <img id='edit-btn-icon' src={Edit} alt='edit' />
               <span className='tooltiptext'>Edit Project</span>
             </Link>
           </div>

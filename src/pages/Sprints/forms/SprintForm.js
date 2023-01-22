@@ -5,7 +5,6 @@ import axios from "axios";
 import styled from "styled-components";
 
 // functions
-import { unauthorized } from "../../../functions/unauthorized.js";
 import { handleAlert } from "../../../functions/handleAlert.js";
 import { toggleSprintForm } from "../../../functions/toggleSprintForm.js";
 
@@ -103,7 +102,7 @@ const SprintForm = ({
         user.role === process.env.REACT_APP_USER_SECRET ||
         user.role === process.env.REACT_APP_ADMIN_SECRET 
         ? <button onClick={() => { handleSprintForm(); }}>Save</button>
-        : <button onClick={() => { unauthorized(); }}>Save</button>
+        : <button>Save</button>
       }
     </StyledSprintForm>
   );

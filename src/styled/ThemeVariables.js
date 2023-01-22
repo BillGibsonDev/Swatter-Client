@@ -5,8 +5,8 @@ export const helperGrey = "#dddddd";
 export const titleColor = "#ffffff";
 
 // font sizes
-export const titleSize = "30px";
-export const subtitleSize = "20px";
+export const titleSize = "2em";
+export const subtitleSize = "1.5em";
 export const labelSize = "1em";
 export const optionSize = "1em";
 export const paraSize = "1em";

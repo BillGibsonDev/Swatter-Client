@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -6,7 +6,6 @@ import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
-import { unauthorized } from "../../../functions/unauthorized.js";
 import { handleAlert } from "../../../functions/handleAlert";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
 
@@ -32,18 +31,17 @@ const Comment = ({
   const DeleteAlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [compareDate, setCompareDate] = useState("");
 
-  useEffect(() => {
-    const handleDate = () => {
-      const currentDate = new Date();
-      setCompareDate(currentDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    };
-    handleDate();
-  }, []);
-
-  const [currentDate] = compareDate.split(",");
-  const [commentDate, commentTime] = comment.date.split(",");
+  const handleDate = (comment) => {
+		let currentDate = new Date();
+		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
+		const [ commentDate, commentTime ] = comment.date.split(",");
+		if(compareDate[0] === commentDate){
+			return commentTime;
+		} else {
+			return commentDate;
+		}
+	}
 
   const deleteComment = () => {
     setLoading(true);
@@ -88,7 +86,7 @@ const Comment = ({
       />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={comment.author}>{comment.author}<span>{currentDate === commentDate ? commentTime : comment.date}</span></h3>
+          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
           {
             comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <div className='dropdown'>
@@ -99,7 +97,7 @@ const Comment = ({
                   {
                     comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
                     ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-                    : <button onClick={() => { unauthorized(); }}>Delete</button>
+                    : <button>Delete</button>
                   }
                 </div>
               </div>

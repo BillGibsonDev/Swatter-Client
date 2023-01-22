@@ -16,14 +16,14 @@ export const Searchbar = () => {
 }
 
 const StyledSearchbar = styled.form`
-width: 200px;
-position: absolute;
-top: 20px;
-background: white;
-display: flex;
-align-items: center;
-padding-left: 4px;
-border-radius: 6px;
+    width: 200px;
+    position: absolute;
+    top: 20px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    border-radius: 6px;
     &:hover {
         outline: 2px solid ${pallette.helperGrey} ;
     }

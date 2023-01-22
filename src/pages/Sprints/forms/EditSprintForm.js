@@ -6,7 +6,7 @@ import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
-import { unauthorized } from "../../../functions/unauthorized.js";
+
 import { handleAlert } from "../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
 
@@ -187,8 +187,8 @@ const EditSprintForm = ({
             <button id='delete' onClick={() => { toggleSprintForm(editSprintFormRef); handleDeleteSprint();}}> Delete</button>
           </>
           : <>
-            <button onClick={() => { unauthorized(); }}>Save</button>
-            <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
+            <button>Save</button>
+            <button id='delete'>Delete</button>
           </>
         }
       </div>

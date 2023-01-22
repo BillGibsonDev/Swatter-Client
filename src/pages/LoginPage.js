@@ -68,7 +68,7 @@ const StyledLoginPage = styled.div`
 			width: 300px;
 			height: 40px;
 			margin-bottom: 20px;
-			font-size: 18px;
+			font-size: 1em;
 		}
 		#submit-button {
 			color: #ffffff;

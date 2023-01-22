@@ -4,6 +4,26 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 
 export default function ImageSection({ images, handleModal }) {
 
+    const handleImages = (image, index) => {
+        if(image.image === ''){
+            return <h2>No Images</h2>;
+        } else {
+            return <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
+        }
+    }
+
+    const handleCaptions = (image) => {
+        if(image.caption.length > 50) {
+            return <p>{image.caption.slice(0, 50)}...</p>
+        } else if(image.image === "" && image.caption === ""){
+            return <></>
+        } else if (image.caption.length === 0){
+            return <p>No Caption</p>
+        } else {
+            return <p>{image.caption}</p>
+        } 
+    }
+
     return (
         <StyledImageSection className='bug-page-tabs' id="images">
             {
@@ -15,18 +35,8 @@ export default function ImageSection({ images, handleModal }) {
                             return (
                                 <div key={index}>
                                     <div className="image-container">
-                                        {
-                                            image.image === "" 
-                                            ? <h2>No Images</h2>
-                                            : <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
-                                        }
-                                        {
-                                            image.caption.length > 50 
-                                            ? <p>{image.caption.slice(0, 50)}...</p>
-                                            : image.image === "" && image.caption === "" ? <></>
-                                            : image.caption.length === 0 ? <p>No Caption</p>
-                                            : <p>{image.caption}</p>
-                                        }
+                                        {handleImages(image, index)}
+                                        {handleCaptions(image)}
                                     </div>
                                     <div className="modal" id={index}>
                                         <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>

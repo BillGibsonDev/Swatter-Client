@@ -63,6 +63,14 @@ export const BugPage = () => {
     e.currentTarget.className += " active";
   };
 
+  const handleSprint = (bug) => {
+    if(!bug.sprint || bug.sprint === ""){
+      return 'None'
+    } else {
+      return bug.sprint
+    }
+  }
+
   return (
     <StyledBugPage>
       <div className='breadcrumbs'>
@@ -72,7 +80,8 @@ export const BugPage = () => {
         <span>/</span>
         {!bug ? <></> : <p>{bug.title}</p>}
       </div>
-      {isLoading ? <BugPageLoader />
+      {
+        isLoading ? <BugPageLoader />
        : 
         <div className='bug-wrapper'>
           <div className='title-container'>
@@ -84,13 +93,7 @@ export const BugPage = () => {
               <h3><span>Tag: </span> {bug.tag}</h3>
               <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
               <h3><span>Status: </span>{bug.status}</h3>
-              <h3><span>Sprint: </span>
-                {
-                  !bug.sprint  || bug.sprint === ""
-                  ? <>None</>
-                  : <>{bug.sprint}</>
-                }
-              </h3>
+              <h3><span>Sprint: </span>{handleSprint(bug)}</h3>
             </div>
             <div className='info-container'>
               <h2><span>Creator: </span>{bug.author}</h2>

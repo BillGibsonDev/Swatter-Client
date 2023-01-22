@@ -96,9 +96,9 @@ const StyledSideNav = styled.div`
             display: flex;
             flex-direction: column;
             margin-left: 12px;
-            font-size: 16px;
+            font-size: 1em;
             span {
-                font-size: 14px;
+                font-size: 1em;
                 color: grey;
             }
         }
@@ -111,12 +111,13 @@ const StyledSideNav = styled.div`
             margin-bottom: 20px;
             padding: 10px 10px 10px 20px;
             color: black;
-            font-size: 16px;
+            font-size: 1em;
             font-weight: 400;
             cursor: pointer;
             background: none;
             border: none;
             width: 100%;
+            white-space: nowrap;
             img {
                 width: 25px;
                 height: 25px;
@@ -129,19 +130,19 @@ const StyledSideNav = styled.div`
         }
     }
     @keyframes slideLeftSideNav {
-        from {width: 0; opacity: 0; left: -300px;}
+        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
         to {width: 250px; opacity: 1; left: 50px; }
     }
     @keyframes slideLeftSideNav1440 {
-        from {width: 0; opacity: 0; left: -300px;}
+        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
         to {width: 225px; opacity: 1; left: 50px; }
     }
     @keyframes slideLeftSideNav810 {
-        from {width: 0; opacity: 0; left: -300px;}
+        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
         to {width: 300px; opacity: 1; left: 50px; }
     }
     @keyframes slideLeftSideNav390 {
-        from {width: 0; opacity: 0; left: -300px;}
+        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
         to {width: 100%; opacity: 1; left: 50px; }
     }
     

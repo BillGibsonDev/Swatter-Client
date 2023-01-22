@@ -36,7 +36,6 @@ export const SprintsPage = () => {
   const [rerender, setRerender] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const getProject = (projectId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
@@ -95,18 +94,15 @@ export const SprintsPage = () => {
                     <div className='title-container'>
                       <h4>{sprint.title}</h4>
                       <button onClick={() => { toggleSprintForm(editSprintFormRef); }} >
-                        <img id='edit-button' src={Edit} alt='' />
+                        <img id='edit-button' src={Edit} alt='edit' />
                         <span className='tooltiptext'>Edit Sprint</span>
                       </button>
                     </div>
                     <h5 id='status'><span>Status: </span>{sprint.status}</h5>
                     <div className='info-container'>
-                      <h5>
-                        <span>Updated:</span> {sprint.updated}
-                      </h5>
+                      <h5><span>Updated:</span> {sprint.updated}</h5>
                       {
-                        sprint.endDate === "" 
-                        ? <></>
+                        sprint.endDate === "" ? <></>
                         : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
                       }
                     </div>

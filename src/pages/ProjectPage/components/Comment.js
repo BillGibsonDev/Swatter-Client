@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -18,14 +18,10 @@ import { Alert } from "../../../components/Alert";
 // functions
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
 import { handleAlert } from "../../../functions/handleAlert";
-import { unauthorized } from "../../../functions/unauthorized";
 
 const Comment = ({
-  comments,
-  author,
-  date,
+  comment,
   user,
-  commentId,
   projectId,
   setLoading,
 }) => {
@@ -34,22 +30,21 @@ const Comment = ({
   const DeleteAlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [compareDate, setCompareDate] = useState("");
 
-  useEffect(() => {
-    const handleDate = () => {
-      const currentDate = new Date();
-      setCompareDate(currentDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    };
-    handleDate();
-  }, []);
-
-  const [currentDate] = compareDate.split(",");
-  const [commentDate, commentTime] = date.split(",");
+  const handleDate = (comment) => {
+		let currentDate = new Date();
+		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
+		const [ commentDate, commentTime ] = comment.date.split(",");
+		if(compareDate[0] === commentDate){
+			return commentTime;
+		} else {
+			return commentDate;
+		}
+	}
 
   const deleteComment = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${comment._id}`)
     .then((response) => {
       if (response.data !== "Comment Deleted") {
         setLoading(false);
@@ -66,14 +61,16 @@ const Comment = ({
     })
   };
 
+  const handleCommentAuthor = (author) => {
+    if(author === user.username){
+      return { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`};
+    } else {
+      return { margin: "10px auto 10px 5%", background: "white" };
+    }
+  }
+
   return (
-    <StyledComment
-      style={
-        author === user.username
-        ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
-        : { margin: "10px auto 10px 5%", background: "white" }
-      }
-    >
+    <StyledComment style={handleCommentAuthor(comment.author)}>
       <Alert
         message={message}
         AlertRef={AlertRef}
@@ -85,23 +82,23 @@ const Comment = ({
       />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={author}>{author}<span>{currentDate === commentDate ? commentTime : date}</span></h3>
+          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
           {
-            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
             ? <div className='dropdown'>
               <button className='dropbtn'><img src={Menu} alt='Menu' /></button>
               <div className='dropdown-content'>
                 {  
-                  author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                  comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
                   ? <button onClick={() => handleDeleteAlert(DeleteAlertRef) }>Delete</button>
-                  : <button onClick={() => unauthorized() }>Delete</button>
+                  : <button>Delete</button>
                 }
               </div>
             </div>
            :<></>
           }
         </div>
-        <p>{comments}</p>
+        <p>{comment.comment}</p>
       </div>
     </StyledComment>
   );
@@ -129,12 +126,12 @@ const StyledComment = styled.div`
       align-items: center;
       margin-bottom: 10px;
       h3 {
-        font-size: 12px;
+        font-size: .8em;
         display: flex;
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: 10px;
+          font-size: .6em;
           color: #575757;
         }
       }
@@ -195,7 +192,7 @@ const StyledComment = styled.div`
       color: #0dbe7a;
     }
     p {
-      font-size: 12px;
+      font-size: .6em;
       font-weight: 400;
     }
   }

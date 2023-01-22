@@ -3,25 +3,21 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../styled/ThemeVariables.js";
+import * as pallette from "../../styled/ThemeVariables.js";
 
 // router
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-// functions
-import { unauthorized } from "../functions/unauthorized.js";
-import { handleAlert } from "../functions/handleAlert.js";
-import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
+import { handleAlert } from "../../functions/handleAlert.js";
+import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
 
 // components
-import Loader from "../loaders/Loader";
-import { DeleteAlert } from "../components/DeleteAlert.js";
-import { Alert } from '../components/Alert.js';
+import Loader from "../../loaders/Loader.js";
+import { DeleteAlert } from "../../components/DeleteAlert.js";
+import { Alert } from '../../components/Alert.js';
+import ButtonContainer from "./components/ButtonContainer.js";
 
-// redux
-import { connect } from "react-redux";
-
-const EditProjectPage = ({ user }) => {
+export const EditProjectPage = () => {
 
   const { projectId } = useParams();
   
@@ -47,7 +43,7 @@ const EditProjectPage = ({ user }) => {
       });
     };
     getProject(projectId);
-  }, [projectId, user]);
+  }, [ projectId ]);
 
   const deleteProject = () => {
     setLoading(true);
@@ -136,9 +132,7 @@ const EditProjectPage = ({ user }) => {
       </div>
       <h1>Edit Project</h1>
       {
-        user === null 
-        ? <h1>You are signed out</h1>
-        : isLoading ? <Loader />
+        isLoading ? <Loader />
         :
         <div className='form-wrapper'>
           <div className='top-form-container'>
@@ -246,18 +240,11 @@ const EditProjectPage = ({ user }) => {
           </div>
         </div>
       }
-      <div className='button-container'>
-        {
-          user.role === process.env.REACT_APP_GUEST_SECRET 
-          ? <button onClick={() => { unauthorized(); }}>Update</button>
-          : <button onClick={() => { editProject(); }}>Update</button>
-        }
-        {
-          user.role === process.env.REACT_APP_ADMIN_SECRET
-          ? <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-          : <button onClick={() => { unauthorized(); }}>Delete</button>
-        }
-      </div>
+      <ButtonContainer
+        editProject={editProject}
+        handleDeleteAlert={handleDeleteAlert}
+        DeleteAlert={DeleteAlertRef}
+      />
     </StyledProjectPage>
   );
 }
@@ -349,47 +336,4 @@ const StyledProjectPage = styled.div`
       }
     }
   }
-  .button-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 16px;
-    width: 100%;
-    @media (max-width: 750px) {
-      margin-top: 10%;
-      width: 90%;
-    }
-    button {
-      width: 200px;
-      height: 40px;
-      cursor: pointer;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 18px;
-      @media (max-width: 1050px) {
-        margin: 10px 0;
-        width: 150px;
-      }
-      @media (max-width: 450px) {
-        font-size: 16px;
-        width: 100px;
-        margin-bottom: 0;
-      }
-      &:hover {
-        color: #ffffff;
-        background: #000000;
-        transform: scale(1.05);
-        transition: 0.2s;
-      }
-    }
-  }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(EditProjectPage);

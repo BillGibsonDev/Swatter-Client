@@ -11,7 +11,10 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icon from '../assets/IconImports.js';
 
-const Nav = ({user, logout}) => {
+// components
+import { ToggleProjectNavArrow } from './ToggleProjectNavArrow';
+
+const Nav = ({user, logout, projectSideNavRef}) => {
     return (
         <StyledNav>
             <div className="top-container">
@@ -25,6 +28,7 @@ const Nav = ({user, logout}) => {
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
                 <Link to="/"><img src={icon.Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
             </div>
+            <ToggleProjectNavArrow projectSideNavRef={projectSideNavRef} />
             <div className="bottom-container">
                 <Link to="/ProfilePage"><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
                 <Link to="/LoginPage" onClick={logout}><img src={icon.Logout} alt="Log Out" /><span className="tooltiptext">Log Out</span></Link>

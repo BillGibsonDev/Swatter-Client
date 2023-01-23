@@ -9,7 +9,7 @@ import { handleAlert } from "../../../functions/handleAlert";
 //redux
 import { connect } from "react-redux";
 
-const CommentInput = ({ user, setAddComment, setLoading, AlertRef, setMessage, projectId }) => {
+const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId }) => {
 
   const sendComment = () => {
     setLoading(true);

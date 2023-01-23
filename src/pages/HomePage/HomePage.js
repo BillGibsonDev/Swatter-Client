@@ -7,10 +7,14 @@ import styled from "styled-components";
 // components
 import Project from "./components/Project.js";
 import HomePageLoader from "../../loaders/HomePageLoader";
+import { Searchbar } from '../../components/Searchbar.js';
+import { SearchProjectTable } from "./components/SearchProjectTable.js";
+import { ProjectTable } from "./components/ProjectTable.js";
 
 export const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [ projectSearchPhrase, setProjectSearchPhrase ] = useState('');
 
   useEffect(() => {
     const getProjects = () => {
@@ -31,18 +35,14 @@ export const HomePage = () => {
       {
         isLoading ? <HomePageLoader />
         : <>
-          <div className='projects-container'>
-            {
-              projects.slice().reverse().map((project, key) => {
-                return (
-                  <Project
-                    project={project}
-                    key={key}
-                  />
-                );
-              })
-            }
-          </div>
+            <Searchbar setSearchPhrase={setProjectSearchPhrase} />
+            <div className='projects-container'>
+              {
+                projectSearchPhrase 
+                ? <SearchProjectTable projectSearchPhrase={projectSearchPhrase} projects={projects} />
+                : <ProjectTable projects={projects} />
+              }
+            </div>
         </>
       }
     </StyledHomePage>
@@ -92,18 +92,6 @@ const StyledHomePage = styled.div`
     width: 295px;
   }
   .projects-container {
-    width: 100%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 20px;
-    row-gap: 20px;
-    @media (max-width: 1050px) {
-      grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 450px) {
-      grid-template-columns: 75vw;
-      row-gap: 20px;
-    }
+    margin-top: 10px;
   }
 `;

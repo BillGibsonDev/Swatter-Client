@@ -7,14 +7,14 @@ import Bug from './Bug.js';
 
 export default function SearchBugTable({
     project,
-    searchPhrase
+    bugSearchPhrase
 }) {
 
     // save me :)
     // Object.keys(bugObject).forEach((key) => {
     //     let string = `${bugObject[key]}`;
     //     string = string.toLowerCase();
-    //     if(string.includes(searchPhrase.toLowerCase())){
+    //     if(string.includes(bugSearchPhrase.toLowerCase())){
     //         if(array.findIndex(bug => bug._id === bugObject._id) < 0){
     //             bugArray.push(project.bugs[i])
     //         }
@@ -23,7 +23,7 @@ export default function SearchBugTable({
 
 const handleSearch = (status) => {
     let bugArray = [];
-    if(searchPhrase){
+    if(bugSearchPhrase){
         let x = project.bugs.length;
         for ( let i = 0; x > i; i++ ){
             let array = bugArray;
@@ -33,7 +33,7 @@ const handleSearch = (status) => {
                 Object.keys(bugObject).forEach((key) => {
                     let string = `${bugObject[key]}`;
                     string = string.toLowerCase();
-                    if(string.includes(searchPhrase.toLowerCase())){
+                    if(string.includes(bugSearchPhrase.toLowerCase())){
                         if(array.findIndex(bug => bug._id === bugObject._id) < 0){
                             bugArray.push(project.bugs[i])
                         }
@@ -42,11 +42,11 @@ const handleSearch = (status) => {
             }
         }
         return bugArray;
-    } else {
-        bugArray = project.bugs.filter(bug => bug.status === status).slice().reverse()
-        return bugArray;
+        } else {
+            bugArray = project.bugs.filter(bug => bug.status === status).slice().reverse()
+            return bugArray;
+        }
     }
-}
 
    const filteredBugs = handleSearch();
 

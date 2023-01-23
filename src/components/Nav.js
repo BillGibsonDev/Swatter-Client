@@ -19,7 +19,6 @@ const Nav = ({user, logout, projectSideNavRef}) => {
         <StyledNav>
             <div className="top-container">
                 <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
-                <Link to="/"><img src={icon.Search} alt="Search" /><span className="tooltiptext">Search</span></Link>
                 {
                     user.role === process.env.REACT_APP_ADMIN_SECRET 
                     ? <Link to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>

@@ -7,7 +7,7 @@ import styled from "styled-components";
 // components
 import BugTable from "./components/BugTable.js";
 import { ProjectSideNav } from "./components/ProjectSideNav";
-import { Searchbar } from "./forms/Searchbar";
+import { Searchbar } from "../../components/Searchbar";
 import SearchBugTable from "./components/SearchBugTable.js";
 
 // loaders
@@ -27,7 +27,7 @@ export const ProjectPage = ({projectSideNavRef}) => {
   const [ project, setProject ] = useState([]);
   const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
-  const [ searchPhrase, setSearchPhrase ] = useState('');
+  const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
 
   useEffect(() => {
     const getProject = () => {
@@ -54,20 +54,20 @@ export const ProjectPage = ({projectSideNavRef}) => {
         isLoading ? <Loader />
         : <div className='bug-table-wrapper'>
             <Searchbar
-              setSearchPhrase={setSearchPhrase}
+              setBugSearchPhrase={setBugSearchPhrase}
             />
           {
             !project.bugs ? 
               <div className='undefined'>
                 <h1>You've haven't entered any bugs</h1>
               </div>
-            : searchPhrase ?
+            : bugSearchPhrase ?
               <SearchBugTable
                 setRerender={setRerender}
                 rerender={rerender}
                 project={project}
                 bugs={project.bugs}
-                searchPhrase={searchPhrase}
+                bugSearchPhrase={bugSearchPhrase}
               />
             :
               <BugTable
@@ -75,7 +75,7 @@ export const ProjectPage = ({projectSideNavRef}) => {
                 rerender={rerender}
                 project={project}
                 bugs={project.bugs}
-                searchPhrase={searchPhrase}
+                bugSearchPhrase={bugSearchPhrase}
               />
           }
         </div>

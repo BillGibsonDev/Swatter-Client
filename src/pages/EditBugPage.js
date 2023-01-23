@@ -6,9 +6,9 @@ import styled from "styled-components";
 import * as pallette from "../styled/ThemeVariables.js";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
 import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 // components
 import BugPageLoader from "../loaders/BugPageLoader";
@@ -31,8 +31,6 @@ const EditBugPage = ({ user }) => {
   const { projectId, bugId } = useParams();
 
   const [ message, setMessage ] = useState('');
-
-  const [author, setAuthor] = useState("");
   const [bug, setBug] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
@@ -51,10 +49,9 @@ const EditBugPage = ({ user }) => {
     };
     const getBug = (projectId, bugId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
-      .then(function (response) {
+      .then((response) => {
         setBug(response.data[0].bugs[0]);
         setOptions(response.data);
-        setAuthor(response.data[0].bugs[0].author);
         setImages(response.data[0].bugs[0].images);
         setLoading(false);
       })
@@ -173,127 +170,133 @@ const EditBugPage = ({ user }) => {
         <span>/</span>
         { !bug ? <></> : <p>{bug.title}</p> }
       </div>
-      {isLoading ? <BugPageLoader />
-      : 
-        <div className='bug-container'>
-          <h1>{bug.title}</h1>
-          <div className='info-wrapper'>
-            <div className='info-container'>
-              <h2><span>Creator: </span>{bug.author}</h2>
-              <h2><span>Created: </span>{bug.date}</h2>
-              <h2><span>Updated: </span>{bug.lastUpdate}</h2>
+      {
+        isLoading ? <BugPageLoader />
+        : 
+          <div className='bug-container'>
+            <h1>{bug.title}</h1>
+            <div className='info-wrapper'>
+              <div className='info-container'>
+                <h2><span>Creator: </span>{bug.author}</h2>
+                <h2><span>Created: </span>{bug.date}</h2>
+                <h2><span>Updated: </span>{bug.lastUpdate}</h2>
+              </div>
+              <div className='selector-container'>
+                <label>
+                  Tag:
+                  <select id='tag' defaultValue={bug.tag} onChange={(event) => { setTag(event.target.value);}}>
+                    <option value={bug.tag}>{bug.tag}</option>
+                    <option value='Bug'>Bug</option>
+                    <option value='Feature'>Feature</option>
+                    <option value='Enhancement'>Enhancement</option>
+                    <option value='Task'>Task</option>
+                  </select>
+                </label>
+                <label>
+                  Priority:
+                  <select id='priority' defaultValue={bug.priority} onChange={(event) => {setPriority(event.target.value); }}>
+                    <option value={bug.priority}>{bug.priority}</option>
+                    <option value='Standard'>Standard</option>
+                    <option value='Medium'>Medium</option>
+                    <option value='High'>High</option>
+                  </select>
+                </label>
+                <label>
+                  Status:
+                  <select id='status' defaultValue={bug.status} onChange={(event) => { setStatus(event.target.value); }}>
+                    <option value={bug.status}>{bug.status}</option>
+                    <option value='Open'>Open</option>
+                    <option value='Underway'>Underway</option>
+                    <option value='Reviewing'>Reviewing</option>
+                    <option value='Completed'>Completed</option>
+                  </select>
+                </label>
+                <label>
+                  Sprint:
+                  <select id='sprint' defaultValue={bug.sprint} onChange={(event) => { setSprint(event.target.value); }}>
+                    <option value={bug.sprint}>{bug.sprint}</option>
+                    {
+                      options.map((sprint, key) => {
+                        return (
+                          <option key={key} value={`${sprint.title}`}>
+                            {sprint.title}
+                          </option>
+                        );
+                      })
+                    }
+                    <option value=''>None</option>
+                  </select>
+                </label>
+              </div>
             </div>
-            <div className='selector-container'>
-              <label>
-                Tag:
-                <select id='tag' defaultValue={bug.tag} onChange={(event) => { setTag(event.target.value);}}>
-                  <option value={bug.tag}>{bug.tag}</option>
-                  <option value='Bug'>Bug</option>
-                  <option value='Feature'>Feature</option>
-                  <option value='Enhancement'>Enhancement</option>
-                  <option value='Task'>Task</option>
-                </select>
-              </label>
-              <label>
-                Priority:
-                <select id='priority' defaultValue={bug.priority} onChange={(event) => {setPriority(event.target.value); }}>
-                  <option value={bug.priority}>{bug.priority}</option>
-                  <option value='Standard'>Standard</option>
-                  <option value='Medium'>Medium</option>
-                  <option value='High'>High</option>
-                </select>
-              </label>
-              <label>
-                Status:
-                <select id='status' defaultValue={bug.status} onChange={(event) => { setStatus(event.target.value); }}>
-                  <option value={bug.status}>{bug.status}</option>
-                  <option value='Open'>Open</option>
-                  <option value='Underway'>Underway</option>
-                  <option value='Reviewing'>Reviewing</option>
-                  <option value='Completed'>Completed</option>
-                </select>
-              </label>
-              <label>
-                Sprint:
-                <select id='sprint' defaultValue={bug.sprint} onChange={(event) => { setSprint(event.target.value); }}>
-                  <option value={bug.sprint}>{bug.sprint}</option>
-                  {options.map((sprint, key) => {
-                    return (
-                      <option key={key} value={`${sprint.title}`}>
-                        {sprint.title}
-                      </option>
-                    );
-                  })}
-                  <option value=''>None</option>
-                </select>
-              </label>
-            </div>
+            <label>
+              Description
+              <textarea
+                name='description'
+                id='description'
+                key={bug.description}
+                defaultValue={bug.description}
+                cols='30'
+                rows='10'
+                onChange={(event) => {
+                  setDescription(event.target.value);
+                }}
+              />
+            </label>
+            <img src={bug.thumbnail} alt={bug.title} />
           </div>
-          <label>
-            Description
-            <textarea
-              name='description'
-              id='description'
-              key={bug.description}
-              defaultValue={bug.description}
-              cols='30'
-              rows='10'
-              onChange={(event) => {
-                setDescription(event.target.value);
-              }}
-            />
-          </label>
-          <img src={bug.thumbnail} alt={bug.title} />
-        </div>
       }
       <h2>Images:</h2>
-      {images === undefined 
-      ? <h1>No Images Yet</h1>
-      : 
-        <div className='images-wrapper'>
-          {images.map((image, index) => {
-            return (
-              <div className='image-container' key={index}>
-                <img className='preview-image' id='image' src={image.image} alt={image.caption}/>
-                <div className='input-container'>
-                  <label>
-                    Image
-                    <input
-                      type='text'
-                      id='image'
-                      name='image'
-                      defaultValue={image.image}
-                      onChange={(event) => handleInputChange(index, event)}
-                    />
-                  </label>
-                  <label>
-                    Caption
-                    <input
-                      type='text'
-                      id='caption'
-                      name='caption'
-                      defaultValue={image.caption}
-                      onChange={(event) => handleInputChange(index, event)}
-                    />
-                  </label>
-                  <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove</button>
-                </div>
-              </div>
-            );
-          })}
+      {
+        !images 
+        ? <h1>No Images Yet</h1>
+        : 
+          <div className='images-wrapper'>
+            {
+              images.map((image, index) => {
+                return (
+                  <div className='image-container' key={index}>
+                    <img className='preview-image' id='image' src={image.image} alt={image.caption}/>
+                    <div className='input-container'>
+                      <label>
+                        Image
+                        <input
+                          type='text'
+                          id='image'
+                          name='image'
+                          defaultValue={image.image}
+                          onChange={(event) => handleInputChange(index, event)}
+                        />
+                      </label>
+                      <label>
+                        Caption
+                        <input
+                          type='text'
+                          id='caption'
+                          name='caption'
+                          defaultValue={image.caption}
+                          onChange={(event) => handleInputChange(index, event)}
+                        />
+                      </label>
+                      <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove</button>
+                    </div>
+                  </div>
+                );
+              })
+          }
         </div>
       }
       <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
       <div className='button-container'>
         {
-          author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+          handleAdminAuth(user)
           ? <>
               <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
               <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
             </>
           : <>
-            <button onClick={() => { unauthorized(); }}>Save</button>
-            <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
+            <button>Save</button>
+            <button id='delete'>Delete</button>
           </>
         }
       </div>

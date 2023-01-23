@@ -5,34 +5,29 @@ import axios from "axios";
 import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables.js";
 
-// functions
-import { unauthorized } from "../../../functions/unauthorized.js";
-
 // components
 import Comment from "../components/Comment";
 import { Alert } from "../../../components/Alert.js";
+import CommentInput from "../components/CommentInput.js";
 
 // router
 import { useParams } from "react-router-dom";
 
 //redux
 import { connect } from "react-redux";
-import { handleAlert } from "../../../functions/handleAlert.js";
 
-const CommentSection = ({
-  toggleComments,
-  commentSectionRef,
-  user
-}) => {
+// functions
+import { toggleRef } from "../../../functions/toggleRef.js";
+
+const CommentSection = ({ commentSectionRef, user }) => {
+
   const { projectId, bugId } = useParams();
 
   const AlertRef = useRef();
 
   const [ message, setMessage ] = useState('')
-  const [comments, setComments] = useState([]);
-  const [addComment, setAddComment] = useState("");
-  const [addAuthor ] = useState(user.username);
-  const [isLoading, setLoading] = useState(false);
+  const [ comments, setComments ] = useState([]);
+  const [ isLoading, setLoading ] = useState(false);
 
   useEffect(() => {
     const getProject = () => {
@@ -47,44 +42,6 @@ const CommentSection = ({
     getProject(projectId);
   }, [projectId, bugId, user, isLoading]);
 
-  const sendComment = () => {
-    setLoading(true);
-    if (addComment === "") {
-      setLoading(false);
-      setMessage("No Comment Entered!");
-      handleAlert(AlertRef);
-    } else {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`,
-        {
-          projectId: projectId,
-          comment: addComment,
-          author: addAuthor,
-        }
-      )
-      .then((response) => {
-        if (response.data !== "Comment Created") {
-          setLoading(false);
-          setMessage("Server Error - Comment not created!");
-          handleAlert(AlertRef);
-        } else {
-          setLoading(false);
-          document.getElementById("comment").value = "";
-          let container = document.getElementById("comment-container");
-          setTimeout(() => {
-            container.scrollTo(0, document.body.scrollHeight);
-          }, 1000);
-        }
-        setAddComment('');
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setMessage("Server Error - Comment not created!");
-        handleAlert(AlertRef);
-      })
-    }
-  };
-
   return (
     <StyledCommentSection ref={commentSectionRef} style={{ display: "none" }}>
       <Alert
@@ -94,47 +51,32 @@ const CommentSection = ({
       <div className='comment-section-wrapper'>
         <div className='title-container'>
           <h1>Comments</h1>
-          <button id='exit-btn' onClick={() => { toggleComments(); }}>
-            &times;<span className='tooltiptext'>Close</span>
-          </button>
+          <button id='exit-btn' onClick={() => { toggleRef(commentSectionRef); }}>&times;</button>
         </div>
-        {comments.length === 0 || comments === [] 
-        ? <h1 style={{ color: "white", textAlign: "center", fontSize: "20px" }}>
-          No comments yet..
-        </h1>
-        :
-          <div className='comment-container' id='comment-container'>
-            {comments.map((comment, key) => {
-              return (
-                <Comment
-                  date={comment.date}
-                  author={comment.author}
-                  comments={comment.comment}
-                  commentId={comment._id}
-                  projectId={projectId}
-                  key={key}
-                  setLoading={setLoading}
-                />
-              );
-            })}
+        {
+          comments.length === 0 || !comments 
+          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
+          : <div className='comment-container' id='comment-container'>
+            {
+              comments.map((comment, index) => {
+                return (
+                  <Comment
+                    comment={comment}
+                    projectId={projectId}
+                    key={index}
+                    setLoading={setLoading}
+                  />
+                );
+              })
+            }
           </div>
         }
-        <div className='comment-maker'>
-          <textarea
-            placeholder='Add a comment'
-            name='comment'
-            id='comment'
-            required
-            onChange={(event) => {
-              setAddComment(event.target.value);
-            }}
-          />
-          {
-            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
-            ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button onClick={() => { unauthorized(); }}>Send</button>
-          }
-        </div>
+        <CommentInput
+          AlertRef={AlertRef}
+          setLoading={setLoading}
+          setMessage={setMessage}
+          projectId={projectId}
+        />
       </div>
     </StyledCommentSection>
   );
@@ -145,7 +87,7 @@ const StyledCommentSection = styled.div`
   width: 100%;
   margin: 0 auto;
   height: 100%;
-  min-height: 30vh;
+  min-height: 50vh;
   border: 2px white solid;
   position: absolute;
   background: #0000007d;
@@ -174,9 +116,9 @@ const StyledCommentSection = styled.div`
   .comment-section-wrapper {
     display: flex;
     width: 60%;
+    min-height: 70vh;
     border-radius: 12px;
     flex-direction: column;
-    justify-content: center;
     background: ${pallette.accentColor};
     @media (max-width: 834px) {
       width: 80%;
@@ -199,70 +141,14 @@ const StyledCommentSection = styled.div`
       #exit-btn {
         background: none;
         border: none;
-        font-size: 40px;
+        font-size: 30px;
         color: white;
         position: relative;
         cursor: pointer;
-        #exit-btn-icon {
-          width: 30px;
-          height: 30px;
-          cursor: pointer;
-        }
-        .tooltiptext {
-          visibility: hidden;
-          width: 100%;
-          min-width: 160px;
-          background-color: black;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 5px 0;
-          position: absolute;
-          z-index: 1000;
-          top: 25%;
-          right: 105%;
-          font-size: 20px;
-        }
-      }
-      #exit-btn:hover .tooltiptext,
-      #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
-      }
-    }
-    .comment-maker {
-      margin: 10px;
-      display: flex;
-      justify-content: center;
-      textarea {
-        border-radius: 4px 0 0 4px;
-        background: #d6d6d6;
-        padding: 6px;
-        min-height: 20px;
-        height: auto;
-        max-width: 500px;
-        width: 100%;
-        max-height: 50px;
-        font-size: 12px;
-      }
-      button {
-        margin: 0;
-        width: 100px;
-        cursor: pointer;
-        color: #0f4d92;
-        background: white;
-        border: none;
-        border-radius: 0 4px 4px 0;
-        font-size: 14px;
-        font-weight: 700;
-        transition: 0.2s;
-        &:hover {
-          background: #000000;
-          color: white;
-        }
       }
     }
     .comment-container {
+      min-height: 65vh;
       max-height: 65vh;
       overflow-y: auto;
       @media (max-width: 428px) {

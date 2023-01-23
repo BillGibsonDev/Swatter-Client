@@ -12,21 +12,21 @@ import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 const RegisterUserPage = ({ user }) => {
 
   const AlertRef = useRef();
 
   const [ message, setMessage ] = useState('')
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ confirm, setConfirm ] = useState("");
 
   const registerUser = () => {
     if (password !== confirm) {
-      setMessage("Passwords Do not Match!");
+      setMessage("Passwords Do Not Match!");
       handleAlert(AlertRef);
     } else {
       axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_REGISTER_URL}`,
@@ -76,9 +76,9 @@ const RegisterUserPage = ({ user }) => {
           <input type='text' onChange={(event) => { setConfirm(event.target.value); }} />
         </label>
         {
-          user.role === process.env.REACT_APP_ADMIN_SECRET 
-          ? <button type='submit' onClick={() => { registerUser(); }}> Create User</button>
-          : <button onClick={() => { unauthorized(); }}>Create User</button>
+          handleAdminAuth(user)
+          ? <button type='submit' onClick={() => { registerUser(); }}>Create User</button>
+          : <button>Create User</button>
         }
       </div>
     </StyledRegister>

@@ -1,10 +1,10 @@
-// images
-import BugImage from '../assets/icons/bugYaleBlue.png';
-
 // styled
 import styled from 'styled-components';
 import { StyledButton } from '../styled/StyledButton';
 import * as pallette from '../styled/ThemeVariables';
+
+// loaders
+import LoginLoader from '../loaders/LoginLoader';
 
 export default function LoginPage({login, setUsername, setPassword, isLoading }) {
 
@@ -13,13 +13,7 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 			<h1>Swatter</h1>
 			<h2>Project Management</h2>
 			{
-				isLoading 
-				? <div className="loading-container">
-					<div className="loader">
-						<img src={BugImage} alt="Loading" />
-					</div>
-					<h2>Signing In...</h2>
-				</div>
+				isLoading ? <LoginLoader />
 				:  <form className="form-wrapper">
 					<label>Username</label>
 					<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
@@ -58,40 +52,6 @@ const StyledLoginPage = styled.div`
 		color: #0f4c92bc;
 		text-align: center;
 	}
-	h3 {
-		font-size: 2em;
-		margin-bottom: 50px;
-	}
-	.loading-container {
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		align-items: center;
-		position: relative;
-		.loader {
-			opacity: 80%;
-			border: 16px dashed #000000;
-			border-radius: 50%;
-			width: 180px;
-			height: 180px;
-			animation: spin 2s linear infinite;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			img {
-				width: 100px;
-			}
-		}
-		h2 {
-			margin-top: 10px;
-			font-size: 1em;
-			color: black;
-		}
-	}
- 	@keyframes spin {
-        0%  { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
 	.form-wrapper {
 		display: flex;
 		flex-direction: column;
@@ -102,13 +62,13 @@ const StyledLoginPage = styled.div`
 		}
 		label {
 			font-weight: bold;
-			font-size: ${pallette.subtitleSize};
+			font-size: ${pallette.labelSize};
 		}
 		input {
 			width: 300px;
 			height: 40px;
 			margin-bottom: 20px;
-			font-size: 18px;
+			font-size: 1em;
 		}
 		#submit-button {
 			color: #ffffff;

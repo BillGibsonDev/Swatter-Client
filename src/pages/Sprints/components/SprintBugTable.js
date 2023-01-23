@@ -3,129 +3,43 @@ import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
 // components
-import Bug from '../../ProjectPage/components/Bug.js';
+import { Bug } from '../../ProjectPage/components/Bug.js';
 
 // redux
 import { connect } from 'react-redux';
 
-const SprintBugTable = ({ 
-    bugs,
-    openBugs, 
-    underwayBugs, 
-    reviewBugs, 
-    completedBugs,
-    projectId,
-    project
-}) => {
+const SprintBugTable = ({ project, searchSprint }) => {
+
+    const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
     return (
         <StyledBugTable>
             { 
-                !bugs 
+                !project.bugs
                 ? <div className="undefined">
                     <h1>You've haven't entered any bugs</h1>
                 </div>
                 : <>
-                    <div className="bugs-container">
-                        <h5>Open <span>{openBugs.length}</span></h5>
-                        {
-                            openBugs.slice().reverse().map((bug, key) => {
-                                return (
-                                    <Bug
-                                        project={project}
-                                        projectTitle={project.projectTitle}
-                                        projectId={projectId}
-                                        bugId={bug._id}
-                                        title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
-                                        priority={bug.priority}
-                                        author={bug.author}
-                                        status={bug.status}
-                                        tag={bug.tag}
-                                        lastUpdate={bug.lastUpdate}
-                                        key={key}
-                                        
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                    <div className="bugs-container">
-                        <h5>Underway <span>{underwayBugs.length}</span></h5>
-                        {
-                            underwayBugs.slice().reverse().map((bug, key) => {
-                                return (
-                                    <Bug
-                                        project={project}
-                                        projectTitle={project.projectTitle}
-                                        projectId={projectId}
-                                        bugId={bug._id}
-                                        title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
-                                        priority={bug.priority}
-                                        author={bug.author}
-                                        status={bug.status}
-                                        tag={bug.tag}
-                                        lastUpdate={bug.lastUpdate}
-                                        key={key}
-                                        
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                    <div className="bugs-container">
-                        <h5>Reviewing <span>{reviewBugs.length}</span></h5>
-                        {
-                            reviewBugs.slice().reverse().map((bug, key) => {
-                                return (
-                                    <Bug
-                                        project={project}
-                                        projectTitle={project.projectTitle}
-                                        projectId={projectId}
-                                        bugId={bug._id}
-                                        title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
-                                        priority={bug.priority}
-                                        author={bug.author}
-                                        status={bug.status}
-                                        tag={bug.tag}
-                                        lastUpdate={bug.lastUpdate}
-                                        key={key}
-                                        
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                    <div className="bugs-container">
-                        <h5>Completed <span>{completedBugs.length}</span></h5>
-                        {
-                            completedBugs.slice().reverse().map((bug, key) => {
-                                return (
-                                    <Bug
-                                        project={project}
-                                        projectTitle={project.projectTitle}
-                                        projectId={projectId}
-                                        bugId={bug._id}
-                                        title={bug.title}
-                                        thumbnail={bug.thumbnail}
-                                        description={bug.description}
-                                        priority={bug.priority}
-                                        author={bug.author}
-                                        status={bug.status}
-                                        tag={bug.tag}
-                                        lastUpdate={bug.lastUpdate}
-                                        key={key}
-                                        
-                                    />
-                                )
-                            })
-                        }
-                    </div>
+                    {
+                        bugStatuses.map((status, index) => {
+                            return (
+                                <div className="bugs-container" key={index}>
+                                    <h5>{status} <span>{project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).length}</span></h5>
+                                    {
+                                        project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).slice().reverse().map((bug, index) => {
+                                            return (
+                                                <Bug
+                                                    bug={bug}
+                                                    project={project}
+                                                    key={index}
+                                                />
+                                            )
+                                        })
+                                    }
+                                </div>
+                            )
+                        })
+                    }
                 </>
             }
         </StyledBugTable>

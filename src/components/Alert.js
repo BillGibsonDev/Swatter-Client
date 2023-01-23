@@ -19,7 +19,7 @@ const StyledAlert = styled.div`
     display: none;
     position: absolute;
     width: 100%;
-    height: 50%;
+    height: 100%;
     max-width: 700px;
     z-index: 100;
     text-align: center;
@@ -38,7 +38,7 @@ const StyledAlert = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        padding: 50px;
+        padding: 20px;
         background: white;
         border-radius: 12px;
         width: 100%;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -6,9 +6,9 @@ import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
-import { unauthorized } from "../../../functions/unauthorized.js";
 import { handleAlert } from "../../../functions/handleAlert";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
+import { handleAuthor } from "../../../functions/handleAuthor";
 
 // components
 import { Alert } from "../../../components/Alert";
@@ -20,37 +20,27 @@ import Menu from "../../../assets/icons/dotMenu.png";
 // redux
 import { connect } from "react-redux";
 
-const Comment = ({
-  comments,
-  author,
-  date,
-  user,
-  commentId,
-  projectId,
-  setLoading,
-  bugId,
-}) => {
+const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [compareDate, setCompareDate] = useState("");
 
-  useEffect(() => {
-    const handleDate = () => {
-      const currentDate = new Date();
-      setCompareDate(currentDate.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    };
-    handleDate();
-  }, []);
-
-  const [currentDate] = compareDate.split(",");
-  const [commentDate, commentTime] = date.split(",");
+  const handleDate = (comment) => {
+		let currentDate = new Date();
+		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
+		const [ commentDate, commentTime ] = comment.date.split(",");
+		if(compareDate[0] === commentDate){
+			return commentTime;
+		} else {
+			return commentDate;
+		}
+	}
 
   const deleteComment = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${comment._id}`)
     .then((response) => {
       if (response.data !== "Comment Deleted!") {
         setMessage("Server Error - Comment not deleted");
@@ -69,15 +59,17 @@ const Comment = ({
       setLoading(false);
     });
   };
+  
+  const handleCommentAuthor = (author) => {
+    if(author === user.username){
+      return { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`};
+    } else {
+      return { margin: "10px auto 10px 5%", background: "white" };
+    }
+  }
 
   return (
-    <StyledComment
-      style={
-        author === user.username
-        ? { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`}
-        : { margin: "10px auto 10px 5%", background: "white" }
-      }
-    >
+    <StyledComment style={handleCommentAuthor(comment.author)} >
       <Alert
         message={message}
         AlertRef={AlertRef}
@@ -89,25 +81,25 @@ const Comment = ({
       />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={author}>{author}<span>{currentDate === commentDate ? commentTime : date}</span></h3>
+          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
           {
-            author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            handleAuthor(comment.author, user) 
             ? <div className='dropdown'>
                 <button className='dropbtn'>
                   <img src={Menu} alt='Menu' />
                 </button>
                 <div className='dropdown-content'>
                   {
-                    author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    handleAuthor(comment.author, user)
                     ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-                    : <button onClick={() => { unauthorized(); }}>Delete</button>
+                    : <button>Delete</button>
                   }
                 </div>
               </div>
             : <></>
           }
         </div>
-        <p>{comments}</p>
+        <p>{comment.comment}</p>
       </div>
     </StyledComment>
   );

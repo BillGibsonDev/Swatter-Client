@@ -11,7 +11,7 @@ import { Alert } from "../../../components/Alert";
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert";
-import { unauthorized } from "../../../functions/unauthorized.js";
+import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -26,9 +26,9 @@ const CommentSection = ({
   const AlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [addComment, setAddComment] = useState("");
-  const [addAuthor] = useState(user.username);
-  const [comments, setComments] = useState([]);
+  const [ addComment, setAddComment ] = useState("");
+  const [ addAuthor ] = useState(user.username);
+  const [ comments, setComments ] = useState([]);
 
   useEffect(() => {
     const getComments = (projectId, bugId) => {
@@ -46,7 +46,7 @@ const CommentSection = ({
 
   const sendComment = () => {
     setLoading(true);
-    if (addComment === "") {
+    if (!addComment) {
       setLoading(false);
       setMessage("No Comment Entered!");
       handleAlert(AlertRef);
@@ -90,25 +90,25 @@ const CommentSection = ({
         AlertRef={AlertRef}
       />
       <div className='comment-section-wrapper'>
-        {comments.length === 0 
-        ? <h2>No comments yet..</h2>
-        : 
-          <div className='comment-container' id='bug-comment-container'>
-            {comments.map((comment, key) => {
-              return (
-                <Comment
-                  date={comment.date}
-                  author={comment.author}
-                  comments={comment.comment}
-                  commentId={comment._id}
-                  bugId={bugId}
-                  projectId={projectId}
-                  key={key}
-                  setLoading={setLoading}
-                />
-              );
-            })}
-          </div>
+        {
+          comments.length === 0 
+          ? <h2>No comments yet..</h2>
+          : 
+            <div className='comment-container' id='bug-comment-container'>
+              {
+                comments.map((comment, index) => {
+                  return (
+                    <Comment
+                      comment={comment}
+                      bugId={bugId}
+                      projectId={projectId}
+                      key={index}
+                      setLoading={setLoading}
+                    />
+                  );
+                })
+              }
+            </div>
         }
         <div className='comment-maker'>
           <textarea
@@ -122,9 +122,9 @@ const CommentSection = ({
             }}
           />
           {
-            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
+            handleUserAuth(user) 
             ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button onClick={() => { unauthorized(); }}>Send</button>
+            : <button>Send</button>
           }
         </div>
       </div>

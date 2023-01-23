@@ -9,8 +9,8 @@ import * as pallette from "../styled/ThemeVariables.js";
 import { Link, useParams } from "react-router-dom";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
+import { handleUserAuth } from "../functions/handleUserAuth.js";
 
 // components
 import Loader from "../loaders/Loader";
@@ -130,7 +130,7 @@ const CreateBugPage = ({ user }) => {
       </div>
       <h1>Create Bug</h1>
       {
-      user === null ? <h1>You are signed out</h1>
+      !user ? <h1>You are signed out</h1>
       : isLoading ? <Loader />
       : 
         <div className='form-wrapper'>
@@ -150,8 +150,7 @@ const CreateBugPage = ({ user }) => {
               <label>
                 Sprint:
                 { 
-                  !options ? 
-                    <></>
+                  !options ? <></>
                   : <select id='sprint' onChange={(event) => { setSprint(event.target.value); }}>
                       <option value=''>None</option>
                       {
@@ -249,10 +248,9 @@ const CreateBugPage = ({ user }) => {
           })}
           <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
           {
-            user.role === process.env.REACT_APP_USER_SECRET ||
-            user.role === process.env.REACT_APP_ADMIN_SECRET 
+            handleUserAuth(user)
             ? <button style={{ marginTop: "40px" }} onClick={() => { createBug(); }}>Save</button>
-            : <button style={{ marginTop: "40px" }} onClick={() => unauthorized()}>Save</button>
+            : <button style={{ marginTop: "40px" }}>Save</button>
           }
         </div>
       }
@@ -266,7 +264,7 @@ const StyledAddBug = styled.div`
   min-height: 96vh;
   height: 100%;
   width: 70%;
-  margin: 0 auto;
+  margin: 20px auto;
   @media (max-width: 834px) {
     width: 80%;
     height: 100%;

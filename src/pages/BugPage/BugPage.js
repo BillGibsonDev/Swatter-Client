@@ -18,10 +18,10 @@ import { Link, useParams } from "react-router-dom";
 // images
 import EditIcon from "../../assets/icons/editIconWhite.png";
 
-// redux
-import { connect } from "react-redux";
+// components
+import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
-const BugPage = ({ user }) => {
+export const BugPage = () => {
   const { projectId, bugId } = useParams();
 
   const [bug, setBug] = useState([]);
@@ -66,16 +66,23 @@ const BugPage = ({ user }) => {
     e.currentTarget.className += " active";
   };
 
+  const handleSprint = (bug) => {
+    if(!bug.sprint){
+      return 'None'
+    } else {
+      return bug.sprint
+    }
+  }
+
   return (
     <StyledBugPage>
-      <div className='breadcrumbs'>
-        <Link to={`/`}>Home</Link>
-        <span>/</span>
-        <Link to={`/projects/${projectId}`}>Project</Link>
-        <span>/</span>
-        {!bug ? <></> : <p>{bug.title}</p>}
-      </div>
-      {isLoading ? <BugPageLoader />
+      <BreadCrumbs 
+        projectId={projectId}
+        projectTitle={"Project"} 
+        title={bug.title}
+      />
+      {
+        isLoading ? <BugPageLoader />
        : 
         <div className='bug-wrapper'>
           <div className='title-container'>
@@ -87,13 +94,7 @@ const BugPage = ({ user }) => {
               <h3><span>Tag: </span> {bug.tag}</h3>
               <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
               <h3><span>Status: </span>{bug.status}</h3>
-              <h3><span>Sprint: </span>
-                {
-                  !bug.sprint  || bug.sprint === ""
-                  ? <>None</>
-                  : <>{bug.sprint}</>
-                }
-              </h3>
+              <h3><span>Sprint: </span>{handleSprint(bug)}</h3>
             </div>
             <div className='info-container'>
               <h2><span>Creator: </span>{bug.author}</h2>
@@ -117,7 +118,7 @@ const BugPage = ({ user }) => {
 const StyledBugPage = styled.div`
   height: 100%;
   width: 70%;
-  margin: 30px auto;
+  margin: 20px auto;
   @media (max-width: 834px) {
     width: 90%;
   }
@@ -286,11 +287,3 @@ const StyledBugPage = styled.div`
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(BugPage);

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import * as pallette from "../../../styled/ThemeVariables";
 
 // functions
-import { unauthorized } from "../../../functions/unauthorized.js";
+
 import { handleAlert } from "../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
 
@@ -17,10 +17,13 @@ import { connect } from "react-redux";
 import { Alert } from "../../../components/Alert";
 import { DeleteAlert } from "../../../components/DeleteAlert";
 
+// functions
+import { toggleRef } from "../../../functions/toggleRef";
+import { handleUserAuth } from "../../../functions/handleUserAuth";
+
 const EditSprintForm = ({
   projectId,
-  editSprintForm,
-  toggleEditSprintForm,
+  editSprintFormRef,
   rerender,
   setRerender,
   project,
@@ -103,7 +106,7 @@ const EditSprintForm = ({
   };
 
   return (
-    <StyledSprintForm ref={editSprintForm} style={{ display: "none" }}>
+    <StyledSprintForm ref={editSprintFormRef} style={{ display: "none" }}>
       <Alert
         message={message}
         handleAlert={handleAlert}
@@ -117,7 +120,7 @@ const EditSprintForm = ({
       />
       <div className='title-container'>
         <h1>Edit Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleEditSprintForm(); }}>&times;<span className='tooltiptext'>Close</span></button>
+        <button id='exit-btn' onClick={() => { toggleRef(editSprintFormRef); }}>&times;<span className='tooltiptext'>Close</span></button>
       </div>
       <label>
         Title
@@ -178,15 +181,14 @@ const EditSprintForm = ({
       </label>
       <div className='button-container'>
         {
-          user.role === process.env.REACT_APP_USER_SECRET ||
-          user.role === process.env.REACT_APP_ADMIN_SECRET 
+          handleUserAuth(user) 
           ? <>
             <button onClick={() => { handleUpdateSprint(); }}>Save</button>
-            <button id='delete' onClick={() => { toggleEditSprintForm(); handleDeleteSprint();}}> Delete</button>
+            <button id='delete' onClick={() => { toggleRef(editSprintFormRef); handleDeleteSprint();}}> Delete</button>
           </>
           : <>
-            <button onClick={() => { unauthorized(); }}>Save</button>
-            <button id='delete' onClick={() => { unauthorized(); }}>Delete</button>
+            <button>Save</button>
+            <button id='delete'>Delete</button>
           </>
         }
       </div>

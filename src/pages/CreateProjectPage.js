@@ -6,7 +6,6 @@ import styled from "styled-components";
 import * as pallette from "../styled/ThemeVariables.js";
 
 // functions
-import { unauthorized } from "../functions/unauthorized.js";
 import { handleAlert } from "../functions/handleAlert.js";
 
 // router
@@ -18,6 +17,7 @@ import Loader from "../loaders/Loader";
 // redux
 import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 const CreateProjectPage = ({ user }) => {
 
@@ -62,15 +62,9 @@ const CreateProjectPage = ({ user }) => {
       }
     )
     .then((response) => {
-      if (response.data !== "Project Created") {
-        setLoading(false);
-        setMessage("Server Error - Project not created");
-        handleAlert(AlertRef);
-      } else {
-        setLoading(false);
-        setMessage(`${projectTitle} Project Started!`);
-        handleAlert(AlertRef);
-      }
+      setLoading(false);
+      setMessage(`${projectTitle} Project Started!`);
+      handleAlert(AlertRef);
     })
     .catch((err) => {
       console.log(err);
@@ -141,9 +135,9 @@ const CreateProjectPage = ({ user }) => {
         </div>
       }
       {
-        user.role === process.env.REACT_APP_GUEST_SECRET 
-        ? <button className='start-button' onClick={() => { unauthorized(); }}>Start</button>
-        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
+        handleAdminAuth(user)
+        ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
+        : <button className='start-button'>Start</button>
       }
     </StyledProjectPage>
   );

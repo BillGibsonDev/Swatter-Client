@@ -8,6 +8,7 @@ import * as pallette from "../../../styled/ThemeVariables";
 // functions
 import { handleAlert } from "../../../functions/handleAlert";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
+import { handleAuthor } from "../../../functions/handleAuthor";
 
 // components
 import { Alert } from "../../../components/Alert";
@@ -19,13 +20,7 @@ import Menu from "../../../assets/icons/dotMenu.png";
 // redux
 import { connect } from "react-redux";
 
-const Comment = ({
-  comment,
-  projectId,
-  setLoading,
-  bugId,
-  user
-}) => {
+const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -88,14 +83,14 @@ const Comment = ({
         <div className='comment-title-container'>
           <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
           {
-            comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+            handleAuthor(comment.author, user) 
             ? <div className='dropdown'>
                 <button className='dropbtn'>
                   <img src={Menu} alt='Menu' />
                 </button>
                 <div className='dropdown-content'>
                   {
-                    comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    handleAuthor(comment.author, user)
                     ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
                     : <button>Delete</button>
                   }

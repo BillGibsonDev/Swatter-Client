@@ -25,7 +25,7 @@ export const Searchbar = ({ setSearchPhrase }) => {
 const StyledSearchbar = styled.form`
     width: 200px;
     position: absolute;
-    top: 20px;
+    top: 10px;
     background: white;
     display: flex;
     align-items: center;

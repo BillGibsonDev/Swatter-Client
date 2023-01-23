@@ -18,16 +18,14 @@ import { Alert } from "../../../components/Alert";
 // functions
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
 import { handleAlert } from "../../../functions/handleAlert";
+import { toggleRef } from "../../../functions/toggleRef";
+import { handleAuthor } from "../../../functions/handleAuthor.js";
 
-const Comment = ({
-  comment,
-  user,
-  projectId,
-  setLoading,
-}) => {
+const Comment = ({ comment, user, projectId, setLoading }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
+  const DropDownRef = useRef();
 
   const [ message, setMessage ] = useState('');
 
@@ -81,20 +79,16 @@ const Comment = ({
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
           <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
-          {
-            comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
-            ? <div className='dropdown'>
-              <button className='dropbtn'><img src={Menu} alt='Menu' /></button>
-              <div className='dropdown-content'>
-                {  
-                  comment.author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
-                  ? <button onClick={() => handleDeleteAlert(DeleteAlertRef) }>Delete</button>
-                  : <button>Delete</button>
-                }
-              </div>
+          <div className='dropdown'>
+            <button className='drop-down-btn' onClick={() => { toggleRef(DropDownRef)}}><img src={Menu} alt='Menu' /></button>
+            <div className='dropdown-content' ref={DropDownRef} style={{display: 'none'}}>
+              {  
+                handleAuthor(comment.author, user)
+                ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
+                : <button>Delete</button>
+              }
             </div>
-           :<></>
-          }
+          </div>
         </div>
         <p>{comment.comment}</p>
       </div>
@@ -136,7 +130,7 @@ const StyledComment = styled.div`
       .dropdown {
         position: relative;
         display: inline-block;
-        .dropbtn {
+        .drop-down-btn {
           color: white;
           font-size: 16px;
           border: none;
@@ -151,19 +145,19 @@ const StyledComment = styled.div`
           }
         }
         .dropdown-content {
-          display: none;
           position: absolute;
-          right: 90%;
-          top: 0;
+          right: 10%;
+          top: 99%;
           box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
           z-index: 1;
           background: ${pallette.helperGrey};
+          border-radius: 4px;
           button {
-            color: black;
+            color: #ff0000;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
-            border: none;
+            border: 1px solid black;
             background: none;
             cursor: pointer;
             &:hover {
@@ -171,16 +165,6 @@ const StyledComment = styled.div`
             }
           }
         }
-      }
-      .dropdown:hover .dropdown-content,
-      .dropdown:active .dropdown-content,
-      .dropdown:focus .dropdown-content {
-        display: block;
-      }
-      .dropdown:hover .dropbtn,
-      .dropdown:active .dropdown-content,
-      .dropdown:focus .dropdown-content {
-        background-color: ${pallette.helperGrey};
       }
     }
     #Gibby {

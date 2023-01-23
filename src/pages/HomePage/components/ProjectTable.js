@@ -34,6 +34,6 @@ const StyledProjectTable = styled.div`
   }
   @media (max-width: 450px) {
     grid-template-columns: 75vw;
-    row-gap: 20px;
+    row-gap: 8px;
   }
 `;

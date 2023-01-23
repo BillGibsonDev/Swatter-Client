@@ -11,8 +11,8 @@ import { SearchProjectTable } from "./components/SearchProjectTable.js";
 import { ProjectTable } from "./components/ProjectTable.js";
 
 export const HomePage = () => {
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [ projects, setProjects ] = useState([]);
+  const [ isLoading, setLoading ] = useState(true);
   const [ projectSearchPhrase, setProjectSearchPhrase ] = useState('');
 
   useEffect(() => {
@@ -52,7 +52,6 @@ const StyledHomePage = styled.div`
   width: 90%;
   max-width: 1200px;
   margin: auto;
-  margin-top: 2%;
   min-height: 80vh;
   border-radius: 20px;
   display: flex;
@@ -91,6 +90,6 @@ const StyledHomePage = styled.div`
     width: 295px;
   }
   .projects-container {
-    margin-top: 10px;
+    margin-top: 20px;
   }
 `;

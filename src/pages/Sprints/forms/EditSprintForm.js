@@ -18,7 +18,8 @@ import { Alert } from "../../../components/Alert";
 import { DeleteAlert } from "../../../components/DeleteAlert";
 
 // functions
-import { toggleSprintForm } from "../../../functions/toggleSprintForm";
+import { toggleRef } from "../../../functions/toggleRef";
+import { handleUserAuth } from "../../../functions/handleUserAuth";
 
 const EditSprintForm = ({
   projectId,
@@ -119,7 +120,7 @@ const EditSprintForm = ({
       />
       <div className='title-container'>
         <h1>Edit Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleSprintForm(editSprintFormRef); }}>&times;<span className='tooltiptext'>Close</span></button>
+        <button id='exit-btn' onClick={() => { toggleRef(editSprintFormRef); }}>&times;<span className='tooltiptext'>Close</span></button>
       </div>
       <label>
         Title
@@ -180,11 +181,10 @@ const EditSprintForm = ({
       </label>
       <div className='button-container'>
         {
-          user.role === process.env.REACT_APP_USER_SECRET ||
-          user.role === process.env.REACT_APP_ADMIN_SECRET 
+          handleUserAuth(user) 
           ? <>
             <button onClick={() => { handleUpdateSprint(); }}>Save</button>
-            <button id='delete' onClick={() => { toggleSprintForm(editSprintFormRef); handleDeleteSprint();}}> Delete</button>
+            <button id='delete' onClick={() => { toggleRef(editSprintFormRef); handleDeleteSprint();}}> Delete</button>
           </>
           : <>
             <button>Save</button>

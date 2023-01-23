@@ -51,6 +51,7 @@ const StyledButton = styled.button`
       transition: 0.2s;
       width: 30px;
       height: 30px;
+      transform: rotate(180deg)
     }
   #arrow-button:hover .tooltiptext,
   #arrow-button:active .tooltiptext {
@@ -58,7 +59,7 @@ const StyledButton = styled.button`
     transition-delay: 1s;
   }
   .rotate {
-    transform: rotate(180deg);
+    transform: rotate(360deg);
     transition: 0.2s;
   }
 `;

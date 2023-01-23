@@ -17,6 +17,7 @@ import Loader from "../loaders/Loader";
 // redux
 import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 const CreateProjectPage = ({ user }) => {
 
@@ -134,9 +135,9 @@ const CreateProjectPage = ({ user }) => {
         </div>
       }
       {
-        user.role === process.env.REACT_APP_GUEST_SECRET 
-        ? <button className='start-button'>Start</button>
-        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
+        handleAdminAuth(user)
+        ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
+        : <button className='start-button'>Start</button>
       }
     </StyledProjectPage>
   );

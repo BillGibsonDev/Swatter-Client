@@ -3,15 +3,12 @@ import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
 // components
-import Bug from '../../ProjectPage/components/Bug.js';
+import { Bug } from '../../ProjectPage/components/Bug.js';
 
 // redux
 import { connect } from 'react-redux';
 
-const SprintBugTable = ({ 
-    project,
-    searchSprint
-}) => {
+const SprintBugTable = ({ project, searchSprint }) => {
 
     const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 

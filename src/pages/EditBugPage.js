@@ -8,6 +8,7 @@ import * as pallette from "../styled/ThemeVariables.js";
 // functions
 import { handleAlert } from "../functions/handleAlert.js";
 import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 // components
 import BugPageLoader from "../loaders/BugPageLoader";
@@ -30,7 +31,6 @@ const EditBugPage = ({ user }) => {
   const { projectId, bugId } = useParams();
 
   const [ message, setMessage ] = useState('');
-  const [author, setAuthor] = useState("");
   const [bug, setBug] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
@@ -52,7 +52,6 @@ const EditBugPage = ({ user }) => {
       .then((response) => {
         setBug(response.data[0].bugs[0]);
         setOptions(response.data);
-        setAuthor(response.data[0].bugs[0].author);
         setImages(response.data[0].bugs[0].images);
         setLoading(false);
       })
@@ -290,7 +289,7 @@ const EditBugPage = ({ user }) => {
       <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
       <div className='button-container'>
         {
-          author === user.username || user.role === process.env.REACT_APP_ADMIN_SECRET 
+          handleAdminAuth(user)
           ? <>
               <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
               <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>

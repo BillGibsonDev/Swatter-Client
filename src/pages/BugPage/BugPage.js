@@ -18,6 +18,9 @@ import { Link, useParams } from "react-router-dom";
 // images
 import EditIcon from "../../assets/icons/editIconWhite.png";
 
+// components
+import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+
 export const BugPage = () => {
   const { projectId, bugId } = useParams();
 
@@ -73,13 +76,11 @@ export const BugPage = () => {
 
   return (
     <StyledBugPage>
-      <div className='breadcrumbs'>
-        <Link to={`/`}>Home</Link>
-        <span>/</span>
-        <Link to={`/projects/${projectId}`}>Project</Link>
-        <span>/</span>
-        {!bug ? <></> : <p>{bug.title}</p>}
-      </div>
+      <BreadCrumbs 
+        projectId={projectId}
+        projectTitle={"Project"} 
+        title={bug.title}
+      />
       {
         isLoading ? <BugPageLoader />
        : 
@@ -117,7 +118,7 @@ export const BugPage = () => {
 const StyledBugPage = styled.div`
   height: 100%;
   width: 70%;
-  margin: 30px auto;
+  margin: 20px auto;
   @media (max-width: 834px) {
     width: 90%;
   }

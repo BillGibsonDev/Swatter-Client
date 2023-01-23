@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import * as pallette from '../../../styled/ThemeVariables';
 
 // components
-import Bug from './Bug.js';
+import { Bug } from './Bug.js';
 
-export default function BugTable({
-    project
-}) {
+export default function BugTable({ project }) {
 
     const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 

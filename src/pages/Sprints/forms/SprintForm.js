@@ -6,7 +6,8 @@ import styled from "styled-components";
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert.js";
-import { toggleSprintForm } from "../../../functions/toggleSprintForm.js";
+import { toggleRef } from "../../../functions/toggleRef.js";
+import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -14,13 +15,7 @@ import { connect } from "react-redux";
 // components
 import { Alert } from "../../../components/Alert.js";
 
-const SprintForm = ({
-  projectId,
-  sprintFormRef,
-  rerender,
-  setRerender,
-  user
-}) => {
+const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) => {
 
   const AlertRef = useRef();
 
@@ -50,7 +45,7 @@ const SprintForm = ({
         setMessage("Sprint Created!");
         handleAlert(AlertRef);
         setRerender(!rerender);
-        toggleSprintForm(sprintFormRef);
+        toggleRef(sprintFormRef);
       }
     })
     .catch((err) => {
@@ -67,7 +62,7 @@ const SprintForm = ({
       />
       <div className='title-container'>
         <h1>New Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleSprintForm(sprintFormRef); }}>
+        <button id='exit-btn' onClick={() => { toggleRef(sprintFormRef); }}>
           &times;<span className='tooltiptext'>Close</span>
         </button>
       </div>
@@ -99,8 +94,7 @@ const SprintForm = ({
         />
       </label>
       {
-        user.role === process.env.REACT_APP_USER_SECRET ||
-        user.role === process.env.REACT_APP_ADMIN_SECRET 
+        handleUserAuth(user)
         ? <button onClick={() => { handleSprintForm(); }}>Save</button>
         : <button>Save</button>
       }
@@ -110,14 +104,15 @@ const SprintForm = ({
 
 const StyledSprintForm = styled.div`
   height: 100%;
-  width: 100%;
+  width: 90vw;
+  margin: 0 auto;
   max-width: 500px;
   max-height: 300px;
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 100px;
-  left: 10px;
+  left: 5%;
   z-index: 1003;
   background: grey;
   border-radius: 8px;

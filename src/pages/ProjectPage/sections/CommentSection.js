@@ -17,12 +17,10 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 // functions
-import { toggleComments } from "../../../functions/toggleComments.js";
+import { toggleRef } from "../../../functions/toggleRef.js";
 
-const CommentSection = ({
-  commentSectionRef,
-  user
-}) => {
+const CommentSection = ({ commentSectionRef, user }) => {
+
   const { projectId, bugId } = useParams();
 
   const AlertRef = useRef();
@@ -53,29 +51,24 @@ const CommentSection = ({
       <div className='comment-section-wrapper'>
         <div className='title-container'>
           <h1>Comments</h1>
-          <button id='exit-btn' onClick={() => { toggleComments(commentSectionRef); }}>
-            &times;<span className='tooltiptext'>Close</span>
-          </button>
+          <button id='exit-btn' onClick={() => { toggleRef(commentSectionRef); }}>&times;</button>
         </div>
         {
           comments.length === 0 || !comments 
-          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>
-            No comments yet..
-          </h1>
-          :
-            <div className='comment-container' id='comment-container'>
-              {
-                comments.map((comment, index) => {
-                  return (
-                    <Comment
-                      comment={comment}
-                      projectId={projectId}
-                      key={index}
-                      setLoading={setLoading}
-                    />
-                  );
-                })
-              }
+          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
+          : <div className='comment-container' id='comment-container'>
+            {
+              comments.map((comment, index) => {
+                return (
+                  <Comment
+                    comment={comment}
+                    projectId={projectId}
+                    key={index}
+                    setLoading={setLoading}
+                  />
+                );
+              })
+            }
           </div>
         }
         <CommentInput
@@ -148,35 +141,10 @@ const StyledCommentSection = styled.div`
       #exit-btn {
         background: none;
         border: none;
-        font-size: 40px;
+        font-size: 30px;
         color: white;
         position: relative;
         cursor: pointer;
-        #exit-btn-icon {
-          width: 30px;
-          height: 30px;
-          cursor: pointer;
-        }
-        .tooltiptext {
-          visibility: hidden;
-          width: 100%;
-          min-width: 160px;
-          background-color: black;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 5px 0;
-          position: absolute;
-          z-index: 1000;
-          top: 25%;
-          right: 105%;
-          font-size: 20px;
-        }
-      }
-      #exit-btn:hover .tooltiptext,
-      #exit-btn:active .tooltiptext {
-        visibility: visible;
-        transition-delay: 1s;
       }
     }
     .comment-container {

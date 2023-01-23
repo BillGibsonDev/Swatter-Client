@@ -31,7 +31,6 @@ const GlobalStyles = createGlobalStyle`
     button, a, label, input, textarea {
         font-family: 'Roboto Mono', monospace;
         letter-spacing: 1px;
-        padding: 2px;
         border-radius: 4px;
     }
     h1 {

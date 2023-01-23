@@ -8,10 +8,7 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icons from '../../../assets/IconImports.js';
 
-// redux
-import { connect } from 'react-redux';
-
-const Bug = ({ user, project, bug }) => {
+export const Bug = ({ project, bug }) => {
 
 	const handleDate = (bug) => {
 		let currentDate = new Date();
@@ -108,7 +105,7 @@ const StyledBug = styled.div`
 		margin: 10px auto;
 		.status-icons-container {
 			img {
-				width: 25px;
+				width: 20px;
 				&:first-child {
 					margin-right: 10px;
 				}
@@ -148,11 +145,3 @@ const StyledBug = styled.div`
 		color: #0dbe7a;
 	}
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(Bug);

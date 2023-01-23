@@ -11,6 +11,7 @@ import { Alert } from "../../../components/Alert";
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert";
+import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -121,7 +122,7 @@ const CommentSection = ({
             }}
           />
           {
-            user.role !== process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
+            handleUserAuth(user) 
             ? <button onClick={() => { sendComment(); }}>Send</button>
             : <button>Send</button>
           }

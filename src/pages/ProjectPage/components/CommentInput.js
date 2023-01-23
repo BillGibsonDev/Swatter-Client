@@ -8,6 +8,7 @@ import { handleAlert } from "../../../functions/handleAlert";
 
 //redux
 import { connect } from "react-redux";
+import { handleUserAuth } from "../../../functions/handleUserAuth";
 
 const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId }) => {
 
@@ -50,51 +51,51 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId }) => 
 
   return (
     <StyledCommentInput>
-        <textarea
-            placeholder='Add a comment'
-            name='comment'
-            id='comment'
-        />
-        {
-            user.role === process.env.REACT_APP_ADMIN_SECRET || process.env.REACT_APP_USER_SECRET 
-            ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button>Send</button>
-        }
+      <textarea
+        placeholder='Add a comment'
+        name='comment'
+        id='comment'
+      />
+      {
+        handleUserAuth(user)
+        ? <button onClick={() => { sendComment(); }}>Send</button>
+        : <button>Send</button>
+      }
     </StyledCommentInput>
   );
 }
 
 const StyledCommentInput = styled.div`
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    textarea {
-        border-radius: 4px 0 0 4px;
-        background: #d6d6d6;
-        padding: 6px;
-        min-height: 20px;
-        height: auto;
-        max-width: 500px;
-        width: 100%;
-        max-height: 50px;
-        font-size: 12px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  textarea {
+    border-radius: 4px 0 0 4px;
+    background: #d6d6d6;
+    padding: 6px;
+    min-height: 20px;
+    height: auto;
+    max-width: 500px;
+    width: 100%;
+    max-height: 50px;
+    font-size: 12px;
+  }
+  button {
+    margin: 0;
+    width: 100px;
+    cursor: pointer;
+    color: #0f4d92;
+    background: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.2s;
+    &:hover {
+      background: #000000;
+      color: white;
     }
-    button {
-        margin: 0;
-        width: 100px;
-        cursor: pointer;
-        color: #0f4d92;
-        background: white;
-        border: none;
-        border-radius: 0 4px 4px 0;
-        font-size: 14px;
-        font-weight: 700;
-        transition: 0.2s;
-        &:hover {
-            background: #000000;
-            color: white;
-        }
-    }
+  }
 `;
 
 const mapStateToProps = (state) => {

@@ -3,20 +3,22 @@ import styled from "styled-components";
 
 // redux
 import { connect } from "react-redux";
+import { handleAdminAuth } from "../../../functions/handleAdminAuth";
 
 const ButtonContainer = ({ user, handleDeleteAlert, editProject, DeleteAlertRef }) => {
   return (
     <StyledButtonContainer>
-        {
-          user.role === process.env.REACT_APP_GUEST_SECRET 
-          ? <button>Update</button>
-          : <button onClick={() => { editProject(); }}>Update</button>
-        }
-        {
-          user.role === process.env.REACT_APP_ADMIN_SECRET
-          ? <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-          : <button>Delete</button>
-        }
+      {
+        handleAdminAuth(user)
+        ? <>
+            <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
+            <button onClick={() => { editProject(); }}>Update</button>
+          </>
+        : <>
+            <button>Update</button>
+            <button id='delete'>Delete</button>
+          </>
+      }
     </StyledButtonContainer>
   )
 }

@@ -267,7 +267,6 @@ const StyledProjectPage = styled.div`
   }
   @media (max-width: 750px) {
     height: 40vh;
-    margin: 20px auto;
   }
   @media (max-width: 428px) {
     margin-left: 65px;

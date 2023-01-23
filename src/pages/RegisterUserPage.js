@@ -13,6 +13,7 @@ import { Alert } from "../components/Alert.js";
 
 // functions
 import { handleAlert } from "../functions/handleAlert.js";
+import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 
 const RegisterUserPage = ({ user }) => {
 
@@ -75,7 +76,7 @@ const RegisterUserPage = ({ user }) => {
           <input type='text' onChange={(event) => { setConfirm(event.target.value); }} />
         </label>
         {
-          user.role === process.env.REACT_APP_ADMIN_SECRET 
+          handleAdminAuth(user)
           ? <button type='submit' onClick={() => { registerUser(); }}>Create User</button>
           : <button>Create User</button>
         }

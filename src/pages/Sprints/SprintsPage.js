@@ -7,6 +7,7 @@ import * as pallette from "../../styled/ThemeVariables";
 
 // components
 import SprintBugTable from "./components/SprintBugTable.js";
+import { BreadCrumbs } from "../../components/Breadcrumbs";
 
 // forms
 import SprintForm from "./forms/SprintForm.js";
@@ -22,7 +23,7 @@ import Loader from "../../loaders/Loader";
 import { useParams } from "react-router-dom";
 
 // functions
-import { toggleSprintForm } from "../../functions/toggleSprintForm";
+import { toggleRef } from "../../functions/toggleRef";
 
 export const SprintsPage = () => {
   const { projectId } = useParams();
@@ -59,16 +60,21 @@ export const SprintsPage = () => {
     let newArr = x.split(/[ -]+/);
     return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
   };
-
+  
   return (
     <StyledSprintSection>
+      <BreadCrumbs 
+        projectId={projectId}
+        projectTitle={project.projectTitle} 
+        title={'Sprints'}
+      />
       <div className='button-wrapper'>
-        <button onClick={() => { toggleSprintForm(sprintFormRef); }}>New Sprint</button>
+        <button onClick={() => { toggleRef(sprintFormRef); }}>New Sprint</button>
         {
           !options
           ? <></>
           : 
-            <select  onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
+            <select onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
               <option value=''></option>
               {
                 options.map((sprint, key) => {
@@ -93,7 +99,7 @@ export const SprintsPage = () => {
                   <div className='title-wrapper' key={key}>
                     <div className='title-container'>
                       <h4>{sprint.title}</h4>
-                      <button onClick={() => { toggleSprintForm(editSprintFormRef); }} >
+                      <button onClick={() => { toggleRef(editSprintFormRef); }} >
                         <img id='edit-button' src={Edit} alt='edit' />
                         <span className='tooltiptext'>Edit Sprint</span>
                       </button>

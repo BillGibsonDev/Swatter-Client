@@ -9,17 +9,15 @@ export const SearchProjectTable = ({ projects, projectSearchPhrase }) => {
   const handleSearch = () => {
     let projectArray = [];
     if(projectSearchPhrase){
-      let x = projects.length;
-      for ( let i = 0; x > i; i++ ){
-        let array = projectArray;
+      for ( let i = 0; projects.length > i; i++ ){
         let projectObject = projects[i];
-        let index = array.findIndex(project => project._id === projectObject._id)
-        if( index < 0){
+        let arrayIndex = projectArray.findIndex(project => project._id === projectObject._id)
+        if( arrayIndex < 0){
           Object.keys(projectObject).forEach((key) => {
             let string = `${projectObject[key]}`;
             string = string.toLowerCase();
             if(string.includes(projectSearchPhrase.toLowerCase())){
-              if(array.findIndex(project => project._id === projectObject._id) < 0){
+              if(projectArray.findIndex(project => project._id === projectObject._id) < 0){
                 projectArray.push(projects[i])
               }
             }
@@ -27,13 +25,13 @@ export const SearchProjectTable = ({ projects, projectSearchPhrase }) => {
         }
       }
       return projectArray;
-      } else {
-        projectArray = projects.slice().reverse()
-        return projectArray;
-      }
+    } else {
+      let array = projects.slice().reverse()
+      return array;
     }
+  }
 
-   const filteredProjects = handleSearch();
+  const filteredProjects = handleSearch();
 
   return (
     <StyledProjectTable>

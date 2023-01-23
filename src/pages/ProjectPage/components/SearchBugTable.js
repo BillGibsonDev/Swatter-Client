@@ -26,15 +26,14 @@ const handleSearch = (status) => {
     if(bugSearchPhrase){
         let x = project.bugs.length;
         for ( let i = 0; x > i; i++ ){
-            let array = bugArray;
             let bugObject = project.bugs[i];
-            let index = array.findIndex(bug => bug._id === bugObject._id)
+            let index = bugArray.findIndex(bug => bug._id === bugObject._id)
             if( index < 0){
                 Object.keys(bugObject).forEach((key) => {
                     let string = `${bugObject[key]}`;
                     string = string.toLowerCase();
                     if(string.includes(bugSearchPhrase.toLowerCase())){
-                        if(array.findIndex(bug => bug._id === bugObject._id) < 0){
+                        if(bugArray.findIndex(bug => bug._id === bugObject._id) < 0){
                             bugArray.push(project.bugs[i])
                         }
                     }
@@ -43,8 +42,8 @@ const handleSearch = (status) => {
         }
         return bugArray;
         } else {
-            bugArray = project.bugs.filter(bug => bug.status === status).slice().reverse()
-            return bugArray;
+            let array = project.bugs.filter(bug => bug.status === status).slice().reverse()
+            return array;
         }
     }
 

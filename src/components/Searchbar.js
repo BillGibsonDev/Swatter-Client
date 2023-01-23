@@ -23,7 +23,6 @@ export const Searchbar = ({ setSearchPhrase }) => {
 }
 
 const StyledSearchbar = styled.form`
-    width: 200px;
     position: absolute;
     top: 10px;
     background: white;
@@ -35,30 +34,32 @@ const StyledSearchbar = styled.form`
         outline: 2px solid ${pallette.helperGrey} ;
     }
     img {
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
     }
     input {
         background: none;
         border: none;
         text-indent: 10px;
-        padding: 5px 3px;
         transition:0.3s;
+        width: 210px;
         &:focus {
             outline: none;
             text-indent: 6px;
         }
     }
     button {
-        background: white;
+        background: #f0f0f0;
         font-weight: 700;
         font-size: .8em;
         border: none;
-        padding: 5px 10px;
         cursor: pointer;
         transition: 0.2s;
-        width: 100px;
+        width: 60px;
         height: 28px;
+        margin-left: 6px;
+        border-radius: 0;
+        border-radius: 0 4px 4px 0;
         &:hover{
             color: white;
             background: black;

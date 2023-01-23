@@ -68,7 +68,7 @@ const StyledBugTable = styled.div`
     .bugs-container {
         width: 100%;
         background: black;
-        padding: 10px;
+        padding: 6px;
         background: #0b2849;
         border-radius: 12px;
         h5 {

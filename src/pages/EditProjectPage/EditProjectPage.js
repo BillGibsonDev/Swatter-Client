@@ -29,8 +29,8 @@ export const EditProjectPage = () => {
   const DeleteAlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [project, setProject] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [ project, setProject ] = useState([]);
+  const [ isLoading, setLoading ] = useState(false);
 
   useEffect(() => {
     const getProject = () => {

@@ -91,7 +91,7 @@ const StyledRegister = styled.div`
   justify-content: center;
   flex-direction: column;
   min-height: 50vh;
-  width: 100%;
+  width: 90%;
   max-width: 1000px;
   margin: 50px auto;
   @media (max-width: 750px) {

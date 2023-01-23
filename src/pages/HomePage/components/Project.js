@@ -31,7 +31,6 @@ const StyledProject = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 10px auto;
     position: relative;
     background: #5c5c5c;
     border-radius: 4px;
@@ -40,7 +39,6 @@ const StyledProject = styled.div`
         flex-direction: row;
         align-items: center;
         padding: 6px;
-        margin: 3px auto;
     }
     .project-image-link {
         display: flex;

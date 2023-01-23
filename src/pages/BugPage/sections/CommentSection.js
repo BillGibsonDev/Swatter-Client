@@ -16,12 +16,7 @@ import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 // redux
 import { connect } from "react-redux";
 
-const CommentSection = ({
-  user,
-  bugId,
-  projectId,
-  setLoading,
-}) => {
+const CommentSection = ({ user, bugId, projectId, setLoading }) => {
 
   const AlertRef = useRef();
 

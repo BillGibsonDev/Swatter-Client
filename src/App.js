@@ -166,7 +166,7 @@ function App() {
             <Route path='/:projectId/:bugId' exact element={ <BugPage /> }  />
             <Route path='/:projectId/:bugId/edit' exact element={ <EditBugPage /> } />
             <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
-            <Route path='/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
+            <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
             <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
             <Route path='/EditProject/:projectId' exact element={ <EditProjectPage /> } />
             <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />

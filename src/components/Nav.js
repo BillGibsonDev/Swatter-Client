@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import * as icon from '../assets/IconImports.js';
 
 // components
-import { ToggleProjectNavArrow } from './ToggleProjectNavArrow';
+import { ToggleProjectNav } from './ToggleProjectNav.js';
 
 const Nav = ({user, logout, projectSideNavRef}) => {
     return (
@@ -27,7 +27,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
                 <Link to="/"><img src={icon.Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
             </div>
-            <ToggleProjectNavArrow projectSideNavRef={projectSideNavRef} />
+            <ToggleProjectNav projectSideNavRef={projectSideNavRef} />
             <div className="bottom-container">
                 <Link to="/ProfilePage"><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
                 <Link to="/LoginPage" onClick={logout}><img src={icon.Logout} alt="Log Out" /><span className="tooltiptext">Log Out</span></Link>
@@ -82,14 +82,14 @@ const StyledNav = styled.div`
     }
     .bottom-container {
         display: flex;
-        height: 20%;
+        height: 15%;
         flex-direction: column;
         align-items: center;
         margin-bottom: 0;
         bottom: 0;
         position: relative;
         a {
-            margin-bottom: 10px;
+            margin-bottom: 30px;
             position: relative;
             .tooltiptext {
                 visibility: hidden;

@@ -24,7 +24,7 @@ export const ProjectTable = ({projects}) => {
 
 const StyledProjectTable = styled.div`
   width: 100%;
-  margin: 20px auto;
+  margin: 30px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 20px;
@@ -35,5 +35,6 @@ const StyledProjectTable = styled.div`
   @media (max-width: 450px) {
     grid-template-columns: 75vw;
     row-gap: 8px;
+    column-gap: 0;
   }
 `;

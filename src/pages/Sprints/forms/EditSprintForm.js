@@ -41,8 +41,7 @@ const EditSprintForm = ({
   useEffect(() => {
     if (searchSprint) {
       setSprintId(
-        project.sprints.filter((sprints) => sprints.title === searchSprint)[0]
-          ._id
+        project.sprints.filter((sprints) => sprints.title === searchSprint)[0]._id
       );
     }
     const handleSprint = (projectId, sprintId) => {

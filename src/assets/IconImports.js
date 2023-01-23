@@ -21,6 +21,7 @@ import DetailsIcon from './icons/panel.png';
 import AddBugIcon from './icons/plus.png';
 import CommentsIcon from './icons/comments.png';
 import SprintsIcon from './icons/sprint.png';
+import RoundMenu from './icons/dot-menu-white.png';
 
 // nav icons
 export const Logout = LogoutIcon;
@@ -52,3 +53,4 @@ export const Menu = MenuIcon;
 // general icons
 export const Edit= EditIcon;
 export const Add = AddIcon;
+export const RoundDotMenu = RoundMenu;

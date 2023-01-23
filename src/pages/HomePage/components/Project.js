@@ -18,7 +18,7 @@ export default function Project({
             <Link className='project-image-link' to={`/projects/${project._Id}`}>
                 <img 
                     className="project-image" 
-                    src={project.projectImage === "" || undefined ? PlaceholderImage : project.projectImage} 
+                    src={!project.projectImage ? PlaceholderImage : project.projectImage} 
                     alt={project.title} 
                 />
             </Link>

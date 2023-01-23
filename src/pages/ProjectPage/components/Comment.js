@@ -52,8 +52,6 @@ const Comment = ({
         handleAlert(AlertRef);
       } else {
         setLoading(false);
-        setMessage("Comment Deleted!");
-        handleAlert(AlertRef);
       }
     })
     .catch((err) => {

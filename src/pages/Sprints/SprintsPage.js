@@ -102,7 +102,7 @@ export const SprintsPage = () => {
                     <div className='info-container'>
                       <h5><span>Updated:</span> {sprint.updated}</h5>
                       {
-                        sprint.endDate === "" ? <></>
+                        !sprint.endDate ? <></>
                         : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
                       }
                     </div>

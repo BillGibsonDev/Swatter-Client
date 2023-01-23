@@ -12,10 +12,12 @@ import { handleAlert } from "../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
 
 // components
-import Loader from "../../loaders/Loader.js";
 import { DeleteAlert } from "../../components/DeleteAlert.js";
 import { Alert } from '../../components/Alert.js';
 import ButtonContainer from "./components/ButtonContainer.js";
+
+// loaders
+import Loader from "../../loaders/Loader.js";
 
 export const EditProjectPage = () => {
 

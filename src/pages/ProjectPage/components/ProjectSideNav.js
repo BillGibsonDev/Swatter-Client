@@ -36,7 +36,7 @@ export const ProjectSideNav = ({
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
-                    project.projectImage === "" 
+                    !project.projectImage
                     ? <img id="default" src={images.DefaultImage} alt={project.projectTitle} />
                     : <img src={project.projectImage} alt={project.projectTitle} />
                 }
@@ -145,5 +145,4 @@ const StyledSideNav = styled.div`
         from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
         to {width: 100%; opacity: 1; left: 50px; }
     }
-    
 `;

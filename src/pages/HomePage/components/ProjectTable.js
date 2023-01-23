@@ -12,8 +12,8 @@ export const ProjectTable = ({projects}) => {
         projects.slice().reverse().map((project, key) => {
           return (
             <Project
-            project={project}
-            key={key}
+              project={project}
+              key={key}
             />
           );
         })

@@ -25,7 +25,7 @@ const RegisterUserPage = ({ user }) => {
 
   const registerUser = () => {
     if (password !== confirm) {
-      setMessage("Passwords Do not Match!");
+      setMessage("Passwords Do Not Match!");
       handleAlert(AlertRef);
     } else {
       axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_REGISTER_URL}`,

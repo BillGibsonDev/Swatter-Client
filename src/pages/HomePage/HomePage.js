@@ -5,7 +5,6 @@ import axios from "axios";
 import styled from "styled-components";
 
 // components
-import Project from "./components/Project.js";
 import HomePageLoader from "../../loaders/HomePageLoader";
 import { Searchbar } from '../../components/Searchbar.js';
 import { SearchProjectTable } from "./components/SearchProjectTable.js";

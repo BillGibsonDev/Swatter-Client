@@ -5,7 +5,7 @@ import * as pallette from '../../../styled/ThemeVariables.js';
 export default function ImageSection({ images, handleModal }) {
 
     const handleImages = (image, index) => {
-        if(image.image === ''){
+        if(!image.image){
             return <h2>No Images</h2>;
         } else {
             return <img src={image.image} onClick={() => { handleModal(index)} } alt={image.caption}/>
@@ -15,7 +15,7 @@ export default function ImageSection({ images, handleModal }) {
     const handleCaptions = (image) => {
         if(image.caption.length > 50) {
             return <p>{image.caption.slice(0, 50)}...</p>
-        } else if(image.image === "" && image.caption === ""){
+        } else if(!image.image && !image.caption ){
             return <></>
         } else if (image.caption.length === 0){
             return <p>No Caption</p>

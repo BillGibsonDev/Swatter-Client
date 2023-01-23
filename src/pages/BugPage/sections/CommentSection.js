@@ -45,7 +45,7 @@ const CommentSection = ({
 
   const sendComment = () => {
     setLoading(true);
-    if (addComment === "") {
+    if (!addComment) {
       setLoading(false);
       setMessage("No Comment Entered!");
       handleAlert(AlertRef);

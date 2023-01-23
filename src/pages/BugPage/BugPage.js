@@ -64,7 +64,7 @@ export const BugPage = () => {
   };
 
   const handleSprint = (bug) => {
-    if(!bug.sprint || bug.sprint === ""){
+    if(!bug.sprint){
       return 'None'
     } else {
       return bug.sprint

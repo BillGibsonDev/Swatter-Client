@@ -62,9 +62,15 @@ const CreateProjectPage = ({ user }) => {
       }
     )
     .then((response) => {
-      setLoading(false);
-      setMessage(`${projectTitle} Project Started!`);
-      handleAlert(AlertRef);
+      if(response !== 'Project Created!'){
+        setLoading(false);
+        setMessage("Server Error - Project not created");
+        handleAlert(AlertRef);
+      } else {
+        setLoading(false);
+        setMessage(`${projectTitle} Project Started!`);
+        handleAlert(AlertRef);
+      }
     })
     .catch((err) => {
       console.log(err);

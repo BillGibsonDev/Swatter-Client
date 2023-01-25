@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../styled/ThemeVariables.js";
+import * as palette from "../styled/ThemeVariables.js";
 
 // functions
 import { handleAlert } from "../functions/handleAlert.js";
@@ -181,7 +181,7 @@ const StyledProjectPage = styled.div`
     }
     a {
       font-size: 20px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       @media (max-width: 450px) {
         font-size: 12px;
       }
@@ -198,9 +198,9 @@ const StyledProjectPage = styled.div`
     color: white;
     width: 100%;
     margin: 10px auto;
-    font-size: ${pallette.titleSize};
+    font-size: ${palette.titleSize};
     @media (max-width: 750px) {
-      font-size: ${pallette.subtitleSize};
+      font-size: ${palette.subtitleSize};
     }
   }
   .form-wrapper {
@@ -224,7 +224,7 @@ const StyledProjectPage = styled.div`
         margin: 10px 0;
         color: white;
         @media (max-width: 750px) {
-          font-size: ${pallette.labelSize};
+          font-size: ${palette.labelSize};
         }
         @media (max-width: 428px) {
           font-size: 16px;
@@ -234,7 +234,7 @@ const StyledProjectPage = styled.div`
           width: 400px;
           font-size: 18px;
           padding: 2px;
-          background: ${pallette.helperGrey};
+          background: ${palette.helperGrey};
           @media (max-width: 834px) {
             width: 100%;
           }
@@ -258,10 +258,10 @@ const StyledProjectPage = styled.div`
     cursor: pointer;
     border: none;
     border-radius: 4px;
-    font-size: ${pallette.subtitleSize};
+    font-size: ${palette.subtitleSize};
     font-weight: 700;
     background: #ffffff;
-    color: ${pallette.accentColor};
+    color: ${palette.accentColor};
     &:hover {
       color: #ffffff;
       cursor: pointer;
@@ -271,7 +271,7 @@ const StyledProjectPage = styled.div`
     }
     @media (max-width: 750px) {
       width: 100px;
-      font-size: ${pallette.paraSize};
+      font-size: ${palette.paraSize};
     }
     @media (max-width: 429px) {
       width: 100px;

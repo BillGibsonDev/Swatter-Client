@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../styled/ThemeVariables.js";
+import * as palette from "../styled/ThemeVariables.js";
 
 // redux
 import { connect } from "react-redux";
@@ -117,9 +117,9 @@ const StyledRegister = styled.div`
       justify-content: center;
       align-items: center;
       margin: 20px 0;
-      font-size: ${pallette.subtitleSize};
+      font-size: ${palette.subtitleSize};
       @media (max-width: 750px) {
-        font-size: ${pallette.paraSize};
+        font-size: ${palette.paraSize};
       }
       input {
         width: 300px;
@@ -127,7 +127,7 @@ const StyledRegister = styled.div`
         border-radius: 4px;
         font-size: 18px;
         padding: 6px;
-        background: ${pallette.helperGrey};
+        background: ${palette.helperGrey};
       }
     }
     button {
@@ -139,10 +139,10 @@ const StyledRegister = styled.div`
       cursor: pointer;
       border: none;
       border-radius: 4px;
-      font-size: ${pallette.subtitleSize};
+      font-size: ${palette.subtitleSize};
       font-weight: 700;
       background: #ffffff;
-      color: ${pallette.accentColor};
+      color: ${palette.accentColor};
       margin-top: 20px;
       &:hover {
         color: #ffffff;
@@ -152,7 +152,7 @@ const StyledRegister = styled.div`
         transform: scale(1.01);
       }
       @media (max-width: 750px) {
-        font-size: ${pallette.paraSize};
+        font-size: ${palette.paraSize};
       }
     }
   }

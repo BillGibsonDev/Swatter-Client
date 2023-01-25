@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables';
+import * as palette from '../../../styled/ThemeVariables';
 
 // router
 import { Link } from 'react-router-dom';
@@ -72,7 +72,7 @@ const StyledProject = styled.div`
             margin-left: 6px;
         }
         a {
-            font-size: ${pallette.subtitleSize};
+            font-size: ${palette.subtitleSize};
             color: white;
             font-weight: 700;
             &:hover {
@@ -85,7 +85,7 @@ const StyledProject = styled.div`
             }
         }
         h2 {
-            font-size: ${pallette.labelSize};
+            font-size: ${palette.labelSize};
             color: white;
             font-weight: 400;
             @media (max-width: 450px){

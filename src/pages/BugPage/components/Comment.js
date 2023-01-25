@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../../styled/ThemeVariables";
+import * as palette from "../../../styled/ThemeVariables";
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert";
@@ -62,7 +62,7 @@ const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
   
   const handleCommentAuthor = (author) => {
     if(author === user.username){
-      return { margin: "10px 5% 10px auto", background: `${pallette.helperGrey}`};
+      return { margin: "10px 5% 10px auto", background: `${palette.helperGrey}`};
     } else {
       return { margin: "10px auto 10px 5%", background: "white" };
     }
@@ -163,7 +163,7 @@ const StyledComment = styled.div`
           top: 0;
           box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
           z-index: 1;
-          background: ${pallette.helperGrey};
+          background: ${palette.helperGrey};
           button {
             color: black;
             padding: 12px 16px;
@@ -186,7 +186,7 @@ const StyledComment = styled.div`
       .dropdown:hover .dropbtn,
       .dropdown:active .dropdown-content,
       .dropdown:focus .dropdown-content {
-        background-color: ${pallette.helperGrey};
+        background-color: ${palette.helperGrey};
       }
     }
     #Gibby {

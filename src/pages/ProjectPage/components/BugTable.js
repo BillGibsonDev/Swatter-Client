@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables';
+import * as palette from '../../../styled/ThemeVariables';
 
 // components
 import { Bug } from './Bug.js';
@@ -72,9 +72,9 @@ const StyledBugTable = styled.div`
         background: #0b2849;
         border-radius: 12px;
         h5 {
-            color: ${pallette.helperGrey};
+            color: ${palette.helperGrey};
             padding: 10px;
-            font-size: ${pallette.paraSize};
+            font-size: ${palette.paraSize};
             span {
                 font-weight: 400;
             }

@@ -1,6 +1,6 @@
 // styles
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables';
+import * as palette from '../styled/ThemeVariables';
 
 // redux
 import { connect } from 'react-redux';
@@ -118,7 +118,7 @@ const StyledNav = styled.div`
         align-items: center;
         padding: 6px;
         &:hover {
-            background: ${pallette.accentColor};
+            background: ${palette.accentColor};
         }
     }
     img {

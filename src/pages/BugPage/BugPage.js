@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../styled/ThemeVariables.js";
+import * as palette from "../../styled/ThemeVariables.js";
 
 // sections
 import ImageSection from "./sections/ImageSection.js";
-import CommentSection from "./sections/CommentSection.js";
+import { CommentSection } from "./sections/CommentSection.js";
 
 // loaders
 import BugPageLoader from "../../loaders/BugPageLoader";
@@ -20,24 +20,32 @@ import EditIcon from "../../assets/icons/editIconWhite.png";
 
 // components
 import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+import { ButtonContainer } from "./components/ButtonContainer.js";
+import { InfoContainer } from "./components/InfoContainer.js";
+import { DeleteAlert } from "../../components/DeleteAlert.js";
+import { Alert } from "../../components/Alert.js";
 
 export const BugPage = () => {
   const { projectId, bugId } = useParams();
 
-  const [bug, setBug] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [images, setImages] = useState([]);
+  const DeleteAlertRef = useRef();
+  const AlertRef = useRef();
+
+  const [ bug, setBug ] = useState([]);
+  const [ isLoading, setLoading ] = useState(true);
+  const [ images, setImages ] = useState([]);
 
   useEffect(() => {
     const getBug = (projectId, bugId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
       .then((response) => {
-        setBug(response.data[0].bugs[0]);
-        setImages(response.data[0].bugs[0].images);
+        setBug(response.data.bugs[0]);
+        setImages(response.data.bugs[0].images);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
     };
     getBug(projectId, bugId);
@@ -52,20 +60,6 @@ export const BugPage = () => {
     }
   };
 
-  const handleTabs = (e, section) => {
-    let i;
-    let tabs = document.getElementsByClassName("bug-page-tabs");
-    for (i = 0; i < tabs.length; i++) {
-      tabs[i].style.display = "none";
-    }
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(section).style.display = "block";
-    e.currentTarget.className += " active";
-  };
-
   const handleSprint = (bug) => {
     if(!bug.sprint){
       return 'None'
@@ -76,6 +70,12 @@ export const BugPage = () => {
 
   return (
     <StyledBugPage>
+      <Alert 
+        
+      />
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+      />
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={"Project"} 
@@ -96,17 +96,10 @@ export const BugPage = () => {
               <h3><span>Status: </span>{bug.status}</h3>
               <h3><span>Sprint: </span>{handleSprint(bug)}</h3>
             </div>
-            <div className='info-container'>
-              <h2><span>Creator: </span>{bug.author}</h2>
-              <h2><span>Created: </span>{bug.date}</h2>
-              <h2><span>Updated: </span>{bug.lastUpdate}</h2>
-            </div>
+            <InfoContainer bug={bug} />
           </div>
           <p id='description'><span>Description: </span> {bug.description}</p>
-          <div className='button-container'>
-            <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>Comments</button>
-            <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
-          </div>
+          <ButtonContainer />
           <ImageSection images={images} handleModal={handleModal} />
           <CommentSection bugId={bugId} projectId={projectId} setLoading={setLoading} />
         </div>
@@ -126,38 +119,6 @@ const StyledBugPage = styled.div`
     width: 85%;
     padding: 10px;
     margin: 0 0 auto auto;
-  }
-  .breadcrumbs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    @media (max-width: 428px) {
-      display: none;
-    }
-    a {
-      border: none;
-      background: none;
-      font-size: 16px;
-      color: ${pallette.helperGrey};
-      cursor: pointer;
-      @media (max-width: 450px) {
-        font-size: 12px;
-      }
-      &:hover {
-        color: white;
-      }
-    }
-    p {
-      font-size: 16px;
-      color: ${pallette.helperGrey};
-      @media (max-width: 450px) {
-        font-size: 12px;
-      }
-    }
-    span {
-      margin: 0 10px;
-      color: white;
-    }
   }
   .bug-wrapper {
     display: flex;
@@ -265,25 +226,8 @@ const StyledBugPage = styled.div`
         font-size: 14px;
       }
       span {
-        color: ${pallette.helperGrey};
+        color: ${palette.helperGrey};
       }
-    }
-  }
-  .button-container {
-    border-bottom: 2px solid white;
-    width: 80%;
-    button {
-      border: 1px solid ${pallette.helperGrey};
-      font-size: 16px;
-      border-radius: 0;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      cursor: pointer;
-      padding: 8px 12px;
-    }
-    .active {
-      background: black;
-      color: white;
     }
   }
 `;

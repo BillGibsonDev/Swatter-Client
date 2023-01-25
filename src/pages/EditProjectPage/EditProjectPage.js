@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../styled/ThemeVariables.js";
+import * as palette from "../../styled/ThemeVariables.js";
 
 // router
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -281,7 +281,7 @@ const StyledProjectPage = styled.div`
     }
     a {
       font-size: 20px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       @media (max-width: 450px) {
         font-size: 12px;
       }
@@ -322,7 +322,7 @@ const StyledProjectPage = styled.div`
         select {
           width: 400px;
           padding: 2px;
-          background: ${pallette.helperGrey};
+          background: ${palette.helperGrey};
           @media (max-width: 834px) {
             width: 100%;
           }

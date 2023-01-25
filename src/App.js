@@ -20,7 +20,7 @@ import { BugPage }from "./pages/BugPage/BugPage.js";
 import CreateBugPage from "./pages/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import DetailsPage from "./pages/DetailsPage";
-import EditBugPage from "./pages/EditBugPage";
+import EditBugPage from "./pages/EditBugPage/EditBugPage.js";
 
 // router
 import { Route, Routes, useNavigate } from "react-router-dom";

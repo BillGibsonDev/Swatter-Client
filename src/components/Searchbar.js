@@ -1,6 +1,6 @@
 // styled 
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables.js';
+import * as palette from '../styled/ThemeVariables.js';
 
 // images
 import SearchIcon from '../assets/images/bugMicroYaleBlue.png';
@@ -31,7 +31,7 @@ const StyledSearchbar = styled.form`
     padding-left: 4px;
     border-radius: 6px;
     &:hover {
-        outline: 2px solid ${pallette.helperGrey} ;
+        outline: 2px solid ${palette.helperGrey} ;
     }
     img {
         width: 15px;

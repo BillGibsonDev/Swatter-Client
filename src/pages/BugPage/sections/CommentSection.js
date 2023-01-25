@@ -1,35 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../../styled/ThemeVariables.js";
+import * as palette from "../../../styled/ThemeVariables.js";
 
 // components
 import Comment from "../components/Comment";
-import { Alert } from "../../../components/Alert";
+import CommentInput from "../components/CommentInput.js";
 
-// functions
-import { handleAlert } from "../../../functions/handleAlert";
-import { handleUserAuth } from "../../../functions/handleUserAuth.js";
+export const CommentSection = ({ bugId, projectId, setLoading, AlertRef, DeleteAlertRef }) => {
 
-// redux
-import { connect } from "react-redux";
-
-const CommentSection = ({ user, bugId, projectId, setLoading }) => {
-
-  const AlertRef = useRef();
-
-  const [ message, setMessage ] = useState('');
-  const [ addComment, setAddComment ] = useState("");
-  const [ addAuthor ] = useState(user.username);
   const [ comments, setComments ] = useState([]);
 
   useEffect(() => {
     const getComments = (projectId, bugId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
       .then((response) => {
-        setComments(response.data[0].bugs[0].comments);
+        setComments(response.data.bugs[0].comments);
         setLoading(false);
       })
       .catch((err) => {
@@ -39,51 +27,8 @@ const CommentSection = ({ user, bugId, projectId, setLoading }) => {
     getComments(projectId, bugId);
   }, [projectId, bugId, setLoading]);
 
-  const sendComment = () => {
-    setLoading(true);
-    if (!addComment) {
-      setLoading(false);
-      setMessage("No Comment Entered!");
-      handleAlert(AlertRef);
-    } else {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`,
-        {
-          projectId: projectId,
-          bugId: bugId,
-          comment: addComment,
-          author: addAuthor,
-        }
-      )
-      .then((response) => {
-        if (response.data !== "Comment created!") {
-          setLoading(false);
-          setMessage("Server Error - Comment not created!");
-          handleAlert(AlertRef);
-        } else {
-          setLoading(false);
-          document.getElementById("comment").value = "";
-          let container = document.getElementById("bug-comment-container");
-          setTimeout(function () {
-            container.scrollTo(0, document.body.scrollHeight);
-            setAddComment("");
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-        setMessage("Server Error - Comment not created!");
-        handleAlert(AlertRef);
-      });
-    }
-  };
-
   return (
     <StyledBugCommentSection className='bug-page-tabs active' id='comments'>
-      <Alert
-        message={message}
-        AlertRef={AlertRef}
-      />
       <div className='comment-section-wrapper'>
         {
           comments.length === 0 
@@ -105,23 +50,10 @@ const CommentSection = ({ user, bugId, projectId, setLoading }) => {
               }
             </div>
         }
-        <div className='comment-maker'>
-          <textarea
-            placeholder='Add a comment'
-            name='comment'
-            id='comment'
-            required
-            cols={200}
-            onChange={(event) => {
-              setAddComment(event.target.value);
-            }}
-          />
-          {
-            handleUserAuth(user) 
-            ? <button onClick={() => { sendComment(); }}>Send</button>
-            : <button>Send</button>
-          }
-        </div>
+        <CommentInput
+          bugId={bugId}
+          projectId={projectId}
+        />
       </div>
     </StyledBugCommentSection>
   );
@@ -148,8 +80,8 @@ const StyledBugCommentSection = styled.div`
     flex-direction: column;
     align-items: center;
     h2 {
-      color: ${pallette.helperGrey};
-      font-size: 16px;
+      color: ${palette.helperGrey};
+      font-size: 1em;
       font-weight: 400;
       margin-right: auto;
     }
@@ -205,11 +137,3 @@ const StyledBugCommentSection = styled.div`
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(CommentSection);

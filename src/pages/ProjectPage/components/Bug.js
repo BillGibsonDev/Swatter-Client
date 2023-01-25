@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables';
+import * as palette from '../../../styled/ThemeVariables';
 
 // router
 import { Link } from 'react-router-dom';
@@ -92,7 +92,7 @@ const StyledBug = styled.div`
 	border-radius: 4px;
 	cursor: pointer;
 	border: 1px solid white;
-	background: ${pallette.accentColor};
+	background: ${palette.accentColor};
 	#title {
 		color: #ffffff;
 	}

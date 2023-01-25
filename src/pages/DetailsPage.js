@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../styled/ThemeVariables.js";
+import * as palette from "../styled/ThemeVariables.js";
 
 // images
 import Edit from "../assets/icons/editIconWhite.png";
@@ -97,7 +97,7 @@ const StyledDetails = styled.div`
       border: none;
       background: none;
       font-size: 16px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       cursor: pointer;
       @media (max-width: 450px) {
         font-size: 12px;
@@ -108,7 +108,7 @@ const StyledDetails = styled.div`
     }
     p {
       font-size: 16px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       @media (max-width: 450px) {
         font-size: 12px;
       }
@@ -180,7 +180,7 @@ const StyledDetails = styled.div`
           margin: 20px 0;
         }
         span {
-          color: ${pallette.helperGrey};
+          color: ${palette.helperGrey};
         }
       }
     }

@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
+import * as palette from '../../../styled/ThemeVariables.js';
 
 export default function ImageSection({ images, handleModal }) {
 
@@ -28,7 +28,7 @@ export default function ImageSection({ images, handleModal }) {
         <StyledImageSection className='bug-page-tabs' id="images">
             {
                 !images || images.length === 0 
-                ? <h2>No Images</h2>
+                ? <h2>No images yet..</h2>
                 : <div className="images-wrapper">
                     { 
                         images.map((image, index) => {
@@ -58,7 +58,6 @@ const StyledImageSection = styled.div`
     height: 100%;
     width: 100%;
     margin: 20px auto auto auto;
-    border: 1px soild ${pallette.helperGrey};
     @media (max-width: 834px){
         width: 90%;
     }
@@ -66,10 +65,11 @@ const StyledImageSection = styled.div`
         margin: 0;
     }
     h2 {
-        color: ${pallette.helperGrey};
-            font-size: 16px;
-            font-weight: 400;
-            margin-right: auto;
+        color: ${palette.helperGrey};
+        font-size: 1em;
+        font-weight: 400;
+        margin-right: auto;
+        margin: 20px auto;
     }
     .images-wrapper {
         display: flex;
@@ -127,7 +127,7 @@ const StyledImageSection = styled.div`
                 width: 80%;
                 max-width: 700px;
                 text-align: center;
-                color: ${pallette.helperGrey};
+                color: ${palette.helperGrey};
                 padding: 10px 0;
                 height: 150px;
             }

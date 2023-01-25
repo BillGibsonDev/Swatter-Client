@@ -1,7 +1,7 @@
 // styled
 import styled from 'styled-components';
 import { StyledButton } from '../styled/StyledButton';
-import * as pallette from '../styled/ThemeVariables';
+import * as palette from '../styled/ThemeVariables';
 
 // loaders
 import LoginLoader from '../loaders/LoginLoader';
@@ -62,7 +62,7 @@ const StyledLoginPage = styled.div`
 		}
 		label {
 			font-weight: bold;
-			font-size: ${pallette.labelSize};
+			font-size: ${palette.labelSize};
 		}
 		input {
 			width: 300px;
@@ -75,7 +75,7 @@ const StyledLoginPage = styled.div`
 			background: #0f4d92;
 			width: 200px;
 			height: 40px;
-			font-size: ${pallette.subtitleSize};
+			font-size: ${palette.subtitleSize};
 			&:hover{
 				color: #ffffff;
 				cursor: pointer;
@@ -91,12 +91,12 @@ const StyledLoginPage = styled.div`
 		justify-content: center;
 		flex-direction: column;
 		h4 {
-			font-size: ${pallette.paraSize};
+			font-size: ${palette.paraSize};
 			color: #636363;
 		}
 		h5 {
 			color: #636363;
-			font-size: ${pallette.paraSize};
+			font-size: ${palette.paraSize};
 		}
 	}
 `;

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // styled 
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
+import * as palette from '../../../styled/ThemeVariables.js';
 
 // images
 import * as icons from '../../../assets/IconImports.js';
@@ -86,7 +86,7 @@ const StyledSideNav = styled.div`
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            background: ${pallette.helperGrey};
+            background: ${palette.helperGrey};
         }
         h5 {
             display: flex;
@@ -120,7 +120,7 @@ const StyledSideNav = styled.div`
                 margin-right: 10px;
             }
             &:hover {
-                background: ${pallette.accentColorTransparent};
+                background: ${palette.accentColorTransparent};
                 color: white;
             }
         }

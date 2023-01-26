@@ -51,7 +51,7 @@ export const SearchProjectTable = ({ projects, projectSearchPhrase }) => {
 
 const StyledProjectTable = styled.div`
   width: 100%;
-  margin: 20px auto;
+  margin: 30px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 20px;

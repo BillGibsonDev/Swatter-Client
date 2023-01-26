@@ -53,9 +53,7 @@ export const ProjectPage = ({projectSideNavRef}) => {
       {
         isLoading ? <Loader />
         : <div className='bug-table-wrapper'>
-            <Searchbar
-              setBugSearchPhrase={setBugSearchPhrase}
-            />
+            <Searchbar setSearchPhrase={setBugSearchPhrase} />
           {
             !project.bugs ? 
               <div className='undefined'>
@@ -63,8 +61,6 @@ export const ProjectPage = ({projectSideNavRef}) => {
               </div>
             : bugSearchPhrase ?
               <SearchBugTable
-                setRerender={setRerender}
-                rerender={rerender}
                 project={project}
                 bugs={project.bugs}
                 bugSearchPhrase={bugSearchPhrase}

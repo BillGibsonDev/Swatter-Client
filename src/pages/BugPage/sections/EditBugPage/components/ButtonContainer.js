@@ -2,8 +2,8 @@
 import styled from "styled-components";
 
 // functions
-import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
-import { handleAdminAuth } from "../../../functions/handleAdminAuth.js";
+import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
+import { handleAdminAuth } from "../../../../../functions/handleAdminAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -33,23 +33,15 @@ const StyledButtonContainer = styled.article`
   justify-content: space-between;
   margin-top: 30px;
   button {
-    width: 200px;
+    width: 40%;
+    max-width: 300px;
     height: 40px;
     cursor: pointer;
     border: none;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 1em;
     transition: 0.2s;
-    @media (max-width: 1050px) {
-      margin: 10px 0;
-      width: 150px;
-    }
-    @media (max-width: 450px) {
-      font-size: 16px;
-      width: 100px;
-      margin-bottom: 0;
-    }
     &:hover {
       color: #ffffff;
       background: #000000;

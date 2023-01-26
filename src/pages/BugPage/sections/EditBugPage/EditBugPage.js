@@ -4,15 +4,17 @@ import axios from "axios";
 // styled
 import styled from "styled-components";
 
+// images
+import EditIcon from "../../../../assets/icons/editIconWhite.png";
+
 // functions
-import { handleAlert } from "../../functions/handleAlert.js";
-import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
+import { handleAlert } from "../../../../functions/handleAlert.js";
+import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // components
-import BugPageLoader from "../../loaders/BugPageLoader.js";
-import { DeleteAlert } from "../../components/DeleteAlert.js";
-import { Alert } from '../../components/Alert.js';
-import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+import BugPageLoader from "../../../../loaders/BugPageLoader.js";
+import { DeleteAlert } from "../../../../components/DeleteAlert.js";
+import { Alert } from '../../../../components/Alert.js';
 import { Selector } from "./components/Selector.js";
 import { Images } from "./components/Images.js";
 import ButtonContainer from "./components/ButtonContainer.js";
@@ -22,10 +24,7 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 // router
 import { useNavigate, useParams } from "react-router-dom";
 
-// redux
-import { connect } from "react-redux";
-
-const EditBugPage = ({ user }) => {
+export const EditBugPage = ({ setEditing }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -99,6 +98,7 @@ const EditBugPage = ({ user }) => {
         setMessage(`Bug updated!`);
         setLoading(false);
         handleAlert(AlertRef);
+        setEditing(false);
       }
     })
     .catch((err) => {
@@ -147,16 +147,14 @@ const EditBugPage = ({ user }) => {
         deleteFunction={deleteBug}
         title={bug.title}
       />
-      <BreadCrumbs
-        projectId={projectId}
-        title={bug.title}
-        projectTitle={'Project'}
-      />
       {
         isLoading ? <BugPageLoader />
         : 
           <div className='bug-container'>
-            <h1>{bug.title}</h1>
+            <div className='title-container'>
+              <h1>{bug.title}</h1>
+              <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit bug link' /></button>
+            </div>
             <div className='info-wrapper'>
               <InfoContainer bug={bug} />
               <div className='selector-container'>
@@ -205,46 +203,42 @@ const EditBugPage = ({ user }) => {
 
 const StyledBugSection = styled.section`
   height: 100%;
-  width: 70%;
-  margin: 30px auto;
-  @media (max-width: 834px) {
-    width: 100%;
-  }
-  @media (max-width: 428px) {
-    width: 80%;
-    margin: 0 0 0 60px;
+  width: 100%;
+  margin: 20px auto;
+  @media (max-width: 450px) {
+    margin: 0 auto;
   }
   .bug-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: auto;
-    h1 {
-      color: white;
-      font-size: 2.5em;
-      margin: 10px 0;
+    .title-container {
+      display: flex;
+      align-items: center;
       @media (max-width: 450px) {
-        font-size: 1.5em;
+        justify-content: space-between;
       }
-    }
-    .selector-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      width: 100%;
-      margin: 10px 0 10px 0;
-      @media (max-width: 700px) {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      h1 {
+        color: white;
+        font-size: 2em;
+        margin: 10px 0;
+        @media (max-width: 450px) {
+          font-size: 1.5em;
+        }
+      }
+      .selector-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 20px;
+        width: 100%;
+        margin: 10px 0 10px 0;
+        @media (max-width: 700px) {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
       }
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(EditBugPage);

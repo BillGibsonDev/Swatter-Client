@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as palette from '../../../styled/ThemeVariables.js';
+import * as palette from '../../../../../styled/ThemeVariables.js';
 
 export default function ImageSection({ images, handleModal }) {
 
@@ -57,24 +57,18 @@ const StyledImageSection = styled.div`
     display: none;
     height: 100%;
     width: 100%;
-    margin: 20px auto auto auto;
+    margin: 20px auto auto 0;
     @media (max-width: 834px){
         width: 90%;
-    }
-    @media (max-width: 428px){
-        margin: 0;
     }
     h2 {
         color: ${palette.helperGrey};
         font-size: 1em;
         font-weight: 400;
-        margin-right: auto;
-        margin: 20px auto;
     }
     .images-wrapper {
         display: flex;
         grid-gap: 20px;
-        margin: 0 0 20px 0;
         width: 70%;
         height: auto;
         overflow-x: auto;
@@ -87,17 +81,17 @@ const StyledImageSection = styled.div`
         .image-container {
             display: flex;
             flex-direction: column;
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 100%;
             img {
                 cursor: pointer;
                 width: 100%;
                 height: 80%;
+                border: 1px solid white;
             }
             p {
                 padding-top: 6px;
-                min-height: 20%;
-                font-size: 12px;
+                font-size: 1em;
                 text-align: center;
                 color: white;
                 background: #2c272771;
@@ -120,16 +114,16 @@ const StyledImageSection = styled.div`
                 display: block;
                 width: 80%;
                 max-width: 700px;
+                 #caption {
+                    margin: auto;
+                    display: block;
+                    width: 80%;
+                    max-width: 700px;
+                    text-align: center;
+                    color: ${palette.helperGrey};
+                    padding: 10px 0;
+                    height: 150px;
                 }
-            #caption {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-                text-align: center;
-                color: ${palette.helperGrey};
-                padding: 10px 0;
-                height: 150px;
             }
             .close-button {
                 position: absolute;

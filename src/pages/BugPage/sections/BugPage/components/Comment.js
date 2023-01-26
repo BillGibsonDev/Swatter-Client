@@ -3,19 +3,19 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../../../styled/ThemeVariables";
+import * as palette from "../../../../../styled/ThemeVariables";
 
 // functions
-import { handleAlert } from "../../../functions/handleAlert";
-import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
-import { handleAuthor } from "../../../functions/handleAuthor";
+import { handleAlert } from "../../../../../functions/handleAlert";
+import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
+import { handleAuthor } from "../../../../../functions/handleAuthor";
 
 // components
-import { Alert } from "../../../components/Alert";
-import { DeleteAlert } from "../../../components/DeleteAlert";
+import { Alert } from "../../../../../components/Alert";
+import { DeleteAlert } from "../../../../../components/DeleteAlert";
 
 // images
-import Menu from "../../../assets/icons/dotMenu.png";
+import * as icon from '../../../../../assets/IconImports.js'
 
 // redux
 import { connect } from "react-redux";
@@ -86,7 +86,7 @@ const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
             handleAuthor(comment.author, user) 
             ? <div className='dropdown'>
                 <button className='dropbtn'>
-                  <img src={Menu} alt='Menu' />
+                  <img src={icon.Menu} alt='Menu' />
                 </button>
                 <div className='dropdown-content'>
                   {

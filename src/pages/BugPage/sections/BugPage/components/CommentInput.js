@@ -4,11 +4,11 @@ import axios from "axios";
 import styled from "styled-components";
 
 // functions
-import { handleAlert } from "../../../functions/handleAlert";
+import { handleAlert } from "../../../../../functions/handleAlert";
 
 //redux
 import { connect } from "react-redux";
-import { handleUserAuth } from "../../../functions/handleUserAuth";
+import { handleUserAuth } from "../../../../../functions/handleUserAuth";
 
 const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId }) => {
 
@@ -85,6 +85,7 @@ const StyledCommentInput = styled.article`
     margin: 0;
     margin-top: 4px;
     width: 100%;
+    max-width: 500px;
     height: 30px;
     cursor: pointer;
     color: #0f4d92;

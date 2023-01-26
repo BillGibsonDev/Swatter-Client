@@ -8,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
     }
     html {
         scroll-behavior: smooth;
-        background: #124075;
+        background: #0e1a28;
         font-family: 'Roboto Mono', monospace;
         letter-spacing: 1px;
         line-height: 1.5;
@@ -32,6 +32,9 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Roboto Mono', monospace;
         letter-spacing: 1px;
         border-radius: 4px;
+    }
+    input{
+        background: lightgrey;
     }
     h1 {
         line-height: normal;

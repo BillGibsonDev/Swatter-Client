@@ -92,7 +92,7 @@ const StyledBug = styled.div`
 	border-radius: 4px;
 	cursor: pointer;
 	border: 1px solid white;
-	background: ${palette.accentColor};
+	background: #0f4d92bd;
 	#title {
 		color: #ffffff;
 	}
@@ -117,7 +117,7 @@ const StyledBug = styled.div`
 		}
 		#date, #author {
 			color: #e4e4e4;
-			font-size: .6em;
+			font-size: .8em;
 			font-weight: 400;
 		}
 	}
@@ -127,10 +127,7 @@ const StyledBug = styled.div`
 			margin-right: auto;
 		}
 		#sprint {
-			margin-top: 6px;
 			color: white;
-			padding: 0 6px;
-			font-size: .6em;
 			border-radius: 4px;
 		}
 	}

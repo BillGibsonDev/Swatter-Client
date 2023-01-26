@@ -1,6 +1,6 @@
 // styled
 import styled from "styled-components";
-import * as palette from "../../../styled/ThemeVariables.js";
+import * as palette from "../../../../../styled/ThemeVariables.js";
 
 export const Selector = ({ 
     priority,
@@ -107,6 +107,7 @@ const StyledSelector = styled.label`
     font-weight: 400;
     font-size: ${palette.labelSize};
     width: 100%;
+    max-width: 500px;
     @media (max-width: 450px) {
         margin: 10px 0;
     }

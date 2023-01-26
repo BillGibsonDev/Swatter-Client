@@ -1,6 +1,6 @@
 // styled
 import styled from "styled-components";
-import * as palette from "../../../styled/ThemeVariables.js";
+import * as palette from "../../../../../styled/ThemeVariables.js";
 
 export const Images = ({images, setImages}) => {
 
@@ -31,44 +31,43 @@ export const Images = ({images, setImages}) => {
 
   return (
     <StyledImageSection>
-        {
-            images.length === 0 ? <></>
-            : <>
-                {
-                    images.map((image, index) => {
-                    return (
-                        <div className='image-container' key={index}>
-                        <img className='preview-image' id='image' src={image.image} alt={image.image}/>
-                        <div className='input-container'>
-                            <label>
-                            Image
-                            <input
-                                type='text'
-                                id='image'
-                                name='image'
-                                defaultValue={image.image}
-                                onChange={(event) => handleInputChange(index, event)}
-                            />
-                            </label>
-                            <label>
-                            Caption
-                            <input
-                                type='text'
-                                id='caption'
-                                name='caption'
-                                defaultValue={image.caption}
-                                onChange={(event) => handleInputChange(index, event)}
-                            />
-                            </label>
-                            <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove Image</button>
-                        </div>
-                        </div>
-                    );
-                    })
-                }
-            </>
-        }
-       <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
+      {
+        images.length <= 0 ? <></>
+        : <>
+            {
+              images.map((image, index) => {
+                return (
+                  <div className='image-container' key={index}>
+                    <img className='preview-image' id='image' src={image.image} alt={image.image}/>
+                    <div className='input-container'>
+                      <label>Image
+                        <input
+                          type='text'
+                          id='image'
+                          name='image'
+                          defaultValue={image.image}
+                          onChange={(event) => handleInputChange(index, event)}
+                        />
+                        </label>
+                        <label>
+                        Caption
+                        <input
+                          type='text'
+                          id='caption'
+                          name='caption'
+                          defaultValue={image.caption}
+                          onChange={(event) => handleInputChange(index, event)}
+                        />
+                      </label>
+                      <button id='delete' onClick={() => { handleRemoveFields(index);}}>Remove Image</button>
+                    </div>
+                  </div>
+                );
+            })
+          }
+        </>
+      }
+      <button className='add-images-button' onClick={() => { handleAddFields(); }}>Add Image</button>
     </StyledImageSection>
   );
 }
@@ -90,6 +89,7 @@ const StyledImageSection = styled.article`
       img {
         width: 40%;
         height: 100%;
+        border: 1px solid white;
         @media (max-width: 428px) {
           width: 90%;
         }
@@ -125,9 +125,11 @@ const StyledImageSection = styled.article`
     background: none;
     border: 2px solid white;
     color: white;
-    font-size: 16px;
+    font-size: 1em;
     cursor: pointer;
     padding: 6px;
+    max-width: 500px;
+
     &:hover {
       background: black;
     }

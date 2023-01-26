@@ -12,8 +12,8 @@ export const InfoContainer = ({bug}) => {
 }
 
 const StyledBugSection = styled.article`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 10px 0 10px 0;
   @media (max-width: 700px) {
@@ -25,14 +25,14 @@ const StyledBugSection = styled.article`
     color: white;
     font-size: 1em;
     display: flex;
-    flex-direction: column;
     width: 90%;
-    margin: 10px 0;
     font-weight: 400;
+    margin: 6px 0;
     span {
       color: #cecece;
       font-weight: 400;
       font-size: 1em;
+      margin-right: 6px;
     }
   }
 `;

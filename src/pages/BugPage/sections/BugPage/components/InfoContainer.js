@@ -23,15 +23,15 @@ const StyledBugPage = styled.article`
     }
     h2 {
         color: white;
-        font-size: 14px;
+        font-size: 1em;
         display: flex;
-        flex-direction: column;
-        margin: 4px 0;
+        margin: 4px 6px 4px 0;
         font-weight: 400;
         span {
             color: #cecece;
             font-weight: 400;
-            font-size: 12px;
+            font-size: 1em;
+            margin-right: 6px;
         }
     }
 `;

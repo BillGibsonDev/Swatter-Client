@@ -23,13 +23,14 @@ export const Searchbar = ({ setSearchPhrase }) => {
 }
 
 const StyledSearchbar = styled.form`
-    position: absolute;
+    position: fixed;
     top: 10px;
     background: white;
     display: flex;
     align-items: center;
     padding-left: 4px;
     border-radius: 6px;
+    z-index: 100;
     &:hover {
         outline: 2px solid ${palette.helperGrey} ;
     }

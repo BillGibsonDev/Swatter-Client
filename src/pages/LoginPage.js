@@ -15,10 +15,12 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 			{
 				isLoading ? <LoginLoader />
 				:  <form className="form-wrapper">
-					<label>Username</label>
-					<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
-					<label>Password</label>
-					<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
+					<label>Username
+						<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
+					</label>
+					<label>Password
+						<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
+					</label>
 					<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
 				</form>
 			}
@@ -42,6 +44,9 @@ const StyledLoginPage = styled.div`
 	width: 90%;
 	max-width: 1000px;
 	margin: 5% auto;
+	@media (max-width: 750px){
+		width: 95vh;
+	}
 	h1 {
 		font-size: 5em;
 		color: #0f4d92;
@@ -49,7 +54,7 @@ const StyledLoginPage = styled.div`
 	h2 {
 		font-size: 1em;
 		margin-bottom: 40px;
-		color: #0f4c92bc;
+		color: #0f4c92;
 		text-align: center;
 	}
 	.form-wrapper {
@@ -63,6 +68,9 @@ const StyledLoginPage = styled.div`
 		label {
 			font-weight: bold;
 			font-size: ${palette.labelSize};
+			display: flex;
+			flex-direction: column;
+			text-align: center;
 		}
 		input {
 			width: 300px;

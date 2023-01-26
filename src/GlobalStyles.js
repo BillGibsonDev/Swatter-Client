@@ -16,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
             font-size: 90%;
         }
         @media (max-width: 750px){
-            font-size: 80%;
+            font-size: 85%;
         } 
     }
     body {
@@ -49,6 +49,9 @@ const GlobalStyles = createGlobalStyle`
             color: #ff0000;
             transform: scale(1.02);
         }
+    }
+    h1, h2, h3, h4 ,h5, h6, p, span {
+        font-weight: 300;
     }
 `;
 

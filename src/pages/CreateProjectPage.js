@@ -8,9 +8,6 @@ import * as palette from "../styled/ThemeVariables.js";
 // functions
 import { handleAlert } from "../functions/handleAlert.js";
 
-// router
-import { Link } from "react-router-dom";
-
 // components
 import Loader from "../loaders/Loader";
 
@@ -18,6 +15,7 @@ import Loader from "../loaders/Loader";
 import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
 import { handleAdminAuth } from "../functions/handleAdminAuth.js";
+import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
 const CreateProjectPage = ({ user }) => {
 
@@ -87,11 +85,9 @@ const CreateProjectPage = ({ user }) => {
         handleAlert={handleAlert}
         AlertRef={AlertRef}
       />
-      <div className='breadcrumbs'>
-        <Link to={`/`}>Home</Link>
-        <span>/</span>
-        <Link to={`/`}>Add Project</Link>
-      </div>
+      <BreadCrumbs
+        projectTitle={'Create Project'}
+      />
       <h1>Start a Project</h1>
       {
         user === null ? <h1>You are signed out</h1>
@@ -172,28 +168,6 @@ const StyledProjectPage = styled.div`
     margin-left: 65px;
     width: 80vw;
   }
-  .breadcrumbs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    @media (max-width: 428px) {
-      display: none;
-    }
-    a {
-      font-size: 20px;
-      color: ${palette.helperGrey};
-      @media (max-width: 450px) {
-        font-size: 12px;
-      }
-      &:hover {
-        color: white;
-      }
-    }
-    span {
-      margin: 0 10px;
-      color: white;
-    }
-  }
   h1 {
     color: white;
     width: 100%;
@@ -227,22 +201,18 @@ const StyledProjectPage = styled.div`
           font-size: ${palette.labelSize};
         }
         @media (max-width: 428px) {
-          font-size: 16px;
+          font-size: 1em;
           margin: 10px 0;
         }
         input {
           width: 400px;
-          font-size: 18px;
+          font-size: 1em;
           padding: 2px;
           background: ${palette.helperGrey};
           @media (max-width: 834px) {
             width: 100%;
           }
-          @media (max-width: 750px) {
-            width: 100%;
-          }
           @media (max-width: 428px) {
-            font-size: 16px;
             height: 30px;
           }
         }
@@ -272,10 +242,6 @@ const StyledProjectPage = styled.div`
     @media (max-width: 750px) {
       width: 100px;
       font-size: ${palette.paraSize};
-    }
-    @media (max-width: 429px) {
-      width: 100px;
-      font-size: 16px;
     }
   }
 `;

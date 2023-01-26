@@ -11,14 +11,13 @@ export const BreadCrumbs = ({ projectId, projectTitle, title }) => {
     <StyledBreadCrumbs>
         <Link to={`/`}>Home</Link>
         <span>/</span>
-        <Link to={`/projects/${projectId}`}>{projectTitle}</Link>
         {
-            title ? 
-            <>
-                <span>/</span>
-                <p>{title}</p>
-            </>
-            : <></>
+          projectId ? <Link to={`/projects/${projectId}`}>{projectTitle}</Link>
+          : <p>{projectTitle}</p>
+        }
+        {
+          title ?  <> <span>/</span><p>{title}</p></>
+          : <></>
         }
     </StyledBreadCrumbs>
   );

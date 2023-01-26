@@ -98,7 +98,7 @@ const StyledRegister = styled.div`
     margin: 20px auto;
   }
   h1 {
-    font-size: 40px;
+    font-size: ${palette.titleSize};
     color: #ffffff;
     margin-bottom: 20px;
   }
@@ -117,7 +117,7 @@ const StyledRegister = styled.div`
       justify-content: center;
       align-items: center;
       margin: 20px 0;
-      font-size: ${palette.subtitleSize};
+      font-size: ${palette.paraSize};
       @media (max-width: 750px) {
         font-size: ${palette.paraSize};
       }
@@ -125,7 +125,7 @@ const StyledRegister = styled.div`
         width: 300px;
         height: 40px;
         border-radius: 4px;
-        font-size: 18px;
+        font-size: 1em;
         padding: 6px;
         background: ${palette.helperGrey};
       }
@@ -139,7 +139,7 @@ const StyledRegister = styled.div`
       cursor: pointer;
       border: none;
       border-radius: 4px;
-      font-size: ${palette.subtitleSize};
+      font-size: ${palette.paraSize};
       font-weight: 700;
       background: #ffffff;
       color: ${palette.accentColor};

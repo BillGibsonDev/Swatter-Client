@@ -92,10 +92,10 @@ const StyledSideNav = styled.div`
             display: flex;
             flex-direction: column;
             margin-left: 12px;
-            font-size: 1em;
+            font-size: .8em;
             span {
-                font-size: 1em;
-                color: grey;
+                font-size: .8em;
+                color: #666666;
             }
         }
     }
@@ -107,7 +107,7 @@ const StyledSideNav = styled.div`
             margin-bottom: 20px;
             padding: 10px 10px 10px 20px;
             color: black;
-            font-size: 1em;
+            font-size: .8em;
             font-weight: 400;
             cursor: pointer;
             background: none;

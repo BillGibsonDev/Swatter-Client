@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icon from '../assets/IconImports.js';
 
+// functions
+import { handleAdminAuth } from '../functions/handleAdminAuth';
+
 // components
 import { ToggleProjectNav } from './ToggleProjectNav.js';
 
@@ -20,7 +23,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
             <div className="top-container">
                 <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
                 {
-                    user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    handleAdminAuth(user) 
                     ? <Link to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
                     : <></>
                 }

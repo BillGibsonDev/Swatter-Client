@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../../styled/ThemeVariables";
+import * as palette from "../../../styled/ThemeVariables";
 
 // functions
 
@@ -271,7 +271,7 @@ const StyledSprintForm = styled.div`
       border: none;
       border-radius: 6px;
       font-weight: 700;
-      font-size: ${pallette.subtitleSize};
+      font-size: ${palette.subtitleSize};
       @media (max-width: 1050px) {
         margin: 10px 0;
         width: 150px;

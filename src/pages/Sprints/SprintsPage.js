@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../styled/ThemeVariables";
+import * as palette from "../../styled/ThemeVariables";
 
 // components
 import SprintBugTable from "./components/SprintBugTable.js";
@@ -274,7 +274,7 @@ const StyledSprintSection = styled.div`
           margin-bottom: 6px;
         }
         span {
-          color: ${pallette.helperGrey};
+          color: ${palette.helperGrey};
         }
       }
       .info-container {
@@ -290,7 +290,7 @@ const StyledSprintSection = styled.div`
             margin-bottom: 6px;
           }
           span {
-            color: ${pallette.helperGrey};
+            color: ${palette.helperGrey};
           }
         }
       }

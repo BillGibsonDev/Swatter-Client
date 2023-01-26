@@ -8,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
     }
     html {
         scroll-behavior: smooth;
-        background: #124075;
+        background: #0e1a28;
         font-family: 'Roboto Mono', monospace;
         letter-spacing: 1px;
         line-height: 1.5;
@@ -16,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
             font-size: 90%;
         }
         @media (max-width: 750px){
-            font-size: 80%;
+            font-size: 85%;
         } 
     }
     body {
@@ -33,6 +33,9 @@ const GlobalStyles = createGlobalStyle`
         letter-spacing: 1px;
         border-radius: 4px;
     }
+    input{
+        background: lightgrey;
+    }
     h1 {
         line-height: normal;
     }
@@ -46,6 +49,9 @@ const GlobalStyles = createGlobalStyle`
             color: #ff0000;
             transform: scale(1.02);
         }
+    }
+    h1, h2, h3, h4 ,h5, h6, p, span {
+        font-weight: 300;
     }
 `;
 

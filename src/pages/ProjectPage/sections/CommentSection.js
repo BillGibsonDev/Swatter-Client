@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../../styled/ThemeVariables.js";
+import * as palette from "../../../styled/ThemeVariables.js";
 
 // components
 import Comment from "../components/Comment";
@@ -119,7 +119,7 @@ const StyledCommentSection = styled.div`
     min-height: 70vh;
     border-radius: 12px;
     flex-direction: column;
-    background: ${pallette.accentColor};
+    background: ${palette.accentColor};
     @media (max-width: 834px) {
       width: 80%;
       height: 50%;

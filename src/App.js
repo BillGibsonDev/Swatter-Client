@@ -16,11 +16,10 @@ import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
 import { EditProjectPage } from "./pages/EditProjectPage/EditProjectPage.js";
-import { BugPage }from "./pages/BugPage/BugPage.js";
+import { MainBugPage }from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import DetailsPage from "./pages/DetailsPage";
-import EditBugPage from "./pages/EditBugPage";
 
 // router
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -163,8 +162,7 @@ function App() {
           <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
           <Routes>
             <Route path='/' exact element={ <HomePage /> } />
-            <Route path='/:projectId/:bugId' exact element={ <BugPage /> }  />
-            <Route path='/:projectId/:bugId/edit' exact element={ <EditBugPage /> } />
+            <Route path='/:projectId/:bugId' exact element={ <MainBugPage /> }  />
             <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
             <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
             <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />

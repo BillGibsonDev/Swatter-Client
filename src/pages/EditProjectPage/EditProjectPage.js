@@ -3,10 +3,10 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../../styled/ThemeVariables.js";
+import * as palette from "../../styled/ThemeVariables.js";
 
 // router
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { handleAlert } from "../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
@@ -15,6 +15,7 @@ import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
 import { DeleteAlert } from "../../components/DeleteAlert.js";
 import { Alert } from '../../components/Alert.js';
 import ButtonContainer from "./components/ButtonContainer.js";
+import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
 // loaders
 import Loader from "../../loaders/Loader.js";
@@ -127,11 +128,11 @@ export const EditProjectPage = () => {
         deleteFunction={deleteProject}
         title={project.projectTitle}
       />
-      <div className='breadcrumbs'>
-        <Link to={`/`}>Home</Link>
-        <span>/</span>
-        <Link to={`/`}>Edit Project</Link>
-      </div>
+      <BreadCrumbs
+        projectId={projectId}
+        projectTitle={project.projectTitle}
+        title={'Edit'}
+      />
       <h1>Edit Project</h1>
       {
         isLoading ? <Loader />
@@ -272,31 +273,9 @@ const StyledProjectPage = styled.div`
     margin-left: 65px;
     width: 80vw;
   }
-  .breadcrumbs {
-    display: flex;
-    align-items: center;
-    margin-bottom: 16px;
-    @media (max-width: 428px) {
-      display: none;
-    }
-    a {
-      font-size: 20px;
-      color: ${pallette.helperGrey};
-      @media (max-width: 450px) {
-        font-size: 12px;
-      }
-      &:hover {
-        color: white;
-      }
-    }
-    span {
-      margin: 0 10px;
-      color: white;
-    }
-  }
   h1 {
     color: white;
-    font-size: 2em;
+    font-size: ${palette.titleSize};
   }
   .form-wrapper {
     width: 100%;
@@ -318,11 +297,10 @@ const StyledProjectPage = styled.div`
         color: white;
         flex-direction: column;
         margin: 10px 0;
-        input,
-        select {
+        input, select {
           width: 400px;
           padding: 2px;
-          background: ${pallette.helperGrey};
+          background: ${palette.helperGrey};
           @media (max-width: 834px) {
             width: 100%;
           }
@@ -330,7 +308,7 @@ const StyledProjectPage = styled.div`
             width: 100%;
           }
           @media (max-width: 428px) {
-            font-size: 16px;
+            font-size: 1em;
             height: 30px;
           }
         }

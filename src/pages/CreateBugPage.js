@@ -3,7 +3,7 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as pallette from "../styled/ThemeVariables.js";
+import * as palette from "../styled/ThemeVariables.js";
 
 // router
 import { Link, useParams } from "react-router-dom";
@@ -285,7 +285,7 @@ const StyledAddBug = styled.div`
       border: none;
       background: none;
       font-size: 16px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       cursor: pointer;
       @media (max-width: 450px) {
         font-size: 12px;
@@ -296,7 +296,7 @@ const StyledAddBug = styled.div`
     }
     p {
       font-size: 16px;
-      color: ${pallette.helperGrey};
+      color: ${palette.helperGrey};
       @media (max-width: 450px) {
         font-size: 12px;
       }
@@ -346,7 +346,7 @@ const StyledAddBug = styled.div`
       color: white;
       flex-direction: column;
       margin: 10px 0;
-      font-size: ${pallette.labelSize};
+      font-size: ${palette.labelSize};
       @media (max-width: 750px) {
         font-size: 14px;
       }
@@ -358,11 +358,11 @@ const StyledAddBug = styled.div`
         width: 100%;
         height: 30px;
         padding: 2px;
-        background: ${pallette.helperGrey};
+        background: ${palette.helperGrey};
       }
       textarea {
         padding: 10px;
-        background: ${pallette.helperGrey};
+        background: ${palette.helperGrey};
       }
     }
     .image-container {
@@ -392,7 +392,7 @@ const StyledAddBug = styled.div`
           color: white;
           flex-direction: column;
           margin: 10px 0;
-          font-size: ${pallette.labelSize};
+          font-size: ${palette.labelSize};
           @media (max-width: 750px) {
             font-size: 14px;
           }
@@ -403,7 +403,7 @@ const StyledAddBug = styled.div`
             width: 100%;
             height: 30px;
             padding: 2px;
-            background: ${pallette.helperGrey};
+            background: ${palette.helperGrey};
           }
         }
       }
@@ -433,10 +433,10 @@ const StyledAddBug = styled.div`
       cursor: pointer;
       border: none;
       border-radius: 4px;
-      font-size: ${pallette.subtitleSize};
+      font-size: ${palette.subtitleSize};
       font-weight: 700;
       background: #ffffff;
-      color: ${pallette.accentColor};
+      color: ${palette.accentColor};
       margin-top: 16px;
       transition: 0.2s;
       &:hover {
@@ -447,7 +447,7 @@ const StyledAddBug = styled.div`
       }
       @media (max-width: 750px) {
         width: 100px;
-        font-size: ${pallette.paraSize};
+        font-size: ${palette.paraSize};
       }
       @media (max-width: 450px) {
         font-size: 16px;

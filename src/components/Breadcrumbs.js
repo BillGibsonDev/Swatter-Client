@@ -11,14 +11,13 @@ export const BreadCrumbs = ({ projectId, projectTitle, title }) => {
     <StyledBreadCrumbs>
         <Link to={`/`}>Home</Link>
         <span>/</span>
-        <Link to={`/projects/${projectId}`}>{projectTitle}</Link>
         {
-            title ? 
-            <>
-                <span>/</span>
-                <p>{title}</p>
-            </>
-            : <></>
+          projectId ? <Link to={`/projects/${projectId}`}>{projectTitle}</Link>
+          : <p>{projectTitle}</p>
+        }
+        {
+          title ?  <> <span>/</span><p>{title}</p></>
+          : <></>
         }
     </StyledBreadCrumbs>
   );
@@ -34,22 +33,16 @@ const StyledBreadCrumbs = styled.div`
   a {
     border: none;
     background: none;
-    font-size: 16px;
+    font-size: 1em;
     color: ${pallette.helperGrey};
     cursor: pointer;
-    @media (max-width: 450px) {
-      font-size: .6em;
-    }
     &:hover {
       color: white;
     }
   }
   p {
-    font-size: 16px;
+    font-size: 1em;
     color: ${pallette.helperGrey};
-    @media (max-width: 450px) {
-      font-size: 12px;
-    }
   }
   span {
     margin: 0 10px;

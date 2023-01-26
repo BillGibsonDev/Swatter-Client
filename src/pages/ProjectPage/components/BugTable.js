@@ -1,6 +1,6 @@
 // styled
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables';
+import * as palette from '../../../styled/ThemeVariables';
 
 // components
 import { Bug } from './Bug.js';
@@ -55,10 +55,8 @@ const StyledBugTable = styled.div`
     position: relative;
     @media (max-width: 1440px){
         grid-template-columns: 275px 275px 275px 275px;
-        width: 100%;
     }
     @media (max-width: 834px){
-        width: 100%;
         grid-template-columns: 310px 310px 310px 310px;
     }
     @media (max-width: 428px){
@@ -72,9 +70,9 @@ const StyledBugTable = styled.div`
         background: #0b2849;
         border-radius: 12px;
         h5 {
-            color: ${pallette.helperGrey};
+            color: ${palette.helperGrey};
             padding: 10px;
-            font-size: ${pallette.paraSize};
+            font-size: ${palette.paraSize};
             span {
                 font-weight: 400;
             }

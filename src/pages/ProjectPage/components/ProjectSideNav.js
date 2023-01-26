@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // styled 
 import styled from 'styled-components';
-import * as pallette from '../../../styled/ThemeVariables.js';
+import * as palette from '../../../styled/ThemeVariables.js';
 
 // images
 import * as icons from '../../../assets/IconImports.js';
@@ -86,16 +86,16 @@ const StyledSideNav = styled.div`
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            background: ${pallette.helperGrey};
+            background: ${palette.helperGrey};
         }
         h5 {
             display: flex;
             flex-direction: column;
             margin-left: 12px;
-            font-size: 1em;
+            font-size: .8em;
             span {
-                font-size: 1em;
-                color: grey;
+                font-size: .8em;
+                color: #666666;
             }
         }
     }
@@ -107,7 +107,7 @@ const StyledSideNav = styled.div`
             margin-bottom: 20px;
             padding: 10px 10px 10px 20px;
             color: black;
-            font-size: 1em;
+            font-size: .8em;
             font-weight: 400;
             cursor: pointer;
             background: none;
@@ -120,7 +120,7 @@ const StyledSideNav = styled.div`
                 margin-right: 10px;
             }
             &:hover {
-                background: ${pallette.accentColorTransparent};
+                background: ${palette.accentColorTransparent};
                 color: white;
             }
         }

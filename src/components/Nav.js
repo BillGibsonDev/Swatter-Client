@@ -1,6 +1,6 @@
 // styles
 import styled from 'styled-components';
-import * as pallette from '../styled/ThemeVariables';
+import * as palette from '../styled/ThemeVariables';
 
 // redux
 import { connect } from 'react-redux';
@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icon from '../assets/IconImports.js';
 
+// functions
+import { handleAdminAuth } from '../functions/handleAdminAuth';
+
 // components
 import { ToggleProjectNav } from './ToggleProjectNav.js';
 
@@ -20,7 +23,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
             <div className="top-container">
                 <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
                 {
-                    user.role === process.env.REACT_APP_ADMIN_SECRET 
+                    handleAdminAuth(user) 
                     ? <Link to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
                     : <></>
                 }
@@ -118,12 +121,12 @@ const StyledNav = styled.div`
         align-items: center;
         padding: 6px;
         &:hover {
-            background: ${pallette.accentColor};
+            background: ${palette.accentColor};
         }
     }
     img {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 `;
 

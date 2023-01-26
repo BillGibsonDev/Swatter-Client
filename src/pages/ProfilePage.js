@@ -1,5 +1,6 @@
 // styled
 import styled from 'styled-components';
+import * as palette from '../styled/ThemeVariables.js';
 
 // redux
 import { connect } from 'react-redux';
@@ -46,7 +47,7 @@ const StyledProfilePage = styled.div`
         margin: 20px auto;
     }
     h1 {
-		font-size: 3em;
+		font-size: ${palette.titleSize};
 		color: #ffffff;
         margin: 20px auto;
         display: flex;
@@ -55,10 +56,7 @@ const StyledProfilePage = styled.div`
         border-bottom: 2px #ffffff solid;
     }
     .user-container {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
+        text-align: center;
         width: 60%;
         @media (max-width: 1150px){
             flex-direction: column;
@@ -68,7 +66,7 @@ const StyledProfilePage = styled.div`
             color: white;
             @media (max-width: 1150px){
                 margin: 10px 0;
-                font-size: 2em;
+                font-size: 1em;
             }
             span {
                 color: #e2e2e2;

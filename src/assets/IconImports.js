@@ -22,6 +22,7 @@ import AddBugIcon from './icons/plus.png';
 import CommentsIcon from './icons/comments.png';
 import SprintsIcon from './icons/sprint.png';
 import RoundMenu from './icons/dot-menu-white.png';
+import ArchivesIcon from './icons/archive.png';
 
 // nav icons
 export const Logout = LogoutIcon;
@@ -38,6 +39,7 @@ export const Details = DetailsIcon;
 export const AddBug = AddBugIcon;
 export const Comments = CommentsIcon;
 export const Sprints = SprintsIcon;
+export const ArchiveIcon = ArchivesIcon;
 
 // bug icons
 export const BugPicture = BugPictureIcon;

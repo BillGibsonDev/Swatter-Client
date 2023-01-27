@@ -22,7 +22,7 @@ import { useParams } from "react-router-dom";
 export const ProjectPage = ({projectSideNavRef}) => {
   const commentSectionRef = useRef();
 
-  const { projectId, bugId } = useParams();
+  const { projectId } = useParams();
 
   const [ project, setProject ] = useState([]);
   const [ rerender, setRerender ] = useState(false);
@@ -38,10 +38,11 @@ export const ProjectPage = ({projectSideNavRef}) => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
     };
     getProject(projectId);
-  }, [projectId, bugId, rerender]);
+  }, [projectId, rerender]);
 
   return (
     <StyledProjectPage>

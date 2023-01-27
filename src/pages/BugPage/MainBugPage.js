@@ -38,7 +38,7 @@ export const MainBugPage = () => {
       });
     };
     getBug(projectId, bugId);
-  }, [projectId, bugId, isLoading]);
+  }, [ projectId, bugId, isLoading, editing ]);
 
   return (
     <StyledBugPage>

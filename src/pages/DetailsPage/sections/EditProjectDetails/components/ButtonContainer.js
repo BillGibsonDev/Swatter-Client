@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // redux
 import { connect } from "react-redux";
-import { handleAdminAuth } from "../../../functions/handleAdminAuth";
+import { handleAdminAuth } from "../../../../../functions/handleAdminAuth";
 
 const ButtonContainer = ({ user, handleDeleteAlert, editProject, DeleteAlertRef }) => {
   return (
@@ -11,8 +11,8 @@ const ButtonContainer = ({ user, handleDeleteAlert, editProject, DeleteAlertRef 
       {
         handleAdminAuth(user)
         ? <>
-            <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
             <button onClick={() => { editProject(); }}>Update</button>
+            <button id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
           </>
         : <>
             <button>Update</button>
@@ -31,23 +31,20 @@ const StyledButtonContainer = styled.div`
     width: 100%;
     @media (max-width: 750px) {
       margin-top: 10%;
-      width: 90%;
     }
     button {
-      width: 200px;
+      width: 40%;
+      max-width: 300px;
       height: 40px;
       cursor: pointer;
       border: none;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 1em;
       @media (max-width: 1050px) {
         margin: 10px 0;
-        width: 150px;
       }
       @media (max-width: 450px) {
-        font-size: 16px;
-        width: 100px;
         margin-bottom: 0;
       }
       &:hover {

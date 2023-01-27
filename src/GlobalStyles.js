@@ -33,7 +33,7 @@ const GlobalStyles = createGlobalStyle`
         letter-spacing: 1px;
         border-radius: 4px;
     }
-    input{
+    input, textarea{
         background: lightgrey;
     }
     h1 {

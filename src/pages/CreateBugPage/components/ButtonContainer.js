@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 // functions
-import { handleAdminAuth } from "../../../functions/handleAdminAuth.js";
+import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -12,7 +12,7 @@ const ButtonContainer = ({ user, createBug }) => {
   return (
     <StyledButtonContainer>
       {
-        handleAdminAuth(user)
+        handleUserAuth(user)
         ? <button onClick={() => { createBug() }}>Save</button> 
         : <button>Save</button>
       }

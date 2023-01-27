@@ -13,7 +13,7 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 			<h1>Swatter</h1>
 			<h2>Project Management</h2>
 			{
-				isLoading ? <LoginLoader />
+				!isLoading ? <LoginLoader />
 				:  <form className="form-wrapper">
 					<label>Username
 						<input type="text" onChange={(event) => { setUsername(event.target.value); }} />

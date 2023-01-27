@@ -9,7 +9,7 @@ export default function BugPageLoader() {
     return (
         <StyledLoader>
             <div className="loader"><img src={BugImage} alt="Loading Page" /></div>
-            <h2>Loading...</h2>
+            <h2>Loading..</h2>
         </StyledLoader>
     )
 }

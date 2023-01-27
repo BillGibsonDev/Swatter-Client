@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -8,10 +8,21 @@ import * as palette from "../../../../../styled/ThemeVariables.js";
 // components
 import Comment from "../components/Comment";
 import CommentInput from "../components/CommentInput.js";
+import { DeleteAlert } from "../../../../../components/DeleteAlert.js";
+import { Alert } from "../../../../../components/Alert.js";
 
-export const CommentSection = ({ bugId, projectId, AlertRef, DeleteAlertRef }) => {
+// functions
+import { handleAlert } from "../../../../../functions/handleAlert.js";
+
+export const CommentSection = ({ bugId, projectId, setLoading }) => {
+
+  const AlertRef = useRef();
+  const DeleteAlertRef = useRef();
+  const CommentContainerRef = useRef();
 
   const [ comments, setComments ] = useState([]);
+  const [ message, setMessage ] = useState('');
+  const [ commentId, setCommentId] = useState();
 
   useEffect(() => {
     const getComments = (projectId, bugId) => {
@@ -26,14 +37,44 @@ export const CommentSection = ({ bugId, projectId, AlertRef, DeleteAlertRef }) =
     getComments(projectId, bugId);
   }, [ projectId, bugId ]);
 
+  const deleteComment = (commentId) => {
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
+    .then((response) => {
+      if (response.data !== "Comment Deleted!") {
+        setMessage("Server Error - Comment not deleted");
+        handleAlert(AlertRef);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setMessage("Server Error - Comment not deleted");
+      handleAlert(AlertRef);
+      setLoading(false);
+    });
+  };
+
   return (
     <StyledBugCommentSection className='bug-page-tabs active' id='comments'>
+      <Alert 
+        AlertRef={AlertRef}
+        message={message}
+      />
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        message={message}
+        commentId={commentId}
+      />
       <div className='comment-section-wrapper'>
         {
           comments.length === 0 
           ? <h2>No comments yet..</h2>
           : 
-            <div className='comment-container' id='bug-comment-container'>
+            <div className='comment-container' ref={CommentContainerRef}>
               {
                 comments.map((comment, index) => {
                   return (
@@ -42,6 +83,10 @@ export const CommentSection = ({ bugId, projectId, AlertRef, DeleteAlertRef }) =
                       bugId={bugId}
                       projectId={projectId}
                       key={index}
+                      AlertRef={AlertRef}
+                      setLoading={setLoading}
+                      DeleteAlertRef={DeleteAlertRef}
+                      setCommentId={setCommentId}
                     />
                   );
                 })
@@ -51,6 +96,10 @@ export const CommentSection = ({ bugId, projectId, AlertRef, DeleteAlertRef }) =
         <CommentInput
           bugId={bugId}
           projectId={projectId}
+          setLoading={setLoading}
+          AlertRef={AlertRef}
+          setMessage={setMessage}
+          CommentContainerRef={CommentContainerRef}
         />
       </div>
     </StyledBugCommentSection>

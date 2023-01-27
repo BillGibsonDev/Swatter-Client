@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as palette from '../styled/ThemeVariables.js';
 
 // images
-import BugImage from '../assets/icons/bugYaleBlue.png';
+import BugImage from '../assets/icons/bugYaleBlue.png'
 
 export default function LoginLoader() {
 
@@ -30,8 +30,10 @@ export default function LoginLoader() {
 
     return (
         <StyledLoader>
-            <div className="loading-container">
-                <img src={BugImage} alt="Loading" />
+            <div className="loader-container">
+                <div className="loader">
+                    <img src={BugImage} alt="Loading Page" />
+                </div>
             </div>
             <h3 id="phrase">{loadingPhrases()}</h3>
         </StyledLoader>
@@ -39,26 +41,36 @@ export default function LoginLoader() {
 }
 
 const StyledLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 30vh;
-    position: relative;
+    height: 100%;
+    display: flex;
     flex-direction: column;
-    .loading-container {
+    align-items: center;
+    .loader-container {
         opacity: 80%;
         border: 16px dashed #000000;
         border-radius: 50%;
-        width: 250px;
-        height: 250px;
-        animation: spin 4s linear infinite;
+        width: 300px;
+        height: 300px;
+        animation: spinOuter 8s linear infinite;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-        img {
-            width: 50%;
-            height: 50%;
+        .loader {
+            opacity: 80%;
+            border: 16px dashed #000000;
+            border-radius: 50%;
+            width: 90%;
+            height: 90%;
+            animation: spinInner 8s linear infinite;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 100px;
+            }
         }
     }
     h3 {
@@ -67,10 +79,23 @@ const StyledLoader = styled.div`
         color: ${palette.accentColor};
         animation: fadeInOut 3s infinite;
     }
-    @keyframes spin {
+    @keyframes spinInner {
         0%  { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        20%  { transform: rotate(200deg); }
+        40%  { transform: rotate(-20deg); }
+        60%  { transform: rotate(30deg); }
+        80%  { transform: rotate(200deg); }
+        100% { transform: rotate(0deg); }
     }
+
+    @keyframes spinOuter {
+        0%  { transform: rotate(0deg); }
+        25%  { transform: rotate(-180deg); }
+        50%  { transform: rotate(120deg); }
+        75%  { transform: rotate(-250deg); }
+        100% { transform: rotate(0deg); }
+    }
+
     @keyframes fadeInOut {
         0%  { opacity: .3; }
         50% { opacity: 1; }

@@ -62,16 +62,10 @@ const StyledHomePage = styled.div`
   @media (max-width: 1024px) {
     margin-left: 80px;
   }
-  @media (max-width: 834px) {
-    width: 900px;
+  @media (max-width: 838px) {
+    width: 80%;
     max-width: 86vw;
     margin-left: 90px;
-  }
-  @media (max-width: 820px) {
-    width: 760px;
-  }
-  @media (max-width: 768px) {
-    width: 710px;
   }
   @media (max-width: 428px) {
     width: 360px;

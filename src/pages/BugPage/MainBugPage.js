@@ -55,13 +55,14 @@ export const MainBugPage = () => {
           images={images}
           bugId={bugId}
           projectId={projectId}
+          setLoading={setLoading}
         /> 
         : <EditBugPage 
-          setEditing={setEditing} 
-          bug={bug}
-          bugId={bugId}
-          projectId={projectId}
-        />
+            setEditing={setEditing} 
+            bug={bug}
+            bugId={bugId}
+            projectId={projectId}
+          />
       }
     </StyledBugPage>
   );
@@ -72,9 +73,6 @@ const StyledBugPage = styled.div`
   width: 70%;
   margin: 20px auto;
   @media (max-width: 834px) {
-    width: 90%;
-  }
-  @media (max-width: 428px) {
     width: 80%;
     padding: 0;
     margin: 0 5% 0 15%;

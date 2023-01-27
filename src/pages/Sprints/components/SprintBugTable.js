@@ -54,7 +54,7 @@ const StyledBugTable = styled.div`
     height: 100%;
     max-height: 93vh;
     width: 100%;
-    margin-top: 7vh;
+    margin-top: 20px;
     position: relative;
     @media (max-width: 1440px){
         grid-template-columns: 275px 275px 275px 275px;

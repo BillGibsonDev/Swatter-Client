@@ -6,24 +6,18 @@ import * as palette from '../../../styled/ThemeVariables';
 import { handleActiveBugs } from '../../../functions/handleActiveBugs';
 
 // components
-import { Bug } from './Bug.js';
+import { Bug } from '../../ProjectPage/components/Bug.js';
 
-export default function BugTable({ project, bugs }) {
+export default function ArchiveBugTable({ project, bugs }) {
 
     const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
-    let activeBugs = handleActiveBugs(true, bugs);
-
-    activeBugs.sort((a, b) => {
-        let dateA = new Date(a);
-        let dateB = new Date(b);
-        return dateA - dateB;
-    })
+    let archiveBugs = handleActiveBugs(false, bugs);
 
     return (
         <StyledBugTable>
             { 
-                !project.bugs
+                !project
                 ? <div className="undefined">
                     <h1>You've haven't entered any bugs</h1>
                 </div>
@@ -32,9 +26,9 @@ export default function BugTable({ project, bugs }) {
                         bugStatuses.map((status, index) => {
                             return (
                                 <div className="bugs-container" key={index}>
-                                    <h5>{status} <span>{activeBugs.filter(bug => bug.status === status).slice().reverse().length}</span></h5>
+                                    <h5>{status} <span>{archiveBugs.filter(bug => bug.status === status).slice().reverse().length}</span></h5>
                                     {
-                                       activeBugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
+                                       archiveBugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
                                             return (
                                                 <Bug
                                                     bug={bug}
@@ -56,13 +50,13 @@ export default function BugTable({ project, bugs }) {
 
 const StyledBugTable = styled.div`
     display: grid;
-    grid-template-columns: 350px 350px 350px 350px;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
     height: 100%;
     max-height: 93vh;
     width: 100%;
-    margin-top: 7vh;
+    margin-top: 20px;
     position: relative;
     @media (max-width: 1440px){
         grid-template-columns: 275px 275px 275px 275px;

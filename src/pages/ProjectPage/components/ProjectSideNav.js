@@ -14,7 +14,7 @@ import { Link, useParams } from 'react-router-dom';
 // functions
 import { toggleRef } from '../../../functions/toggleRef.js';
 
-export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }) => {
+export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef, ArchiveRef }) => {
 
     const { projectId } = useParams();
 
@@ -41,12 +41,13 @@ export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }
                 </h5>
             </div>
             <div className="menu-wrapper">
-                <Link to={`/project/${projectId}/sprints`} ><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
+                <Link to={`/project/${projectId}/sprints`}><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Project Link</a>
                 <button onClick={()=> { toggleRef(commentSectionRef)}}><img src={icons.Comments} alt="Comments" />Comments</button>
-                <Link to={`/${projectId}/CreateBugPage`} ><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
-                <Link to={`/${projectId}/details`} ><img src={icons.Details} alt="Details" />Details</Link>
+                <Link to={`/${projectId}/CreateBugPage`}><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
+                <Link to={`/${projectId}/details`}><img src={icons.Details} alt="Details" />Details</Link>
+                <Link to={`/${projectId}/archive`}><img src={icons.ArchiveIcon} alt="Archive" />Archive</Link>
             </div>
         </div>
     </StyledSideNav>

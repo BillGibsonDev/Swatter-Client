@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import axios from "axios";
+import { useRef } from "react";
 
 // styled
 import styled from "styled-components";
@@ -11,23 +10,14 @@ import Menu from "../../../assets/icons/dotMenu.png";
 // redux
 import { connect } from "react-redux";
 
-// components
-import { DeleteAlert } from "../../../components/DeleteAlert";
-import { Alert } from "../../../components/Alert";
-
 // functions
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
-import { handleAlert } from "../../../functions/handleAlert";
 import { toggleRef } from "../../../functions/toggleRef";
 import { handleAuthor } from "../../../functions/handleAuthor.js";
 
-const Comment = ({ comment, user, projectId, setLoading }) => {
+const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
 
-  const AlertRef = useRef();
-  const DeleteAlertRef = useRef();
   const DropDownRef = useRef();
-
-  const [ message, setMessage ] = useState('');
 
   const handleDate = (comment) => {
 		let currentDate = new Date();
@@ -40,23 +30,6 @@ const Comment = ({ comment, user, projectId, setLoading }) => {
 		}
 	}
 
-  const deleteComment = () => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${comment._id}`)
-    .then((response) => {
-      if (response.data !== "Comment Deleted") {
-        setLoading(false);
-        setMessage('Server Error - Comment Not Deleted');
-        handleAlert(AlertRef);
-      } else {
-        setLoading(false);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  };
-
   const handleCommentAuthor = (author) => {
     if(author === user.username){
       return { margin: "10px 5% 10px auto", background: `${palette.helperGrey}`};
@@ -67,15 +40,6 @@ const Comment = ({ comment, user, projectId, setLoading }) => {
 
   return (
     <StyledComment style={handleCommentAuthor(comment.author)}>
-      <Alert
-        message={message}
-        AlertRef={AlertRef}
-      />
-      <DeleteAlert
-        DeleteAlertRef={DeleteAlertRef}
-        deleteFunction={deleteComment}
-        title={'comment'}
-      />
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
           <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
@@ -84,7 +48,7 @@ const Comment = ({ comment, user, projectId, setLoading }) => {
             <div className='dropdown-content' ref={DropDownRef} style={{display: 'none'}}>
               {  
                 handleAuthor(comment.author, user)
-                ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
+                ? <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
                 : <button>Delete</button>
               }
             </div>
@@ -174,7 +138,7 @@ const StyledComment = styled.div`
       color: #0dbe7a;
     }
     p {
-      font-size: .6em;
+      font-size: .8em;
       font-weight: 400;
     }
   }

@@ -30,6 +30,11 @@ const StyledSearchbar = styled.form`
     align-items: center;
     padding-left: 4px;
     border-radius: 6px;
+    width: 40%;
+    max-width: 330px;
+    @media (max-width: 838px) {
+        width: 70%;
+    }
     &:hover {
         outline: 2px solid ${palette.helperGrey} ;
     }
@@ -42,7 +47,7 @@ const StyledSearchbar = styled.form`
         border: none;
         text-indent: 10px;
         transition:0.3s;
-        width: 210px;
+        width: 70%;
         &:focus {
             outline: none;
             text-indent: 6px;
@@ -55,7 +60,7 @@ const StyledSearchbar = styled.form`
         border: none;
         cursor: pointer;
         transition: 0.2s;
-        width: 60px;
+        width: 30%;
         height: 28px;
         margin-left: 6px;
         border-radius: 0;

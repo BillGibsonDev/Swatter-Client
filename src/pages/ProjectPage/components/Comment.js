@@ -138,7 +138,7 @@ const StyledComment = styled.div`
       color: #0dbe7a;
     }
     p {
-      font-size: .6em;
+      font-size: .8em;
       font-weight: 400;
     }
   }

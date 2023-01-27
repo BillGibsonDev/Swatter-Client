@@ -32,7 +32,7 @@ const StyledProjectTable = styled.div`
   @media (max-width: 1050px) {
     grid-template-columns: 1fr 1fr;
   }
-  @media (max-width: 450px) {
+  @media (max-width: 838px) {
     grid-template-columns: 75vw;
     row-gap: 8px;
     column-gap: 0;

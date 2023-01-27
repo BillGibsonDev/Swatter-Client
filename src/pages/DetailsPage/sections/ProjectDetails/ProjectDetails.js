@@ -43,7 +43,7 @@ const StyledDetails = styled.div`
   margin: 20px auto;
   .title-container {
     display: flex;
-    max-width: 300px;
+    max-width: 400px;
     width: 100%;
     justify-content: space-between;
     align-items: center;

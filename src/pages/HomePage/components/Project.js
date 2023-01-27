@@ -32,7 +32,7 @@ const StyledProject = styled.div`
     flex-direction: column;
     width: 100%;
     position: relative;
-    background: #5c5c5c;
+    background: #5c5c5c73;
     border-radius: 4px;
     padding: 8px;
     border: 1px solid #0e1a28;

@@ -7,7 +7,6 @@ export default function Loader() {
     return (
         <StyledLoader>
             <div className="loader"></div>
-            <h2>Loading...</h2>
         </StyledLoader>
     )
 }
@@ -36,12 +35,6 @@ const StyledLoader = styled.div`
         right: 0;
         margin: auto;
     }
-    h2 {
-        position: relative;
-        margin-top: 20px;
-        color: white;
-    }
-
     @keyframes spin {
         0%  { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }

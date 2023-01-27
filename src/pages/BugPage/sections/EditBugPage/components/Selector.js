@@ -118,6 +118,5 @@ const StyledSelector = styled.label`
         font-size: 1em;
         background: ${palette.helperGrey};
         font-weight: 400;
-        background: white;
     }
 `;

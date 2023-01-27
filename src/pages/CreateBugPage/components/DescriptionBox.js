@@ -1,8 +1,8 @@
 // styled
 import styled from "styled-components";
-import * as palette from '../../../../../styled/ThemeVariables.js';
+import * as palette from '../../../styled/ThemeVariables.js';
 
-export const DescriptionBox = ({setDescription, description}) => {
+export const DescriptionBox = ({setDescription}) => {
 
   return (
     <StyledDescriptionBox>
@@ -10,8 +10,6 @@ export const DescriptionBox = ({setDescription, description}) => {
         <textarea
             name='description'
             id='description'
-            key={description}
-            defaultValue={description}
             cols='30'
             rows='10'
             onChange={(e) => {
@@ -30,6 +28,7 @@ const StyledDescriptionBox = styled.label`
     font-weight: 400;
     font-size: ${palette.labelSize};
     width: 100%;
+    max-width: 100%;
     textarea {
         padding: 2px;
         font-size: 1em;

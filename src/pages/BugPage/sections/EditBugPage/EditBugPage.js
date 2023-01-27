@@ -118,9 +118,7 @@ export const EditBugPage = ({ setEditing }) => {
         setLoading(false);
         handleAlert(AlertRef);
       } else {
-        setMessage(`Bug Deleted!`);
         setLoading(false);
-        handleAlert(AlertRef);
         navigate(`/projects/${projectId}`);
       }
     })

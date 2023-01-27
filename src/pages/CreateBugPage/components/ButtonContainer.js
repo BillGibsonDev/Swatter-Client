@@ -2,38 +2,28 @@
 import styled from "styled-components";
 
 // functions
-import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
-import { handleAdminAuth } from "../../../../../functions/handleAdminAuth.js";
+import { handleAdminAuth } from "../../../functions/handleAdminAuth.js";
 
 // redux
 import { connect } from "react-redux";
 
-const ButtonContainer = ({ user, DeleteAlertRef, updateBug, setRerender, rerender}) => {
+const ButtonContainer = ({ user, createBug }) => {
 
   return (
     <StyledButtonContainer>
       {
         handleAdminAuth(user)
-        ? <>
-            <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
-            <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-          </>
-        : <>
-          <button>Save</button>
-          <button id='delete'>Delete</button>
-        </>
+        ? <button onClick={() => { createBug() }}>Save</button> 
+        : <button>Save</button>
       }
     </StyledButtonContainer>
   );
 }
 
 const StyledButtonContainer = styled.article`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-top: 30px;
   button {
-    width: 40%;
+    width: 60%;
     max-width: 300px;
     height: 40px;
     cursor: pointer;

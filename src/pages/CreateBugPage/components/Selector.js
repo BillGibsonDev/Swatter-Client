@@ -1,12 +1,8 @@
 // styled
 import styled from "styled-components";
-import * as palette from "../../../../../styled/ThemeVariables.js";
+import * as palette from "../../../styled/ThemeVariables.js";
 
 export const Selector = ({ 
-    priority,
-    tag,
-    status, 
-    sprint,
     label, 
     setTag, 
     setPriority, 
@@ -30,18 +26,6 @@ export const Selector = ({
             return 'Status';
         } else if(label === 'Sprint'){
             return "Sprint";
-        }
-    }
-
-    const handleDefaultValue = (label) => {
-        if (label === 'Tag'){
-            return tag;
-        } else if(label === 'Priority'){
-            return priority;
-        } else if(label === 'Status'){
-            return status;
-        } else if(label === 'Sprint'){
-            return sprint;
         }
     }
 
@@ -83,17 +67,15 @@ export const Selector = ({
 
   return (
     <StyledSelector>{Label}:
-        <select value={handleDefaultValue(Label)} onChange={(e) => { handleStateFunction(Label, e.target.value);}}>
-        {
-            Options.map((options, key) => {
-                return (
-                    <option value={options} key={key}>{options}</option>
-                )
-            })
-        }
-        {
-            Label === 'Sprint' ? <option value=''>None</option> : <></>
-        }
+        <select onChange={(e) => { handleStateFunction(Label, e.target.value);}}>
+            <option value=''>None</option>
+            {
+                Options.map((options, key) => {
+                    return (
+                        <option value={options} key={key}>{options}</option>
+                    )
+                })
+            }
         </select>
     </StyledSelector>
   );
@@ -112,12 +94,10 @@ const StyledSelector = styled.label`
         margin: 10px 0;
     }
     select {
-        padding: 6px 0;
         cursor: pointer;
         width: 100%;
         font-size: 1em;
         background: ${palette.helperGrey};
         font-weight: 400;
-        background: white;
     }
 `;

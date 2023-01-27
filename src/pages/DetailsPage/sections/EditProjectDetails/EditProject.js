@@ -41,9 +41,7 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
         setLoading(false);
         handleAlert(AlertRef);
       } else {
-        setMessage(`Project deleted!`);
         setLoading(false);
-        handleAlert(AlertRef);
         navigate("/");
       }
     })
@@ -228,7 +226,7 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
       <ButtonContainer
         editProject={editProject}
         handleDeleteAlert={handleDeleteAlert}
-        DeleteAlert={DeleteAlertRef}
+        DeleteAlertRef={DeleteAlertRef}
       />
     </StyledDetails>
   );

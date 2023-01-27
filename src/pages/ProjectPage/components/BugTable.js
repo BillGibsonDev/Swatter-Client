@@ -14,6 +14,12 @@ export default function BugTable({ project, bugs }) {
 
     let activeBugs = handleActiveBugs(true, bugs);
 
+    activeBugs.sort((a, b) => {
+        let dateA = new Date(a);
+        let dateB = new Date(b);
+        return dateA - dateB;
+    })
+
     return (
         <StyledBugTable>
             { 

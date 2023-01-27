@@ -3,18 +3,18 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../styled/ThemeVariables.js";
+import * as palette from "../../styled/ThemeVariables.js";
 
 // router
 import { Link, useParams } from "react-router-dom";
 
 // functions
-import { handleAlert } from "../functions/handleAlert.js";
-import { handleUserAuth } from "../functions/handleUserAuth.js";
+import { handleAlert } from "../../functions/handleAlert.js";
+import { handleUserAuth } from "../../functions/handleUserAuth.js";
 
 // components
-import Loader from "../loaders/Loader";
-import { Alert } from "../components/Alert.js";
+import Loader from "../../loaders/Loader.js";
+import { Alert } from "../../components/Alert.js";
 
 // redux
 import { connect } from "react-redux";

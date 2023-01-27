@@ -4,13 +4,13 @@ import * as palette from '../styled/ThemeVariables.js';
 // functions
 import { handleDeleteAlert } from "../functions/handleDeleteAlert.js";
 
-export const DeleteAlert = ({ DeleteAlertRef, title, deleteFunction }) => {
+export const DeleteAlert = ({ DeleteAlertRef, title, deleteFunction, commentId }) => {
   return (
     <StyledAlert ref={DeleteAlertRef}>
         <div className="alert-container">
             <h1>Are you sure you want to delete {title}?</h1>
             <div className="button-container">
-                <button id="yes-btn" onClick={() => { deleteFunction(); handleDeleteAlert(DeleteAlertRef)}}>Yes</button>
+                <button id="yes-btn" onClick={() => { deleteFunction(commentId); handleDeleteAlert(DeleteAlertRef)}}>Yes</button>
                 <button id="no-btn" onClick={() => { handleDeleteAlert(DeleteAlertRef)}}>No</button>
             </div>
         </div>

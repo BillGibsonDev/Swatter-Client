@@ -19,7 +19,7 @@ import { handleUserAuth } from "../../../../functions/handleUserAuth.js";
 // redux
 import { connect } from "react-redux";
 
-const BugPage = ({ images, bug, setEditing, bugId, projectId, user }) => {
+const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -66,7 +66,7 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user }) => {
         <p id='description'><span>Description: </span> {bug.description}</p>
         <ButtonContainer />
         <ImageSection images={images} handleModal={handleModal} />
-        <CommentSection bugId={bugId} projectId={projectId} />
+        <CommentSection bugId={bugId} projectId={projectId}  setLoading={setLoading}/>
       </div>
     </StyledBugPage>
   );

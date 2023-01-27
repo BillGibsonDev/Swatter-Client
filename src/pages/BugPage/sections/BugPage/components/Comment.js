@@ -1,18 +1,10 @@
-import { useState, useRef } from "react";
-import axios from "axios";
-
 // styled
 import styled from "styled-components";
 import * as palette from "../../../../../styled/ThemeVariables";
 
 // functions
-import { handleAlert } from "../../../../../functions/handleAlert";
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
 import { handleAuthor } from "../../../../../functions/handleAuthor";
-
-// components
-import { Alert } from "../../../../../components/Alert";
-import { DeleteAlert } from "../../../../../components/DeleteAlert";
 
 // images
 import * as icon from '../../../../../assets/IconImports.js'
@@ -20,12 +12,7 @@ import * as icon from '../../../../../assets/IconImports.js'
 // redux
 import { connect } from "react-redux";
 
-const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
-
-  const AlertRef = useRef();
-  const DeleteAlertRef = useRef();
-
-  const [ message, setMessage ] = useState('');
+const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
 
   const handleDate = (comment) => {
 		let currentDate = new Date();
@@ -37,28 +24,6 @@ const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
 			return commentDate;
 		}
 	}
-
-  const deleteComment = () => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${comment._id}`)
-    .then((response) => {
-      if (response.data !== "Comment Deleted!") {
-        setMessage("Server Error - Comment not deleted");
-        handleAlert(AlertRef);
-        setLoading(false);
-      } else {
-        setMessage("Comment Deleted!");
-        handleAlert(AlertRef);
-        setLoading(false);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      setMessage("Server Error - Comment not deleted");
-      handleAlert(AlertRef);
-      setLoading(false);
-    });
-  };
   
   const handleCommentAuthor = (author) => {
     if(author === user.username){
@@ -69,16 +34,7 @@ const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
   }
 
   return (
-    <StyledComment style={handleCommentAuthor(comment.author)} >
-      <Alert
-        message={message}
-        AlertRef={AlertRef}
-      />
-      <DeleteAlert
-        DeleteAlertRef={DeleteAlertRef}
-        deleteFunction={deleteComment}
-        title={'comment'}
-      />
+    <StyledComment style={handleCommentAuthor(comment.author)}>
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
           <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
@@ -91,7 +47,7 @@ const Comment = ({ comment, projectId, setLoading, bugId, user }) => {
                 <div className='dropdown-content'>
                   {
                     handleAuthor(comment.author, user)
-                    ? <button onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
+                    ? <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
                     : <button>Delete</button>
                   }
                 </div>

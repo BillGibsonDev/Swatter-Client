@@ -9,6 +9,7 @@ import * as palette from "../../../styled/ThemeVariables.js";
 import Comment from "../components/Comment";
 import { Alert } from "../../../components/Alert.js";
 import CommentInput from "../components/CommentInput.js";
+import { DeleteAlert } from "../../../components/DeleteAlert.js";
 
 // router
 import { useParams } from "react-router-dom";
@@ -18,16 +19,20 @@ import { connect } from "react-redux";
 
 // functions
 import { toggleRef } from "../../../functions/toggleRef.js";
+import { handleAlert } from "../../../functions/handleAlert.js";
 
 const CommentSection = ({ commentSectionRef, user }) => {
 
+  const DeleteAlertRef = useRef();
+  const AlertRef = useRef();
+  const CommentContainerRef = useRef();
+
   const { projectId, bugId } = useParams();
 
-  const AlertRef = useRef();
-
-  const [ message, setMessage ] = useState('')
   const [ comments, setComments ] = useState([]);
+  const [ message, setMessage ] = useState('');
   const [ isLoading, setLoading ] = useState(false);
+  const [ commentId, setCommentId ] = useState();
 
   useEffect(() => {
     const getProject = () => {
@@ -42,11 +47,34 @@ const CommentSection = ({ commentSectionRef, user }) => {
     getProject(projectId);
   }, [projectId, bugId, user, isLoading]);
 
+    const deleteComment = (commentId) => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+      .then((response) => {
+        if (response.data !== "Comment Deleted") {
+          setLoading(false);
+          setMessage('Server Error - Comment Not Deleted');
+          handleAlert(AlertRef);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    };
+
   return (
     <StyledCommentSection ref={commentSectionRef} style={{ display: "none" }}>
       <Alert
         message={message}
         AlertRef={AlertRef}
+      />
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+        commentId={commentId}
       />
       <div className='comment-section-wrapper'>
         <div className='title-container'>
@@ -56,7 +84,7 @@ const CommentSection = ({ commentSectionRef, user }) => {
         {
           comments.length === 0 || !comments 
           ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
-          : <div className='comment-container' id='comment-container'>
+          : <div className='comment-container' ref={CommentContainerRef}>
             {
               comments.map((comment, index) => {
                 return (
@@ -65,6 +93,8 @@ const CommentSection = ({ commentSectionRef, user }) => {
                     projectId={projectId}
                     key={index}
                     setLoading={setLoading}
+                    setCommentId={setCommentId}
+                    DeleteAlertRef={DeleteAlertRef}
                   />
                 );
               })
@@ -76,6 +106,7 @@ const CommentSection = ({ commentSectionRef, user }) => {
           setLoading={setLoading}
           setMessage={setMessage}
           projectId={projectId}
+          CommentContainerRef={CommentContainerRef}
         />
       </div>
     </StyledCommentSection>

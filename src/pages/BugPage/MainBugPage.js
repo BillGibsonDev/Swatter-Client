@@ -55,13 +55,14 @@ export const MainBugPage = () => {
           images={images}
           bugId={bugId}
           projectId={projectId}
+          setLoading={setLoading}
         /> 
         : <EditBugPage 
-          setEditing={setEditing} 
-          bug={bug}
-          bugId={bugId}
-          projectId={projectId}
-        />
+            setEditing={setEditing} 
+            bug={bug}
+            bugId={bugId}
+            projectId={projectId}
+          />
       }
     </StyledBugPage>
   );

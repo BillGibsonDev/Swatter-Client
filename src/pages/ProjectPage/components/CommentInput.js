@@ -10,7 +10,7 @@ import { handleAlert } from "../../../functions/handleAlert";
 import { connect } from "react-redux";
 import { handleUserAuth } from "../../../functions/handleUserAuth";
 
-const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId }) => {
+const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, CommentContainerRef }) => {
 
   const sendComment = () => {
     setLoading(true);
@@ -27,14 +27,14 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId }) => 
         }
       )
       .then((response) => {
-        if (response.data !== "Comment Created") {
+        if (response.data !== "Comment created!") {
           setLoading(false);
           setMessage("Server Error - Comment not created!");
           handleAlert(AlertRef);
         } else {
           setLoading(false);
           document.getElementById("comment").value = "";
-          let container = document.getElementById("comment-container");
+          let container = CommentContainerRef.current
           setTimeout(() => {
             container.scrollTo(0, document.body.scrollHeight);
           }, 1000);

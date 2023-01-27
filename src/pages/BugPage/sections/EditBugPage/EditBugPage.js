@@ -96,9 +96,9 @@ export const EditBugPage = ({ setEditing }) => {
         handleAlert(AlertRef);
       } else {
         setMessage(`Bug updated!`);
+        setEditing(false);
         setLoading(false);
         handleAlert(AlertRef);
-        setEditing(false);
       }
     })
     .catch((err) => {

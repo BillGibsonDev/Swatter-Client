@@ -21,6 +21,7 @@ export default function ProjectDetails({ project, isLoading, setEditing}) {
             <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit' /></button>
           </div>
           <div className='container'>
+            <h6><span>Key:</span> {project.projectKey}</h6>
             <h6><span>Type:</span> {project.projectType}</h6>
             <h6><span>Description:</span> {project.description}</h6>
           </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styled
@@ -83,19 +83,19 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
     .then((response) => {
       if (response.data !== "Project Updated") {
         setMessage('Server Error - Project not updated');
-        setLoading(false);
         handleAlert(AlertRef);
-      } else {
+        setLoading(false);
+      } else { 
+        setEditing(false);
         setMessage(`${project.projectTitle} updated!`);
-        setLoading(false);
         handleAlert(AlertRef);
+        setLoading(false);
       }
     })
     .catch((err) => {
       console.log(err);
       setMessage('Server Error - Project not updated');
       setLoading(false);
-      handleAlert(AlertRef);
     })
   };
 
@@ -120,7 +120,7 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
         isLoading ? <Loader />
         :
         <div className='form-wrapper'>
-          <div className='top-form-container'>
+          <div className='form-container'>
             <label>
               Title
               <input
@@ -177,7 +177,7 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
               />
             </label>
           </div>
-          <div className='bottom-form-container'>
+          <div className='form-container'>
             <label>
               Date
               <input
@@ -259,8 +259,7 @@ const StyledDetails = styled.div`
     @media (max-width: 838px) {
       flex-direction: column;
     }
-    .top-form-container,
-    .bottom-form-container {
+    .form-container {
       margin: 0;
       width: 45%;
       @media (max-width: 838px) {

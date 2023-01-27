@@ -3,7 +3,6 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../../styled/ThemeVariables.js";
 
 // router
 import { useParams } from "react-router-dom";
@@ -21,8 +20,8 @@ import { EditProject } from "./sections/EditProjectDetails/EditProject.js";
 export default function ProjectDetailsPage() {
   const { projectId } = useParams();
 
-  const [project, setProject] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [ project, setProject ] = useState([]);
+  const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export default function ProjectDetailsPage() {
       });
     };
     getProject(projectId);
-  }, [projectId]);
+  }, [ projectId, editing ]);
 
   return (
     <StyledDetails>

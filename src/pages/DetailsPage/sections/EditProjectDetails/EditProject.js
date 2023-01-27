@@ -3,26 +3,27 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../../styled/ThemeVariables.js";
+import * as palette from "../../../../styled/ThemeVariables.js";
 
 // router
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { handleAlert } from "../../functions/handleAlert.js";
-import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
+// images
+import EditIcon from "../../../../assets/icons/editIconWhite.png";
+
+// functions
+import { handleAlert } from "../../../../functions/handleAlert.js";
+import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // components
-import { DeleteAlert } from "../../components/DeleteAlert.js";
-import { Alert } from '../../components/Alert.js';
+import { DeleteAlert } from "../../../../components/DeleteAlert.js";
+import { Alert } from '../../../../components/Alert.js';
 import ButtonContainer from "./components/ButtonContainer.js";
-import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
 // loaders
-import Loader from "../../loaders/Loader.js";
+import Loader from "../../../../loaders/Loader.js";
 
-export const EditProjectPage = () => {
-
-  const { projectId } = useParams();
+export const EditProject = ({ setEditing, isLoading, setLoading, project, projectId }) => {
   
   const navigate = useNavigate();
 
@@ -30,23 +31,6 @@ export const EditProjectPage = () => {
   const DeleteAlertRef = useRef();
 
   const [ message, setMessage ] = useState('');
-  const [ project, setProject ] = useState([]);
-  const [ isLoading, setLoading ] = useState(false);
-
-  useEffect(() => {
-    const getProject = () => {
-      axios.get( `${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then((response) => {
-        setProject(response.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-    };
-    getProject(projectId);
-  }, [ projectId ]);
 
   const deleteProject = () => {
     setLoading(true);
@@ -116,7 +100,7 @@ export const EditProjectPage = () => {
   };
 
   return (
-    <StyledProjectPage>
+    <StyledDetails>
       <Alert
         message={message}
         handleAlert={handleAlert}
@@ -128,12 +112,10 @@ export const EditProjectPage = () => {
         deleteFunction={deleteProject}
         title={project.projectTitle}
       />
-      <BreadCrumbs
-        projectId={projectId}
-        projectTitle={project.projectTitle}
-        title={'Edit'}
-      />
-      <h1>Edit Project</h1>
+      <div className='title-container'>
+        <h1>Edit Project</h1>
+        <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit' /></button>
+      </div>
       {
         isLoading ? <Loader />
         :
@@ -248,48 +230,40 @@ export const EditProjectPage = () => {
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlert={DeleteAlertRef}
       />
-    </StyledProjectPage>
+    </StyledDetails>
   );
 }
 
-const StyledProjectPage = styled.div`
+const StyledDetails = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 1000px;
   min-height: 50vh;
-  margin: 20px auto;
-  @media (max-width: 1160px) {
-    width: 80%;
-    left: 60px;
-  }
-  @media (max-width: 834px) {
-    left: 0;
-  }
-  @media (max-width: 750px) {
-    height: 40vh;
-  }
-  @media (max-width: 428px) {
-    margin-left: 65px;
-    width: 80vw;
-  }
-  h1 {
-    color: white;
-    font-size: ${palette.titleSize};
+  .title-container {
+    display: flex;
+    max-width: 400px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      color: white;
+      font-size: ${palette.titleSize};
+    }
   }
   .form-wrapper {
     width: 100%;
     margin: 16px auto;
     display: flex;
     justify-content: space-between;
-    @media (max-width: 750px) {
+    @media (max-width: 838px) {
       flex-direction: column;
     }
     .top-form-container,
     .bottom-form-container {
       margin: 0;
       width: 45%;
-      @media (max-width: 600px) {
+      @media (max-width: 838px) {
         width: 100%;
       }
       label {
@@ -297,20 +271,14 @@ const StyledProjectPage = styled.div`
         color: white;
         flex-direction: column;
         margin: 10px 0;
+        width: 100%;
+        max-width: 400px;
         input, select {
-          width: 400px;
+          width: 100%;
           padding: 2px;
+          font-size: 1em;
           background: ${palette.helperGrey};
-          @media (max-width: 834px) {
-            width: 100%;
-          }
-          @media (max-width: 750px) {
-            width: 100%;
-          }
-          @media (max-width: 428px) {
-            font-size: 1em;
-            height: 30px;
-          }
+          height: 30px;
         }
       }
     }

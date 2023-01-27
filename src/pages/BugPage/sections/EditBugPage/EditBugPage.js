@@ -153,7 +153,7 @@ export const EditBugPage = ({ setEditing }) => {
           <div className='bug-container'>
             <div className='title-container'>
               <h1>{bug.title}</h1>
-              <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit bug link' /></button>
+              <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit' /></button>
             </div>
             <div className='info-wrapper'>
               <InfoContainer bug={bug} />

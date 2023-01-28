@@ -1,8 +1,6 @@
 import { useRef } from "react";
-
 // styled
 import styled from "styled-components";
-import * as palette from "../../../../styled/ThemeVariables.js";
 
 // images
 import EditIcon from "../../../../assets/icons/editIconWhite.png";
@@ -15,6 +13,7 @@ import { InfoContainer } from "./components/InfoContainer.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { Alert } from "../../../../components/Alert.js";
 import { handleUserAuth } from "../../../../functions/handleUserAuth.js";
+import { DescriptionBox } from "./components/DescriptionBox.js";
 
 // redux
 import { connect } from "react-redux";
@@ -63,7 +62,7 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
           </div>
           <InfoContainer bug={bug} />
         </div>
-        <p id='description'><span>Description: </span> {bug.description}</p>
+        <DescriptionBox description={bug.description} />
         <ButtonContainer />
         <ImageSection images={images} handleModal={handleModal} />
         <CommentSection bugId={bugId} projectId={projectId}  setLoading={setLoading}/>
@@ -134,22 +133,6 @@ const StyledBugPage = styled.div`
         .High {
           color: red;
         }
-      }
-    }
-    #description {
-      color: white;
-      font-size: 16px;
-      display: flex;
-      flex-direction: column;
-      margin: 50px 0;
-      border-top: 2px solid grey;
-      border-bottom: 2px solid grey;
-      padding: 50px 0;
-      @media (max-width: 450px) {
-        font-size: 1em;
-      }
-      span {
-        color: ${palette.helperGrey};
       }
     }
   }

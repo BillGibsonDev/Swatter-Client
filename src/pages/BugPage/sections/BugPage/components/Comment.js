@@ -1,3 +1,5 @@
+import { marked } from "marked";
+
 // styled
 import styled from "styled-components";
 import * as palette from "../../../../../styled/ThemeVariables";
@@ -27,9 +29,9 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
   
   const handleCommentAuthor = (author) => {
     if(author === user.username){
-      return { margin: "10px 5% 10px auto", background: `${palette.helperGrey}`};
+      return { margin: "10px 0 10px auto"};
     } else {
-      return { margin: "10px auto 10px 5%", background: "white" };
+      return { margin: "10px auto 10px 0"};
     }
   }
 
@@ -55,7 +57,7 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
             : <></>
           }
         </div>
-        <p>{comment.comment}</p>
+        <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
       </div>
     </StyledComment>
   );
@@ -63,18 +65,16 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
 
 const StyledComment = styled.div`
   display: flex;
-  max-width: 80%;
+  max-width: 90%;
+  max-width: 500px;
   width: auto;
   height: auto;
   margin: 10px auto;
-  background: #ffffff;
+  background: #dfdfdf;
   border-radius: 4px;
   box-shadow: 3px 3px 3px #5252528d;
   position: relative;
   justify-content: space-around;
-  @media (max-width: 450px) {
-    max-width: 80%;
-  }
   .comment-wrapper {
     width: 95%;
     margin: 10px auto;
@@ -86,12 +86,12 @@ const StyledComment = styled.div`
       align-items: center;
       margin-bottom: 10px;
       h3 {
-        font-size: 12px;
+        font-size: .8em;
         display: flex;
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: 10px;
+          font-size: .6em;
           color: #575757;
         }
       }
@@ -145,6 +145,11 @@ const StyledComment = styled.div`
         background-color: ${palette.helperGrey};
       }
     }
+    .comment-text-container {
+      p {
+        margin-bottom: 12px;
+      }
+    }
     #Gibby {
       color: #008ee0;
     }
@@ -152,7 +157,7 @@ const StyledComment = styled.div`
       color: #0dbe7a;
     }
     p {
-      font-size: 12px;
+      font-size: .8em;
       font-weight: 400;
     }
   }

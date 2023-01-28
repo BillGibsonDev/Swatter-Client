@@ -50,9 +50,6 @@ const GlobalStyles = createGlobalStyle`
             transform: scale(1.02);
         }
     }
-    h1, h2, h3, h4 ,h5, h6, p, span {
-        font-weight: 300;
-    }
 `;
 
 export default GlobalStyles;

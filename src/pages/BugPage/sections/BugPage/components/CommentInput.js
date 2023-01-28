@@ -59,7 +59,7 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
       />
       {
         handleUserAuth(user)
-        ? <button onClick={() => { sendComment(); }}>Send</button>
+        ? <button onClick={(e) => { sendComment()}}>Send</button>
         : <button>Send</button>
       }
     </StyledCommentInput>
@@ -70,14 +70,14 @@ const StyledCommentInput = styled.article`
   margin: 10px 0;
   display: flex;
   justify-content: center;
-    flex-direction: column;
-    width: 100%;
+  flex-direction: column;
+  width: 100%;
   textarea {
     background: #d6d6d6;
     padding: 6px;
     min-height: 70px;
     height: auto;
-    max-width: 500px;
+    max-width: 550px;
     width: 100%;
     font-size: 1em;
   }
@@ -85,7 +85,7 @@ const StyledCommentInput = styled.article`
     margin: 0;
     margin-top: 4px;
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     height: 30px;
     cursor: pointer;
     color: #0f4d92;

@@ -67,7 +67,6 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, Comme
 
 const StyledCommentInput = styled.div`
   margin: 10px;
-  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;

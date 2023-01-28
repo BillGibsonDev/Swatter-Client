@@ -107,16 +107,11 @@ export const CommentSection = ({ bugId, projectId, setLoading }) => {
 }
 
 const StyledBugCommentSection = styled.div`
-  width: 60%;
+  width: 90%;
   margin: 20px 0;
   height: 100%;
   min-height: 30vh;
-  @media (max-width: 834px) {
-    width: 70%;
-  }
-  @media (max-width: 428px) {
-    width: 100%;
-  }
+  max-width: 550px;
   .comment-section-wrapper {
     display: flex;
     width: 100%;

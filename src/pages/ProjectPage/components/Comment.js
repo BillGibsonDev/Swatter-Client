@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { marked } from "marked";
 
 // styled
 import styled from "styled-components";
@@ -32,9 +33,9 @@ const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
 
   const handleCommentAuthor = (author) => {
     if(author === user.username){
-      return { margin: "10px 5% 10px auto", background: `${palette.helperGrey}`};
+      return { margin: "10px 10px 10px auto", background: `${palette.helperGrey}`};
     } else {
-      return { margin: "10px auto 10px 5%", background: "white" };
+      return { margin: "10px auto 10px 10px", background: "white" };
     }
   }
 
@@ -54,7 +55,7 @@ const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
             </div>
           </div>
         </div>
-        <p>{comment.comment}</p>
+        <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
       </div>
     </StyledComment>
   );
@@ -129,6 +130,11 @@ const StyledComment = styled.div`
             }
           }
         }
+      }
+    }
+    .comment-text-container {
+      p {
+        margin-bottom: 12px;
       }
     }
     #Gibby {

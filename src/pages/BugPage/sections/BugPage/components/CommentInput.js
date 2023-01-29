@@ -79,7 +79,7 @@ const StyledCommentInput = styled.article`
     height: auto;
     max-width: 550px;
     width: 100%;
-    font-size: 1em;
+    font-size: .8em;
   }
   button {
     margin: 0;

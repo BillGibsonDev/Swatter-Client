@@ -28,7 +28,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
                     : <></>
                 }
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
-                <Link to="/"><img src={icon.Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
+                <Link to="/help"><img src={icon.Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
             </div>
             <ToggleProjectNav projectSideNavRef={projectSideNavRef} />
             <div className="bottom-container">

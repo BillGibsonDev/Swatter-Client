@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 // styled
@@ -8,13 +8,9 @@ import * as palette from "../../styled/ThemeVariables";
 // components
 import SprintBugTable from "./components/SprintBugTable.js";
 import { BreadCrumbs } from "../../components/Breadcrumbs";
-
-// forms
-import SprintForm from "./forms/SprintForm.js";
-import EditSprintForm from "./forms/EditSprintForm.js";
-
-// images
-import Edit from "../../assets/icons/editIconWhite.png";
+import { TitleContainer } from "./components/TitleContainer";
+import CreateSprint from "./sections/CreateSprint";
+import EditSprint from "./sections/EditSprint";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -22,20 +18,17 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
-// functions
-import { toggleRef } from "../../functions/toggleRef";
 
 export const SprintsPage = () => {
   const { projectId } = useParams();
-
-  const sprintFormRef = useRef();
-  const editSprintFormRef = useRef();
 
   const [searchSprint, setSearchSprint] = useState(false);
   const [options, setOptions] = useState([]);
   const [project, setProject] = useState([]);
   const [rerender, setRerender] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [ editing, setEditing ] = useState(false);
+  const [ creating, setCreating ] = useState(false);
 
   useEffect(() => {
     const getProject = (projectId) => {
@@ -43,9 +36,6 @@ export const SprintsPage = () => {
       .then((response) => {
         setProject(response.data);
         setOptions(response.data.sprints);
-        if(response.data.sprints[0]){
-          handleEndDate(response.data.sprints[0].endDate);
-        }
         setLoading(false);
       })
       .catch((err) => {
@@ -54,13 +44,8 @@ export const SprintsPage = () => {
       });
     };
     getProject(projectId);
-  }, [projectId, rerender]);
+  }, [ projectId, rerender, editing, creating ]);
 
-  const handleEndDate = (x) => {
-    let newArr = x.split(/[ -]+/);
-    return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
-  };
-  
   return (
     <StyledSprintSection>
       <BreadCrumbs 
@@ -68,78 +53,21 @@ export const SprintsPage = () => {
         projectTitle={project.projectTitle} 
         title={'Sprints'}
       />
-      <div className='button-wrapper'>
-        <button onClick={() => { toggleRef(sprintFormRef); }}>New Sprint</button>
-        {
-          !options
-          ? <></>
-          : 
-            <select onChange={(event) => { setSearchSprint(event.target.value); setRerender(!rerender);}}>
-              <option value=''></option>
-              {
-                options.map((sprint, key) => {
-                  return (
-                    <option key={key} id={sprint._id} value={`${sprint.title}`}>
-                      {sprint.title}
-                    </option>
-                  );
-                })
-              }
-            </select>
-        }
-      </div>
-      <div className='sprint-list-wrapper'>
-        {
-          !project.sprints ? <></>
-          : 
-          <>
-            {
-              project.sprints.filter((sprint) => sprint.title === searchSprint).map((sprint, key) => {
-                return (
-                  <div className='title-wrapper' key={key}>
-                    <div className='title-container'>
-                      <h4>{sprint.title}</h4>
-                      <button onClick={() => { toggleRef(editSprintFormRef); }} >
-                        <img id='edit-button' src={Edit} alt='edit' />
-                        <span className='tooltiptext'>Edit Sprint</span>
-                      </button>
-                    </div>
-                    <h5 id='status'><span>Status: </span>{sprint.status}</h5>
-                    <div className='info-container'>
-                      <h5><span>Updated:</span> {sprint.updated}</h5>
-                      {
-                        !sprint.endDate ? <></>
-                        : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>
-                      }
-                    </div>
-                  </div>
-                );
-              })
-            }
-          </>
-        }
-      </div>
-      <SprintForm
-        projectId={projectId}
-        sprintFormRef={sprintFormRef}
-        setRerender={setRerender}
-        rerender={rerender}
-      />
-      {
-        !searchSprint && !project.sprints
-        ? <></>
-        : 
-          <EditSprintForm
-            projectId={projectId}
-            editSprintFormRef={editSprintFormRef}
-            setRerender={setRerender}
-            rerender={rerender}
-            project={project}
-            searchSprint={searchSprint}
-          />
-      }
       {
         isLoading ? <Loader />
+        : creating ? <CreateSprint
+          setCreating={setCreating}
+          projectId={projectId}
+        />
+        : editing ? <EditSprint
+          projectId={projectId}
+          rerender={rerender}
+          setRerender={setRerender}
+          project={project}
+          searchSprint={searchSprint}
+          setEditing={setEditing}
+          setSearchSprint={setSearchSprint}
+        />
         : 
           <div className='sprint-bug-table-wrapper'>
             {
@@ -148,12 +76,53 @@ export const SprintsPage = () => {
                   <h1>You've haven't entered any bugs</h1>
                 </div>
               : 
+              <>
+              <div className='button-wrapper'>
+              <button onClick={() => { setCreating(true); }}>New Sprint</button>
+              {
+                !options
+                ? <></>
+                : 
+                  <select onChange={(e) => { setSearchSprint(e.target.value); setRerender(!rerender);}}>
+                    <option value=''></option>
+                    {
+                      options.map((sprint, key) => {
+                        return (
+                          <option key={key} id={sprint._id} value={`${sprint.title}`}>
+                            {sprint.title}
+                          </option>
+                        );
+                      })
+                    }
+                  </select>
+              }
+            </div>
+                <div className='sprint-list-wrapper'>
+                  {
+                    !project.sprints ? <></>
+                    : 
+                    <>
+                      {
+                        project.sprints.filter((sprint) => sprint.title === searchSprint).map((sprint, key) => {
+                          return (
+                            <TitleContainer
+                              key={key}
+                              sprint={sprint}
+                              setEditing={setEditing}
+                            />
+                          );
+                        })
+                      }
+                    </>
+                  }
+                </div>
                 <SprintBugTable
                   setRerender={setRerender}
                   rerender={rerender}
                   project={project}
                   searchSprint={searchSprint}
                 />
+              </>
             }
           </div>
       }
@@ -233,23 +202,6 @@ const StyledSprintSection = styled.div`
             width: 24px;
             height: 24px;
           }
-          .tooltiptext {
-            font-size: 16px;
-            visibility: hidden;
-            width: 150px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1000;
-            top: 90%;
-            left: 50%;
-            @media (max-width: 450px) {
-              left: 30%;
-            }
-          }
           #edit-button {
             width: 100%;
             height: 100%;
@@ -259,12 +211,6 @@ const StyledSprintSection = styled.div`
               transform: scale(1.05);
             }
           }
-        }
-        #edit-link:hover .tooltiptext,
-        #edit-link:active .tooltiptext,
-        #edit-link:focus .tooltiptext {
-          visibility: visible;
-          transition-delay: 1s;
         }
       }
       #status {

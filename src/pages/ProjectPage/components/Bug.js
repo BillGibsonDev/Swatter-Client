@@ -21,11 +21,16 @@ export const Bug = ({ project, bug }) => {
 	}
 	
 	const handleSprintColor = (project) => {
-		if(project.sprints.find(sprints => sprints.title === bug.sprint)){
-			let color = project.sprints.find(sprints => sprints.title === bug.sprint).color;
-			return color;
-		} else {
-			return '';
+		if(project.sprints){
+			let sprintColor = project.sprints.find(sprint => sprint.title === bug.sprint)
+			if(sprintColor){
+				let color = sprintColor.color;
+				if(color){
+					return { background: color, padding: '1px 4px' };
+				}
+			} else {
+				return {};
+			}
 		}
 	}
 
@@ -67,7 +72,7 @@ export const Bug = ({ project, bug }) => {
 				</div>
 				<div className="center-container">
 					<h2 id="date">{handleDate(bug)}</h2>
-					<h2 id="sprint" style={{background: handleSprintColor(project)}}>{bug.sprint}</h2>
+					<h2 id="sprint" style={handleSprintColor(project)}>{bug.sprint}</h2>
 				</div>
 				<div className="bottom-container">
 					<div className="status-icons-container">

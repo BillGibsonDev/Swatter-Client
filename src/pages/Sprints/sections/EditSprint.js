@@ -99,6 +99,14 @@ const EditSprint = ({ projectId, setEditing, project, searchSprint, setSearchSpr
     });
   };
 
+  const sprintColors = [ 'Black', 'Blue', 'Brown', 'DarkRed', 'Green', 'Olive', 'Red', 'Slateblue', 'Tomato', 'Purple']
+
+  const handleSprintColor = (myColor) => {
+    if(myColor){
+      return myColor.toLowerCase();
+    }
+  }
+
   return (
     <StyledEditSprint>
       <Alert
@@ -166,14 +174,13 @@ const EditSprint = ({ projectId, setEditing, project, searchSprint, setSearchSpr
         </label>
         <label>
           Color Code
-          <input
-            type='text'
-            defaultValue={sprint.color}
-            id='color-code'
-            onChange={(event) => {
-              setColor(event.target.value);
-            }}
-          />
+          <select id="color" value={handleSprintColor(color)} onChange={(event) => { setColor(event.target.value); }}>
+            {
+              sprintColors.map((color, key) => {
+                return ( <option key={key} value={color.toLowerCase()}>{color}</option>)
+              })
+            }
+          </select>
         </label>
         </div>
       </div>

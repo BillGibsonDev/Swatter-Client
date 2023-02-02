@@ -20,7 +20,7 @@ import { DeleteAlert } from "../../../components/DeleteAlert";
 // functions
 import ButtonContainer from "../components/ButtonContainer";
 
-const EditSprint = ({ projectId, setEditing, project, searchSprint, setSearchSprint }) => {
+const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSearchSprint }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -58,6 +58,11 @@ const EditSprint = ({ projectId, setEditing, project, searchSprint, setSearchSpr
   const handleUpdateSprint = () => {
     axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`,
       {
+        headers: {
+          Authorization: user.token
+        }
+      },
+      {
         projectId: projectId,
         sprintId: sprintId,
         goal: goal,
@@ -83,9 +88,16 @@ const EditSprint = ({ projectId, setEditing, project, searchSprint, setSearchSpr
   };
 
   const handleDeleteSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`, {
-      sprintTitle: sprint.title
-    })
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
+      {
+        sprintTitle: sprint.title
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
+      }
+    )
     .then(function (response) {
       if (response.data !== "Sprint Deleted") {
         setMessage("Server Error - Sprint Not Deleted!");

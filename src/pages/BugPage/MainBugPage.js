@@ -15,7 +15,7 @@ import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
 // sections
 import BugPage from "./sections/BugPage/BugPage.js";
-import { EditBugPage } from "./sections/EditBugPage/EditBugPage.js";
+import EditBugPage from "./sections/EditBugPage/EditBugPage.js";
 
 export const MainBugPage = () => {
   const { projectId, bugId } = useParams();

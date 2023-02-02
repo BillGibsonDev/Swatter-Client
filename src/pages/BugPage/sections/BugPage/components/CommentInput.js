@@ -21,6 +21,11 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`,
         {
+          headers: {
+            Authorization: user.token
+          }
+        },
+        {
           projectId: projectId,
           bugId: bugId,
           comment: document.getElementById("comment").value,

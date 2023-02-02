@@ -14,7 +14,7 @@ import { Alert } from "../../../../../components/Alert.js";
 // functions
 import { handleAlert } from "../../../../../functions/handleAlert.js";
 
-export const CommentSection = ({ bugId, projectId, setLoading }) => {
+export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -39,7 +39,13 @@ export const CommentSection = ({ bugId, projectId, setLoading }) => {
 
   const deleteComment = (commentId) => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`)
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`,
+      {
+        headers: {
+          Authorization: user.token
+        }
+      }
+    )
     .then((response) => {
       if (response.data !== "Comment Deleted!") {
         setMessage("Server Error - Comment not deleted");

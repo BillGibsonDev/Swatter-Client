@@ -66,7 +66,7 @@ function App() {
           } else {
             setLoggedIn(true);
             setLoading(false);
-            dispatch(handleUser(username, response.data));
+            dispatch(handleUser(username, response.data, token));
           }
         })
         .catch((err) => {

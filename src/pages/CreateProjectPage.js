@@ -56,6 +56,11 @@ const CreateProjectPage = ({ user }) => {
         projectKey: projectTitle.slice(0,2).toUpperCase(),
         projectLead: projectLead,
         projectType: projectType,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {
@@ -134,7 +139,7 @@ const CreateProjectPage = ({ user }) => {
       {
         handleAdminAuth(user)
         ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-        : <button className='start-button'>Start</button>
+        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
       }
     </StyledProjectPage>
   );

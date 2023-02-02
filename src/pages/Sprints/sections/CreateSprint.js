@@ -35,6 +35,11 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
         endDate: endDate,
         color: color,
         status: status,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {

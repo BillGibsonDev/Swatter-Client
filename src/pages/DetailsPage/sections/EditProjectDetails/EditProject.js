@@ -23,7 +23,10 @@ import ButtonContainer from "./components/ButtonContainer.js";
 // loaders
 import Loader from "../../../../loaders/Loader.js";
 
-export const EditProject = ({ setEditing, isLoading, setLoading, project, projectId }) => {
+// redux
+import { connect } from "react-redux";
+
+const EditProject = ({ user, setEditing, isLoading, setLoading, project, projectId }) => {
   
   const navigate = useNavigate();
 
@@ -34,7 +37,12 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
 
   const deleteProject = () => {
     setLoading(true);
-    axios.delete(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`)
+    axios.delete(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`, {},
+    {
+      headers: {
+        Authorization: user.token
+      }
+    })
     .then((response) => {
       if (response.data !== "Project Deleted") {
         setMessage(`Server Error - Project not deleted!`);
@@ -76,6 +84,11 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
         projectKey: projectKey,
         projectLead: projectLead,
         projectType: projectType,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {
@@ -282,3 +295,11 @@ const StyledDetails = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditProject);

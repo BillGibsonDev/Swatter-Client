@@ -78,6 +78,11 @@ const CreateBugPage = ({ user }) => {
           sprint: sprint,
           images: images,
           bugKey: bugKey,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
       )
       .then((response) => {

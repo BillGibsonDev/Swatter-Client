@@ -28,7 +28,6 @@ const CreateProjectPage = ({ user }) => {
   const [projectLink, setProjectLink] = useState("");
   const [projectImage, setProjectImage] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [projectKey, setProjectKey] = useState("");
   const [description, setDescription] = useState("");
   const [repository, setRepository] = useState("");
   const [projectLead, setProjectLead] = useState("");
@@ -54,7 +53,7 @@ const CreateProjectPage = ({ user }) => {
         projectImage: projectImage,
         repository: repository,
         description: description,
-        projectKey: projectKey,
+        projectKey: projectTitle.slice(0,2).toUpperCase(),
         projectLead: projectLead,
         projectType: projectType,
       }
@@ -98,10 +97,6 @@ const CreateProjectPage = ({ user }) => {
             <label>
               Title
               <input type='text' id='title' onChange={(event) => { setProjectTitle(event.target.value); }} />
-            </label>
-            <label>
-              Key
-              <input type='text' id='key' onChange={(event) => { setProjectKey(event.target.value); }} />
             </label>
             <label>
               URL

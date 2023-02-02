@@ -19,7 +19,7 @@ export const Bug = ({ project, bug }) => {
 			return bugDate;
 		}
 	}
-	
+
 	const handleSprintColor = (project) => {
 		if(project.sprints){
 			let sprintColor = project.sprints.find(sprint => sprint.title === bug.sprint)
@@ -69,6 +69,10 @@ export const Bug = ({ project, bug }) => {
 			<Link to={`/${project._id}/${bug._id}`}>
 				<div className="top-container">
 					<h2 id="title">{bug.title}</h2>
+					{
+						bug.bugKey ? <h2 id="key">{bug.bugKey}</h2>
+						: <></>
+					}
 				</div>
 				<div className="center-container">
 					<h2 id="date">{handleDate(bug)}</h2>
@@ -104,7 +108,8 @@ const StyledBug = styled.div`
 	#title {
 		color: #ffffff;
 	}
-	#date, .author, #sprint {
+
+	#date, .author, #sprint, #key {
 		color: #e4e4e4;
 		font-size: .8em;
 		font-weight: 200;

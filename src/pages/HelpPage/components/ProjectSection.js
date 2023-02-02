@@ -32,55 +32,6 @@ export const ProjectSection = () => {
       <article>
         <h2>Getting to Know The Project Page</h2>
         <p>Let's take a look at the important features of the project page.</p>
-        <h3>Project Navigation</h3>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Project Info</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Repository</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Website</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Comments</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Sprints</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Sprints</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Details</h4>
-            </div>
-        </div>
-        <div className="container">
-            <img src="" alt="" />
-            <div className="text-container">
-                <h4>Archive</h4>
-            </div>
-        </div>
       </article>
       <article>
         <h2>Creating Your First Issue</h2>

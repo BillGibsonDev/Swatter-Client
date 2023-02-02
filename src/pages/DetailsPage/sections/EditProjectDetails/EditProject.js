@@ -135,6 +135,7 @@ export const EditProject = ({ setEditing, isLoading, setLoading, project, projec
               <input
                 type='text'
                 id='key'
+                readOnly
                 defaultValue={project.projectKey}
                 onChange={(event) => {
                   setProjectKey(event.target.value);

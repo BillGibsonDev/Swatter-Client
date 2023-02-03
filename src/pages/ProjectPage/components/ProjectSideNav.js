@@ -14,7 +14,7 @@ import { Link, useParams } from 'react-router-dom';
 // functions
 import { toggleRef } from '../../../functions/toggleRef.js';
 
-export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef, ArchiveRef }) => {
+export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }) => {
 
     const { projectId } = useParams();
 
@@ -41,7 +41,7 @@ export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef, 
                 </h5>
             </div>
             <div className="menu-wrapper">
-                                <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
+                <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
                 <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Website</a>
                 <button onClick={()=> { toggleRef(commentSectionRef)}}><img src={icons.Comments} alt="Comments" />Comments</button>
                 <Link to={`/project/${projectId}/sprints`}><img src={icons.Sprints} alt="Sprints" />Sprints</Link>

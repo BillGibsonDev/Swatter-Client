@@ -5,7 +5,7 @@ export const FeaturesPage = () => {
   return (
     <StyledFeatures>
       <header className="title-container">
-        <h1>Swatter - Project Management</h1>
+        <h1>Swatter Project Management</h1>
         <p>Project management is the goal of Swatter. Organizing and paving the way to meet your goals and create better outcomes. </p>
         <h2>Features</h2>
       </header>
@@ -35,10 +35,15 @@ export const FeaturesPage = () => {
 const StyledFeatures = styled.section`
   width: 60%;
   margin: 20px auto;
-  h1, p, h2 {
+  @media (max-width: 834px){
+    width: 70%;
+    text-align: center;
+  }
+  h1, h2 {
     color: white;
   }
   p {
+    color: ${palette.helperGrey};
     font-size: .8em;
   }
   .title-container {

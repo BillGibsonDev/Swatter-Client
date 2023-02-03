@@ -111,8 +111,8 @@ const StyledBug = styled.div`
 
 	#date, .author, #sprint, #key {
 		color: #e4e4e4;
-		font-size: .8em;
-		font-weight: 200;
+		font-size: .7em;
+		font-weight: 400;
 	}
 	.center-container, .bottom-container, .top-container {
 		display: flex;

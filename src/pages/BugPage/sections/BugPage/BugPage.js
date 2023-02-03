@@ -65,7 +65,7 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
         <DescriptionBox description={bug.description} />
         <ButtonContainer />
         <ImageSection images={images} handleModal={handleModal} />
-        <CommentSection bugId={bugId} projectId={projectId}  setLoading={setLoading}/>
+        <CommentSection user={user} bugId={bugId} projectId={projectId}  setLoading={setLoading}/>
       </div>
     </StyledBugPage>
   );

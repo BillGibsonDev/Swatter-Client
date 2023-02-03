@@ -22,9 +22,6 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-family: 'Roboto Mono', monospace;
     }
-    ul {
-        list-style-type: none;
-    }
     a {
         text-decoration: none;
     }

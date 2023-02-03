@@ -12,6 +12,16 @@ const SprintBugTable = ({ project, searchSprint }) => {
 
     const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
+    const handleSprintFilter = (status) => {
+        let sprintArray = [];
+        if (searchSprint){
+            sprintArray = project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).slice().reverse()
+        } else {
+            sprintArray = project.bugs.filter(bug => bug.status === status)
+        }
+        return sprintArray;
+    }
+
     return (
         <StyledBugTable>
             { 
@@ -24,9 +34,9 @@ const SprintBugTable = ({ project, searchSprint }) => {
                         bugStatuses.map((status, index) => {
                             return (
                                 <div className="bugs-container" key={index}>
-                                    <h5>{status} <span>{project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).length}</span></h5>
+                                    <h5>{status} <span>{ handleSprintFilter(status).length}</span></h5>
                                     {
-                                        project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).slice().reverse().map((bug, index) => {
+                                        handleSprintFilter(status).map((bug, index) => {
                                             return (
                                                 <Bug
                                                     bug={bug}

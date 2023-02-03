@@ -19,13 +19,18 @@ export const Bug = ({ project, bug }) => {
 			return bugDate;
 		}
 	}
-	
+
 	const handleSprintColor = (project) => {
-		if(project.sprints.find(sprints => sprints.title === bug.sprint)){
-			let color = project.sprints.find(sprints => sprints.title === bug.sprint).color;
-			return color;
-		} else {
-			return '';
+		if(project.sprints){
+			let sprintColor = project.sprints.find(sprint => sprint.title === bug.sprint)
+			if(sprintColor){
+				let color = sprintColor.color;
+				if(color){
+					return { background: color, padding: '1px 4px' };
+				}
+			} else {
+				return {};
+			}
 		}
 	}
 
@@ -64,10 +69,14 @@ export const Bug = ({ project, bug }) => {
 			<Link to={`/${project._id}/${bug._id}`}>
 				<div className="top-container">
 					<h2 id="title">{bug.title}</h2>
+					{
+						bug.bugKey ? <h2 id="key">{bug.bugKey}</h2>
+						: <></>
+					}
 				</div>
 				<div className="center-container">
 					<h2 id="date">{handleDate(bug)}</h2>
-					<h2 id="sprint" style={{background: handleSprintColor(project)}}>{bug.sprint}</h2>
+					<h2 id="sprint" style={handleSprintColor(project)}>{bug.sprint}</h2>
 				</div>
 				<div className="bottom-container">
 					<div className="status-icons-container">
@@ -99,10 +108,11 @@ const StyledBug = styled.div`
 	#title {
 		color: #ffffff;
 	}
-	#date, .author, #sprint {
+
+	#date, .author, #sprint, #key {
 		color: #e4e4e4;
-		font-size: .8em;
-		font-weight: 200;
+		font-size: .7em;
+		font-weight: 400;
 	}
 	.center-container, .bottom-container, .top-container {
 		display: flex;

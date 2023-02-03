@@ -35,6 +35,11 @@ const RegisterUserPage = ({ user }) => {
           password: password,
           role: user.role,
           userRole: `${process.env.REACT_APP_GUEST_SECRET}`,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
       )
       .then((response) => {

@@ -13,8 +13,8 @@ const ButtonContainer = ({ user, createBug }) => {
     <StyledButtonContainer>
       {
         handleUserAuth(user)
-        ? <button onClick={() => { createBug() }}>Save</button> 
-        : <button>Save</button>
+        ? <button onClick={() => { createBug() }}>Create</button> 
+        : <button onClick={() => { createBug() }}>Create</button> 
       }
     </StyledButtonContainer>
   );

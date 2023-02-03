@@ -3,10 +3,10 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
+import * as palette from '../../../styled/ThemeVariables.js';
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert.js";
-import { toggleRef } from "../../../functions/toggleRef.js";
 import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 // components
 import { Alert } from "../../../components/Alert.js";
 
-const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) => {
+const CreateSprint = ({ projectId, setCreating, user }) => {
 
   const AlertRef = useRef();
 
@@ -26,7 +26,7 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
   const [color, setColor] = useState("");
   const [status, setStatus] = useState("");
 
-  const handleSprintForm = () => {
+  const handleCreateSprint = () => {
     axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`,
       {
         projectId: projectId,
@@ -35,6 +35,11 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
         endDate: endDate,
         color: color,
         status: status,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {
@@ -44,8 +49,7 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
       } else {
         setMessage("Sprint Created!");
         handleAlert(AlertRef);
-        setRerender(!rerender);
-        toggleRef(sprintFormRef);
+        setCreating(false);
       }
     })
     .catch((err) => {
@@ -53,8 +57,10 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
     });
   };
 
+  const sprintColors = [ 'Black', 'Blue', 'Brown', 'Green', 'Lightblue', 'Lightgray', 'Lightgreen', 'Red', 'Purple', 'Yellow' ]
+
   return (
-    <StyledSprintForm ref={sprintFormRef} style={{ display: "none" }}>
+    <StyledCreateSprint>
       <Alert
         message={message}
         handleAlert={handleAlert}
@@ -62,10 +68,12 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
       />
       <div className='title-container'>
         <h1>New Sprint</h1>
-        <button id='exit-btn' onClick={() => { toggleRef(sprintFormRef); }}>
-          &times;<span className='tooltiptext'>Close</span>
+        <button id='exit-btn' onClick={() => { setCreating(false); }}>
+          Cancel
         </button>
       </div>
+      <div className="form-wrapper">
+      <div className="form-container">
       <label>
         Title
         <input type='text' id='title' onChange={(event) => { setTitle(event.target.value);}} />
@@ -87,90 +95,89 @@ const SprintForm = ({ projectId, sprintFormRef, rerender, setRerender, user }) =
       </label>
       <label>
         Color Code
-        <input defaultValue={"#000000"} type='text' id='color-code'
-          onChange={(event) => {
-            setColor(event.target.value);
-          }}
-        />
+        <select id="color" onChange={(event) => { setColor(event.target.value); }}>
+          <option value=''>None</option>
+          {
+            sprintColors.map((color, key) => {
+              return ( <option key={key} value={color.toLowerCase()}>{color}</option>)
+            })
+          }
+        </select>
       </label>
       {
         handleUserAuth(user)
-        ? <button onClick={() => { handleSprintForm(); }}>Save</button>
-        : <button>Save</button>
+        ? <button onClick={() => { handleCreateSprint(); }}>Create</button>
+        : <button>Create</button>
       }
-    </StyledSprintForm>
+    </div>
+    </div>
+    </StyledCreateSprint>
   );
 };
 
-const StyledSprintForm = styled.div`
-  height: 100%;
-  width: 90vw;
-  margin: 0 auto;
-  max-width: 500px;
-  max-height: 300px;
+const StyledCreateSprint = styled.section`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 100px;
-  left: 5%;
-  z-index: 1003;
-  background: grey;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 50vh;
   .title-container {
     display: flex;
-    width: 95%;
+    max-width: 500px;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin: auto;
     h1 {
-      color: #ffffff;
-    }
-    #exit-btn {
-      background: none;
-      border: none;
-      font-size: 40px;
       color: white;
-      position: relative;
+      font-size: ${palette.titleSize};
+    }
+    button {
+      border: none;
+      padding: 8px 16px;
       cursor: pointer;
-      #exit-btn-icon {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-      }
-      .tooltiptext {
-        visibility: hidden;
-        width: 100%;
-        min-width: 160px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-        position: absolute;
-        z-index: 1000;
-        top: 25%;
-        right: 105%;
-        font-size: 20px;
-      }
-    }
-    #exit-btn:hover .tooltiptext,
-    #exit-btn:active .tooltiptext {
-      visibility: visible;
-      transition-delay: 1s;
     }
   }
-  label {
+  .form-wrapper {
+    width: 100%;
+    margin: 16px auto;
     display: flex;
-    margin: auto;
-    select,
-    input,
-    textarea {
-      margin-left: 6px;
-      padding: 2px 4px;
+    justify-content: space-between;
+    @media (max-width: 838px) {
+      flex-direction: column;
     }
-  }
-  button {
-    cursor: pointer;
+    .form-container {
+      margin: 0;
+      width: 100%;
+      max-width: 500px;
+      label {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        margin: 10px 0;
+        width: 100%;
+        max-width: 500px;
+        input, select, textarea {
+          width: 100%;
+          padding: 2px;
+          font-size: .8em;
+          background: ${palette.helperGrey};
+          height: 30px;
+          text-transform: capitalize;
+          option {
+            text-transform: capitalize;
+          }
+        }
+        textarea {
+          height: 100px;
+        }
+      }
+      button {
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+    }
   }
 `;
 
@@ -180,4 +187,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SprintForm);
+export default connect(mapStateToProps)(CreateSprint);

@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 
 // functions
 import { handleAlert } from "../../functions/handleAlert.js";
+import { handleKeyNumber } from "../../functions/handleKeyNumber.js";
 
 // components
 import Loader from "../../loaders/Loader.js";
@@ -40,12 +41,14 @@ const CreateBugPage = ({ user }) => {
   const [sprint, setSprint] = useState("");
   const [sprintOptions, setSprintOptions] = useState([]);
   const [ project, setProject ] = useState({})
+  const [ bugKey, setBugKey ] = useState('')
 
   useEffect(() => {
     const getProject = (projectId) => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
       .then((response) => {
         setProject(response.data)
+        setBugKey(handleKeyNumber(response.data.projectKey))
         setSprintOptions(response.data.sprints);
         setLoading(false);
       })
@@ -74,6 +77,12 @@ const CreateBugPage = ({ user }) => {
           role: user.role,
           sprint: sprint,
           images: images,
+          bugKey: bugKey,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
       )
       .then((response) => {

@@ -28,7 +28,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
                     : <></>
                 }
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
-                <Link to="/"><img src={icon.Help} alt="Help" /><span className="tooltiptext">Help</span></Link>
+                <Link to="/features"><img src={icon.Help} alt="Features" /><span className="tooltiptext">Features</span></Link>
             </div>
             <ToggleProjectNav projectSideNavRef={projectSideNavRef} />
             <div className="bottom-container">
@@ -46,7 +46,7 @@ const StyledNav = styled.div`
     align-items: center;
     flex-direction: column;
     background: #000000;
-    z-index: 1;
+    z-index: 1000;
     position: fixed;
     left: 0;
     top: 0;
@@ -73,7 +73,6 @@ const StyledNav = styled.div`
                 border-radius: 6px;
                 padding: 5px 0;
                 position: absolute;
-                z-index: 1000;
                 top: 0;
                 left: 105%;
             }

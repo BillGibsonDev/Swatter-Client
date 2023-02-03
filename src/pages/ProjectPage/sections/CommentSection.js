@@ -49,7 +49,13 @@ const CommentSection = ({ commentSectionRef, user }) => {
 
     const deleteComment = (commentId) => {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`)
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`,
+        {
+          headers: {
+            Authorization: user.token
+          }
+        }
+      )
       .then((response) => {
         if (response.data !== "Comment Deleted") {
           setLoading(false);

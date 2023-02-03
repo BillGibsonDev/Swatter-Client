@@ -15,7 +15,7 @@ import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
 //sections
 import ProjectDetails from "./sections/ProjectDetails/ProjectDetails.js";
-import { EditProject } from "./sections/EditProjectDetails/EditProject.js";
+import EditProject from "./sections/EditProjectDetails/EditProject.js";
 
 export default function ProjectDetailsPage() {
   const { projectId } = useParams();

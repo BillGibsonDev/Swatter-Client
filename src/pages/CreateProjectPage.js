@@ -28,7 +28,6 @@ const CreateProjectPage = ({ user }) => {
   const [projectLink, setProjectLink] = useState("");
   const [projectImage, setProjectImage] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [projectKey, setProjectKey] = useState("");
   const [description, setDescription] = useState("");
   const [repository, setRepository] = useState("");
   const [projectLead, setProjectLead] = useState("");
@@ -54,9 +53,14 @@ const CreateProjectPage = ({ user }) => {
         projectImage: projectImage,
         repository: repository,
         description: description,
-        projectKey: projectKey,
+        projectKey: projectTitle.slice(0,2).toUpperCase(),
         projectLead: projectLead,
         projectType: projectType,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {
@@ -100,10 +104,6 @@ const CreateProjectPage = ({ user }) => {
               <input type='text' id='title' onChange={(event) => { setProjectTitle(event.target.value); }} />
             </label>
             <label>
-              Key
-              <input type='text' id='key' onChange={(event) => { setProjectKey(event.target.value); }} />
-            </label>
-            <label>
               URL
               <input type='text' id='projectLink' onChange={(event) => { setProjectLink(event.target.value); }} />
             </label>
@@ -139,7 +139,7 @@ const CreateProjectPage = ({ user }) => {
       {
         handleAdminAuth(user)
         ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-        : <button className='start-button'>Start</button>
+        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
       }
     </StyledProjectPage>
   );

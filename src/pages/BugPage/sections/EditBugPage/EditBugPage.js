@@ -11,6 +11,9 @@ import EditIcon from "../../../../assets/icons/editIconWhite.png";
 import { handleAlert } from "../../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
+// redux
+import { connect } from "react-redux";
+
 // components
 import BugPageLoader from "../../../../loaders/BugPageLoader.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
@@ -24,7 +27,7 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 // router
 import { useNavigate, useParams } from "react-router-dom";
 
-export const EditBugPage = ({ setEditing }) => {
+const EditBugPage = ({ user, setEditing }) => {
 
   const AlertRef = useRef();
   const DeleteAlertRef = useRef();
@@ -87,6 +90,11 @@ export const EditBugPage = ({ setEditing }) => {
         bugId: bug._id,
         sprint: sprint,
         images: images,
+      },
+      {
+        headers: {
+          Authorization: user.token
+        }
       }
     )
     .then((response) => {
@@ -111,7 +119,13 @@ export const EditBugPage = ({ setEditing }) => {
 
   const deleteBug = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`)
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {},  
+      {
+        headers: {
+          Authorization: user.token
+        }
+      },
+    )
     .then((response) => {
       if (response.data !== "Bug Deleted") {
         setMessage(`Server Error - Bug Not Deleted!`);
@@ -240,3 +254,11 @@ const StyledBugSection = styled.section`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(EditBugPage);

@@ -20,6 +20,7 @@ import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
+import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
 
 // router
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -65,7 +66,7 @@ function App() {
           } else {
             setLoggedIn(true);
             setLoading(false);
-            dispatch(handleUser(username, response.data));
+            dispatch(handleUser(username, response.data, token));
           }
         })
         .catch((err) => {
@@ -171,6 +172,7 @@ function App() {
             <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
             <Route path='/RegisterUserPage' exact element={ <RegisterUserPage /> } />
             <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
+            <Route path='/features' exact element={ <FeaturesPage />} />
           </Routes>
         </>
       }

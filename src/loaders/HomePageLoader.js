@@ -1,5 +1,4 @@
-// images
-import BugImage from '../assets/icons/bugWhite.png'
+import Loader from './Loader.js';
 
 // styled
 import styled from 'styled-components';
@@ -9,8 +8,7 @@ export default function HomePageLoader() {
     return (
         <StyledLoader>
             <div className="loading-wrapper">
-                <div className="loader"><img src={BugImage} alt="Loading Page" /></div>
-                <h2>Loading...</h2>
+                <Loader />
             </div>
             <div className="skelton-bug"></div>
             <div className="skelton-bug"></div>

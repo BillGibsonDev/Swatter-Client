@@ -66,6 +66,7 @@ const StyledFeatures = styled.section`
       h3 {
         font-size: 1.5em;
         color: ${palette.accentColor};
+        margin-bottom: 8px;
       }
     }
   }

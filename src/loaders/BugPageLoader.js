@@ -1,5 +1,4 @@
-// images
-import BugImage from '../assets/icons/bugWhite.png'
+import Loader from './Loader';
 
 // styled
 import styled from 'styled-components';
@@ -8,8 +7,7 @@ export default function BugPageLoader() {
 
     return (
         <StyledLoader>
-            <div className="loader"><img src={BugImage} alt="Loading Page" /></div>
-            <h2>Loading..</h2>
+            <Loader />
         </StyledLoader>
     )
 }

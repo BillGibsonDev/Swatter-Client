@@ -112,7 +112,7 @@ const CreateBugPage = ({ user }) => {
     },
   ]);
 
-  const sections = [ 'Tag', 'Priority', 'Status', 'Sprint' ];
+  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 
   return (
     <StyledAddBug>

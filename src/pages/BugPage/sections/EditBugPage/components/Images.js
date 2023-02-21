@@ -12,7 +12,7 @@ export const Images = ({images, setImages}) => {
 
   const handleRemoveFields = (index) => {
     const result = window.confirm("Are you sure you want to delete?");
-    if (result === true) {
+    if (result) {
       const values = [...images];
       values.splice(index, 1);
       setImages(values);

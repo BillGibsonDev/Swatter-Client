@@ -32,7 +32,7 @@ export const Images = ({images, setImages}) => {
   return (
     <StyledImageSection>
       {
-        images.length <= 0 ? <></>
+        images.length === 0 ? <></>
         : <>
             {
               images.map((image, index) => {

@@ -13,15 +13,17 @@ export default function ImageSection({ images, handleModal }) {
     }
 
     const handleCaptions = (image) => {
-        if(image.caption.length > 50) {
-            return <p>{image.caption.slice(0, 50)}...</p>
-        } else if(!image.image && !image.caption ){
-            return <></>
-        } else if (image.caption.length === 0){
-            return <p>No Caption</p>
-        } else {
-            return <p>{image.caption}</p>
-        } 
+        if(image){
+            if(image.caption.length > 50) {
+                return <p>{image.caption.slice(0, 50)}...</p>
+            } else if(!image.image && !image.caption ){
+                return <></>
+            } else if (image.caption.length === 0){
+                return <p>No Caption</p>
+            } else {
+                return <p>{image.caption}</p>
+            } 
+        }
     }
 
     return (
@@ -43,7 +45,7 @@ export default function ImageSection({ images, handleModal }) {
                                         <img className="modal-image" src={image.image} alt={image.caption} />
                                         <p id="caption">{image.caption}</p>
                                     </div>
-                                </div>
+                                </div>  
                             )
                         })
                     }

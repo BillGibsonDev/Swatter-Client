@@ -65,6 +65,8 @@ const CreateBugPage = ({ user }) => {
       handleAlert(AlertRef);
     } else {
       setLoading(true);
+      let checkImages = images.filter(image => image.image !== '');
+      console.log(checkImages)
       axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`,
         {
           projectId: projectId,
@@ -76,7 +78,7 @@ const CreateBugPage = ({ user }) => {
           tag: tag,
           role: user.role,
           sprint: sprint,
-          images: images,
+          images: checkImages,
           bugKey: bugKey,
         },
         {
@@ -105,12 +107,7 @@ const CreateBugPage = ({ user }) => {
     }
   };
 
-  const [images, setImages] = useState([
-    {
-      image: "",
-      caption: "",
-    },
-  ]);
+  const [images, setImages] = useState([]);
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 

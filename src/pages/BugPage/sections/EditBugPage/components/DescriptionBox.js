@@ -10,7 +10,7 @@ export const DescriptionBox = ({setDescription, description}) => {
         <textarea
             name='description'
             id='description'
-            key={description}
+            // key={description}
             defaultValue={description}
             cols='30'
             rows='10'

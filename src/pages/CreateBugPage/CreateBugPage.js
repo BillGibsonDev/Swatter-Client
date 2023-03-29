@@ -30,7 +30,6 @@ const CreateBugPage = ({ user }) => {
   const AlertRef = useRef();
   
   const [ message, setMessage ] = useState('');
-
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
   const [description, setDescription] = useState("");
@@ -42,6 +41,9 @@ const CreateBugPage = ({ user }) => {
   const [sprintOptions, setSprintOptions] = useState([]);
   const [ project, setProject ] = useState({})
   const [ bugKey, setBugKey ] = useState('')
+  const [images, setImages] = useState([]);
+
+  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 
   useEffect(() => {
     const getProject = (projectId) => {
@@ -107,9 +109,7 @@ const CreateBugPage = ({ user }) => {
     }
   };
 
-  const [images, setImages] = useState([]);
-
-  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
+  console.log(images)
 
   return (
     <StyledAddBug>

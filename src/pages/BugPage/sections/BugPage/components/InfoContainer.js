@@ -1,13 +1,16 @@
 // styled
 import styled from "styled-components";
 
+// functions
+import { handleDate } from "../../../../../functions/handleDates";
+
 export const InfoContainer = ({ bug }) => {
 
   return (
     <StyledBugPage>
         <h2><span>Creator: </span>{bug.author}</h2>
-        <h2><span>Created: </span>{bug.date}</h2>
-        <h2><span>Updated: </span>{bug.lastUpdate}</h2>
+        <h2><span>Created: </span>{handleDate(bug.date)}</h2>
+        <h2><span>Updated: </span>{handleDate(bug.lastUpdate)}</h2>
     </StyledBugPage>
   );
 }

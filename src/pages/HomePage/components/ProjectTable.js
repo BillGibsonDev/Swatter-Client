@@ -6,10 +6,16 @@ import Project from "./Project.js";
 
 export const ProjectTable = ({projects}) => {
 
+  const sortByDate = (projects) => {
+    return projects.sort((a, b) => {
+      return new Date(a.lastUpdate) - new Date(b.lastUpdate);
+    });
+  };
+
   return (
     <StyledProjectTable>
       {
-        projects.slice().reverse().map((project, key) => {
+        sortByDate(projects).slice().reverse().map((project, key) => {
           return (
             <Project
               project={project}

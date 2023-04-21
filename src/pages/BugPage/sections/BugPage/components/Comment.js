@@ -7,6 +7,7 @@ import * as palette from "../../../../../styled/ThemeVariables";
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
 import { handleAuthor } from "../../../../../functions/handleAuthor";
+import { handleDate } from "../../../../../functions/handleDates";
 
 // images
 import * as icon from '../../../../../assets/IconImports.js'
@@ -16,17 +17,6 @@ import { connect } from "react-redux";
 
 const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
 
-  const handleDate = (comment) => {
-		let currentDate = new Date();
-		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
-		const [ commentDate, commentTime ] = comment.date.split(",");
-		if(compareDate[0] === commentDate){
-			return commentTime;
-		} else {
-			return commentDate;
-		}
-	}
-  
   const handleCommentAuthor = (author) => {
     if(author === user.username){
       return { margin: "10px 0 10px auto"};
@@ -39,7 +29,7 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
     <StyledComment style={handleCommentAuthor(comment.author)}>
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
+          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment.lastUpdate)}</span></h3>
           {
             handleAuthor(comment.author, user) 
             ? <div className='dropdown'>

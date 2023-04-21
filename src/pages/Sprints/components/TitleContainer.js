@@ -5,12 +5,15 @@ import * as palette from "../../../styled/ThemeVariables";
 // images
 import Edit from "../../../assets/icons/editIconWhite.png";
 
+// functions
+import { handleDate } from "../../../functions/handleDates";
+
 export const TitleContainer = ({ sprint, setEditing }) => {
   
-    const handleEndDate = (x) => {
-        let newArr = x.split(/[ -]+/);
-        return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
-    };
+  const handleEndDate = (x) => {
+    let newArr = x.split(/[ -]+/);
+    return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
+  };
 
   return (
     <StyledTitleContainer>
@@ -22,7 +25,7 @@ export const TitleContainer = ({ sprint, setEditing }) => {
       </div>
       <h5 id='status'><span>Status: </span>{ sprint.status === "" ? 'None' : sprint.status }</h5>
       <div className='info-container'>
-          <h5><span>Updated:</span> {sprint.updated}</h5>
+          <h5><span>Updated:</span> {handleDate(sprint.updated)}</h5>
           {
             !sprint.endDate ? <></>
             : <h5><span>End date: </span>{handleEndDate(sprint.endDate)}</h5>

@@ -7,18 +7,10 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icons from '../../../assets/IconImports.js';
 
-export const Bug = ({ project, bug }) => {
+// function
+import { handleDate } from '../../../functions/handleDates.js';
 
-	const handleDate = (bug) => {
-		let currentDate = new Date();
-		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
-		const [ bugDate, bugTime ] = bug.lastUpdate.split(",");
-		if(compareDate[0] === bugDate){
-			return bugTime;
-		} else {
-			return bugDate;
-		}
-	}
+export const Bug = ({ project, bug }) => {
 
 	const handleSprintColor = (project) => {
 		if(project.sprints){
@@ -75,7 +67,7 @@ export const Bug = ({ project, bug }) => {
 					}
 				</div>
 				<div className="center-container">
-					<h2 id="date">{handleDate(bug)}</h2>
+					<h2 id="date">{handleDate(bug.lastUpdate)}</h2>
 					<h2 id="sprint" style={handleSprintColor(project)}>{bug.sprint}</h2>
 				</div>
 				<div className="bottom-container">

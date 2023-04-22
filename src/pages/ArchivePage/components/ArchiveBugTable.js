@@ -14,6 +14,12 @@ export default function ArchiveBugTable({ project, bugs }) {
 
     let archiveBugs = handleActiveBugs(false, bugs);
 
+    archiveBugs.sort((a, b) => {
+        let dateA = new Date(a.lastUpdate);
+        let dateB = new Date(b.lastUpdate);
+        return dateA - dateB;
+    })
+
     return (
         <StyledBugTable>
             { 

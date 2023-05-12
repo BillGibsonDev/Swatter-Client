@@ -157,6 +157,7 @@ const StyledCommentSection = styled.div`
     border-radius: 12px;
     flex-direction: column;
     background: ${palette.accentColor};
+    margin-top: auto;
     @media (max-width: 834px) {
       width: 80%;
       height: 50%;

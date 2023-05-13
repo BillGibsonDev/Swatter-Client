@@ -48,8 +48,6 @@ function App() {
 
   const dispatch = useDispatch();
 
-  onbeforeunload = (event) => { logout(); };
-
   useEffect(() => {
     let token = sessionStorage.getItem("token");
     let username = sessionStorage.getItem("username");

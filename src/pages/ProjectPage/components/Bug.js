@@ -99,10 +99,13 @@ const StyledBug = styled.div`
 	}
 	#title {
 		color: #ffffff;
+		margin-right: 8px;
 	}
-
+	#key {
+		margin-bottom: auto;
+	}
 	#date, .author, #sprint, #key {
-		color: #e4e4e4;
+		color: #c5c5c5;
 		font-size: .7em;
 		font-weight: 400;
 	}

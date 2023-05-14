@@ -21,6 +21,7 @@ import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
+import ProjectActivityPage from "./pages/ActivityPage";
 
 // router
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -171,6 +172,7 @@ function App() {
             <Route path='/RegisterUserPage' exact element={ <RegisterUserPage /> } />
             <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
             <Route path='/features' exact element={ <FeaturesPage />} />
+            <Route path='/:projectId/activity' exact element={ <ProjectActivityPage />} />
           </Routes>
         </>
       }

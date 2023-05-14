@@ -48,6 +48,7 @@ export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }
                 <Link to={`/${projectId}/CreateBugPage`}><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
                 <Link to={`/${projectId}/details`}><img src={icons.Details} alt="Details" />Details</Link>
                 <Link to={`/${projectId}/archive`}><img src={icons.ArchiveIcon} alt="Archive" />Archive</Link>
+                <Link to={`/${projectId}/activity`}><img src={icons.ActivityIcon} alt="Activity" />Activity</Link>
             </div>
         </div>
     </StyledSideNav>

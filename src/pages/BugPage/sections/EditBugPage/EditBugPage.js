@@ -89,8 +89,7 @@ const EditBugPage = ({ user, setEditing }) => {
         priority: priority,
         projectId: projectId,
         bugId: bug._id,
-        sprint: sprint,
-        images: images,
+        bug: bug
       },
       {
         headers: {

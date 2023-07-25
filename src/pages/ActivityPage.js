@@ -53,14 +53,14 @@ export default function ProjectActivityPage() {
             ? <h1>This project has no activity yet..</h1>
             : <>
                 {
-                  project.activity.slice().reverse().map((activity, key) => {
-                    return (
-                      <div className="activity-container" key={key}>
-                        <h6>{handleDate(activity.date)}</h6>
-                        <h5>{activity.action}</h5>
-                      </div>
-                    )
-                  })
+                    project.activity.map((activity, key) => {
+                        return (
+                            <div className="activity-container" key={key}>
+                                <h6>{handleDate(activity.date)}</h6>
+                                <h5>{activity.action}</h5>
+                            </div>
+                        )
+                    })
                 }
             </>
           }

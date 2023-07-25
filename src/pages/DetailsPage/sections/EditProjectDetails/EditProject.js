@@ -37,7 +37,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
 
   const deleteProject = () => {
     setLoading(true);
-    axios.delete(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`, {},
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`,
     {
       headers: {
         Authorization: user.token

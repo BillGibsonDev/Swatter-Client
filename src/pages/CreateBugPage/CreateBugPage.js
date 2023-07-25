@@ -109,8 +109,6 @@ const CreateBugPage = ({ user }) => {
     }
   };
 
-  console.log(images)
-
   return (
     <StyledAddBug>
       <Alert

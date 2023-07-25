@@ -82,6 +82,7 @@ const EditBugPage = ({ user, setEditing }) => {
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`,
       {
+        title: bug.title,
         description: description,
         status: status,
         tag: tag,

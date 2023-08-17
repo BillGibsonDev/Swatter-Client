@@ -9,7 +9,7 @@ import Nav from "./components/Nav";
 import { Alert } from "./components/Alert";
 
 // pages
-import { HomePage } from "./pages/HomePage/HomePage.js";
+import HomePage from "./pages/HomePage/HomePage.js";
 import { ProjectPage } from "./pages/ProjectPage/ProjectPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
@@ -96,9 +96,9 @@ function App() {
       )
       .then((response) => {
           if(response.status === 200){
+            dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
             setLoggedIn(true);
             setLoading(false);
-            dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
             navigate("/");
           }
         })

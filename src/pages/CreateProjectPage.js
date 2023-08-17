@@ -10,11 +10,11 @@ import { handleAlert } from "../functions/handleAlert.js";
 
 // components
 import Loader from "../loaders/Loader";
+import { Alert } from "../components/Alert.js";
+import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
 // redux
 import { connect } from "react-redux";
-import { Alert } from "../components/Alert.js";
-import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
 const CreateProjectPage = ({ user }) => {
 

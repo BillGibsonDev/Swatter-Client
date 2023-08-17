@@ -10,24 +10,33 @@ import { Searchbar } from '../../components/Searchbar.js';
 import { SearchProjectTable } from "./components/SearchProjectTable.js";
 import { ProjectTable } from "./components/ProjectTable.js";
 
-export const HomePage = () => {
+// redux
+import { connect } from "react-redux";
+
+const HomePage = ({ user }) => {
   const [ projects, setProjects ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ projectSearchPhrase, setProjectSearchPhrase ] = useState('');
 
   useEffect(() => {
     const getProjects = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECTS_URL}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects`,
+      {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
         setProjects(response.data);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false)
       });
     };
     getProjects();
-  }, []);
+  }, [ user ]);
 
   return (
     <StyledHomePage>
@@ -87,3 +96,11 @@ const StyledHomePage = styled.div`
     margin-top: 20px;
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(HomePage);

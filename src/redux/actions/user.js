@@ -1,11 +1,11 @@
 import { HANDLE_USER } from '../constants/actionTypes.js';
 
-export const handleUser = ( username, role, token ) => {
+export const handleUser = ( username, id, token ) => {
   return {
     type: HANDLE_USER,
     payload: {
       username,
-      role,
+      id,
       token
     },
   };

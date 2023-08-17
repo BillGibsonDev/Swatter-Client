@@ -14,7 +14,6 @@ import Loader from "../loaders/Loader";
 // redux
 import { connect } from "react-redux";
 import { Alert } from "../components/Alert.js";
-import { handleAdminAuth } from "../functions/handleAdminAuth.js";
 import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
 const CreateProjectPage = ({ user }) => {
@@ -23,15 +22,15 @@ const CreateProjectPage = ({ user }) => {
   
   const [ message, setMessage ] = useState('');
 
-  const [projectTitle, setProjectTitle] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [projectLink, setProjectLink] = useState("");
-  const [projectImage, setProjectImage] = useState("");
-  const [isLoading, setLoading] = useState(false);
-  const [description, setDescription] = useState("");
-  const [repository, setRepository] = useState("");
-  const [projectLead, setProjectLead] = useState("");
-  const [projectType, setProjectType] = useState("");
+  const [ title, setTitle ] = useState("");
+  const [ startDate, setStartDate ] = useState("");
+  const [ link, setLink ] = useState("");
+  const [ image, setImage ] = useState("");
+  const [ isLoading, setLoading ] = useState(false);
+  const [ description, setDescription ] = useState("");
+  const [ repository, setRepository ] = useState("");
+  const [ lead, setLead ] = useState("");
+  const [ type, setType ] = useState("");
 
   useEffect(() => {
     const handleDate = () => {
@@ -42,20 +41,20 @@ const CreateProjectPage = ({ user }) => {
     handleDate();
   }, [user]);
 
-  const addProject = () => {
+  const createProject = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_PROJECT_URL}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects`,
       {
-        projectTitle: projectTitle,
-        startDate: startDate,
+        title,
+        startDate,
         author: user.username,
-        projectLink: projectLink,
-        projectImage: projectImage,
+        link,
+        image,
         repository: repository,
         description: description,
-        projectKey: projectTitle.slice(0,2).toUpperCase(),
-        projectLead: projectLead,
-        projectType: projectType,
+        projectKey: title.slice(0,2).toUpperCase(),
+        lead,
+        type,
       },
       {
         headers: {
@@ -64,13 +63,13 @@ const CreateProjectPage = ({ user }) => {
       }
     )
     .then((response) => {
-      if(response !== 'Project Created!'){
+      if(response.status === 200){
         setLoading(false);
-        setMessage("Server Error - Project not created");
+        setMessage(`${title} Project Started!`);
         handleAlert(AlertRef);
       } else {
         setLoading(false);
-        setMessage(`${projectTitle} Project Started!`);
+        setMessage("Server Error - Project not created");
         handleAlert(AlertRef);
       }
     })
@@ -101,11 +100,11 @@ const CreateProjectPage = ({ user }) => {
           <div className='top-form-container'>
             <label>
               Title
-              <input type='text' id='title' onChange={(event) => { setProjectTitle(event.target.value); }} />
+              <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
             </label>
             <label>
               URL
-              <input type='text' id='projectLink' onChange={(event) => { setProjectLink(event.target.value); }} />
+              <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
             </label>
             <label>
               Repository
@@ -113,7 +112,7 @@ const CreateProjectPage = ({ user }) => {
             </label>
             <label>
               Lead
-              <input type='text' id='projectLead' onChange={(event) => { setProjectLead(event.target.value); }}/>
+              <input type='text' id='lead' onChange={(event) => { setLead(event.target.value); }}/>
             </label>
           </div>
           <div className='bottom-form-container'>
@@ -123,7 +122,7 @@ const CreateProjectPage = ({ user }) => {
             </label>
             <label>
               Project Type
-              <input type='text' id='projectType' onChange={(event) => { setProjectType(event.target.value); }} />
+              <input type='text' id='type' onChange={(event) => { setType(event.target.value); }} />
             </label>
             <label>
               Description
@@ -131,16 +130,12 @@ const CreateProjectPage = ({ user }) => {
             </label>
             <label>
               Image
-              <input type='text' id='image' onChange={(event) => { setProjectImage(event.target.value); }} />
+              <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
             </label>
           </div>
         </div>
       }
-      {
-        handleAdminAuth(user)
-        ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-      }
+      <button className='start-button' disabled={isLoading} onClick={() => { createProject(); }}>Start</button>
     </StyledProjectPage>
   );
 }

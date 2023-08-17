@@ -49,38 +49,38 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let token = sessionStorage.getItem("token");
-    let username = sessionStorage.getItem("username");
-    const handlePageReload = (token) => {
-      setLoading(true);
-      setTimeout(() => {
-        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: token })
-        .then((response) => {
-          if(response.data === 'Token Not Valid'){
-            setLoggedIn(false);
-            setLoading(false);
-            sessionStorage.clear();
-            navigate("/LoginPage");
-          } else {
-            setLoggedIn(true);
-            setLoading(false);
-            dispatch(handleUser(username, response.data, token));
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          setLoggedIn(false);
-          setLoading(false);
-          sessionStorage.clear();
-          navigate("/LoginPage");
-        });
-      }, 1000);
-    }
-    if(token){
-      handlePageReload(token);
-    }
-  }, [ navigate, dispatch ]);
+  // useEffect(() => {
+  //   let token = sessionStorage.getItem("token");
+  //   let username = sessionStorage.getItem("username");
+  //   const handlePageReload = (token) => {
+  //     setLoading(true);
+  //     setTimeout(() => {
+  //       axios.post(`${process.env.REACT_APP_BASE_URL}/users/validateTokens`, { token: token })
+  //       .then((response) => {
+  //         if(response.data === 'Token Not Valid'){
+  //           setLoggedIn(false);
+  //           setLoading(false);
+  //           sessionStorage.clear();
+  //           navigate("/LoginPage");
+  //         } else {
+  //           setLoggedIn(true);
+  //           setLoading(false);
+  //           dispatch(handleUser(username, response.data, token));
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err)
+  //         setLoggedIn(false);
+  //         setLoading(false);
+  //         localStorage.clear();
+  //         navigate("/LoginPage");
+  //       });
+  //     }, 1000);
+  //   }
+  //   if(token){
+  //     handlePageReload(token);
+  //   }
+  // }, [ navigate, dispatch ]);
 
   const login = () => {
     if(!password || !username){
@@ -88,42 +88,29 @@ function App() {
       handleAlert(AlertRef);
     } else {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
         {
           username: username,
           password: password,
         }
       )
       .then((response) => {
-        handleTokens(response.data, username);
-        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: response.data })
-        .then((res) => {
-          if(res.status === 200){
+          if(response.status === 200){
             setLoggedIn(true);
             setLoading(false);
-            dispatch(handleUser(username, res.data));
+            dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
             navigate("/");
           }
         })
         .catch((err) => {
           console.log(err);
-          sessionStorage.clear();
+          localStorage.clear();
           setMessage("Wrong Username or Password");
           handleAlert(AlertRef);
           setLoading(false);
           setLoggedIn(false);
           navigate("/LoginPage");
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        sessionStorage.clear();
-        setMessage("Wrong Username or Password");
-        handleAlert(AlertRef);
-        setLoading(false);
-        setLoggedIn(false);
-        navigate("/LoginPage");
-      });
     }
   };
 

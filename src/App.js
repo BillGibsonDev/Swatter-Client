@@ -22,6 +22,7 @@ import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
 import ProjectActivityPage from "./pages/ActivityPage";
+import SignupPage from "./pages/SignupName";
 
 // router
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -109,7 +110,7 @@ function App() {
           handleAlert(AlertRef);
           setLoading(false);
           setLoggedIn(false);
-          navigate("/LoginPage");
+          navigate("/login");
         });
     }
   };
@@ -119,7 +120,7 @@ function App() {
     setLoggedIn(false);
     setPassword("");
     setUsername("");
-    navigate("/LoginPage");
+    navigate("/login");
     setLoading(false);
   };
 
@@ -134,15 +135,29 @@ function App() {
               handleAlert={handleAlert}
               AlertRef={AlertRef}
             />
-            <LoginPage
-              login={login}
-              setUsername={setUsername}
-              setPassword={setPassword}
-              isLoading={isLoading}
-              message={message}
-              handleAlert={handleAlert}
-              AlertRef={AlertRef}
-            />
+            <Routes>
+              <Route path='/login' exact element={ 
+                <LoginPage
+                  login={login}
+                  setUsername={setUsername}
+                  setPassword={setPassword}
+                  isLoading={isLoading}
+                  message={message}
+                  handleAlert={handleAlert}
+                  AlertRef={AlertRef}
+                /> 
+              }/>
+              <Route path='/signup' exact element={ 
+                <SignupPage
+                  isLoading={isLoading}
+                  setLoading={setLoading}
+                  message={message}
+                  setMessage={setMessage}
+                  handleAlert={handleAlert}
+                  AlertRef={AlertRef}
+                />     
+              }/>
+            </Routes>
           </>
         : 
         <>

@@ -13,7 +13,7 @@ import Loader from "../loaders/Loader";
 import { Alert } from "../components/Alert.js";
 import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
-// redux
+// reduxSwatt
 import { connect } from "react-redux";
 
 const CreateProjectPage = ({ user }) => {

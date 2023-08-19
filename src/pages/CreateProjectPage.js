@@ -42,8 +42,10 @@ const CreateProjectPage = ({ user }) => {
   }, [user]);
 
   const createProject = () => {
+    if(!title){ alert('A title is required'); return; };
+    if(!startDate){ alert('A start date is required'); return; };
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/create`,
       {
         title,
         startDate,
@@ -117,25 +119,25 @@ const CreateProjectPage = ({ user }) => {
           </div>
           <div className='bottom-form-container'>
             <label>
-              Date
-              <input type='text' id='date' onChange={(event) => { setStartDate(event.target.value); }} />
+              Date (MM/DD/YYYY)
+              <input type='text' id='date' placeHolder={'01/10/1990'} onChange={(event) => { setStartDate(event.target.value); }} />
             </label>
             <label>
               Project Type
               <input type='text' id='type' onChange={(event) => { setType(event.target.value); }} />
             </label>
             <label>
-              Description
-              <input type='text' id='description' onChange={(event) => { setDescription(event.target.value); }} />
-            </label>
-            <label>
               Image
               <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
+            </label>
+            <label id="description-label">
+              Description
+              <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
             </label>
           </div>
         </div>
       }
-      <button className='start-button' disabled={isLoading} onClick={() => { createProject(); }}>Start</button>
+      <button id='start-button' disabled={isLoading} onClick={() => { createProject(); }}>Start</button>
     </StyledProjectPage>
   );
 }
@@ -143,10 +145,10 @@ const CreateProjectPage = ({ user }) => {
 const StyledProjectPage = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
+  height: 100%;
   width: 100%;
   max-width: 1000px;
-  margin: 50px auto;
+  margin: 1em auto;
   position: relative;
   @media (max-width: 1160px) {
     width: 80%;
@@ -156,7 +158,6 @@ const StyledProjectPage = styled.div`
     left: 0;
   }
   @media (max-width: 750px) {
-    height: 40vh;
     margin: 20px auto;
   }
   @media (max-width: 428px) {
@@ -184,7 +185,7 @@ const StyledProjectPage = styled.div`
     .bottom-form-container {
       margin: 0;
       width: 45%;
-      @media (max-width: 600px) {
+      @media (max-width: 750px) {
         width: 100%;
       }
       label {
@@ -199,7 +200,7 @@ const StyledProjectPage = styled.div`
           font-size: 1em;
           margin: 10px 0;
         }
-        input {
+        input, textarea {
           width: 400px;
           font-size: 1em;
           padding: 2px;
@@ -212,31 +213,36 @@ const StyledProjectPage = styled.div`
           }
         }
       }
+      #description-label {
+        width: 100%;
+        textarea {
+          width: 100%;
+          height: 100px;
+        }
+      }
     }
   }
-  .start-button {
+  #start-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
+    width: 80%;
+    max-width: 300px;
     height: 40px;
     cursor: pointer;
     border: none;
     border-radius: 4px;
-    font-size: ${palette.subtitleSize};
+    font-size: 1.5em;
     font-weight: 700;
-    background: #ffffff;
-    color: ${palette.accentColor};
+    background: ${palette.accentColor};
+    color: #fff;
     &:hover {
       color: #ffffff;
       cursor: pointer;
       background: #000000;
+      border: 1px solid #ffffff;
       transition: 0.2s;
       transform: scale(1.01);
-    }
-    @media (max-width: 750px) {
-      width: 100px;
-      font-size: ${palette.paraSize};
     }
   }
 `;

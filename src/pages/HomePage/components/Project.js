@@ -18,12 +18,12 @@ export default function Project({ project }) {
       <Link className='project-image-link' to={`/projects/${project._id}`}>
         <img
           className='project-image'
-          src={!project.projectImage ? PlaceholderImage : project.projectImage}
+          src={!project.image ? PlaceholderImage : project.image}
           alt={project.title}
         />
       </Link>
       <div className="text-container">
-        <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link>
+        <Link to={`/projects/${project._id}`}>{project.title}</Link>
         {
           project.lastUpdate 
           ? <h2>Updated: {handleDate(project.lastUpdate)}</h2>

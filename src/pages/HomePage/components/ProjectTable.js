@@ -3,9 +3,7 @@ import styled from "styled-components";
 
 // components
 import Project from "./Project.js";
-
 export const ProjectTable = ({projects}) => {
-
   const sortByDate = (projects) => {
     return projects.sort((a, b) => {
       return new Date(a.lastUpdate) - new Date(b.lastUpdate);

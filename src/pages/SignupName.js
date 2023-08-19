@@ -47,7 +47,6 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
       }
     )
     .then((response) => {
-      console.log(response)
         if(response.status === 200){
           setMessage("Account created!");
           handleAlert(AlertRef);
@@ -91,7 +90,7 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
           <label>Confirm Password
 						<input type="password" onChange={(event) => { setConfirmPassword(event.target.value); }} />
 					</label>
-					<StyledButton id="submit-button" type="submit" onClick={() =>{ handleSignup(); }}>Sign Up</StyledButton>
+					<StyledButton id="submit-button" type="submit" onClick={() =>{ handleSignup(); }}>Create Account</StyledButton>
 				</form>
 			}
         <div className="login-container">

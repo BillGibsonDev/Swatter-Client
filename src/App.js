@@ -25,7 +25,7 @@ import ProjectActivityPage from "./pages/ActivityPage";
 import SignupPage from "./pages/SignupName";
 
 // router
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch } from 'react-redux';
@@ -116,10 +116,8 @@ function App() {
   };
 
   const logout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     setLoggedIn(false);
-    setPassword("");
-    setUsername("");
     navigate("/login");
     setLoading(false);
   };
@@ -157,6 +155,7 @@ function App() {
                   AlertRef={AlertRef}
                 />     
               }/>
+              <Route path='/' element={<Navigate replace to="login" />}  />
             </Routes>
           </>
         : 

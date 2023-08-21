@@ -7,6 +7,9 @@ import styled from "styled-components";
 // router
 import { useParams } from "react-router-dom";
 
+// redux
+import { connect } from "react-redux";
+
 // loaders
 import Loader from "../../loaders/Loader.js";
 
@@ -17,7 +20,7 @@ import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 import ProjectDetails from "./sections/ProjectDetails/ProjectDetails.js";
 import EditProject from "./sections/EditProjectDetails/EditProject.js";
 
-export default function ProjectDetailsPage() {
+const ProjectDetailsPage = ({ user }) => {
   const { projectId } = useParams();
 
   const [ project, setProject ] = useState([]);
@@ -27,7 +30,11 @@ export default function ProjectDetailsPage() {
   useEffect(() => {
     const getProject = () => {
       setLoading(true);
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
         setProject(response.data);
         setLoading(false);
@@ -37,7 +44,7 @@ export default function ProjectDetailsPage() {
       });
     };
     getProject(projectId);
-  }, [ projectId, editing ]);
+  }, [ user, projectId ]);
 
   return (
     <StyledDetails>
@@ -47,7 +54,7 @@ export default function ProjectDetailsPage() {
         <>
           <BreadCrumbs 
             projectId={projectId}
-            projectTitle={project.projectTitle}
+            projectTitle={project.title}
             title={'Details'}
           />
           {
@@ -58,6 +65,7 @@ export default function ProjectDetailsPage() {
               project={project}
               projectId={projectId}
               setEditing={setEditing}
+              user={user}
             />
             : <ProjectDetails
               isLoading={isLoading}
@@ -95,3 +103,11 @@ const StyledDetails = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProjectDetailsPage);

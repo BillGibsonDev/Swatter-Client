@@ -14,8 +14,10 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
+// redux
+import { connect } from "react-redux";
 
-export default function ArchivePage() {
+const ArchivePage = ({ user }) => {
 
     const { projectId } = useParams();
 
@@ -25,8 +27,12 @@ export default function ArchivePage() {
     useEffect(() => {
         const getProject = () => {
             setLoading(true)
-            axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-                .then((response) => {
+            axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
+                headers: { 
+                    Authorization: user.token
+                }
+            })
+            .then((response) => {
                 setProject(response.data);
                 setLoading(false);
             })
@@ -35,17 +41,17 @@ export default function ArchivePage() {
                 setLoading(false);
             });
         };
-        getProject(projectId);
-  }, [ projectId ]);
+        getProject();
+    }, [ projectId, user ]);
 
     return (
         <StyledArchive>
             <BreadCrumbs 
                 projectId={projectId}
-                projectTitle={project.projectTitle}
+                projectTitle={project.title}
                 title={'Archive'}
             />
-            <h1>{project.projectTitle} Archive</h1>
+            <h1>{project.title} Archive</h1>
             { 
                 isLoading ? <Loader />
                 : <ArchiveBugTable
@@ -95,3 +101,12 @@ const StyledArchive = styled.section`
       font-size: 1.5em;
     }
 `;
+
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ArchivePage);

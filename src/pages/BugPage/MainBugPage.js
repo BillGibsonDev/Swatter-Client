@@ -13,11 +13,13 @@ import { useParams } from "react-router-dom";
 // components
 import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
+// redux
+import { connect } from "react-redux";
 // sections
 import BugPage from "./sections/BugPage/BugPage.js";
 import EditBugPage from "./sections/EditBugPage/EditBugPage.js";
 
-export const MainBugPage = () => {
+const MainBugPage = ({ user }) => {
   const { projectId, bugId } = useParams();
   const [ bug, setBug ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
@@ -26,10 +28,15 @@ export const MainBugPage = () => {
 
   useEffect(() => {
     const getBug = (projectId, bugId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`, {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
-        setBug(response.data.bugs[0]);
-        setImages(response.data.bugs[0].images);
+        console.log(response)
+        setBug(response.data);
+        setImages(response.data.images);
         setLoading(false);
       })
       .catch((err) => {
@@ -38,7 +45,7 @@ export const MainBugPage = () => {
       });
     };
     getBug(projectId, bugId);
-  }, [ projectId, bugId, isLoading, editing ]);
+  }, [ projectId, bugId, isLoading, editing, user ]);
 
   return (
     <StyledBugPage>
@@ -62,6 +69,7 @@ export const MainBugPage = () => {
             bug={bug}
             bugId={bugId}
             projectId={projectId}
+            user={user}
           />
       }
     </StyledBugPage>
@@ -90,3 +98,11 @@ const StyledBugPage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(MainBugPage);

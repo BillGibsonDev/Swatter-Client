@@ -30,27 +30,31 @@ const CreateBugPage = ({ user }) => {
   const AlertRef = useRef();
   
   const [ message, setMessage ] = useState('');
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState("");
-  const [description, setDescription] = useState("");
-  const [author, setAuthor] = useState(user.username);
-  const [priority, setPriority] = useState("");
-  const [tag, setTag] = useState("");
-  const [isLoading, setLoading] = useState(false);
-  const [sprint, setSprint] = useState("");
-  const [sprintOptions, setSprintOptions] = useState([]);
+  const [ title, setTitle ] = useState("");
+  const [ status, setStatus ] = useState("");
+  const [ description, setDescription ] = useState("");
+  const [ author, setAuthor ] = useState(user.username);
+  const [ priority, setPriority ] = useState("");
+  const [ tag, setTag ] = useState("");
+  const [ isLoading, setLoading ] = useState(false);
+  const [ sprint, setSprint ] = useState("");
+  const [ sprintOptions, setSprintOptions ] = useState([]);
   const [ project, setProject ] = useState({})
-  const [ bugKey, setBugKey ] = useState('')
-  const [images, setImages] = useState([]);
+  const [ bugKey, setBugKey ] = useState('');
+  const [ images, setImages ] = useState([]);
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 
   useEffect(() => {
     const getProject = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`,  {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
-        setProject(response.data)
-        setBugKey(handleKeyNumber(response.data.projectKey))
+        setProject(response.data);
+        setBugKey(handleKeyNumber(response.data.key));
         setSprintOptions(response.data.sprints);
         setLoading(false);
       })
@@ -59,7 +63,7 @@ const CreateBugPage = ({ user }) => {
       });
     };
     getProject(projectId);
-  }, [projectId]);
+  }, [ user, projectId ]);
 
   const createBug = () => {
     if(!title || !status){
@@ -68,10 +72,8 @@ const CreateBugPage = ({ user }) => {
     } else {
       setLoading(true);
       let checkImages = images.filter(image => image.image !== '');
-      console.log(checkImages)
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_BUG_URL}/${projectId}/bugs`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/create`,
         {
-          projectId: projectId,
           title: title,
           description: description,
           status: status,
@@ -90,7 +92,7 @@ const CreateBugPage = ({ user }) => {
         }
       )
       .then((response) => {
-        if (response.data !== "Bug Created") {
+        if (response.status !== 200) {
           setLoading(false);
           setMessage("Server Error - Bug not created");
           handleAlert(AlertRef);
@@ -118,7 +120,7 @@ const CreateBugPage = ({ user }) => {
       />
       <BreadCrumbs
         projectId={projectId}
-        projectTitle={project.projectTitle}
+        projectTitle={project.title}
         title={'Create'}
       />
       <h1>Create Bug</h1>

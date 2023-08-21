@@ -10,12 +10,12 @@ import { Alert } from "./components/Alert";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
-import { ProjectPage } from "./pages/ProjectPage/ProjectPage";
+import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
-import { MainBugPage }from "./pages/BugPage/MainBugPage.js";
+import MainBugPage from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
 import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
@@ -155,7 +155,7 @@ function App() {
                   AlertRef={AlertRef}
                 />     
               }/>
-              <Route path='/' element={<Navigate replace to="login" />}  />
+              <Route path='/' element={<Navigate replace to="/login" />}  />
             </Routes>
           </>
         : 

@@ -36,7 +36,11 @@ const CommentSection = ({ commentSectionRef, user }) => {
 
   useEffect(() => {
     const getProject = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
         setComments(response.data.comments);
       })
@@ -49,7 +53,7 @@ const CommentSection = ({ commentSectionRef, user }) => {
 
     const deleteComment = (commentId) => {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_COMMENT_URL}/${projectId}/${commentId}`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/${commentId}/delete`,
         {
           headers: {
             Authorization: user.token

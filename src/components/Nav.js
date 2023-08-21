@@ -33,7 +33,7 @@ const Nav = ({user, logout, projectSideNavRef}) => {
             <ToggleProjectNav projectSideNavRef={projectSideNavRef} />
             <div className="bottom-container">
                 <Link to="/ProfilePage"><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
-                <Link to="/LoginPage" onClick={logout}><img src={icon.Logout} alt="Log Out" /><span className="tooltiptext">Log Out</span></Link>
+                <Link to="/" onClick={logout}><img src={icon.Logout} alt="Log Out" /><span className="tooltiptext">Log Out</span></Link>
             </div>
         </StyledNav>
     )

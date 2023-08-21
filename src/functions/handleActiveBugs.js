@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 
-export const handleActiveBugs = ( active, bugs) => {
+export const handleActiveBugs = ( active, bugs ) => {
     let activeArray = [];
     let inactiveArray = [];
     for ( let i = 0; bugs.length > i; i++ ){

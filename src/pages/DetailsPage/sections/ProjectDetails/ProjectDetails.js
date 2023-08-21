@@ -8,7 +8,7 @@ import EditIcon from "../../../../assets/icons/editIconWhite.png";
 // loaders
 import Loader from "../../../../loaders/Loader.js";
 
-export default function ProjectDetails({ project, isLoading, setEditing}) {
+export default function ProjectDetails({ project, isLoading, setEditing }) {
 
   return (
     <StyledDetails>
@@ -17,19 +17,19 @@ export default function ProjectDetails({ project, isLoading, setEditing}) {
        : 
         <>
           <div className='title-container'>
-            <h1>{project.projectTitle}</h1>
+            <h1>{project.title}</h1>
             <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit' /></button>
           </div>
           <div className='container'>
-            <h6><span>Key:</span> {project.projectKey}</h6>
-            <h6><span>Type:</span> {project.projectType}</h6>
-            <h6><span>Description:</span> {project.description}</h6>
+            <h6><span>Key:</span> {project.key}</h6>
+            <h6><span>Type:</span> {project.type}</h6>
           </div>
           <div className='container'>
-            <h6><span>Lead:</span> {project.projectLead}</h6>
+            <h6><span>Lead:</span> {project.lead}</h6>
             <h6><span>Started:</span> {project.startDate}</h6>
             <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
-            <a href={project.projectLink} target='_blank' rel='noreferrer'><span>Website:</span> {project.projectLink}</a>
+            <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
+            <h6><span>Description:</span> {project.description}</h6>
           </div>
         </>
       }

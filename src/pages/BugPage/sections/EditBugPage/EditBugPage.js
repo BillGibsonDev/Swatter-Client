@@ -50,7 +50,7 @@ const EditBugPage = ({ user, setEditing }) => {
 
   useEffect(() => {
     const getSprints = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`)
       .then((response) => {
         setSprintOptions(response.data.sprints);
       })
@@ -59,15 +59,15 @@ const EditBugPage = ({ user, setEditing }) => {
       });
     };
     const getBug = (projectId, bugId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`)
       .then((response) => {
-        setBug(response.data.bugs[0]);
-        setImages(response.data.bugs[0].images);
-        setStatus(response.data.bugs[0].status);
-        setDescription(response.data.bugs[0].description);
-        setPriority(response.data.bugs[0].priority);
-        setTag(response.data.bugs[0].tag);
-        setSprint(response.data.bugs[0].sprint);
+        setBug(response.data);
+        setImages(response.data.images);
+        setStatus(response.data.status);
+        setDescription(response.data.description);
+        setPriority(response.data.priority);
+        setTag(response.data.tag);
+        setSprint(response.data.sprint);
         setLoading(false);
       })
       .catch((err) => {
@@ -76,11 +76,11 @@ const EditBugPage = ({ user, setEditing }) => {
     };
     getSprints(projectId);
     getBug(projectId, bugId);
-  }, [projectId, bugId, isLoading, rerender]);
+  }, [ projectId, bugId, isLoading, rerender, user ]);
 
   const updateBug = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_BUG_URL}/${projectId}/${bugId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/update`,
       {
         title: bug.title,
         description: description,

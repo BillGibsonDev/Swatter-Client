@@ -19,7 +19,10 @@ import CommentSection from "./sections/CommentSection";
 // router
 import { useParams } from "react-router-dom";
 
-export const ProjectPage = ({projectSideNavRef}) => {
+// redux
+import { connect } from "react-redux";
+
+const ProjectPage = ({projectSideNavRef, user }) => {
   const commentSectionRef = useRef();
 
   const { projectId } = useParams();
@@ -31,7 +34,11 @@ export const ProjectPage = ({projectSideNavRef}) => {
 
   useEffect(() => {
     const getProject = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
         setProject(response.data);
         setLoading(false);
@@ -42,7 +49,7 @@ export const ProjectPage = ({projectSideNavRef}) => {
       });
     };
     getProject(projectId);
-  }, [projectId, rerender]);
+  }, [ projectId, rerender, user ]);
 
   return (
     <StyledProjectPage>
@@ -148,3 +155,11 @@ const StyledProjectPage = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProjectPage);

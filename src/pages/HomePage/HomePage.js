@@ -32,7 +32,7 @@ const HomePage = ({ user }) => {
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false)
+        setLoading(false);
       });
     };
     getProjects();

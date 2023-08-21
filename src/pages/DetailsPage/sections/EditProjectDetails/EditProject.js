@@ -37,7 +37,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
 
   const deleteProject = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_PROJECT_URL}/${projectId}`, {},
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/delete`, {},
     {
       headers: {
         Authorization: user.token
@@ -61,29 +61,29 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
     })
   };
 
-  const [projectTitle, setProjectTitle] = useState(project.projectTitle);
+  const [title, setTitle] = useState(project.title);
   const [startDate, setStartDate] = useState(project.startDate);
-  const [projectLink, setProjectLink] = useState(project.projectLink);
-  const [projectImage, setProjectImage] = useState(project.projectImage);
-  const [projectKey, setProjectKey] = useState(project.projectKey);
+  const [link, setLink] = useState(project.link);
+  const [image, setImage] = useState(project.image);
+  const [key, setKey] = useState(project.key);
   const [description, setDescription] = useState(project.description);
   const [repository, setRepository] = useState(project.repository);
-  const [projectLead, setProjectLead] = useState(project.projectLead);
-  const [projectType, setProjectType] = useState(project.projectType);
+  const [lead, setLead] = useState(project.lead);
+  const [type, setType] = useState(project.type);
 
   const editProject = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_PROJECT_URL}/${projectId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/edit`,
       {
-        projectTitle: projectTitle,
+        title: title,
         startDate: startDate,
-        projectLink: projectLink,
-        projectImage: projectImage,
+        link: link,
+        image: image,
         repository: repository,
         description: description,
-        projectKey: projectKey,
-        projectLead: projectLead,
-        projectType: projectType,
+        key: key,
+        lead: lead,
+        type: type,
       },
       {
         headers: {
@@ -98,7 +98,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
         setLoading(false);
       } else { 
         setEditing(false);
-        setMessage(`${project.projectTitle} updated!`);
+        setMessage(`${project.title} updated!`);
         handleAlert(AlertRef);
         setLoading(false);
       }
@@ -121,7 +121,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteProject}
-        title={project.projectTitle}
+        title={project.title}
       />
       <div className='title-container'>
         <h1>Edit Project</h1>
@@ -137,9 +137,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
               <input
                 type='text'
                 id='title'
-                defaultValue={project.projectTitle}
+                defaultValue={project.title}
                 onChange={(event) => {
-                  setProjectTitle(event.target.value);
+                  setTitle(event.target.value);
                 }}
               />
             </label>
@@ -149,9 +149,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
                 type='text'
                 id='key'
                 readOnly
-                defaultValue={project.projectKey}
+                defaultValue={project.key}
                 onChange={(event) => {
-                  setProjectKey(event.target.value);
+                  setKey(event.target.value);
                 }}
               />
             </label>
@@ -160,9 +160,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
               <input
                 type='text'
                 id='projectLink'
-                defaultValue={project.projectLink}
+                defaultValue={project.link}
                 onChange={(event) => {
-                  setProjectLink(event.target.value);
+                  setLink(event.target.value);
                 }}
               />
             </label>
@@ -182,9 +182,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
               <input
                 type='text'
                 id='projectLead'
-                defaultValue={project.projectLead}
+                defaultValue={project.lead}
                 onChange={(event) => {
-                  setProjectLead(event.target.value);
+                  setLead(event.target.value);
                 }}
               />
             </label>
@@ -206,9 +206,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
               <input
                 type='text'
                 id='projectType'
-                defaultValue={project.projectType}
+                defaultValue={project.type}
                 onChange={(event) => {
-                  setProjectType(event.target.value);
+                  setType(event.target.value);
                 }}
               />
             </label>
@@ -228,9 +228,9 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
               <input
                 type='text'
                 id='image'
-                defaultValue={project.projectImage}
+                defaultValue={project.image}
                 onChange={(event) => {
-                  setProjectImage(event.target.value);
+                  setImage(event.target.value);
                 }}
               />
             </label>

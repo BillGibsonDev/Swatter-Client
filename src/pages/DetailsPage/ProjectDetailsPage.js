@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 // styled
 import styled from "styled-components";
@@ -20,6 +19,9 @@ import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 import ProjectDetails from "./sections/ProjectDetails/ProjectDetails.js";
 import EditProject from "./sections/EditProjectDetails/EditProject.js";
 
+// functiomns
+import { getProject } from "../../functions/getProject.js";
+
 const ProjectDetailsPage = ({ user }) => {
   const { projectId } = useParams();
 
@@ -28,23 +30,18 @@ const ProjectDetailsPage = ({ user }) => {
   const [ editing, setEditing ] = useState(false);
 
   useEffect(() => {
-    const getProject = () => {
-      setLoading(true);
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
-        headers: {
-          Authorization: user.token,
-        }
-      })
-      .then((response) => {
-        setProject(response.data);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject( user, projectId );
+        setProject(projectData);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } catch (error) {
+        setLoading(false);
+      }
     };
-    getProject(projectId);
-  }, [ user, projectId ]);
+    fetchProject();
+  }, [projectId, user]);
+
 
   return (
     <StyledDetails>

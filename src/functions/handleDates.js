@@ -12,7 +12,7 @@ export const handleDate = (timestamp) => {
 
     if (sameDate(date, currentDate)) {
         // If the date is the same as today, return just the time
-        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+        const options = { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
         return date.toLocaleTimeString(undefined, options);
     } else {
         // If the date is not the same as today, return the full formatted date

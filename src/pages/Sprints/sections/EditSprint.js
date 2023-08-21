@@ -34,7 +34,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
       setSprintId(project.sprints.find((sprint) => sprint.title === searchSprint)._id);
     }
     const handleSprint = (projectId, sprintId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}`)
       .then((response) => {
         setSprint(response.data.sprints[0]);
         setLastTitle(response.data.sprints[0].title)
@@ -46,7 +46,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
     if (sprintId) {
       handleSprint(projectId, sprintId);
     }
-  }, [project, projectId, searchSprint, sprintId ]);
+  }, [ user, project, projectId, searchSprint, sprintId ]);
 
   const [title, setTitle] = useState(sprint.title);
   const [goal, setGoal] = useState(sprint.goal);
@@ -56,7 +56,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
   const [ lastTitle, setLastTitle ] = useState(sprint.title);
 
   const handleUpdateSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/update`,
       {
         headers: {
           Authorization: user.token
@@ -74,10 +74,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
       }
     )
     .then((response) => {
-      if (response.data !== "Sprint Updated") {
-        setMessage("Server Error - Sprint not updated");
-        handleAlert(AlertRef);
-      } else {
+      if (response.status === 200) {
         setMessage(`Sprint Updated!`);
         handleAlert(AlertRef);
       }
@@ -88,7 +85,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
   };
 
   const handleDeleteSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/project/${projectId}/sprints/${sprintId}/delete`,
       {
         sprintTitle: sprint.title
       },

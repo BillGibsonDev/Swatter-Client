@@ -7,7 +7,6 @@ import * as palette from '../../../styled/ThemeVariables.js';
 
 // functions
 import { handleAlert } from "../../../functions/handleAlert.js";
-import { handleUserAuth } from "../../../functions/handleUserAuth.js";
 
 // redux
 import { connect } from "react-redux";
@@ -104,11 +103,7 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
           }
         </select>
       </label>
-      {
-        handleUserAuth(user)
-        ? <button onClick={() => { handleCreateSprint(); }}>Create</button>
-        : <button>Create</button>
-      }
+      <button onClick={() => { handleCreateSprint(); }}>Create</button>
     </div>
     </div>
     </StyledCreateSprint>

@@ -8,7 +8,6 @@ import { handleAlert } from "../../../../../functions/handleAlert";
 
 //redux
 import { connect } from "react-redux";
-import { handleUserAuth } from "../../../../../functions/handleUserAuth";
 
 const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId, CommentContainerRef }) => {
 
@@ -19,7 +18,7 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
       handleAlert(AlertRef);
     } else {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_BUG_COMMENT_URL}/${projectId}/${bugId}/comments`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/comments`,
         {
           headers: {
             Authorization: user.token
@@ -62,11 +61,7 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
         name='comment'
         id='comment'
       />
-      {
-        handleUserAuth(user)
-        ? <button onClick={(e) => { sendComment()}}>Send</button>
-        : <button>Send</button>
-      }
+      <button onClick={(e) => { sendComment()}}>Send</button>
     </StyledCommentInput>
   );
 }

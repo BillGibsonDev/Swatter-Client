@@ -12,7 +12,6 @@ import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { Alert } from "../../../../components/Alert.js";
-import { handleUserAuth } from "../../../../functions/handleUserAuth.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
 
 // redux
@@ -51,7 +50,7 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
       <div className='bug-wrapper'>
         <div className='title-container'>
           <h1>{bug.title}</h1>
-          <button id="toggle-edit-button" style={{display: handleUserAuth(user) ? 'block' : 'none'}} onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit bug link' /></button>
+          <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit bug link' /></button>
         </div>
         <div className='info-wrapper'>
           <div className='info-container'>

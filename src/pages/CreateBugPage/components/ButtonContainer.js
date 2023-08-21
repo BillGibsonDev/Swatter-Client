@@ -1,21 +1,14 @@
 // styled
 import styled from "styled-components";
 
-// functions
-import { handleUserAuth } from "../../../functions/handleUserAuth.js";
-
 // redux
 import { connect } from "react-redux";
 
-const ButtonContainer = ({ user, createBug }) => {
+const ButtonContainer = ({ createBug }) => {
 
   return (
     <StyledButtonContainer>
-      {
-        handleUserAuth(user)
-        ? <button onClick={() => { createBug() }}>Create</button> 
-        : <button onClick={() => { createBug() }}>Create</button> 
-      }
+      <button onClick={() => { createBug() }}>Create</button>
     </StyledButtonContainer>
   );
 }

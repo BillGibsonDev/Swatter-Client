@@ -6,7 +6,6 @@ import * as palette from "../../../../../styled/ThemeVariables";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
-import { handleAuthor } from "../../../../../functions/handleAuthor";
 import { handleDate } from "../../../../../functions/handleDates";
 
 // images
@@ -30,22 +29,14 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
           <h3 id={comment.author}>{comment.author}<span>{handleDate(comment.lastUpdate)}</span></h3>
-          {
-            handleAuthor(comment.author, user) 
-            ? <div className='dropdown'>
-                <button className='dropbtn'>
-                  <img src={icon.Menu} alt='Menu' />
-                </button>
-                <div className='dropdown-content'>
-                  {
-                    handleAuthor(comment.author, user)
-                    ? <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-                    : <button>Delete</button>
-                  }
-                </div>
-              </div>
-            : <></>
-          }
+          <div className='dropdown'>
+            <button className='dropbtn'>
+              <img src={icon.Menu} alt='Menu' />
+            </button>
+            <div className='dropdown-content'>
+              <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
+            </div>
+          </div>
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
       </div>

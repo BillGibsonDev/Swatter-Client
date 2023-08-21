@@ -17,6 +17,9 @@ import { useParams } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 
+// functions
+import { getProject } from "../../functions/getProject.js";
+
 const ArchivePage = ({ user }) => {
 
     const { projectId } = useParams();
@@ -25,24 +28,21 @@ const ArchivePage = ({ user }) => {
     const [ isLoading, setLoading ] = useState(true);
 
     useEffect(() => {
-        const getProject = () => {
-            setLoading(true)
-            axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
-                headers: { 
-                    Authorization: user.token
-                }
-            })
-            .then((response) => {
-                setProject(response.data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoading(false);
-            });
+        const fetchProject = async () => {
+        try {
+            const projectData = await getProject( user, projectId );
+            setProject(projectData);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+        }
         };
-        getProject();
-    }, [ projectId, user ]);
+        fetchProject();
+    }, [projectId, user]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
 
     return (
         <StyledArchive>
@@ -51,14 +51,11 @@ const ArchivePage = ({ user }) => {
                 projectTitle={project.title}
                 title={'Archive'}
             />
-            <h1>{project.title} Archive</h1>
-            { 
-                isLoading ? <Loader />
-                : <ArchiveBugTable
-                    project={project}
-                    bugs={project.bugs}
-                />
-            }
+            <h1>{project.title}Archive</h1>
+            <ArchiveBugTable
+                project={project}
+                bugs={project.bugs}
+            />
         </StyledArchive>
     )
 }

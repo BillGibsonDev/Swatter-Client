@@ -17,7 +17,7 @@ import CreateProjectPage from "./pages/CreateProjectPage";
 import RegisterUserPage from "./pages/RegisterUserPage.js";
 import MainBugPage from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
-import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
+import SprintsPage from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";

@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
 
 // styled
 import styled from "styled-components";
@@ -22,6 +21,9 @@ import { useParams } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 
+// functions
+import { getProject } from "../../functions/getProject.js";
+
 const ProjectPage = ({projectSideNavRef, user }) => {
   const commentSectionRef = useRef();
 
@@ -33,23 +35,17 @@ const ProjectPage = ({projectSideNavRef, user }) => {
   const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
 
   useEffect(() => {
-    const getProject = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
-        headers: {
-          Authorization: user.token,
-        }
-      })
-      .then((response) => {
-        setProject(response.data);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject( user, projectId );
+        setProject(projectData);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
         setLoading(false);
-      });
+      }
     };
-    getProject(projectId);
-  }, [ projectId, rerender, user ]);
+    fetchProject();
+  }, [projectId, user]);
 
   return (
     <StyledProjectPage>

@@ -8,7 +8,6 @@ import { handleAlert } from "../../../functions/handleAlert";
 
 //redux
 import { connect } from "react-redux";
-import { handleUserAuth } from "../../../functions/handleUserAuth";
 
 const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, CommentContainerRef }) => {
 
@@ -19,27 +18,23 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, Comme
       setMessage("No Comment Entered!");
       handleAlert(AlertRef);
     } else {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_SEND_COMMENT_URL}/${projectId}/comments`,
-        {
-          headers: {
-            Authorization: user.token
-          }
-        },
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/comments`,
         {
           projectId: projectId,
           comment: document.getElementById("comment").value,
           author: user.username,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
       )
       .then((response) => {
-        if (response.data !== "Comment created!") {
-          setLoading(false);
-          setMessage("Server Error - Comment not created!");
-          handleAlert(AlertRef);
-        } else {
+        if (response.status === 200) {
           setLoading(false);
           document.getElementById("comment").value = "";
-          let container = CommentContainerRef.current
+          let container = CommentContainerRef.current;
           setTimeout(() => {
             container.scrollTo(0, document.body.scrollHeight);
           }, 1000);
@@ -61,11 +56,7 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, Comme
         name='comment'
         id='comment'
       />
-      {
-        handleUserAuth(user)
-        ? <button onClick={() => { sendComment(); }}>Send</button>
-        : <button>Send</button>
-      }
+      <button onClick={() => { sendComment(); }}>Send</button>
     </StyledCommentInput>
   );
 }

@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 // functions
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
 import { toggleRef } from "../../../functions/toggleRef";
-import { handleAuthor } from "../../../functions/handleAuthor.js";
 
 const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
 
@@ -47,11 +46,7 @@ const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
           <div className='dropdown'>
             <button className='drop-down-btn' onClick={() => { toggleRef(DropDownRef)}}><img src={Menu} alt='Menu' /></button>
             <div className='dropdown-content' ref={DropDownRef} style={{display: 'none'}}>
-              {  
-                handleAuthor(comment.author, user)
-                ? <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
-                : <button>Delete</button>
-              }
+              <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
             </div>
           </div>
         </div>

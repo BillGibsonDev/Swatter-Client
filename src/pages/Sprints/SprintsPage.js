@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 // styled
 import styled from "styled-components";
@@ -18,8 +17,13 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
+// functions
+import { getProject } from "../../functions/getProject";
 
-export const SprintsPage = () => {
+// redux
+import { connect } from "react-redux";
+
+const SprintsPage = ({ user }) => {
   const { projectId } = useParams();
 
   const [searchSprint, setSearchSprint] = useState(false);
@@ -31,20 +35,18 @@ export const SprintsPage = () => {
   const [ creating, setCreating ] = useState(false);
 
   useEffect(() => {
-    const getProject = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then((response) => {
-        setProject(response.data);
-        setOptions(response.data.sprints);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject( user, projectId );
+        setProject(projectData);
+        setOptions(projectData.sprints)
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
         setLoading(false);
-      });
+      }
     };
-    getProject(projectId);
-  }, [ projectId, rerender, editing, creating ]);
+    fetchProject();
+  }, [ projectId, user ]);
 
   return (
     <StyledSprintSection>
@@ -256,3 +258,11 @@ const StyledSprintSection = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(SprintsPage);

@@ -3,26 +3,13 @@ import styled from "styled-components";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
-import { handleAdminAuth } from "../../../../../functions/handleAdminAuth.js";
 
-// redux
-import { connect } from "react-redux";
-
-const ButtonContainer = ({ user, DeleteAlertRef, updateBug, setRerender, rerender}) => {
+export const ButtonContainer = ({ DeleteAlertRef, updateBug, setRerender, rerender}) => {
 
   return (
     <StyledButtonContainer>
-      {
-        handleAdminAuth(user)
-        ? <>
-            <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
-            <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-          </>
-        : <>
-          <button>Save</button>
-          <button id='delete'>Delete</button>
-        </>
-      }
+      <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
+      <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
     </StyledButtonContainer>
   );
 }
@@ -49,11 +36,3 @@ const StyledButtonContainer = styled.article`
     }
   }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(ButtonContainer);

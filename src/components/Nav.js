@@ -52,19 +52,6 @@ const StyledNav = styled.div`
         a {
             margin-bottom: 30px;
             position: relative;
-            .tooltiptext {
-                visibility: hidden;
-                width: 100%;
-                min-width: 160px;
-                background-color: black;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 5px 0;
-                position: absolute;
-                top: 0;
-                left: 105%;
-            }
         }
         a:hover .tooltiptext, a:active .tooltiptext {
             visibility: visible;
@@ -73,7 +60,7 @@ const StyledNav = styled.div`
     }
     .bottom-container {
         display: flex;
-        height: 15%;
+        height: auto;
         flex-direction: column;
         align-items: center;
         margin-bottom: 0;
@@ -82,20 +69,6 @@ const StyledNav = styled.div`
         a {
             margin-bottom: 30px;
             position: relative;
-            .tooltiptext {
-                visibility: hidden;
-                width: 100%;
-                min-width: 160px;
-                background-color: black;
-                color: #fff;
-                text-align: center;
-                border-radius: 6px;
-                padding: 5px 0;
-                position: absolute;
-                z-index: 2000;
-                top: 0;
-                left: 105%;
-            }
         }
         a:hover .tooltiptext, a:active .tooltiptext {
             visibility: visible;
@@ -116,4 +89,18 @@ const StyledNav = styled.div`
         width: 25px;
         height: 25px;
     }
+    .tooltiptext {
+    visibility: hidden;
+    width: 100%;
+    min-width: 160px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 2000;
+    top: 0;
+    left: 105%;
+}
 `;

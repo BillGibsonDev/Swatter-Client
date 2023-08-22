@@ -91,7 +91,7 @@ const CreateBugPage = ({ user, showAlert }) => {
       }
     )
     .then((response) => {
-      if (response.status === 200) {
+      if(response.status === 200) {
         setLoading(false);
         handleAlert('Bug created', 'success');
       }

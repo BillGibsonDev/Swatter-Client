@@ -16,7 +16,7 @@ import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // components
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
-import ButtonContainer from "./components/ButtonContainer.js";
+import { ButtonContainer } from "./components/ButtonContainer.js";
 
 // loaders
 import Loader from "../../../../loaders/Loader.js";

@@ -18,7 +18,7 @@ import BugPageLoader from "../../../../loaders/BugPageLoader.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { Selector } from "./components/Selector.js";
 import { Images } from "./components/Images.js";
-import ButtonContainer from "./components/ButtonContainer.js";
+import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
 

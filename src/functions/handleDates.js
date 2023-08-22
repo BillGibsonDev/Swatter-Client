@@ -7,16 +7,14 @@ const sameDate = (date1, date2) => {
 }
 
 export const handleDate = (timestamp) => {
-    const date = new Date(parseInt(timestamp));
+    const inputDate = new Date(timestamp);
     const currentDate = new Date();
 
-    if (sameDate(date, currentDate)) {
-        // If the date is the same as today, return just the time
-        const options = { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
-        return date.toLocaleTimeString(undefined, options);
+    if (sameDate(inputDate, currentDate)) {
+        const options = { hour: '2-digit', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
+        return inputDate.toLocaleTimeString(undefined, options);
     } else {
-        // If the date is not the same as today, return the full formatted date
         const options = { year:'numeric', month:'short', day:'numeric' };
-        return date.toLocaleDateString(undefined, options);
+        return inputDate.toLocaleDateString(undefined, options);
     }
 }

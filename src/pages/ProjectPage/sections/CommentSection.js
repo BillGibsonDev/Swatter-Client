@@ -7,7 +7,6 @@ import * as palette from "../../../styled/ThemeVariables.js";
 
 // components
 import Comment from "../components/Comment";
-import { Alert } from "../../../components/Alert.js";
 import CommentInput from "../components/CommentInput.js";
 import { DeleteAlert } from "../../../components/DeleteAlert.js";
 
@@ -19,18 +18,15 @@ import { connect } from "react-redux";
 
 // functions
 import { toggleRef } from "../../../functions/toggleRef.js";
-import { handleAlert } from "../../../functions/handleAlert.js";
 
 const CommentSection = ({ commentSectionRef, user }) => {
 
   const DeleteAlertRef = useRef();
-  const AlertRef = useRef();
   const CommentContainerRef = useRef();
 
   const { projectId, bugId } = useParams();
 
   const [ comments, setComments ] = useState([]);
-  const [ message, setMessage ] = useState('');
   const [ isLoading, setLoading ] = useState(false);
   const [ commentId, setCommentId ] = useState();
 
@@ -61,11 +57,7 @@ const CommentSection = ({ commentSectionRef, user }) => {
         }
       )
       .then((response) => {
-        if (response.data !== "Comment Deleted") {
-          setLoading(false);
-          setMessage('Server Error - Comment Not Deleted');
-          handleAlert(AlertRef);
-        } else {
+        if (response.status === 200) {
           setLoading(false);
         }
       })
@@ -76,10 +68,6 @@ const CommentSection = ({ commentSectionRef, user }) => {
 
   return (
     <StyledCommentSection ref={commentSectionRef} style={{ display: "none" }}>
-      <Alert
-        message={message}
-        AlertRef={AlertRef}
-      />
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteComment}
@@ -112,9 +100,7 @@ const CommentSection = ({ commentSectionRef, user }) => {
           </div>
         }
         <CommentInput
-          AlertRef={AlertRef}
           setLoading={setLoading}
-          setMessage={setMessage}
           projectId={projectId}
           CommentContainerRef={CommentContainerRef}
         />

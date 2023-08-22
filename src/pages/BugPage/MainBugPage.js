@@ -15,6 +15,7 @@ import { BreadCrumbs } from "../../components/Breadcrumbs.js";
 
 // redux
 import { connect } from "react-redux";
+
 // sections
 import BugPage from "./sections/BugPage/BugPage.js";
 import EditBugPage from "./sections/EditBugPage/EditBugPage.js";

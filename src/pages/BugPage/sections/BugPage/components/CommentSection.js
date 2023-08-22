@@ -9,37 +9,31 @@ import * as palette from "../../../../../styled/ThemeVariables.js";
 import Comment from "../components/Comment";
 import CommentInput from "../components/CommentInput.js";
 import { DeleteAlert } from "../../../../../components/DeleteAlert.js";
-import { Alert } from "../../../../../components/Alert.js";
-
-// functions
-import { handleAlert } from "../../../../../functions/handleAlert.js";
 
 export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
 
-  const AlertRef = useRef();
   const DeleteAlertRef = useRef();
   const CommentContainerRef = useRef();
 
   const [ comments, setComments ] = useState([]);
-  const [ message, setMessage ] = useState('');
   const [ commentId, setCommentId] = useState();
 
   useEffect(() => {
-    const getComments = (projectId, bugId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_BUG_URL}/${projectId}/${bugId}`)
+    const getComments = () => {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`)
       .then((response) => {
-        setComments(response.data.bugs[0].comments);
+        setComments(response.data.bugs.comments);
       })
       .catch((err) => {
         console.log(err);
       });
     };
-    getComments(projectId, bugId);
-  }, [ projectId, bugId ]);
+    getComments();
+  }, [ user, projectId, bugId ]);
 
   const deleteComment = (commentId) => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_COMMENT_URL}/${projectId}/${bugId}/${commentId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/comments/${commentId}`, {},
       {
         headers: {
           Authorization: user.token
@@ -47,32 +41,21 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
       }
     )
     .then((response) => {
-      if (response.data !== "Comment Deleted!") {
-        setMessage("Server Error - Comment not deleted");
-        handleAlert(AlertRef);
-        setLoading(false);
-      } else {
+      if (response.status === 200) {
         setLoading(false);
       }
     })
     .catch((err) => {
       console.log(err);
-      setMessage("Server Error - Comment not deleted");
-      handleAlert(AlertRef);
       setLoading(false);
     });
   };
 
   return (
     <StyledBugCommentSection className='bug-page-tabs active' id='comments'>
-      <Alert 
-        AlertRef={AlertRef}
-        message={message}
-      />
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteComment}
-        message={message}
         commentId={commentId}
       />
       <div className='comment-section-wrapper'>
@@ -89,7 +72,6 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
                       bugId={bugId}
                       projectId={projectId}
                       key={index}
-                      AlertRef={AlertRef}
                       setLoading={setLoading}
                       DeleteAlertRef={DeleteAlertRef}
                       setCommentId={setCommentId}
@@ -103,8 +85,6 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
           bugId={bugId}
           projectId={projectId}
           setLoading={setLoading}
-          AlertRef={AlertRef}
-          setMessage={setMessage}
           CommentContainerRef={CommentContainerRef}
         />
       </div>

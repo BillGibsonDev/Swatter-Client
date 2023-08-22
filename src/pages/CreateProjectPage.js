@@ -1,26 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as palette from "../styled/ThemeVariables.js";
 
-// functions
-import { handleAlert } from "../functions/handleAlert.js";
-
 // components
 import Loader from "../loaders/Loader";
-import { Alert } from "../components/Alert.js";
 import { BreadCrumbs } from "../components/Breadcrumbs.js";
 
 // reduxSwatt
 import { connect } from "react-redux";
 
 const CreateProjectPage = ({ user }) => {
-
-  const AlertRef = useRef();
-  
-  const [ message, setMessage ] = useState('');
 
   const [ title, setTitle ] = useState("");
   const [ startDate, setStartDate ] = useState("");
@@ -54,7 +46,7 @@ const CreateProjectPage = ({ user }) => {
         image,
         repository: repository,
         description: description,
-        projectKey: title.slice(0,2).toUpperCase(),
+        key: title.slice(0,2).toUpperCase(),
         lead,
         type,
       },
@@ -67,36 +59,22 @@ const CreateProjectPage = ({ user }) => {
     .then((response) => {
       if(response.status === 200){
         setLoading(false);
-        setMessage(`${title} Project Started!`);
-        handleAlert(AlertRef);
-      } else {
-        setLoading(false);
-        setMessage("Server Error - Project not created");
-        handleAlert(AlertRef);
       }
     })
     .catch((err) => {
       console.log(err);
       setLoading(false);
-      setMessage("Server Error - Project not created");
-      handleAlert(AlertRef);
     });
   };
 
   return (
     <StyledProjectPage>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
       <h1>Start a Project</h1>
       {
-        user === null ? <h1>You are signed out</h1>
-        : isLoading ? <Loader />
+        isLoading ? <Loader />
         : 
         <div className='form-wrapper'>
           <div className='top-form-container'>

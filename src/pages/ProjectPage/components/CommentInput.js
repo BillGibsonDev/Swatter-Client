@@ -3,20 +3,16 @@ import axios from "axios";
 // styled
 import styled from "styled-components";
 
-// functions
-import { handleAlert } from "../../../functions/handleAlert";
-
 //redux
 import { connect } from "react-redux";
 
-const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, CommentContainerRef }) => {
+const CommentInput = ({ user, setLoading, projectId, CommentContainerRef }) => {
 
   const sendComment = () => {
     setLoading(true);
     if (!document.getElementById("comment").value) {
       setLoading(false);
-      setMessage("No Comment Entered!");
-      handleAlert(AlertRef);
+      return;
     } else {
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/comments`,
         {
@@ -43,8 +39,6 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, Comme
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setMessage("Server Error - Comment not created!");
-        handleAlert(AlertRef);
       })
     }
   };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 // styled
@@ -9,12 +9,10 @@ import * as palette from "../../styled/ThemeVariables.js";
 import { useParams } from "react-router-dom";
 
 // functions
-import { handleAlert } from "../../functions/handleAlert.js";
 import { handleKeyNumber } from "../../functions/handleKeyNumber.js";
 
 // components
 import Loader from "../../loaders/Loader.js";
-import { Alert } from "../../components/Alert.js";
 import { Selector } from './components/Selector.js';
 import { BreadCrumbs } from '../../components/Breadcrumbs.js';
 import { DescriptionBox } from './components/DescriptionBox.js';
@@ -27,13 +25,9 @@ import { connect } from "react-redux";
 const CreateBugPage = ({ user }) => {
   const { projectId } = useParams();
 
-  const AlertRef = useRef();
-  
-  const [ message, setMessage ] = useState('');
   const [ title, setTitle ] = useState("");
   const [ status, setStatus ] = useState("");
   const [ description, setDescription ] = useState("");
-  const [ author, setAuthor ] = useState(user.username);
   const [ priority, setPriority ] = useState("");
   const [ tag, setTag ] = useState("");
   const [ isLoading, setLoading ] = useState(false);
@@ -60,6 +54,7 @@ const CreateBugPage = ({ user }) => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
     };
     getProject(projectId);
@@ -67,8 +62,6 @@ const CreateBugPage = ({ user }) => {
 
   const createBug = () => {
     if(!title || !status){
-      setMessage(`Title and Status are required!`);
-      handleAlert(AlertRef);
     } else {
       setLoading(true);
       let checkImages = images.filter(image => image.image !== '');
@@ -77,10 +70,8 @@ const CreateBugPage = ({ user }) => {
           title: title,
           description: description,
           status: status,
-          author: author,
           priority: priority,
           tag: tag,
-          role: user.role,
           sprint: sprint,
           images: checkImages,
           bugKey: bugKey,
@@ -92,32 +83,19 @@ const CreateBugPage = ({ user }) => {
         }
       )
       .then((response) => {
-        if (response.status !== 200) {
+        if (response.status === 200) {
           setLoading(false);
-          setMessage("Server Error - Bug not created");
-          handleAlert(AlertRef);
-        } else {
-          setLoading(false);
-          setMessage(`Bug Added!`);
-          handleAlert(AlertRef);
         }
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setMessage("Server Error - Bug not created");
-        handleAlert(AlertRef);
       })
     }
   };
 
   return (
     <StyledAddBug>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <BreadCrumbs
         projectId={projectId}
         projectTitle={project.title}
@@ -125,20 +103,15 @@ const CreateBugPage = ({ user }) => {
       />
       <h1>Create Bug</h1>
       {
-      !user ? <h1>You are signed out</h1>
-      : isLoading ? <Loader />
-      : 
-        <div className='form-wrapper'>
+        isLoading ? <Loader />
+        : <div className='form-wrapper'>
           <label>
             Title
             <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
           </label>
           <label>
             Created By
-            <input readOnly defaultValue={user.username} type='text' id='author' onChange={(event) => {
-                setAuthor(event.target.value);
-              }}
-            />
+            <input readOnly defaultValue={user.username} type='text' id='author' />
           </label>
           {
             sections.map((section, key) =>{

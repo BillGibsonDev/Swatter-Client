@@ -8,7 +8,6 @@ import styled from "styled-components";
 import EditIcon from "../../../../assets/icons/editIconWhite.png";
 
 // functions
-import { handleAlert } from "../../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // redux
@@ -17,7 +16,6 @@ import { connect } from "react-redux";
 // components
 import BugPageLoader from "../../../../loaders/BugPageLoader.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
-import { Alert } from '../../../../components/Alert.js';
 import { Selector } from "./components/Selector.js";
 import { Images } from "./components/Images.js";
 import ButtonContainer from "./components/ButtonContainer.js";
@@ -29,14 +27,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditBugPage = ({ user, setEditing }) => {
 
-  const AlertRef = useRef();
   const DeleteAlertRef = useRef();
 
   const navigate = useNavigate();
 
   const { projectId, bugId } = useParams();
 
-  const [ message, setMessage ] = useState('');
   const [ bug, setBug ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ sprintOptions, setSprintOptions ] = useState([]);
@@ -98,22 +94,14 @@ const EditBugPage = ({ user, setEditing }) => {
       }
     )
     .then((response) => {
-      if (response.data !== "Bug Updated") {
-        setMessage(`Server Error - Bug Not Updated!`);
-        setLoading(false);
-        handleAlert(AlertRef);
-      } else {
-        setMessage(`Bug updated!`);
+      if (response.status === 200) {
         setEditing(false);
         setLoading(false);
-        handleAlert(AlertRef);
       }
     })
     .catch((err) => {
       console.log(err);
-      setMessage(`Server Error - Bug Not Updated!`);
       setLoading(false);
-      handleAlert(AlertRef);
     })
   };
 
@@ -127,20 +115,14 @@ const EditBugPage = ({ user, setEditing }) => {
       },
     )
     .then((response) => {
-      if (response.data !== "Bug Deleted") {
-        setMessage(`Server Error - Bug Not Deleted!`);
-        setLoading(false);
-        handleAlert(AlertRef);
-      } else {
+      if (response.status === 200) {
         setLoading(false);
         navigate(`/projects/${projectId}`);
       }
     })
     .catch((err) => {
       console.log(err);
-      setMessage(`Server Error - Bug Not Deleted!`);
       setLoading(false);
-      handleAlert(AlertRef);
     })
   };
 
@@ -148,11 +130,6 @@ const EditBugPage = ({ user, setEditing }) => {
 
   return (
     <StyledBugSection>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <DeleteAlert
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}

@@ -136,11 +136,4 @@ const StyledBug = styled.div`
 			font-weight: 200;
 		}
 	}
-	/* author colors */
-	#Gibby {
-		color: #8bd4ff;;
-	}
-	#Moose {
-		color: #0dbe7a;
-	}
 `;

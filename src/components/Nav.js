@@ -2,31 +2,20 @@
 import styled from 'styled-components';
 import * as palette from '../styled/ThemeVariables';
 
-// redux
-import { connect } from 'react-redux';
-
 // router
 import { Link } from 'react-router-dom';
 
 // icons
 import * as icon from '../assets/IconImports.js';
 
-// functions
-import { handleAdminAuth } from '../functions/handleAdminAuth';
-
 // components
 import { ToggleProjectNav } from './ToggleProjectNav.js';
 
-const Nav = ({user, logout, projectSideNavRef}) => {
+export const Nav = ({ logout, projectSideNavRef }) => {
     return (
         <StyledNav>
             <div className="top-container">
                 <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
-                {
-                    handleAdminAuth(user) 
-                    ? <Link to="/RegisterUserPage"><img src={icon.Register} alt="Register User" /><span className="tooltiptext">Register User</span></Link>
-                    : <></>
-                }
                 <Link id="add-button" to={'/CreateProjectPage'}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
                 <Link to="/features"><img src={icon.Help} alt="Features" /><span className="tooltiptext">Features</span></Link>
             </div>
@@ -128,11 +117,3 @@ const StyledNav = styled.div`
         height: 25px;
     }
 `;
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-export default connect(mapStateToProps)(Nav);

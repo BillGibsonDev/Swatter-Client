@@ -39,7 +39,7 @@ const SprintsPage = ({ user }) => {
       try {
         const projectData = await getProject( user, projectId );
         setProject(projectData);
-        setOptions(projectData.sprints)
+        setOptions(projectData.sprints);
         setLoading(false);
       } catch (error) {
         setLoading(false);

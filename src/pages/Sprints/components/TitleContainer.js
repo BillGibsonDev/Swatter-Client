@@ -37,70 +37,67 @@ export const TitleContainer = ({ sprint, setEditing }) => {
 }
 
 const StyledTitleContainer = styled.article`
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      height: 10vh;
-      margin: 20px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 10vh;
+  margin: 20px 0;
+  @media (max-width: 450px) {
+    margin-top: 20px;
+  }
+  .title-container {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    margin-right: auto;
+    align-items: center;
+    h4 {
+      color: white;
+      font-size: 30px;
+      margin-top: auto;
+      margin-right: 16px;
+    }
+    button {
+      width: 30px;
+      height: 30px;
+      z-index: 3;
+      background: none;
+      border: none;
       @media (max-width: 450px) {
-        margin-top: 20px;
+        margin-bottom: 0;
+        width: 24px;
+        height: 24px;
       }
-      .title-container {
-        display: flex;
-        width: 100%;
-        max-width: 600px;
-        margin-right: auto;
-        align-items: center;
-        h4 {
-          color: white;
-          font-size: 30px;
-          margin-top: auto;
-          margin-right: 16px;
-        }
-        button {
-          width: 30px;
-          height: 30px;
-          z-index: 3;
-          background: none;
-          border: none;
-          @media (max-width: 450px) {
-            margin-bottom: 0;
-            width: 24px;
-            height: 24px;
-          }
-          }
-          #edit-button {
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-            &:hover {
-              transform: scale(1.05);
-            }
-          }
-        }
+    }
+    #edit-button {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover {
+        transform: scale(1.05);
       }
-      #status {
-        width: 100%;
-        color: white;
-        @media (max-width: 450px) {
-          margin-bottom: 6px;
-        }
-        span {
-          color: ${palette.helperGrey};
-        }
+    }
+  }
+  #status {
+    width: 100%;
+    color: white;
+    @media (max-width: 450px) {
+      margin-bottom: 6px;
+    }
+    span {
+      color: ${palette.helperGrey};
+    }
+  }
+  .info-container {
+    margin-right: auto;
+    h5 {
+      color: white;
+      @media (max-width: 450px) {
+        margin-bottom: 6px;
       }
-      .info-container {
-        margin-right: auto;
-        h5 {
-          color: white;
-          @media (max-width: 450px) {
-            margin-bottom: 6px;
-          }
-          span {
-            color: ${palette.helperGrey};
-          }
-        }
+      span {
+        color: ${palette.helperGrey};
       }
     }
   }

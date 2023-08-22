@@ -3,19 +3,14 @@ import axios from "axios";
 // styled
 import styled from "styled-components";
 
-// functions
-import { handleAlert } from "../../../../../functions/handleAlert";
-
 //redux
 import { connect } from "react-redux";
 
-const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId, CommentContainerRef }) => {
+const CommentInput = ({ user, setLoading, projectId, bugId, CommentContainerRef }) => {
 
   const sendComment = () => {
     if (!document.getElementById("comment").value) {
       setLoading(false);
-      setMessage("No Comment Entered!");
-      handleAlert(AlertRef);
     } else {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/comments`,
@@ -32,11 +27,7 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
         }
       )
       .then((response) => {
-        if (response.data !== "Comment created!") {
-          setLoading(false);
-          setMessage("Server Error - Comment not created!");
-          handleAlert(AlertRef);
-        } else {
+        if (response.status === 200) {
           setLoading(false);
           document.getElementById("comment").value = "";
           let container = CommentContainerRef.current;
@@ -48,8 +39,6 @@ const CommentInput = ({ user, setLoading, AlertRef, setMessage, projectId, bugId
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        setMessage("Server Error - Comment not created!");
-        handleAlert(AlertRef);
       })
     }
   };

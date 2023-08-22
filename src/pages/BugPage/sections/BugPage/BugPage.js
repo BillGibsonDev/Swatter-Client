@@ -11,7 +11,6 @@ import { CommentSection } from "./components/CommentSection.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
-import { Alert } from "../../../../components/Alert.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
 
 // redux
@@ -19,7 +18,6 @@ import { connect } from "react-redux";
 
 const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }) => {
 
-  const AlertRef = useRef();
   const DeleteAlertRef = useRef();
 
   const handleModal = (index) => {
@@ -41,9 +39,6 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
 
   return (
     <StyledBugPage>
-      <Alert 
-        AlertRef={AlertRef}
-      />
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
       />

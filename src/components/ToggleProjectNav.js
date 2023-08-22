@@ -9,7 +9,7 @@ import { toggleProjectSideNav } from "../functions/toggleProjectNav";
 
 import { useLocation } from "react-router-dom";
 
-export const ToggleProjectNav = ({projectSideNavRef}) => {
+export const ToggleProjectNav = ({ projectSideNavRef }) => {
 
   const location = useLocation();
 

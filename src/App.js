@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styles
 import GlobalStyles from "./GlobalStyles";
 
 // components
-import Nav from "./components/Nav";
-import { Alert } from "./components/Alert";
+import { Nav }from "./components/Nav";
+import Alert from "./components/Alert";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
@@ -14,7 +14,6 @@ import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
-import RegisterUserPage from "./pages/RegisterUserPage.js";
 import MainBugPage from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
 import SprintsPage from "./pages/Sprints/SprintsPage.js";
@@ -31,20 +30,14 @@ import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { handleUser } from './redux/actions/user.js';
 
-//functions
-import { handleTokens } from "./functions/handleTokens";
-import { handleAlert } from "./functions/handleAlert";
-
 function App() {
   
-  const AlertRef = useRef();
   const projectSideNavRef = useRef();
 
-  const [ message, setMessage ] = useState('')
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [ password, setPassword ] = useState("");
+  const [ username, setUsername ] = useState("");
+  const [ isLoggedIn, setLoggedIn ] = useState(false);
+  const [ isLoading, setLoading ] = useState(false);
 
   const navigate = useNavigate();
 
@@ -85,8 +78,7 @@ function App() {
 
   const login = () => {
     if(!password || !username){
-      setMessage("Enter A Username or Password");
-      handleAlert(AlertRef);
+
     } else {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
@@ -106,8 +98,6 @@ function App() {
         .catch((err) => {
           console.log(err);
           localStorage.clear();
-          setMessage("Wrong Username or Password");
-          handleAlert(AlertRef);
           setLoading(false);
           setLoggedIn(false);
           navigate("/login");
@@ -122,61 +112,48 @@ function App() {
     setLoading(false);
   };
 
+  if(!isLoggedIn){
+    return (
+      <>
+        <Routes>
+          <Route path='/login' exact element={ 
+            <LoginPage
+              login={login}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              isLoading={isLoading}
+            /> 
+          } />
+          <Route path='/signup' exact element={ 
+            <SignupPage
+              isLoading={isLoading}
+              setLoading={setLoading}
+            />     
+          } />
+          <Route path='/' element={<Navigate replace to="/login" />}  />
+        </Routes>
+      </>
+    )
+  }
+
   return (
     <>
+      <Alert />
       <GlobalStyles />
-      {
-        !isLoggedIn ? 
-          <>
-            <Alert
-              message={message}
-              handleAlert={handleAlert}
-              AlertRef={AlertRef}
-            />
-            <Routes>
-              <Route path='/login' exact element={ 
-                <LoginPage
-                  login={login}
-                  setUsername={setUsername}
-                  setPassword={setPassword}
-                  isLoading={isLoading}
-                  message={message}
-                  handleAlert={handleAlert}
-                  AlertRef={AlertRef}
-                /> 
-              }/>
-              <Route path='/signup' exact element={ 
-                <SignupPage
-                  isLoading={isLoading}
-                  setLoading={setLoading}
-                  message={message}
-                  setMessage={setMessage}
-                  handleAlert={handleAlert}
-                  AlertRef={AlertRef}
-                />     
-              }/>
-              <Route path='/' element={<Navigate replace to="/login" />}  />
-            </Routes>
-          </>
-        : 
-        <>
-          <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
-          <Routes>
-            <Route path='/' exact element={ <HomePage /> } />
-            <Route path='/:projectId/:bugId' exact element={ <MainBugPage /> }  />
-            <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
-            <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
-            <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
-            <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />
-            <Route path='/:projectId/details' exact element={ <ProjectDetailsPage /> } />
-            <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
-            <Route path='/RegisterUserPage' exact element={ <RegisterUserPage /> } />
-            <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
-            <Route path='/features' exact element={ <FeaturesPage />} />
-            <Route path='/:projectId/activity' exact element={ <ProjectActivityPage />} />
-          </Routes>
-        </>
-      }
+      <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
+      <Routes>
+        <Route path='/' exact element={ <HomePage /> } />
+        <Route path='/:projectId/:bugId' exact element={ <MainBugPage /> }  />
+        <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
+        <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
+        <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
+        <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />
+        <Route path='/:projectId/details' exact element={ <ProjectDetailsPage /> } />
+        <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
+        <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
+        <Route path='/features' exact element={ <FeaturesPage />} />
+        <Route path='/:projectId/activity' exact element={ <ProjectActivityPage />} />
+      </Routes>
     </>
   );
 }

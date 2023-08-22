@@ -1,24 +1,15 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as palette from '../../../styled/ThemeVariables.js';
 
-// functions
-import { handleAlert } from "../../../functions/handleAlert.js";
-
 // redux
 import { connect } from "react-redux";
 
-// components
-import { Alert } from "../../../components/Alert.js";
-
 const CreateSprint = ({ projectId, setCreating, user }) => {
 
-  const AlertRef = useRef();
-
-  const [ message, setMessage ] = useState('');
   const [title, setTitle] = useState("");
   const [goal, setGoal] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -26,7 +17,7 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
   const [status, setStatus] = useState("");
 
   const handleCreateSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/create`,
       {
         projectId: projectId,
         goal: goal,
@@ -42,17 +33,13 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
       }
     )
     .then((response) => {
-      if (response.data !== "Sprint Created") {
-        setMessage("Server Error - Sprint not created");
-        handleAlert(AlertRef);
-      } else {
-        setMessage("Sprint Created!");
-        handleAlert(AlertRef);
+      if (response.data === 200) {
         setCreating(false);
       }
     })
     .catch((err) => {
       console.log(err);
+      setCreating(false);
     });
   };
 
@@ -60,11 +47,6 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
 
   return (
     <StyledCreateSprint>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <div className='title-container'>
         <h1>New Sprint</h1>
         <button id='exit-btn' onClick={() => { setCreating(false); }}>

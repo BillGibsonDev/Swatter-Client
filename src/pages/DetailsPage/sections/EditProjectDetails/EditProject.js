@@ -12,12 +12,10 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "../../../../assets/icons/editIconWhite.png";
 
 // functions
-import { handleAlert } from "../../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // components
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
-import { Alert } from '../../../../components/Alert.js';
 import ButtonContainer from "./components/ButtonContainer.js";
 
 // loaders
@@ -30,10 +28,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
   
   const navigate = useNavigate();
 
-  const AlertRef = useRef();
   const DeleteAlertRef = useRef();
-
-  const [ message, setMessage ] = useState('');
 
   const deleteProject = () => {
     setLoading(true);
@@ -44,10 +39,8 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
       }
     })
     .then((response) => {
-      if (response.data !== "Project Deleted") {
-        setMessage(`Server Error - Project not deleted!`);
+      if (response.status === 200) {
         setLoading(false);
-        handleAlert(AlertRef);
       } else {
         setLoading(false);
         navigate("/");
@@ -55,21 +48,19 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
     })
     .catch((err) => {
       console.log(err);
-      setMessage(`Server Error - Project not deleted!`);
       setLoading(false);
-      handleAlert(AlertRef);
     })
   };
 
-  const [title, setTitle] = useState(project.title);
-  const [startDate, setStartDate] = useState(project.startDate);
-  const [link, setLink] = useState(project.link);
-  const [image, setImage] = useState(project.image);
-  const [key, setKey] = useState(project.key);
-  const [description, setDescription] = useState(project.description);
-  const [repository, setRepository] = useState(project.repository);
-  const [lead, setLead] = useState(project.lead);
-  const [type, setType] = useState(project.type);
+  const [ title, setTitle ] = useState(project.title);
+  const [ startDate, setStartDate ] = useState(project.startDate);
+  const [ link, setLink ] = useState(project.link);
+  const [ image, setImage ] = useState(project.image);
+  const [ key, setKey ] = useState(project.key);
+  const [ description, setDescription ] = useState(project.description);
+  const [ repository, setRepository ] = useState(project.repository);
+  const [ lead, setLead ] = useState(project.lead);
+  const [ type, setType ] = useState(project.type);
 
   const editProject = () => {
     setLoading(true);
@@ -92,31 +83,19 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
       }
     )
     .then((response) => {
-      if (response.data !== "Project Updated") {
-        setMessage('Server Error - Project not updated');
-        handleAlert(AlertRef);
-        setLoading(false);
-      } else { 
+      if (response.status === 200) {
         setEditing(false);
-        setMessage(`${project.title} updated!`);
-        handleAlert(AlertRef);
         setLoading(false);
       }
     })
     .catch((err) => {
       console.log(err);
-      setMessage('Server Error - Project not updated');
       setLoading(false);
     })
   };
 
   return (
     <StyledDetails>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <DeleteAlert
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}

@@ -1,18 +1,24 @@
 import styled from "styled-components";
 import * as palette from '../styled/ThemeVariables.js';
 
-// functions
-import { handleAlert } from "../functions/handleAlert.js";
+// redux
+import { connect } from "react-redux";
+import { hideAlert } from "../redux/actions/alert.js";
 
-export const Alert = ({AlertRef, message}) => {
-  return (
-    <StyledAlert ref={AlertRef} onClick={() => { handleAlert(AlertRef)}}>
-        <div className="alert-container">
-            <h1>{message}</h1>
-            <button>Okay</button>
-        </div>
-    </StyledAlert>
-  )
+const Alert = ({ alert, message, hideAlert }) => {
+
+    if(!alert.isVisible){
+        return null;
+    }
+
+    return (
+        <StyledAlert>
+            <div className="alert-container">
+                <p>{message}</p>
+                <button onClick={() => { hideAlert() }}>Okay</button>
+            </div>
+        </StyledAlert>
+    )
 }
 
 const StyledAlert = styled.div`
@@ -66,3 +72,15 @@ const StyledAlert = styled.div`
         }
     }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = {
+  hideAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Alert);

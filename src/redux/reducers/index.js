@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import user from './user.js';
+import userReducer from './user.js';
+import alertReducer from './alert.js';
 
 export const reducers = combineReducers({ 
-    user
+    user: userReducer,
+    alert: alertReducer
 });

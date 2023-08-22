@@ -7,26 +7,15 @@ import { connect } from 'react-redux';
 
 const ProfilePage =({ user }) => {
 
-    const handleUserRole = (role) => {
-        if( role === process.env.REACT_APP_ADMIN_SECRET ) {
-            return 'Admin';
-        } else if( role === process.env.REACT_APP_USER_SECRET){
-            return 'User';
-        } else {
-            return 'Guest';
-        }
-    }
-
     return (
         <StyledProfilePage>
             <h1>Profile</h1>
             {
-                !user.role
+                !user
                 ? <h1>You are signed out</h1>
                 : <>
                     <div className="user-container">
                         <h2><span>Username: </span>{user.username}</h2>
-                        <h2><span>Role: </span>{handleUserRole(user.role)}</h2>
                     </div>
                 </>
             }

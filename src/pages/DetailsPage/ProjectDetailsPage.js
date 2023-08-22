@@ -36,43 +36,41 @@ const ProjectDetailsPage = ({ user }) => {
         setProject(projectData);
         setLoading(false);
       } catch (error) {
+        console.log(error);
         setLoading(false);
       }
     };
     fetchProject();
   }, [projectId, user]);
 
+  if( isLoading ){
+    return <Loader />
+  }
 
   return (
     <StyledDetails>
+      <BreadCrumbs 
+        projectId={projectId}
+        projectTitle={project.title}
+        title={'Details'}
+      />
       {
-        isLoading ? <Loader />
-       : 
-        <>
-          <BreadCrumbs 
-            projectId={projectId}
-            projectTitle={project.title}
-            title={'Details'}
-          />
-          {
-            editing ? 
-            <EditProject
-              isLoading={isLoading}
-              setLoading={setLoading}
-              project={project}
-              projectId={projectId}
-              setEditing={setEditing}
-              user={user}
-            />
-            : <ProjectDetails
-              isLoading={isLoading}
-              setLoading={setLoading}
-              project={project}
-              projectId={projectId}
-              setEditing={setEditing}
-            />
-          }
-        </>
+        editing ? 
+        <EditProject
+          isLoading={isLoading}
+          setLoading={setLoading}
+          project={project}
+          projectId={projectId}
+          setEditing={setEditing}
+          user={user}
+        />
+        : <ProjectDetails
+          isLoading={isLoading}
+          setLoading={setLoading}
+          project={project}
+          projectId={projectId}
+          setEditing={setEditing}
+        />
       }
     </StyledDetails>
   );

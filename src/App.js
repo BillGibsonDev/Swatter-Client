@@ -115,6 +115,8 @@ function App() {
   if(!isLoggedIn){
     return (
       <>
+        <Alert />
+        <GlobalStyles />
         <Routes>
           <Route path='/login' exact element={ 
             <LoginPage

@@ -5,7 +5,7 @@ import * as palette from '../styled/ThemeVariables.js';
 import { connect } from "react-redux";
 import { hideAlert } from "../redux/actions/alert.js";
 
-const Alert = ({ alert, message, hideAlert }) => {
+const Alert = ({ alert, hideAlert }) => {
 
     if(!alert.isVisible){
         return null;
@@ -14,20 +14,19 @@ const Alert = ({ alert, message, hideAlert }) => {
     return (
         <StyledAlert>
             <div className="alert-container">
-                <p>{message}</p>
-                <button onClick={() => { hideAlert() }}>Okay</button>
+                <p>{alert.message}</p>
+                <button onClick={hideAlert}>Okay</button>
             </div>
         </StyledAlert>
     )
 }
 
 const StyledAlert = styled.div`
-    display: none;
     position: absolute;
     width: 100%;
     height: 100%;
     max-width: 700px;
-    z-index: 100;
+    z-index: 1000;
     text-align: center;
     margin: auto;
     border-radius: 12px;
@@ -35,10 +34,6 @@ const StyledAlert = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    @media(max-width: 650px){
-        width: 100%;
-        height: 100%;
-    }
     .alert-container {
         position: absolute;
         left: 50%;
@@ -75,7 +70,7 @@ const StyledAlert = styled.div`
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    alert: state.alert,
   };
 };
 

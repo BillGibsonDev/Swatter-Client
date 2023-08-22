@@ -35,7 +35,6 @@ const MainBugPage = ({ user }) => {
         }
       })
       .then((response) => {
-        console.log(response)
         setBug(response.data);
         setImages(response.data.images);
         setLoading(false);

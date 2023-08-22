@@ -21,8 +21,9 @@ import ButtonContainer from './components/ButtonContainer.js';
 
 // redux
 import { connect } from "react-redux";
+import { showAlert } from "../../redux/actions/alert.js";
 
-const CreateBugPage = ({ user }) => {
+const CreateBugPage = ({ user, showAlert }) => {
   const { projectId } = useParams();
 
   const [ title, setTitle ] = useState("");
@@ -60,38 +61,45 @@ const CreateBugPage = ({ user }) => {
     getProject(projectId);
   }, [ user, projectId ]);
 
+  const handleAlert = ( message, type ) => {
+    showAlert(message, type);
+  }
+
   const createBug = () => {
-    if(!title || !status){
-    } else {
-      setLoading(true);
-      let checkImages = images.filter(image => image.image !== '');
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/create`,
-        {
-          title: title,
-          description: description,
-          status: status,
-          priority: priority,
-          tag: tag,
-          sprint: sprint,
-          images: checkImages,
-          bugKey: bugKey,
-        },
-        {
-          headers: {
-            Authorization: user.token
-          }
+    if(!title){ handleAlert('A Title is Required!', 'error'); return; }; 
+    if(!status){ handleAlert('A Status is Required!', 'error'); return; }; 
+    if(!tag){ handleAlert('A Tag is Required!', 'error'); return; }; 
+    if(!priority){ handleAlert('A Priority is Required!', 'error'); return; }; 
+    if(!description){ handleAlert('A Description is Required!', 'error'); return; }; 
+    setLoading(true);
+    let checkImages = images.filter(image => image.image !== '');
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/create`,
+      {
+        title,
+        description,
+        status,
+        priority,
+        tag,
+        sprint,
+        checkImages,
+        bugKey,
+      },
+      {
+        headers: {
+          Authorization: user.token
         }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
         setLoading(false);
-      })
-    }
+        handleAlert('Bug created', 'success');
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    })
   };
 
   return (
@@ -198,4 +206,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CreateBugPage);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBugPage);

@@ -1,11 +1,11 @@
 import { SHOW_ALERT, HIDE_ALERT } from '../constants/actionTypes.js';
 
-export const showAlert = ( type, message ) => {
+export const showAlert = ( message, type ) => {
   return {
     type: SHOW_ALERT,
     payload: {
-      type,
-      message
+      message,
+      type
     },
   };
 }

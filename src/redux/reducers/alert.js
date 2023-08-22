@@ -1,5 +1,5 @@
-
 import { SHOW_ALERT, HIDE_ALERT } from "../constants/actionTypes";
+
 const initialState = {
   message: '',
   type: '',
@@ -10,7 +10,9 @@ const alertReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_ALERT:
       return {
-        ...action.payload
+        message: action.payload.message,
+        type: action.payload.type,
+        isVisible: true,
       };
     case HIDE_ALERT:
       return initialState;

@@ -15,7 +15,7 @@ const BreadCrumbs = ({ user, projectId, projectTitle, title }) => {
         <Link to={`/`}>Home</Link>
         <span>/</span>
         {
-          projectId ? <Link to={`/${user.id}/project/${projectId}`}>{projectTitle}</Link>
+          projectId ? <Link to={`/${user.id}/projects/${projectId}`}>{projectTitle}</Link>
           : <p>{projectTitle}</p>
         }
         {

@@ -20,6 +20,9 @@ import ButtonContainer from './components/ButtonContainer.js';
 import { connect } from "react-redux";
 import { showAlert } from "../../redux/actions/alert.js";
 
+// functions
+import { getProject } from '../../functions/getProject.js';
+
 const CreateBugPage = ({ user, showAlert }) => {
   const { projectId } = useParams();
 
@@ -36,24 +39,21 @@ const CreateBugPage = ({ user, showAlert }) => {
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 
+  
+
   useEffect(() => {
-    const getProject = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`,  {
-        headers: {
-          Authorization: user.token,
-        }
-      })
-      .then((response) => {
-        setProject(response.data);
-        setSprintOptions(response.data.sprints);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject(user, projectId);
+        setProject(projectData);
+        setSprintOptions(projectData.sprints)
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-      });
+      }
     };
-    getProject(projectId);
+    fetchProject();
   }, [ user, projectId ]);
 
   const handleAlert = ( message, type ) => {

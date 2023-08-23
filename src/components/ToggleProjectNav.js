@@ -7,6 +7,7 @@ import RoundMenu from "../assets/icons/dot-menu-white.png";
 // functions
 import { toggleProjectSideNav } from "../functions/toggleProjectNav";
 
+// router
 import { useLocation } from "react-router-dom";
 
 export const ToggleProjectNav = ({ projectSideNavRef }) => {
@@ -19,7 +20,7 @@ export const ToggleProjectNav = ({ projectSideNavRef }) => {
   };
 
   const handleLocation = () => {
-    let urlCheck = location.pathname.includes('/project/');
+    let urlCheck = location.pathname.includes('/projects/');
     if(!urlCheck){
       return 'none';
     } else {

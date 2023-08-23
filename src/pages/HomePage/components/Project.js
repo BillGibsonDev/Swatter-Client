@@ -15,7 +15,7 @@ export default function Project({ user, project }) {
 
   return (
     <StyledProject>
-      <Link className='project-image-link' to={`/${user.id}/project/${project._id}`}>
+      <Link className='project-image-link' to={`/${user.id}/projects/${project._id}`}>
         <img
           className='project-image'
           src={!project.image ? PlaceholderImage : project.image}
@@ -23,7 +23,7 @@ export default function Project({ user, project }) {
         />
       </Link>
       <div className="text-container">
-        <Link to={`${user.id}/project/${project._id}`}>{project.title}</Link>
+        <Link to={`${user.id}/projects/${project._id}`}>{project.title}</Link>
         {
           project.lastUpdate 
           ? <h2>Updated: {handleDate(project.lastUpdate)}</h2>

@@ -12,7 +12,7 @@ import * as icon from '../assets/IconImports.js';
 import { connect } from 'react-redux';
 
 // components
-import { ToggleProjectNav } from './ToggleProjectNav.js';
+import { ToggleProjectNav }from './ToggleProjectNav.js';
 
 const Nav = ({ user, projectSideNavRef }) => {
 

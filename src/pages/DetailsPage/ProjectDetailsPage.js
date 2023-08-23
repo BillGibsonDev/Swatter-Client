@@ -29,6 +29,8 @@ const ProjectDetailsPage = ({ user }) => {
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
 
+  
+
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -41,7 +43,7 @@ const ProjectDetailsPage = ({ user }) => {
       }
     };
     fetchProject();
-  }, [projectId, user]);
+  }, [projectId, user ]);
 
   if( isLoading ){
     return <Loader />

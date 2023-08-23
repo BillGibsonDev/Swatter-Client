@@ -8,11 +8,11 @@ import { handleActiveBugs } from '../../../functions/handleActiveBugs';
 // components
 import Bug from './Bug.js';
 
-export default function BugTable({ project, bugs }) {
+export default function BugTable({ project }) {
 
     const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
-    let activeBugs = handleActiveBugs(true, bugs);
+    let activeBugs = handleActiveBugs(true, project.bugs);
 
     activeBugs.sort((a, b) => {
         let dateA = new Date(a.lastUpdate);
@@ -37,8 +37,8 @@ export default function BugTable({ project, bugs }) {
                                        activeBugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
                                             return (
                                                 <Bug
-                                                    bug={bug}
                                                     project={project}
+                                                    bug={bug}
                                                     key={index}
                                                 />
                                             )

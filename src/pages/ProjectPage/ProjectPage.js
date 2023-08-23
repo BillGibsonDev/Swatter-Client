@@ -1,19 +1,15 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 // styled
 import styled from "styled-components";
 
 // components
 import BugTable from "./components/BugTable.js";
-import { ProjectSideNav } from "./components/ProjectSideNav";
 import { Searchbar } from "../../components/Searchbar";
 import SearchBugTable from "./components/SearchBugTable.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
-
-// pop out sections
-import CommentSection from "./sections/CommentSection";
 
 // router
 import { useParams } from "react-router-dom";
@@ -24,12 +20,12 @@ import { connect } from "react-redux";
 // functions
 import { getProject } from "../../functions/getProject.js";
 
-const ProjectPage = ({projectSideNavRef, user }) => {
-  const commentSectionRef = useRef();
+const ProjectPage = ({ user }) => {
 
   const { projectId } = useParams();
 
-  const [ project, setProject ] = useState([]);
+
+  const [ project, setProject ] = useState({});
   const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
   const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
@@ -37,24 +33,19 @@ const ProjectPage = ({projectSideNavRef, user }) => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const projectData = await getProject( user, projectId );
+        const projectData = await getProject(user, projectId);
         setProject(projectData);
         setLoading(false);
       } catch (error) {
+        console.log(error);
         setLoading(false);
       }
     };
     fetchProject();
-  }, [projectId, user]);
+  }, [ projectId, user ]);
 
   return (
     <StyledProjectPage>
-      <ProjectSideNav
-        user={user}
-        project={project}
-        projectSideNavRef={projectSideNavRef}
-        commentSectionRef={commentSectionRef}
-      />
       <Searchbar setSearchPhrase={setBugSearchPhrase} />
       {
         isLoading ? <Loader />
@@ -66,7 +57,6 @@ const ProjectPage = ({projectSideNavRef, user }) => {
               </div>
             : bugSearchPhrase ?
               <SearchBugTable
-                project={project}
                 bugs={project.bugs}
                 bugSearchPhrase={bugSearchPhrase}
               />
@@ -75,17 +65,11 @@ const ProjectPage = ({projectSideNavRef, user }) => {
                 setRerender={setRerender}
                 rerender={rerender}
                 project={project}
-                bugs={project.bugs}
                 bugSearchPhrase={bugSearchPhrase}
               />
           }
         </div>
       }
-      <CommentSection
-        commentSectionRef={commentSectionRef}
-        setRerender={setRerender}
-        rerender={rerender}
-      />
     </StyledProjectPage>
   );
 }

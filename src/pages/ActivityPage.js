@@ -25,6 +25,8 @@ const ProjectActivityPage = ({ user }) => {
   const [ project, setProject ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
 
+  
+
   useEffect(() => {
     const fetchProject = async () => {
       try {

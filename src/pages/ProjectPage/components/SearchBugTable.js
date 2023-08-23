@@ -5,7 +5,7 @@ import * as palette from '../../../styled/ThemeVariables';
 // components
 import Bug from './Bug.js';
 
-export default function SearchBugTable({ project, bugSearchPhrase }) {
+export default function SearchBugTable({ bugs, bugSearchPhrase }) {
 
     // save me :)
     // Object.keys(bugObject).forEach((key) => {
@@ -21,9 +21,9 @@ export default function SearchBugTable({ project, bugSearchPhrase }) {
     const handleSearch = (status) => {
         let bugArray = [];
         if(bugSearchPhrase){
-            let x = project.bugs.length;
+            let x = bugs.length;
             for ( let i = 0; x > i; i++ ){
-                let bugObject = project.bugs[i];
+                let bugObject = bugs[i];
                 let index = bugArray.findIndex(bug => bug._id === bugObject._id)
                 if( index < 0){
                     Object.keys(bugObject).forEach((key) => {
@@ -31,7 +31,7 @@ export default function SearchBugTable({ project, bugSearchPhrase }) {
                         string = string.toLowerCase();
                         if(string.includes(bugSearchPhrase.toLowerCase())){
                             if(bugArray.findIndex(bug => bug._id === bugObject._id) < 0){
-                                bugArray.push(project.bugs[i])
+                                bugArray.push(bugs[i])
                             }
                         }
                     })
@@ -39,7 +39,7 @@ export default function SearchBugTable({ project, bugSearchPhrase }) {
             }
             return bugArray;
         } else {
-            let array = project.bugs.filter(bug => bug.status === status).slice().reverse()
+            let array = bugs.filter(bug => bug.status === status).slice().reverse()
             return array;
         }
     }
@@ -49,7 +49,7 @@ export default function SearchBugTable({ project, bugSearchPhrase }) {
     return (
         <StyledBugTable>
             { 
-                !project.bugs
+                !bugs
                 ? <div className="undefined">
                     <h1>You've haven't entered any bugs</h1>
                 </div>
@@ -60,7 +60,6 @@ export default function SearchBugTable({ project, bugSearchPhrase }) {
                                 return (
                                     <Bug
                                         bug={bug}
-                                        project={project}
                                         key={index}
                                     />
                                 )

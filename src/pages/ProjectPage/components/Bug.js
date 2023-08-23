@@ -136,6 +136,7 @@ const StyledBug = styled.div`
 		}
 	}
 `;
+
 const mapStateToProps = (state) => {
   return {
     user: state.user,

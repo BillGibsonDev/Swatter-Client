@@ -8,6 +8,7 @@ import styled from 'styled-components';
 // components
 import Nav from "./components/Nav";
 import Alert from "./components/Alert";
+import ProjectSideNav from "./components/ProjectSideNav";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
@@ -23,6 +24,7 @@ import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
 import ProjectActivityPage from "./pages/ActivityPage";
+import CommentsPage from "./pages/CommentsPage/CommentsPage";
 
 // logged out pages
 import LoginPage from "./pages/LoginPage";
@@ -116,10 +118,11 @@ const App = () => {
       <GlobalStyles />
       <StyledApp>
         <Nav projectSideNavRef={projectSideNavRef} />
+        <ProjectSideNav projectSideNavRef={projectSideNavRef} />
         <Routes>
           <Route path='/' exact element={ <HomePage /> } />
           <Route path='/:userId/projects/:projectId/bugs/:bugId' exact element={ <MainBugPage /> }  />
-          <Route path='/:userId/project/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
+          <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage /> } />
           <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
           <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
           <Route path='/:userId/projects/:projectId/create-bug' exact element={ <CreateBugPage /> } />
@@ -128,6 +131,7 @@ const App = () => {
           <Route path='/:userId/projects/:projectId/archive' exact element={ <ArchivePage />} />
           <Route path='/features' exact element={ <FeaturesPage />} />
           <Route path='/:userId/projects/:projectId/activity' exact element={ <ProjectActivityPage />} />
+          <Route path='/:userId/projects/:projectId/comments' exact element={ <CommentsPage />} />
         </Routes>
       </StyledApp>
     </>

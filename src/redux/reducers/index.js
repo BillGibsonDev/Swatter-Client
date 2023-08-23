@@ -5,5 +5,5 @@ import alertReducer from './alert.js';
 
 export const reducers = combineReducers({ 
     user: userReducer,
-    alert: alertReducer
+    alert: alertReducer,
 });

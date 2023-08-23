@@ -3,12 +3,13 @@ import axios from "axios";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../../../styled/ThemeVariables.js";
+import * as palette from "../../styled/ThemeVariables.js";
 
 // components
-import Comment from "../components/Comment";
-import CommentInput from "../components/CommentInput.js";
-import { DeleteAlert } from "../../../components/DeleteAlert.js";
+import Comment from "./components/Comment.js";
+import CommentInput from "./components/CommentInput.js";
+import { DeleteAlert } from "../../components/DeleteAlert.js";
+import Loader from "../../loaders/Loader.js";
 
 // router
 import { useParams } from "react-router-dom";
@@ -17,35 +18,32 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 
 // functions
-import { toggleRef } from "../../../functions/toggleRef.js";
+import { getProject } from "../../functions/getProject.js";
 
-const CommentSection = ({ commentSectionRef, user }) => {
+const CommentPage = ({ user }) => {
 
   const DeleteAlertRef = useRef();
   const CommentContainerRef = useRef();
 
-  const { projectId, bugId } = useParams();
+  const { projectId } = useParams();
 
   const [ comments, setComments ] = useState([]);
   const [ isLoading, setLoading ] = useState(false);
   const [ commentId, setCommentId ] = useState();
 
   useEffect(() => {
-    const getProject = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, {
-        headers: {
-          Authorization: user.token,
-        }
-      })
-      .then((response) => {
-        setComments(response.data.comments);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject(user, projectId);
+        setComments(projectData.comments);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     };
-    getProject(projectId);
-  }, [projectId, bugId, user, isLoading]);
+    fetchProject();
+  }, [ projectId, user ]);
 
     const deleteComment = (commentId) => {
       setLoading(true);
@@ -66,8 +64,10 @@ const CommentSection = ({ commentSectionRef, user }) => {
       })
     };
 
+    if(isLoading){ return <Loader /> };
+
   return (
-    <StyledCommentSection ref={commentSectionRef} style={{ display: "none" }}>
+    <StyledCommentPage>
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteComment}
@@ -77,7 +77,6 @@ const CommentSection = ({ commentSectionRef, user }) => {
       <div className='comment-section-wrapper'>
         <div className='title-container'>
           <h1>Comments</h1>
-          <button id='exit-btn' onClick={() => { toggleRef(commentSectionRef); }}>&times;</button>
         </div>
         {
           comments.length === 0 || !comments 
@@ -105,11 +104,11 @@ const CommentSection = ({ commentSectionRef, user }) => {
           CommentContainerRef={CommentContainerRef}
         />
       </div>
-    </StyledCommentSection>
+    </StyledCommentPage>
   );
 }
 
-const StyledCommentSection = styled.div`
+const StyledCommentPage = styled.div`
   display: none;
   width: 100%;
   margin: 0 auto;
@@ -166,14 +165,6 @@ const StyledCommentSection = styled.div`
       h1 {
         color: #ffffff;
       }
-      #exit-btn {
-        background: none;
-        border: none;
-        font-size: 30px;
-        color: white;
-        position: relative;
-        cursor: pointer;
-      }
     }
     .comment-container {
       min-height: 65vh;
@@ -192,4 +183,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CommentSection);
+export default connect(mapStateToProps)(CommentPage);

@@ -50,14 +50,15 @@ const ProjectPage = ({projectSideNavRef, user }) => {
   return (
     <StyledProjectPage>
       <ProjectSideNav
+        user={user}
         project={project}
         projectSideNavRef={projectSideNavRef}
         commentSectionRef={commentSectionRef}
       />
+      <Searchbar setSearchPhrase={setBugSearchPhrase} />
       {
         isLoading ? <Loader />
         : <div className='bug-table-wrapper'>
-            <Searchbar setSearchPhrase={setBugSearchPhrase} />
           {
             !project.bugs ? 
               <div className='undefined'>
@@ -91,43 +92,13 @@ const ProjectPage = ({projectSideNavRef, user }) => {
 
 const StyledProjectPage = styled.div`
   height: 100%;
-  max-height: 100vh;
-  width: 100%;
-  max-width: 80vw;
+  max-height: 80vh;
+  width: 90%;
   display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  overflow: hidden;
   position: relative;
-  margin-left: 350px;
-  z-index: 2;
-  @media (max-width: 1440px) {
-    margin-left: 300px;
-  }
-  @media (max-width: 834px) {
-    width: 900px;
-    max-width: 85vw;
-    margin-left: 70px;
-  }
-  @media (max-width: 820px) {
-    width: 760px;
-  }
-  @media (max-width: 768px) {
-    width: 710px;
-  }
-  @media (max-width: 428px) {
-    width: 360px;
-    margin-left: 60px;
-  }
-  @media (max-width: 414px) {
-    width: 340px;
-  }
-  @media (max-width: 390px) {
-    width: 320px;
-  }
-  @media (max-width: 375px) {
-    width: 310px;
-  }
-  @media (max-width: 360px) {
-    width: 295px;
-  }
   .undefined {
     background: white;
     width: 100%;
@@ -139,16 +110,11 @@ const StyledProjectPage = styled.div`
     margin: auto;
   }
   .bug-table-wrapper {
-    overflow: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
     position: relative;
-    width: 100vw;
+    width: 100%;
+    height: auto;
     display: flex;
-    &::-webkit-scrollbar {
-      display: none;
-      width: none;
-    }
+    overflow: hidden;
   }
 `;
 

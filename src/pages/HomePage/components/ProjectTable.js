@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 // components
 import Project from "./Project.js";
-export const ProjectTable = ({projects}) => {
+export const ProjectTable = ({ user, projects}) => {
   const sortByDate = (projects) => {
     return projects.sort((a, b) => {
       return new Date(a.lastUpdate) - new Date(b.lastUpdate);
@@ -16,6 +16,7 @@ export const ProjectTable = ({projects}) => {
         sortByDate(projects).slice().reverse().map((project, key) => {
           return (
             <Project
+              user={user}
               project={project}
               key={key}
             />

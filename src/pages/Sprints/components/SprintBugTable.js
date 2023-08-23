@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as palette from '../../../styled/ThemeVariables';
 
 // components
-import { Bug } from '../../ProjectPage/components/Bug.js';
+import Bug from '../../ProjectPage/components/Bug.js';
 
 // redux
 import { connect } from 'react-redux';

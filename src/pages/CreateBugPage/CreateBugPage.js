@@ -8,9 +8,6 @@ import * as palette from "../../styled/ThemeVariables.js";
 // router
 import { useParams } from "react-router-dom";
 
-// functions
-import { handleKeyNumber } from "../../functions/handleKeyNumber.js";
-
 // components
 import Loader from "../../loaders/Loader.js";
 import { Selector } from './components/Selector.js';
@@ -34,8 +31,7 @@ const CreateBugPage = ({ user, showAlert }) => {
   const [ isLoading, setLoading ] = useState(false);
   const [ sprint, setSprint ] = useState("");
   const [ sprintOptions, setSprintOptions ] = useState([]);
-  const [ project, setProject ] = useState({})
-  const [ bugKey, setBugKey ] = useState('');
+  const [ project, setProject ] = useState({});
   const [ images, setImages ] = useState([]);
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
@@ -49,7 +45,6 @@ const CreateBugPage = ({ user, showAlert }) => {
       })
       .then((response) => {
         setProject(response.data);
-        setBugKey(handleKeyNumber(response.data.key));
         setSprintOptions(response.data.sprints);
         setLoading(false);
       })
@@ -66,11 +61,11 @@ const CreateBugPage = ({ user, showAlert }) => {
   }
 
   const createBug = () => {
-    if(!title){ handleAlert('A Title is Required!', 'error'); return; }; 
-    if(!status){ handleAlert('A Status is Required!', 'error'); return; }; 
-    if(!tag){ handleAlert('A Tag is Required!', 'error'); return; }; 
-    if(!priority){ handleAlert('A Priority is Required!', 'error'); return; }; 
-    if(!description){ handleAlert('A Description is Required!', 'error'); return; }; 
+    if(!title){ handleAlert('Title', 'warning'); return; }; 
+    if(!status){ handleAlert('Status', 'warning'); return; }; 
+    if(!tag){ handleAlert('Tag', 'warning'); return; }; 
+    if(!priority){ handleAlert('Priority', 'warning'); return; }; 
+    if(!description){ handleAlert('Description', 'warning'); return; }; 
     setLoading(true);
     let checkImages = images.filter(image => image.image !== '');
     axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/create`,
@@ -82,7 +77,7 @@ const CreateBugPage = ({ user, showAlert }) => {
         tag,
         sprint,
         checkImages,
-        bugKey,
+        author: user.username
       },
       {
         headers: {
@@ -96,9 +91,10 @@ const CreateBugPage = ({ user, showAlert }) => {
         handleAlert('Bug created', 'success');
       }
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.log(error);
       setLoading(false);
+      handleAlert(error, 'error');
     })
   };
 

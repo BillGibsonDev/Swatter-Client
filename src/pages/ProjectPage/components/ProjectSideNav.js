@@ -14,7 +14,7 @@ import { Link, useParams } from 'react-router-dom';
 // functions
 import { toggleRef } from '../../../functions/toggleRef.js';
 
-export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }) => {
+export const ProjectSideNav = ({ user, project, projectSideNavRef, commentSectionRef }) => {
 
     const { projectId } = useParams();
 
@@ -32,23 +32,23 @@ export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
-                    !project.projectImage
-                    ? <img id="default" src={images.DefaultImage} alt={project.projectTitle} />
-                    : <img src={project.projectImage} alt={project.projectTitle} />
+                    !project.image
+                    ? <img id="default" src={images.DefaultImage} alt={project.title} />
+                    : <img src={project.image} alt={project.title} />
                 }
-                <h5>{project.projectTitle} 
-                    <span>{project.projectType}</span>
+                <h5>{project.title} 
+                    <span>{project.type}</span>
                 </h5>
             </div>
             <div className="menu-wrapper">
                 <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
-                <a href={project.projectLink} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Website</a>
+                <a href={project.link} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Website" />Website</a>
                 <button onClick={()=> { toggleRef(commentSectionRef)}}><img src={icons.Comments} alt="Comments" />Comments</button>
-                <Link to={`/project/${projectId}/sprints`}><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
-                <Link to={`/${projectId}/CreateBugPage`}><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
-                <Link to={`/${projectId}/details`}><img src={icons.Details} alt="Details" />Details</Link>
-                <Link to={`/${projectId}/archive`}><img src={icons.ArchiveIcon} alt="Archive" />Archive</Link>
-                <Link to={`/${projectId}/activity`}><img src={icons.ActivityIcon} alt="Activity" />Activity</Link>
+                <Link to={`/${user.id}/projects/${projectId}/sprints`}><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
+                <Link to={`/${user.id}/projects/${projectId}/create-bug`}><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
+                <Link to={`/${user.id}/projects/${projectId}/details`}><img src={icons.Details} alt="Details" />Details</Link>
+                <Link to={`/${user.id}/projects/${projectId}/archive`}><img src={icons.ArchiveIcon} alt="Archive" />Archive</Link>
+                <Link to={`/${user.id}/projects/${projectId}/activity`}><img src={icons.ActivityIcon} alt="Activity" />Activity</Link>
             </div>
         </div>
     </StyledSideNav>
@@ -56,31 +56,21 @@ export const ProjectSideNav = ({ project, projectSideNavRef, commentSectionRef }
 }
 
 const StyledSideNav = styled.div`
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     background: white;
     height: 100%;
-    left: 60px;
     position: fixed;
+    top: 0;
+    left: 60px;
     z-index: 2;
     max-height: 100vh;
     animation-name: slideLeftSideNav;
     animation-duration: .5s;
-    @media (max-width: 1440px){
-        width: 225px;
-        animation-name: slideLeftSideNav1440;
-    }
-    @media (max-width: 834px){
-        animation-name: slideLeftSide810;
-        width: 300px;
-    }
-    @media (max-width: 428px){
-        width: 100%;
-        left: 50px;
-        animation-name: slideLeftSideNav390;
-        animation-duration: .5s;
-    }
+    transition: 0.2s;
+    display: none;
     .sidenav-wrapper {
-        margin: 16px;
+        margin: 1em;
     }
     .title-container {
         display: flex;
@@ -129,18 +119,6 @@ const StyledSideNav = styled.div`
     }
     @keyframes slideLeftSideNav {
         from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
-        to {width: 250px; opacity: 1; left: 50px; }
-    }
-    @keyframes slideLeftSideNav1440 {
-        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
-        to {width: 225px; opacity: 1; left: 50px; }
-    }
-    @keyframes slideLeftSideNav810 {
-        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
-        to {width: 300px; opacity: 1; left: 50px; }
-    }
-    @keyframes slideLeftSideNav390 {
-        from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
-        to {width: 100%; opacity: 1; left: 50px; }
+        to {width: 250px; opacity: 1; left: 60px; }
     }
 `;

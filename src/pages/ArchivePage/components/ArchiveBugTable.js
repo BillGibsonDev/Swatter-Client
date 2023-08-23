@@ -6,7 +6,7 @@ import * as palette from '../../../styled/ThemeVariables';
 import { handleActiveBugs } from '../../../functions/handleActiveBugs';
 
 // components
-import { Bug } from '../../ProjectPage/components/Bug.js';
+import Bug from '../../ProjectPage/components/Bug.js';
 
 export default function ArchiveBugTable({ project, bugs }) {
 

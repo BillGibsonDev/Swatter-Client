@@ -6,7 +6,7 @@ import * as palette from '../../../styled/ThemeVariables';
 import { handleActiveBugs } from '../../../functions/handleActiveBugs';
 
 // components
-import { Bug } from './Bug.js';
+import Bug from './Bug.js';
 
 export default function BugTable({ project, bugs }) {
 
@@ -56,24 +56,18 @@ export default function BugTable({ project, bugs }) {
 
 const StyledBugTable = styled.div`
     display: grid;
-    grid-template-columns: 350px 350px 350px 350px;
+    grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
-    height: 100%;
-    max-height: 93vh;
+    height: 90%;
     width: 100%;
-    margin-top: 7vh;
-    position: relative;
-    @media (max-width: 1440px){
-        grid-template-columns: 275px 275px 275px 275px;
-    }
-    @media (max-width: 834px){
-        grid-template-columns: 310px 310px 310px 310px;
-    }
-    @media (max-width: 428px){
-        grid-template-columns: 310px 310px 310px 310px;
-        width: 85vw;
-    }
+    margin-top: 20px;
+    overflow-x: auto;
+    /* scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+        width: none;
+    } */
     .bugs-container {
         width: 100%;
         background: black;

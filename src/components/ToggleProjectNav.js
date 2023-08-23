@@ -19,21 +19,16 @@ export const ToggleProjectNav = ({ projectSideNavRef }) => {
   };
 
   const handleLocation = () => {
-    let screen = window.innerWidth;
-    let check = location.pathname.includes('/projects/')
-    if(!check && screen > 834){
-      return 'none';
-    } else if (!check) {
+    let urlCheck = location.pathname.includes('/projects/')
+    if(!urlCheck){
       return 'none';
     } else {
       return 'block';
     }
   }
 
-  let screen = window.innerWidth;
-
   return (
-    <StyledButton id='arrow-button' style={{display: screen < 834 ? handleLocation() : "none"}} onClick={() => { handleArrow(); toggleProjectSideNav(projectSideNavRef); }}>
+    <StyledButton id='arrow-button' style={{ display: handleLocation() }} onClick={() => { handleArrow(); toggleProjectSideNav(projectSideNavRef); }}>
       <img id='arrow' src={RoundMenu} alt='Project Menu' />
       <span className='tooltiptext'>Project Menu</span>
     </StyledButton>
@@ -44,9 +39,6 @@ const StyledButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  position: absolute;
-  z-index: 2;
-  top: 50%;
   .tooltiptext {
     visibility: hidden;
     width: 100%;
@@ -57,12 +49,9 @@ const StyledButton = styled.button`
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
-    z-index: 1000;
+    z-index: 2;
     top: 0;
     left: 105%;
-  }
-  @media (max-width: 834px) {
-    display: block;
   }
   img {
     transition: 0.2s;

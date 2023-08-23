@@ -1,4 +1,4 @@
-import EditIcon from "./icons/editIconWhite.png";
+import EditIcon from "./icons/pencilWhite.png";
 import AddIcon from './icons/Add.png';
 import LogoutIcon from './icons/logoutWhite.png';
 import HelpIcon from './icons/help.png';
@@ -24,6 +24,15 @@ import SprintsIcon from './icons/sprint.png';
 import RoundMenu from './icons/dot-menu-white.png';
 import ArchivesIcon from './icons/archive.png';
 import ActivitiesIcon from './icons/wave.png';
+
+import CircleCheckboxIcon from './icons/circleCheckFilled196ecf.png';
+import TriangleWarningIcon from './icons/triangleWarningFilled196ecf.png';
+import ChatboxWarningIcon from './icons/chatboxWarningFilled196ecf.png';
+
+// warning icons
+export const CircleCheckbox = CircleCheckboxIcon;
+export const TriangleWarning = TriangleWarningIcon;
+export const ChatboxWarning = ChatboxWarningIcon;
 
 // nav icons
 export const Logout = LogoutIcon;

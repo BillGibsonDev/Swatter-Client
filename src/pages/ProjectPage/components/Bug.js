@@ -10,7 +10,10 @@ import * as icons from '../../../assets/IconImports.js';
 // function
 import { handleDate } from '../../../functions/handleDates.js';
 
-export const Bug = ({ project, bug }) => {
+// redux
+import { connect } from 'react-redux';
+
+const Bug = ({ user, project, bug }) => {
 
 	const handleSprintColor = (project) => {
 		if(project.sprints){
@@ -58,13 +61,9 @@ export const Bug = ({ project, bug }) => {
 
     return (
         <StyledBug className={bug.status}>
-			<Link to={`/${project._id}/${bug._id}`}>
+			<Link to={`/${user.id}/projects/${project._id}/bugs/${bug._id}`}>
 				<div className="top-container">
-					<h2 id="title">{bug.title}</h2>
-					{
-						bug.bugKey ? <h2 id="key">{bug.bugKey}</h2>
-						: <></>
-					}
+					<h2 id="title">{bug.title}</h2> 
 				</div>
 				<div className="center-container">
 					<h2 id="date">{handleDate(bug.lastUpdate)}</h2>
@@ -137,3 +136,10 @@ const StyledBug = styled.div`
 		}
 	}
 `;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(Bug);

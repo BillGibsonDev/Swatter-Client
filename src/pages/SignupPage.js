@@ -12,9 +12,14 @@ import { Link, useNavigate } from 'react-router-dom';
 // loaders
 import LoginLoader from '../loaders/LoginLoader';
 
+// redux
+import { useDispatch } from 'react-redux';
+import { showAlert } from '../redux/actions/alert';
+
 export default function SignupPage({ isLoading, setLoading, setMessage, handleAlert, AlertRef }) {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [ password, setPassword ] = useState("");
   const [ confirmPassword, setConfirmPassword ] = useState("");
@@ -23,21 +28,12 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
   const [ confirmEmail, setConfirmEmail ] = useState("");
 
   const handleSignup = () => {
-    if(!password || !username){
-      setMessage("Enter A Username or Password");
-      handleAlert(AlertRef);
-      return;
-    } 
-    if( password !== confirmPassword){
-      setMessage("Passwords do not match");
-      handleAlert(AlertRef);
-      return;
-    }
-    if( email !== confirmEmail){
-      setMessage("Emails do not match");
-      handleAlert(AlertRef);
-      return;
-    }
+    if(!username){ dispatch(showAlert("Username", 'warning' )); return; };
+	if(username.length > 20){ dispatch(showAlert("Usernames must be 20 characters or less", 'error' )); return; };
+	if(!password){ dispatch(showAlert("Password", 'warning' )); return; };
+    if(password !== confirmPassword){ dispatch(showAlert("Passwords do not match", 'error' )); return; };
+	if(password.length < 8){ dispatch(showAlert("Passwords must be 8 characters or more", 'error' )); return; };
+    if(email !== confirmEmail){ dispatch(showAlert("Emails do not match", 'error' )); return; };
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/users/signup`,
       {
@@ -48,22 +44,15 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
     )
     .then((response) => {
         if(response.status === 200){
-          setMessage("Account created!");
-          handleAlert(AlertRef);
           setLoading(false);
+		  dispatch(showAlert("", 'success' ))
           navigate("/login");
-        } else {
-          setMessage("Account not created!");
-          handleAlert(AlertRef);
-          setLoading(false);
-        }
+		}
       })
-      .catch((err) => {
-        console.log(err);
-        localStorage.clear();
-        setMessage("Error - Account not created");
-        handleAlert(AlertRef);
-        setLoading(false);
+      .catch((error) => {
+        console.log(error);
+		setLoading(false);
+		dispatch(showAlert(error, 'error' ))
       });
   };
 
@@ -74,29 +63,29 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
 			{
 				isLoading ? <LoginLoader />
 				:  <form className="form-wrapper">
-          <h2 id="create-heading">Create an Account</h2>
+          			<h2 id="create-heading">Create an Account</h2>
 					<label>Username
 						<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
 					</label>
-          <label>Email
+          			<label>Email
 						<input type="email" onChange={(event) => { setEmail(event.target.value); }} />
 					</label>
-          <label>Confirm Email
+          			<label>Confirm Email
 						<input type="email" onChange={(event) => { setConfirmEmail(event.target.value); }} />
 					</label>
 					<label>Password
 						<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
 					</label>
-          <label>Confirm Password
+          			<label>Confirm Password
 						<input type="password" onChange={(event) => { setConfirmPassword(event.target.value); }} />
 					</label>
-					<StyledButton id="submit-button" type="submit" onClick={() =>{ handleSignup(); }}>Create Account</StyledButton>
+					<StyledButton type="submit" onClick={() =>{ handleSignup(); }}>Create Account</StyledButton>
 				</form>
 			}
-        <div className="login-container">
-          <p>Already have an account?</p>
-          <Link to={'/login'}>Log in</Link>
-        </div>
+			<div className="login-container">
+				<p>Already have an account?</p>
+				<Link to={'/login'}>Log in</Link>
+			</div>
 		</StyledPage>
 	)
 }
@@ -113,14 +102,14 @@ const StyledPage = styled.div`
 	max-width: 1000px;
 	margin: 20px auto;
 	h1 {
-    margin-top: 20px;
+    	margin-top: 20px;
 		font-size: 5em;
-		color: #0f4d92;
-    line-height: .9;
+		color: ${palette.accentColor};
+    	line-height: .9;
 	}
 	h2 {
 		font-size: 1em;
-		color: #0f4c92;
+		color: ${palette.accentColor};
 		text-align: center;
 	}
 	.form-wrapper {
@@ -128,9 +117,9 @@ const StyledPage = styled.div`
 		flex-direction: column;
 		align-items: center;
 		margin: 20px 0;
-    h2 {
-      margin: 10px auto;
-    }
+		h2 {
+			margin: 10px auto;
+		}
 		label {
 			font-weight: bold;
 			font-size: ${palette.labelSize};
@@ -143,22 +132,9 @@ const StyledPage = styled.div`
 			margin-bottom: 20px;
 			font-size: 1em;
 		}
-		#submit-button {
-			color: #ffffff;
-			background: #0f4d92;
-			width: 200px;
-			height: 40px;
-			font-size: ${palette.subtitleSize};
-			&:hover{
-				color: #ffffff;
-				cursor: pointer;
-				background: #000000;
-				transition: 0.2s;
-			}
-		}
 	}
 	.login-container {
-    margin: 10px 0 20px 0;
+    	margin: 10px 0 20px 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -169,8 +145,8 @@ const StyledPage = styled.div`
 		a {
 			font-size: 1em;
 			margin-left: 4px;
-      text-decoration: underline;
-      text-underline-position: under;
+			text-decoration: underline;
+			text-underline-position: under;
 		}
 	}
 `;

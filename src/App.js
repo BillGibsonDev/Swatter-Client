@@ -3,25 +3,30 @@ import axios from "axios";
 
 // styles
 import GlobalStyles from "./GlobalStyles";
+import styled from 'styled-components';
 
 // components
-import { Nav }from "./components/Nav";
+import Nav from "./components/Nav";
 import Alert from "./components/Alert";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
-import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import ProfilePage from "./pages/ProfilePage";
-import LoginPage from "./pages/LoginPage";
-import CreateProjectPage from "./pages/CreateProjectPage";
+
 import MainBugPage from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
+
+import ProjectPage from "./pages/ProjectPage/ProjectPage";
+import CreateProjectPage from "./pages/CreateProjectPage";
 import SprintsPage from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
 import ProjectActivityPage from "./pages/ActivityPage";
-import SignupPage from "./pages/SignupName";
+
+// logged out pages
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 // router
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
@@ -29,8 +34,9 @@ import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 // redux
 import { useDispatch } from 'react-redux';
 import { handleUser } from './redux/actions/user.js';
+import { showAlert } from "./redux/actions/alert";
 
-function App() {
+const App = () => {
   
   const projectSideNavRef = useRef();
 
@@ -43,66 +49,32 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   let token = sessionStorage.getItem("token");
-  //   let username = sessionStorage.getItem("username");
-  //   const handlePageReload = (token) => {
-  //     setLoading(true);
-  //     setTimeout(() => {
-  //       axios.post(`${process.env.REACT_APP_BASE_URL}/users/validateTokens`, { token: token })
-  //       .then((response) => {
-  //         if(response.data === 'Token Not Valid'){
-  //           setLoggedIn(false);
-  //           setLoading(false);
-  //           sessionStorage.clear();
-  //           navigate("/LoginPage");
-  //         } else {
-  //           setLoggedIn(true);
-  //           setLoading(false);
-  //           dispatch(handleUser(username, response.data, token));
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //         setLoggedIn(false);
-  //         setLoading(false);
-  //         localStorage.clear();
-  //         navigate("/LoginPage");
-  //       });
-  //     }, 1000);
-  //   }
-  //   if(token){
-  //     handlePageReload(token);
-  //   }
-  // }, [ navigate, dispatch ]);
-
-  const login = () => {
-    if(!password || !username){
-
-    } else {
-      setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
-        {
-          username: username,
-          password: password,
-        }
-      )
-      .then((response) => {
-          if(response.status === 200){
-            dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
-            setLoggedIn(true);
-            setLoading(false);
-            navigate("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          localStorage.clear();
-          setLoading(false);
-          setLoggedIn(false);
-          navigate("/login");
-        });
-    }
+  const handleLogin = () => {
+    if(!username){ dispatch(showAlert('Username', 'warning')); return; };
+    if(!password){ dispatch(showAlert('Password', 'warning')); return; };
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
+      {
+        username: username,
+        password: password,
+      }
+    )
+    .then((response) => {
+      if(response.status === 200){
+        dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
+        setLoggedIn(true);
+        setLoading(false);
+        navigate("/");
+      }
+      })
+    .catch((error) => {
+      console.log(error);
+      localStorage.clear();
+      setLoading(false);
+      setLoggedIn(false);
+      dispatch(showAlert(error, 'error'))
+      navigate("/login");
+    });
   };
 
   const logout = () => {
@@ -120,7 +92,7 @@ function App() {
         <Routes>
           <Route path='/login' exact element={ 
             <LoginPage
-              login={login}
+              handleLogin={handleLogin}
               setUsername={setUsername}
               setPassword={setPassword}
               isLoading={isLoading}
@@ -142,21 +114,29 @@ function App() {
     <>
       <Alert />
       <GlobalStyles />
-      <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
-      <Routes>
-        <Route path='/' exact element={ <HomePage /> } />
-        <Route path='/:projectId/:bugId' exact element={ <MainBugPage /> }  />
-        <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
-        <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
-        <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
-        <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />
-        <Route path='/:projectId/details' exact element={ <ProjectDetailsPage /> } />
-        <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
-        <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
-        <Route path='/features' exact element={ <FeaturesPage />} />
-        <Route path='/:projectId/activity' exact element={ <ProjectActivityPage />} />
-      </Routes>
+      <StyledApp>
+        <Nav projectSideNavRef={projectSideNavRef} />
+        <Routes>
+          <Route path='/' exact element={ <HomePage /> } />
+          <Route path='/:userId/projects/:projectId/bugs/:bugId' exact element={ <MainBugPage /> }  />
+          <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
+          <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
+          <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
+          <Route path='/:userId/projects/:projectId/create-bug' exact element={ <CreateBugPage /> } />
+          <Route path='/:userId/projects/:projectId/details' exact element={ <ProjectDetailsPage /> } />
+          <Route path='/users/:userId/profile' exact element={ <ProfilePage logout={logout} /> } />
+          <Route path='/:userId/projects/:projectId/archive' exact element={ <ArchivePage />} />
+          <Route path='/features' exact element={ <FeaturesPage />} />
+          <Route path='/:userId/projects/:projectId/activity' exact element={ <ProjectActivityPage />} />
+        </Routes>
+      </StyledApp>
     </>
   );
 }
+
+const StyledApp = styled.section`
+  display: flex;
+`;
+
 export default App;
+

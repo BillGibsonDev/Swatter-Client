@@ -9,7 +9,7 @@ import LoginLoader from '../loaders/LoginLoader';
 // router
 import { Link } from 'react-router-dom';
 
-export default function LoginPage({login, setUsername, setPassword, isLoading }) {
+export default function LoginPage({handleLogin, setUsername, setPassword, isLoading }) {
 
 	return (
 		<StyledLoginPage>
@@ -26,7 +26,7 @@ export default function LoginPage({login, setUsername, setPassword, isLoading })
 						<label>Password
 							<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
 						</label>
-						<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
+						<StyledButton type="submit" onClick={() =>{ handleLogin(); }}>Sign In</StyledButton>
 					</form>
 					<div className="signup-container">
 						<p>Need an account?</p>
@@ -52,13 +52,13 @@ const StyledLoginPage = styled.div`
 	h1 {
 		margin-top: 20px;
 		font-size: 5em;
-		color: #0f4d92;
+		color: ${palette.accentColor};
     	line-height: .9;
 	}
 	h2 {
 		font-size: 1em;
 		margin-bottom: 40px;
-		color: #0f4c92;
+		color: ${palette.accentColor};
 		text-align: center;
 	}
 	.form-wrapper {
@@ -81,19 +81,6 @@ const StyledLoginPage = styled.div`
 			height: 40px;
 			margin-bottom: 20px;
 			font-size: 1em;
-		}
-		#submit-button {
-			color: #ffffff;
-			background: #0f4d92;
-			width: 200px;
-			height: 40px;
-			font-size: ${palette.subtitleSize};
-			&:hover{
-				color: #ffffff;
-				cursor: pointer;
-				background: #000000;
-				transition: 0.2s;
-			}
 		}
 	}
 	.signup-container {

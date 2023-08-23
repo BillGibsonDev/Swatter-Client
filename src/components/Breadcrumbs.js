@@ -5,14 +5,17 @@ import * as pallette from "../styled/ThemeVariables.js";
 // router
 import { Link } from "react-router-dom";
 
-export const BreadCrumbs = ({ projectId, projectTitle, title }) => {
+// redux
+import { connect } from "react-redux";
+
+export const BreadCrumbs = ({ user, projectId, projectTitle, title }) => {
 
   return (
     <StyledBreadCrumbs>
         <Link to={`/`}>Home</Link>
         <span>/</span>
         {
-          projectId ? <Link to={`/projects/${projectId}`}>{projectTitle}</Link>
+          projectId ? <Link to={`/${user.id}/projects/${projectId}`}>{projectTitle}</Link>
           : <p>{projectTitle}</p>
         }
         {
@@ -27,9 +30,6 @@ const StyledBreadCrumbs = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  @media (max-width: 428px) {
-    display: none;
-  }
   a {
     border: none;
     background: none;
@@ -49,3 +49,11 @@ const StyledBreadCrumbs = styled.div`
     color: white;
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(BreadCrumbs);

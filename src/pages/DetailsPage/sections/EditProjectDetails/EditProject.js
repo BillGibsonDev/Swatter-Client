@@ -32,7 +32,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
 
   const deleteProject = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/delete`, {},
+    axios.delete(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/delete`,
     {
       headers: {
         Authorization: user.token
@@ -40,8 +40,6 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
     })
     .then((response) => {
       if (response.status === 200) {
-        setLoading(false);
-      } else {
         setLoading(false);
         navigate("/");
       }

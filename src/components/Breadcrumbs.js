@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 // redux
 import { connect } from "react-redux";
 
-export const BreadCrumbs = ({ user, projectId, projectTitle, title }) => {
+const BreadCrumbs = ({ user, projectId, projectTitle, title }) => {
 
   return (
     <StyledBreadCrumbs>
         <Link to={`/`}>Home</Link>
         <span>/</span>
         {
-          projectId ? <Link to={`/${user.id}/projects/${projectId}`}>{projectTitle}</Link>
+          projectId ? <Link to={`/${user.id}/project/${projectId}`}>{projectTitle}</Link>
           : <p>{projectTitle}</p>
         }
         {

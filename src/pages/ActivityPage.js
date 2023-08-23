@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import Loader from "../loaders/Loader.js";
 
 // components
-import { BreadCrumbs } from "../components/Breadcrumbs.js";
+import BreadCrumbs from "../components/Breadcrumbs.js";
 
 // functions
 import { handleDate } from "../functions/handleDates";

@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 // styled 
 import styled from 'styled-components';
 import * as palette from '../../../styled/ThemeVariables.js';
@@ -18,17 +16,8 @@ export const ProjectSideNav = ({ user, project, projectSideNavRef, commentSectio
 
     const { projectId } = useParams();
 
-    const [ screenWidth, setScreenWidth ] = useState(0);
-
-    useEffect(() => {
-      const handleScreenWidth = () => {
-        setScreenWidth(window.innerWidth);
-      }
-      handleScreenWidth();
-    }, [])
-
   return (
-    <StyledSideNav ref={projectSideNavRef} style={{display: screenWidth > 834 ? "block" : "none"}}>
+    <StyledSideNav ref={projectSideNavRef} style={{display: 'none'}}>
         <div className="sidenav-wrapper">
             <div className="title-container">
                 {
@@ -68,7 +57,6 @@ const StyledSideNav = styled.div`
     animation-name: slideLeftSideNav;
     animation-duration: .5s;
     transition: 0.2s;
-    display: none;
     .sidenav-wrapper {
         margin: 1em;
     }

@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 // components
 import ArchiveBugTable from "./components/ArchiveBugTable.js";
-import { BreadCrumbs } from '../../components/Breadcrumbs.js';
+import BreadCrumbs from '../../components/Breadcrumbs.js';
 
 // loaders
 import Loader from "../../loaders/Loader";

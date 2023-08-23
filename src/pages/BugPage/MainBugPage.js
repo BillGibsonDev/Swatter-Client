@@ -11,7 +11,7 @@ import BugPageLoader from "../../loaders/BugPageLoader.js";
 import { useParams } from "react-router-dom";
 
 // components
-import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+import BreadCrumbs from "../../components/Breadcrumbs.js";
 
 // redux
 import { connect } from "react-redux";

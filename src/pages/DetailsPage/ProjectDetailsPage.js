@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import Loader from "../../loaders/Loader.js";
 
 // components
-import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+import BreadCrumbs from "../../components/Breadcrumbs.js";
 
 //sections
 import ProjectDetails from "./sections/ProjectDetails/ProjectDetails.js";

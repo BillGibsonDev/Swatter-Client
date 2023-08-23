@@ -6,7 +6,7 @@ import * as palette from "../../styled/ThemeVariables";
 
 // components
 import SprintBugTable from "./components/SprintBugTable.js";
-import { BreadCrumbs } from "../../components/Breadcrumbs";
+import BreadCrumbs from "../../components/Breadcrumbs";
 import { TitleContainer } from "./components/TitleContainer";
 import CreateSprint from "./sections/CreateSprint";
 import EditSprint from "./sections/EditSprint";

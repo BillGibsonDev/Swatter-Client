@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import * as palette from '../styled/ThemeVariables.js';
 
 // components
-import { BreadCrumbs } from '../components/Breadcrumbs.js';
+import BreadCrumbs from '../components/Breadcrumbs.js';
 
 // redux
 import { connect } from 'react-redux';

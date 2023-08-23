@@ -119,7 +119,7 @@ const App = () => {
         <Routes>
           <Route path='/' exact element={ <HomePage /> } />
           <Route path='/:userId/projects/:projectId/bugs/:bugId' exact element={ <MainBugPage /> }  />
-          <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
+          <Route path='/:userId/project/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
           <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
           <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
           <Route path='/:userId/projects/:projectId/create-bug' exact element={ <CreateBugPage /> } />

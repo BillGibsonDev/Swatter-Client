@@ -8,7 +8,7 @@ import { StyledButton } from "../styled/StyledButton.js";
 
 // components
 import Loader from "../loaders/Loader";
-import { BreadCrumbs } from "../components/Breadcrumbs.js";
+import BreadCrumbs from "../components/Breadcrumbs.js";
 
 // redux
 import { connect } from "react-redux";

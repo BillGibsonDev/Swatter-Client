@@ -19,7 +19,7 @@ export const ToggleProjectNav = ({ projectSideNavRef }) => {
   };
 
   const handleLocation = () => {
-    let urlCheck = location.pathname.includes('/projects/')
+    let urlCheck = location.pathname.includes('/project/');
     if(!urlCheck){
       return 'none';
     } else {

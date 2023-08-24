@@ -9,7 +9,7 @@ import * as icons from '../assets/IconImports.js';
 import * as images from '../assets/ImageImports.js';
 
 // router
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // redux
 import { connect } from 'react-redux';
@@ -23,6 +23,7 @@ const ProjectSideNav = ({ user, projectSideNavRef }) => {
     const [ project, setProject ] = useState({});
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleLocation = () => {
@@ -52,7 +53,7 @@ const ProjectSideNav = ({ user, projectSideNavRef }) => {
   return (
     <StyledSideNav ref={projectSideNavRef} style={{display: 'none' }}>
         <div className="sidenav-wrapper">
-            <div className="title-container">
+            <div className="title-container" onClick={() => { navigate(`/${user.id}/projects/${project._id}`)}}>
                 {
                     !project.image
                     ? <img id="default" src={images.DefaultImage} alt={project.title} />
@@ -88,7 +89,7 @@ const StyledSideNav = styled.div`
     height: 100%;
     position: fixed;
     top: 0;
-    left: 60px;
+    left: 35px;
     z-index: 2;
     max-height: 100vh;
     animation-name: slideLeftSideNav;
@@ -99,21 +100,27 @@ const StyledSideNav = styled.div`
     }
     .title-container {
         display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+        border-radius: 4px;
         img {
             border-radius: 50%;
             width: 50px;
             height: 50px;
             background: ${palette.helperGrey};
+            margin: 2px;
         }
         h5 {
             display: flex;
             flex-direction: column;
-            margin-left: 12px;
-            font-size: .8em;
-            span {
-                font-size: .8em;
-                color: #666666;
-            }
+            margin-left: 8px;
+            font-size: 1em;
+            word-wrap: break-word;
+        }
+        &:hover {
+            background: ${palette.accentColorTransparent};
+            color: white;
         }
     }
     .menu-wrapper {
@@ -145,7 +152,7 @@ const StyledSideNav = styled.div`
 
     @keyframes slideLeftSideNav {
         from {width: 0; opacity: 0; left: -300px; white-space: nowrap;}
-        to {width: 250px; opacity: 1; left: 60px; }
+        to {width: 250px; opacity: 1; left: 35px; }
     }
 `;
 

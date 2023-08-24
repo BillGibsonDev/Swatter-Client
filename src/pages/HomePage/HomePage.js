@@ -44,13 +44,11 @@ const HomePage = ({ user }) => {
         isLoading ? <HomePageLoader />
         : <>
             <Searchbar setSearchPhrase={setProjectSearchPhrase} />
-            <div className='projects-container'>
-              {
-                projectSearchPhrase 
-                ? <SearchProjectTable projectSearchPhrase={projectSearchPhrase} projects={projects} />
-                : <ProjectTable projects={projects} user={user} />
-              }
-            </div>
+            {
+              projectSearchPhrase 
+              ? <SearchProjectTable projectSearchPhrase={projectSearchPhrase} projects={projects} />
+              : <ProjectTable projects={projects} user={user} />
+            }
         </>
       }
     </StyledHomePage>
@@ -62,7 +60,6 @@ const StyledHomePage = styled.section`
   max-width: 1200px;
   margin: 0 auto;
   min-height: 80vh;
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
 `;

@@ -50,7 +50,7 @@ const ProjectDetailsPage = ({ user }) => {
   }
 
   return (
-    <StyledDetails>
+    <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={project.title}
@@ -74,19 +74,14 @@ const ProjectDetailsPage = ({ user }) => {
           setEditing={setEditing}
         />
       }
-    </StyledDetails>
+    </StyledPage>
   );
 }
 
-const StyledDetails = styled.div`
+const StyledPage = styled.section`
   height: 100%;
   width: 70%;
   margin: 20px auto;
-  @media (max-width: 834px) {
-    width: 80%;
-    padding: 0;
-    margin: 20px 5% 0 15%;
-  }
   #toggle-edit-button {
     width: 20px;
     height: 20px;

@@ -3,7 +3,7 @@ import * as palette from '../../styled/ThemeVariables.js';
 
 export const FeaturesPage = () => {
   return (
-    <StyledFeatures>
+    <StyledPage>
       <header className="title-container">
         <h1>Swatter Project Management</h1>
         <p>Project management is the goal of Swatter. Organizing and paving the way to meet your goals and create better outcomes. </p>
@@ -28,11 +28,11 @@ export const FeaturesPage = () => {
           <p>When issues haven't been updated in over 30 days, the are sent to the archive. This helps clean up the initial project issue table. To move an issue back to the main project table, simply update it.</p>
         </div>
       </div>
-    </StyledFeatures>
+    </StyledPage>
   )
 }
 
-const StyledFeatures = styled.section`
+const StyledPage = styled.section`
   width: 60%;
   margin: 20px auto;
   @media (max-width: 834px){

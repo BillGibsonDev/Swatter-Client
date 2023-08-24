@@ -8,10 +8,13 @@ import EditIcon from "../../../../assets/icons/editIconWhite.png";
 // loaders
 import Loader from "../../../../loaders/Loader.js";
 
+// function
+import { handleDate } from '../../../../functions/handleDates.js';
+
 export default function ProjectDetails({ project, isLoading, setEditing }) {
 
   return (
-    <StyledDetails>
+    <StyledSection>
       {
         isLoading ? <Loader />
        : 
@@ -21,23 +24,25 @@ export default function ProjectDetails({ project, isLoading, setEditing }) {
             <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit' /></button>
           </div>
           <div className='container'>
-            <h6><span>Key:</span> {project.key}</h6>
-            <h6><span>Type:</span> {project.type}</h6>
-          </div>
-          <div className='container'>
-            <h6><span>Lead:</span> {project.lead}</h6>
-            <h6><span>Started:</span> {project.startDate}</h6>
-            <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
-            <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
+            <h6><span>Started:</span> {handleDate(project.startDate)}</h6>
+            <h6><span>Last Update:</span> {handleDate(project.lastUpdate)}</h6>
+            {
+              project.link ? <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
+              : <h6><span>Website:</span> None</h6>
+            }
+            {
+              project.repository ? <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
+              : <h6><span>Repository:</span> None</h6>
+            }
             <h6><span>Description:</span> {project.description}</h6>
           </div>
         </>
       }
-    </StyledDetails>
+    </StyledSection>
   );
 }
 
-const StyledDetails = styled.div`
+const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 20px auto;
@@ -59,9 +64,6 @@ const StyledDetails = styled.div`
       margin: 10px 0;
       font-size: 1em;
       color: white;
-      @media (max-width: 428px) {
-        margin: 20px 0;
-      }
       span {
         color: ${palette.helperGrey};
       }

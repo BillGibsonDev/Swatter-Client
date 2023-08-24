@@ -51,28 +51,20 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
   };
 
   const [ title, setTitle ] = useState(project.title);
-  const [ startDate, setStartDate ] = useState(project.startDate);
   const [ link, setLink ] = useState(project.link);
   const [ image, setImage ] = useState(project.image);
-  const [ key, setKey ] = useState(project.key);
   const [ description, setDescription ] = useState(project.description);
   const [ repository, setRepository ] = useState(project.repository);
-  const [ lead, setLead ] = useState(project.lead);
-  const [ type, setType ] = useState(project.type);
 
-  const editProject = () => {
+  const updateProject = () => {
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/edit`,
       {
         title: title,
-        startDate: startDate,
         link: link,
         image: image,
         repository: repository,
         description: description,
-        key: key,
-        lead: lead,
-        type: type,
       },
       {
         headers: {
@@ -93,7 +85,7 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
   };
 
   return (
-    <StyledDetails>
+    <StyledSection>
       <DeleteAlert
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}
@@ -106,168 +98,122 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
       </div>
       {
         isLoading ? <Loader />
-        :
+        : 
         <div className='form-wrapper'>
-          <div className='form-container'>
-            <label>
-              Title
-              <input
-                type='text'
-                id='title'
-                defaultValue={project.title}
-                onChange={(event) => {
-                  setTitle(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Key
-              <input
-                type='text'
-                id='key'
-                readOnly
-                defaultValue={project.key}
-                onChange={(event) => {
-                  setKey(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              URL
-              <input
-                type='text'
-                id='projectLink'
-                defaultValue={project.link}
-                onChange={(event) => {
-                  setLink(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Repository
-              <input
-                type='text'
-                id='repository'
-                defaultValue={project.repository}
-                onChange={(event) => {
-                  setRepository(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Lead
-              <input
-                type='text'
-                id='projectLead'
-                defaultValue={project.lead}
-                onChange={(event) => {
-                  setLead(event.target.value);
-                }}
-              />
-            </label>
+          <div className="inputs-container">
+            <div className='form-container'>
+              <label>Title
+                <input 
+                  type='text' 
+                  id='title' 
+                  defaultValue={project.title}
+                  onChange={(event) => { setTitle(event.target.value); }} 
+                />
+              </label>
+              <label>Image
+                <input 
+                  type='text' 
+                  id='image' 
+                  defaultValue={project.image}
+                  onChange={(event) => { setImage(event.target.value); }} 
+                />
+              </label>
+            </div>
+            <div className='form-container'>
+              <label>Website
+                <input 
+                  type='text' 
+                  id='link' 
+                  defaultValue={project.link}
+                  onChange={(event) => { setLink(event.target.value); }} 
+                />
+              </label>
+              <label>Repository
+                <input 
+                  type='text' 
+                  id='repository' 
+                  defaultValue={project.repository}
+                  onChange={(event) => { setRepository(event.target.value); }} 
+                />
+              </label>
+            </div>
           </div>
-          <div className='form-container'>
-            <label>
-              Date
-              <input
-                type='text'
-                id='date'
-                defaultValue={project.startDate}
-                onChange={(event) => {
-                  setStartDate(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Project Type
-              <input
-                type='text'
-                id='projectType'
-                defaultValue={project.type}
-                onChange={(event) => {
-                  setType(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Description
-              <input
-                type='text'
-                id='description'
-                defaultValue={project.description}
-                onChange={(event) => {
-                  setDescription(event.target.value);
-                }}
-              />
-            </label>
-            <label>
-              Image
-              <input
-                type='text'
-                id='image'
-                defaultValue={project.image}
-                onChange={(event) => {
-                  setImage(event.target.value);
-                }}
-              />
-            </label>
-          </div>
+          <label id="description-label">Description
+            <textarea 
+              id='description' 
+              defaultValue={project.repository} 
+              onChange={(event) => { setDescription(event.target.value); }} 
+            />
+          </label>
         </div>
       }
       <ButtonContainer
-        editProject={editProject}
+        editProject={updateProject}
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}
       />
-    </StyledDetails>
+    </StyledSection>
   );
 }
 
-const StyledDetails = styled.div`
+const StyledSection = styled.section`
   display: flex;
   flex-direction: column;
+  height: 100%;
   width: 100%;
-  max-width: 1000px;
-  min-height: 50vh;
+  max-width: 800px;
+  margin: 1em auto;
+  position: relative;
   .title-container {
     display: flex;
-    max-width: 400px;
     width: 100%;
-    justify-content: space-between;
     align-items: center;
     h1 {
       color: white;
       font-size: ${palette.titleSize};
+      margin-right: auto;
     }
   }
   .form-wrapper {
-    width: 100%;
-    margin: 16px auto;
-    display: flex;
-    justify-content: space-between;
-    @media (max-width: 838px) {
-      flex-direction: column;
-    }
-    .form-container {
-      margin: 0;
-      width: 45%;
-      @media (max-width: 838px) {
-        width: 100%;
-      }
-      label {
-        display: flex;
-        color: white;
+    .inputs-container {
+      width: 100%;
+      margin: 10px auto;
+      display: flex;
+      justify-content: space-between;
+      @media (max-width: 750px) {
         flex-direction: column;
-        margin: 10px 0;
-        width: 100%;
-        max-width: 400px;
-        input, select {
+      }
+      .form-container {
+        width: 45%;
+        margin: auto;
+        @media (max-width: 750px) {
           width: 100%;
-          padding: 2px;
-          font-size: 1em;
-          background: ${palette.helperGrey};
-          height: 30px;
         }
+        label {
+          display: flex;
+          flex-direction: column;
+          margin: 10px 0 0 0;
+          color: ${palette.labelColor};
+          font-size: ${palette.labelSize};
+          input {
+            width: 100%;
+            max-width: 350px;
+            font-size: 1em;
+            padding: 2px;
+            background: ${palette.helperGrey};
+          }
+        }
+      }
+    }
+    #description-label {
+      width: 100%;
+      font-size: ${palette.labelSize};
+      color: ${palette.labelColor};
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 2px;
+        background: ${palette.helperGrey};
       }
     }
   }

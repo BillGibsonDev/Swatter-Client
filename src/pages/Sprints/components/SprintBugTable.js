@@ -66,18 +66,6 @@ const StyledBugTable = styled.div`
     width: 100%;
     margin-top: 20px;
     position: relative;
-    @media (max-width: 1440px){
-        grid-template-columns: 275px 275px 275px 275px;
-        width: 100%;
-    }
-    @media (max-width: 834px){
-        width: 100%;
-        grid-template-columns: 310px 310px 310px 310px;
-    }
-    @media (max-width: 428px){
-        grid-template-columns: 310px 310px 310px 310px;
-        width: 85vw;
-    }
     .bugs-container {
         width: 100%;
         background: black;

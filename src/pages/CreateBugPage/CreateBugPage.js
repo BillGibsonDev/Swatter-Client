@@ -39,8 +39,6 @@ const CreateBugPage = ({ user, showAlert }) => {
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
 
-  
-
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -99,7 +97,7 @@ const CreateBugPage = ({ user, showAlert }) => {
   };
 
   return (
-    <StyledAddBug>
+    <StyledPage>
       <BreadCrumbs
         projectId={projectId}
         projectTitle={project.title}
@@ -112,10 +110,6 @@ const CreateBugPage = ({ user, showAlert }) => {
           <label>
             Title
             <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
-          </label>
-          <label>
-            Created By
-            <input readOnly defaultValue={user.username} type='text' id='author' />
           </label>
           {
             sections.map((section, key) =>{
@@ -144,11 +138,11 @@ const CreateBugPage = ({ user, showAlert }) => {
           />
         </div>
       }
-    </StyledAddBug>
+    </StyledPage>
   );
 }
 
-const StyledAddBug = styled.div`
+const StyledPage = styled.section`
   display: flex;
   flex-direction: column;
   min-height: 96vh;
@@ -172,10 +166,7 @@ const StyledAddBug = styled.div`
   .form-wrapper {
     width: 100%;
     height: 100%;
-    margin: 20px auto;
-    @media (max-width: 450px) {
-      margin: 10px auto;
-    }
+    margin: 0 auto;
     label {
       display: flex;
       color: white;

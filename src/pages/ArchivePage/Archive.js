@@ -50,7 +50,7 @@ const ArchivePage = ({ user }) => {
                 projectTitle={project.title}
                 title={'Archive'}
             />
-            <h1>{project.title}Archive</h1>
+            <h1>{project.title}'s Archive</h1>
             <ArchiveBugTable
                 project={project}
                 bugs={project.bugs}

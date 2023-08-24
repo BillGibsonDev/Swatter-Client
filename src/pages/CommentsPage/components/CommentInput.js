@@ -6,7 +6,7 @@ import styled from "styled-components";
 //redux
 import { connect } from "react-redux";
 
-const CommentInput = ({ user, setLoading, projectId, CommentContainerRef }) => {
+const CommentInput = ({ user, setLoading, projectId, CommentContainerRef, setComments }) => {
 
   const sendComment = () => {
     setLoading(true);
@@ -14,7 +14,7 @@ const CommentInput = ({ user, setLoading, projectId, CommentContainerRef }) => {
       setLoading(false);
       return;
     } else {
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/comments`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/comments/create`,
         {
           projectId: projectId,
           comment: document.getElementById("comment").value,
@@ -28,12 +28,15 @@ const CommentInput = ({ user, setLoading, projectId, CommentContainerRef }) => {
       )
       .then((response) => {
         if (response.status === 200) {
+          setComments(response.data);
           setLoading(false);
           document.getElementById("comment").value = "";
           let container = CommentContainerRef.current;
-          setTimeout(() => {
-            container.scrollTo(0, document.body.scrollHeight);
-          }, 1000);
+          if(container){
+            setTimeout(() => {
+              container.scrollTo(0, document.body.scrollHeight);
+            }, 1000);
+          }
         }
       })
       .catch((err) => {
@@ -56,7 +59,7 @@ const CommentInput = ({ user, setLoading, projectId, CommentContainerRef }) => {
 }
 
 const StyledCommentInput = styled.div`
-  margin: 10px;
+  margin: auto 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;

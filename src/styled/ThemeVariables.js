@@ -11,3 +11,9 @@ export const subtitleSize = "1.2em";
 export const labelSize = ".8em;";
 export const optionSize = "1em";
 export const paraSize = "1em";
+
+// borders
+export const accentBorder2px = `2px solid ${accentColor}`;
+export const whiteBorder2px = `2px solid #fff`;
+export const titleBorder = `1px solid #fff`;
+export const borderRadius = '4px';

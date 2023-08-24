@@ -38,7 +38,7 @@ const StyledProjectTable = styled.div`
     grid-template-columns: 1fr 1fr;
   }
   @media (max-width: 838px) {
-    grid-template-columns: 75vw;
+    grid-template-columns: 1fr;
     row-gap: 8px;
     column-gap: 0;
   }

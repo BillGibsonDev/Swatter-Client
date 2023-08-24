@@ -45,7 +45,7 @@ const ProjectPage = ({ user }) => {
   }, [ projectId, user ]);
 
   return (
-    <StyledProjectPage>
+    <StyledPage>
       <Searchbar setSearchPhrase={setBugSearchPhrase} />
       {
         isLoading ? <Loader />
@@ -70,11 +70,11 @@ const ProjectPage = ({ user }) => {
           }
         </div>
       }
-    </StyledProjectPage>
+    </StyledPage>
   );
 }
 
-const StyledProjectPage = styled.div`
+const StyledPage = styled.section`
   height: 100%;
   max-height: 80vh;
   width: 90%;

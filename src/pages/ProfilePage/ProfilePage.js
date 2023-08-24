@@ -3,26 +3,26 @@ import axios from 'axios';
 
 // styled
 import styled from 'styled-components';
-import * as palette from '../styled/ThemeVariables.js';
+import * as palette from '../../styled/ThemeVariables.js';
 
 // components
-import BreadCrumbs from '../components/Breadcrumbs.js';
+import BreadCrumbs from '../../components/Breadcrumbs.js';
+
+// sections
+import { UpdateEmail } from './sections/UpdateEmail.js';
+import { UpdatePassword } from './sections/UpdatePassword.js';
+import { ProfileDetails } from './sections/ProfileDetails.js';
 
 // redux
 import { connect } from 'react-redux';
-import { StyledButton } from '../styled/StyledButton.js';
-
-// functions
-import { handleDate } from '../functions/handleDates.js';
-
-// icons
-import * as icons from '../assets/IconImports.js';
 
 const ProfilePage =({ user, logout }) => {
 
-    if ( !user ){ logout(); };
+    if (!user){ logout(); };
 
     const [ userData, setUserData ] = useState({});
+    const [ editPassword, setEditingPassword ] = useState(false);
+    const [ editEmail, setEditingEmail ] = useState(false);
 
     useEffect(() => {
       const fetchUser = () => {
@@ -32,7 +32,6 @@ const ProfilePage =({ user, logout }) => {
             }
         })
         .then((response) => {
-            console.log(response.data);
             setUserData(response.data);
         })
         .catch((error) =>{
@@ -42,30 +41,33 @@ const ProfilePage =({ user, logout }) => {
       fetchUser();
     }, [ user ])
     
-
     return (
         <StyledProfilePage>
             <BreadCrumbs projectTitle={'Profile'} />
             <h1>Profile</h1>
-            <div className="user-container">
-                <div className="field-container">
-                    <h2><span>Username: </span>{userData.username}</h2>
-                    <button><img src={icons.Edit} alt="Edit" /></button>
-                </div>
-                <div className="field-container">
-                    <h2><span>Email: </span>{userData.email}</h2>
-                    <button><img src={icons.Edit} alt="Edit"  /></button>
-                </div>
-                <div className="field-container">
-                    <h2><span>Account Created: </span>{handleDate(userData.created)}</h2>
-                </div>
-                <div className="field-container">
-                    <h2><span>Last Login: </span>{handleDate(userData.lastLogin)}</h2>
-                </div>
-            </div>
-            <div className="options-container">
-                <StyledButton id="signout-button" onClick={logout}>Sign Out</StyledButton>
-            </div>
+            {
+                editEmail ? 
+                    <UpdateEmail 
+                        setEditingEmail={setEditingEmail}
+                        editEmail={editEmail}
+                        user={user} 
+                        userData={userData}
+                    />
+                : editPassword ? 
+                    <UpdatePassword
+                        setEditingPassword={setEditingPassword}
+                        editPassword={editPassword}
+                        user={user} 
+                    />
+                : <ProfileDetails
+                    setEditingEmail={setEditingEmail}
+                    setEditingPassword={setEditingPassword}
+                    editEmail={editEmail}
+                    editPassword={editPassword}
+                    userData={userData}
+                    logout={logout}
+                />
+            }
         </StyledProfilePage>
     )
 }
@@ -83,7 +85,6 @@ const StyledProfilePage = styled.section`
         border-bottom: 2px #ffffff solid;
     }
     .user-container {
-        width: 60%;
         h2 {
             color: white;
             font-size: 1em;
@@ -95,6 +96,7 @@ const StyledProfilePage = styled.section`
             display: flex;
             align-items: center;
             margin: 10px 0 0 0;
+            width: 100%;
             button {
                 background: none;
                 border: none;
@@ -115,8 +117,11 @@ const StyledProfilePage = styled.section`
         }
     }
     .options-container {
-        #signout-button {
+        button {
             margin: 20px 0;
+        }
+        #edit-email-button {
+
         }
     }
 `;

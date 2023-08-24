@@ -48,7 +48,7 @@ const MainBugPage = ({ user }) => {
   }, [ projectId, bugId, isLoading, editing, user ]);
 
   return (
-    <StyledBugPage>
+    <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={"Project"} 
@@ -72,11 +72,11 @@ const MainBugPage = ({ user }) => {
             user={user}
           />
       }
-    </StyledBugPage>
+    </StyledPage>
   );
 }
 
-const StyledBugPage = styled.div`
+const StyledPage = styled.section`
   height: 100%;
   width: 70%;
   margin: 20px auto;

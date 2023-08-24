@@ -22,10 +22,8 @@ import { connect } from "react-redux";
 const ProjectActivityPage = ({ user }) => {
   const { projectId } = useParams();
 
-  const [ project, setProject ] = useState([]);
+  const [ project, setProject ] = useState({});
   const [ isLoading, setLoading ] = useState(true);
-
-  
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -45,33 +43,33 @@ const ProjectActivityPage = ({ user }) => {
   }
 
   return (
-    <StyledActivity>
+    <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={project.title}
         title={'Activity'}
       />
       {
-        !project.activity 
+        !project.activities
         ? <h1>This project has no activity yet..</h1>
         : <>
           {
-            project.activity.map((activity, key) => {
+            project.activities.map((activity, key) => {
               return (
                 <div className="activity-container" key={key}>
                   <h6>{handleDate(activity.date)}</h6>
-                  <h5>{activity.action}</h5>
+                  <h5><span>{activity.user} </span>{activity.activity}</h5>
                 </div>
               )
             })
           }
         </>
       }
-    </StyledActivity>
+    </StyledPage>
   );
 }
 
-const StyledActivity = styled.div`
+const StyledPage = styled.section`
   height: 100%;
   width: 70%;
   margin: 20px auto;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // styled
@@ -22,39 +22,22 @@ const CreateProjectPage = ({ user, showAlert }) => {
   const navigate = useNavigate();
 
   const [ title, setTitle ] = useState("");
-  const [ startDate, setStartDate ] = useState("");
   const [ link, setLink ] = useState("");
   const [ image, setImage ] = useState("");
   const [ isLoading, setLoading ] = useState(false);
   const [ description, setDescription ] = useState("");
   const [ repository, setRepository ] = useState("");
-  const [ lead, setLead ] = useState("");
-  const [ type, setType ] = useState("");
-
-  useEffect(() => {
-    const handleDate = () => {
-      const current = new Date();
-      const date = `0${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
-      setStartDate(date);
-    };
-    handleDate();
-  }, [ user ]);
 
   const createProject = () => {
     if(!title){ showAlert('Title', 'warning'); return; };
-    if(!startDate){ showAlert('Start Date', 'warning'); return; };
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/create`,
       {
         title,
-        startDate,
-        author: user.username,
         link,
         image,
         repository: repository,
         description: description,
-        lead,
-        type,
       },
       {
         headers: {
@@ -77,7 +60,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
   };
 
   return (
-    <StyledProjectPage>
+    <StyledPage>
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
@@ -87,29 +70,20 @@ const CreateProjectPage = ({ user, showAlert }) => {
         : 
         <div className='form-wrapper'>
           <div className="inputs-container">
-            <div className='top-form-container'>
+            <div className='form-container'>
               <label>Title
                 <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
               </label>
+              <label>Image
+                <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
+              </label>
+            </div>
+            <div className='form-container'>
               <label>URL
                 <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
               </label>
               <label>Repository
                 <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
-              </label>
-              <label>Lead
-                <input type='text' id='lead' onChange={(event) => { setLead(event.target.value); }}/>
-              </label>
-            </div>
-            <div className='bottom-form-container'>
-              <label>Date (MM/DD/YYYY)
-                <input type='text' id='date' placeholder={startDate} onChange={(event) => { setStartDate(event.target.value); }} />
-              </label>
-              <label>Project Type
-                <input type='text' id='type' onChange={(event) => { setType(event.target.value); }} />
-              </label>
-              <label>Image
-                <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
               </label>
             </div>
           </div>
@@ -119,16 +93,16 @@ const CreateProjectPage = ({ user, showAlert }) => {
         </div>
       }
       <StyledButton disabled={isLoading} onClick={() => { createProject(); }}>Start</StyledButton>
-    </StyledProjectPage>
+    </StyledPage>
   );
 }
 
-const StyledProjectPage = styled.section`
+const StyledPage = styled.section`
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 80%;
-  max-width: 1000px;
+  max-width: 800px;
   margin: 1em auto;
   position: relative;
   h1 {
@@ -145,9 +119,9 @@ const StyledProjectPage = styled.section`
       @media (max-width: 750px) {
         flex-direction: column;
       }
-      .top-form-container,
-      .bottom-form-container {
+      .form-container {
         width: 45%;
+        margin: auto;
         @media (max-width: 750px) {
           width: 100%;
         }
@@ -159,7 +133,7 @@ const StyledProjectPage = styled.section`
           font-size: ${palette.labelSize};
           input {
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
             font-size: 1em;
             padding: 2px;
             background: ${palette.helperGrey};

@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 export default function LoginPage({handleLogin, setUsername, setPassword, isLoading }) {
 
 	return (
-		<StyledLoginPage>
+		<StyledPage>
 			<h1>Swatter</h1>
 			<h2>Project Management</h2>
 			{
@@ -34,11 +34,11 @@ export default function LoginPage({handleLogin, setUsername, setPassword, isLoad
 					</div>
 				</>
 			}
-		</StyledLoginPage>
+		</StyledPage>
 	)
 }
 
-const StyledLoginPage = styled.div`
+const StyledPage = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;

@@ -23,8 +23,8 @@ const StyledSearchbar = styled.form`
     align-items: center;
     padding-left: 4px;
     border-radius: 6px;
-    width: 80%;
-    max-width: 330px;
+    width: 100%;
+    max-width: 350px;
     height: 2em;
     &:hover {
         outline: 2px solid ${palette.helperGrey} ;

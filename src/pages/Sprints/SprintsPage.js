@@ -51,7 +51,7 @@ const SprintsPage = ({ user }) => {
   }, [ projectId, user ]);
 
   return (
-    <StyledSprintSection>
+    <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={project.projectTitle} 
@@ -130,11 +130,11 @@ const SprintsPage = ({ user }) => {
             }
           </div>
       }
-    </StyledSprintSection>
+    </StyledPage>
   );
 }
 
-const StyledSprintSection = styled.div`
+const StyledPage = styled.section`
   height: 100%;
   max-height: 100vh;
   width: 100%;

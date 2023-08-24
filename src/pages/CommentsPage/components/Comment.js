@@ -14,35 +14,25 @@ import { connect } from "react-redux";
 // functions
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
 import { toggleRef } from "../../../functions/toggleRef";
+import { handleDate } from "../../../functions/handleDates";
 
 const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
 
   const DropDownRef = useRef();
 
-  const handleDate = (comment) => {
-		let currentDate = new Date();
-		let compareDate = currentDate.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(",");
-		const [ commentDate, commentTime ] = comment.date.split(",");
-		if(compareDate[0] === commentDate){
-			return commentTime;
-		} else {
-			return commentDate;
-		}
-	}
-
   const handleCommentAuthor = (author) => {
     if(author === user.username){
-      return { margin: "10px 10px 10px auto", background: `${palette.helperGrey}`};
+      return { margin: "10px 10px 10px auto", background: `${palette.accentColor}`, color: 'white'};
     } else {
       return { margin: "10px auto 10px 10px", background: "white" };
     }
   }
 
   return (
-    <StyledComment style={handleCommentAuthor(comment.author)}>
+    <StyledComment style={handleCommentAuthor(comment.user)}>
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment)}</span></h3>
+          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span></h3>
           <div className='dropdown'>
             <button className='drop-down-btn' onClick={() => { toggleRef(DropDownRef)}}><img src={Menu} alt='Menu' /></button>
             <div className='dropdown-content' ref={DropDownRef} style={{display: 'none'}}>
@@ -67,6 +57,9 @@ const StyledComment = styled.div`
   box-shadow: 3px 3px 3px #5252528d;
   position: relative;
   justify-content: space-around;
+  @media (max-width: 728px) {
+    max-width: 80%;
+  }
   .comment-wrapper {
     width: 95%;
     margin: 10px auto;
@@ -83,8 +76,8 @@ const StyledComment = styled.div`
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: .6em;
-          color: #575757;
+          font-size: .8em;
+          color: #dadada;
         }
       }
       .dropdown {
@@ -131,12 +124,6 @@ const StyledComment = styled.div`
       p {
         margin-bottom: 12px;
       }
-    }
-    #Gibby {
-      color: #008ee0;
-    }
-    #Moose {
-      color: #0dbe7a;
     }
     p {
       font-size: .8em;

@@ -90,7 +90,7 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
 	)
 }
 
-const StyledPage = styled.div`
+const StyledPage = styled.section`
 	display: flex;
 	align-items: center;
 	justify-content: center;

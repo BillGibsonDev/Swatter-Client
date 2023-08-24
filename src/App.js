@@ -12,7 +12,7 @@ import ProjectSideNav from "./components/ProjectSideNav";
 
 // pages
 import HomePage from "./pages/HomePage/HomePage.js";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 import MainBugPage from "./pages/BugPage/MainBugPage.js";
 import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";

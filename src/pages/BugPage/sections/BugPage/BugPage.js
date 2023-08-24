@@ -38,7 +38,7 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
   }
 
   return (
-    <StyledBugPage>
+    <StyledSection>
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
       />
@@ -61,11 +61,11 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
         <ImageSection images={images} handleModal={handleModal} />
         <CommentSection user={user} bugId={bugId} projectId={projectId} setLoading={setLoading}/>
       </div>
-    </StyledBugPage>
+    </StyledSection>
   );
 }
 
-const StyledBugPage = styled.div`
+const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 20px auto;

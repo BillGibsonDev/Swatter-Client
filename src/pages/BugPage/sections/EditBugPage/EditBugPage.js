@@ -45,8 +45,13 @@ const EditBugPage = ({ user, setEditing }) => {
   const [ sprint, setSprint ] = useState('');
 
   useEffect(() => {
-    const getSprints = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`)
+    const getSprints = () => {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, 
+      {
+        headers: {
+          Authorization: user.token
+        }
+      })
       .then((response) => {
         setSprintOptions(response.data.sprints);
       })
@@ -54,8 +59,13 @@ const EditBugPage = ({ user, setEditing }) => {
         console.log(err);
       });
     };
-    const getBug = (projectId, bugId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`)
+    const getBug = () => {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`, 
+      {
+        headers: {
+          Authorization: user.token
+        }
+      })
       .then((response) => {
         setBug(response.data);
         setImages(response.data.images);
@@ -70,8 +80,8 @@ const EditBugPage = ({ user, setEditing }) => {
         console.log(err);
       });
     };
-    getSprints(projectId);
-    getBug(projectId, bugId);
+    getSprints();
+    getBug();
   }, [ projectId, bugId, isLoading, rerender, user ]);
 
   const updateBug = () => {
@@ -117,7 +127,7 @@ const EditBugPage = ({ user, setEditing }) => {
     .then((response) => {
       if (response.status === 200) {
         setLoading(false);
-        navigate(`/projects/${projectId}`);
+        navigate(`/${user.id}/projects/${projectId}`);
       }
     })
     .catch((err) => {

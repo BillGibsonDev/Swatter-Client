@@ -47,11 +47,11 @@ export const Selector = ({
 
     const handleOptions = (label) => {
         if (label === 'Tag'){
-            return bugTags;
+            return ticketTags;
         } else if(label === 'Priority'){
-            return bugPriority;
+            return ticketPriority;
         } else if(label === 'Status'){
-            return bugStats;
+            return ticketStats;
         } else if(label === 'Sprint'){
             if(!sprintOptions || sprintOptions.length === 0){
                 return [];
@@ -62,9 +62,9 @@ export const Selector = ({
         }
     }
 
-    const bugTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign']
-    const bugPriority = [ 'Standard', 'Medium', 'High' ]
-    const bugStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ]
+    const ticketTags = [ 'Ticket', 'Feature', 'Enhancement', 'Task', 'Redesign']
+    const ticketPriority = [ 'Standard', 'Medium', 'High' ]
+    const ticketStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ]
 
     let Label = handleLabels(label);
     const Options = handleOptions(label);

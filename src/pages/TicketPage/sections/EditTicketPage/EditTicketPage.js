@@ -14,7 +14,7 @@ import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 import { connect } from "react-redux";
 
 // components
-import BugPageLoader from "../../../../loaders/BugPageLoader.js";
+import TicketPageLoader from "../../../../loaders/TicketPageLoader.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { Selector } from "./components/Selector.js";
 import { Images } from "./components/Images.js";
@@ -25,15 +25,15 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 // router
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditBugPage = ({ user, setEditing }) => {
+const EditTicketPage = ({ user, setEditing }) => {
 
   const DeleteAlertRef = useRef();
 
   const navigate = useNavigate();
 
-  const { projectId, bugId } = useParams();
+  const { projectId, ticketId } = useParams();
 
-  const [ bug, setBug ] = useState([]);
+  const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ sprintOptions, setSprintOptions ] = useState([]);
   const [ images, setImages ] = useState([]);
@@ -59,15 +59,15 @@ const EditBugPage = ({ user, setEditing }) => {
         console.log(err);
       });
     };
-    const getBug = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`, 
+    const getTicket = () => {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, 
       {
         headers: {
           Authorization: user.token
         }
       })
       .then((response) => {
-        setBug(response.data);
+        setTicket(response.data);
         setImages(response.data.images);
         setStatus(response.data.status);
         setDescription(response.data.description);
@@ -81,21 +81,21 @@ const EditBugPage = ({ user, setEditing }) => {
       });
     };
     getSprints();
-    getBug();
-  }, [ projectId, bugId, isLoading, rerender, user ]);
+    getTicket();
+  }, [ projectId, ticketId, isLoading, rerender, user ]);
 
-  const updateBug = () => {
+  const updateTicket = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/update`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/update`,
       {
-        title: bug.title,
+        title: ticket.title,
         description: description,
         status: status,
         tag: tag,
         priority: priority,
         projectId: projectId,
-        bugId: bug._id,
-        bug: bug
+        ticketId: ticket._id,
+        ticket: ticket
       },
       {
         headers: {
@@ -115,9 +115,9 @@ const EditBugPage = ({ user, setEditing }) => {
     })
   };
 
-  const deleteBug = () => {
+  const deleteTicket = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_BUG_URL}/${projectId}/${bugId}`, {},  
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, {},  
       {
         headers: {
           Authorization: user.token
@@ -139,23 +139,23 @@ const EditBugPage = ({ user, setEditing }) => {
   const sections = [ 'Tag', 'Priority', 'Status', 'Sprint' ];
 
   return (
-    <StyledBugSection>
+    <StyledTicketSection>
       <DeleteAlert
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}
-        deleteFunction={deleteBug}
-        title={bug.title}
+        deleteFunction={deleteTicket}
+        title={ticket.title}
       />
       {
-        isLoading ? <BugPageLoader />
+        isLoading ? <TicketPageLoader />
         : 
-          <div className='bug-container'>
+          <div className='ticket-container'>
             <div className='title-container'>
-              <h1>{bug.title}</h1>
+              <h1>{ticket.title}</h1>
               <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit' /></button>
             </div>
             <div className='info-wrapper'>
-              <InfoContainer bug={bug} />
+              <InfoContainer ticket={ticket} />
               <div className='selector-container'>
                 {
                   !tag || !sprintOptions ? <></>
@@ -192,22 +192,22 @@ const EditBugPage = ({ user, setEditing }) => {
       <Images setImages={setImages} images={images} />
       <ButtonContainer 
         DeleteAlertRef={DeleteAlertRef} 
-        updateBug={updateBug} 
+        updateTicket={updateTicket} 
         rerender={rerender}
         setRerender={setRerender}
       />
-    </StyledBugSection>
+    </StyledTicketSection>
   );
 }
 
-const StyledBugSection = styled.section`
+const StyledTicketSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 20px auto;
   @media (max-width: 450px) {
     margin: 0 auto;
   }
-  .bug-container {
+  .ticket-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -248,4 +248,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditBugPage);
+export default connect(mapStateToProps)(EditTicketPage);

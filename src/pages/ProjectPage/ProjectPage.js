@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // components
-import BugTable from "./components/BugTable.js";
+import TicketTable from "./components/TicketTable.js";
 import { Searchbar } from "../../components/Searchbar";
-import SearchBugTable from "./components/SearchBugTable.js";
+import SearchTicketTable from "./components/SearchTicketTable.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -28,7 +28,7 @@ const ProjectPage = ({ user }) => {
   const [ project, setProject ] = useState({});
   const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
-  const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
+  const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -46,26 +46,26 @@ const ProjectPage = ({ user }) => {
 
   return (
     <StyledPage>
-      <Searchbar setSearchPhrase={setBugSearchPhrase} />
+      <Searchbar setSearchPhrase={setTicketSearchPhrase} />
       {
         isLoading ? <Loader />
-        : <div className='bug-table-wrapper'>
+        : <div className='ticket-table-wrapper'>
           {
-            !project.bugs ? 
+            !project.tickets ? 
               <div className='undefined'>
-                <h1>You've haven't entered any bugs</h1>
+                <h1>You've haven't entered any tickets</h1>
               </div>
-            : bugSearchPhrase ?
-              <SearchBugTable
-                bugs={project.bugs}
-                bugSearchPhrase={bugSearchPhrase}
+            : ticketSearchPhrase ?
+              <SearchTicketTable
+                tickets={project.tickets}
+                ticketSearchPhrase={ticketSearchPhrase}
               />
             :
-              <BugTable
+              <TicketTable
                 setRerender={setRerender}
                 rerender={rerender}
                 project={project}
-                bugSearchPhrase={bugSearchPhrase}
+                ticketSearchPhrase={ticketSearchPhrase}
               />
           }
         </div>
@@ -93,7 +93,7 @@ const StyledPage = styled.section`
     align-items: center;
     margin: auto;
   }
-  .bug-table-wrapper {
+  .ticket-table-wrapper {
     position: relative;
     width: 100%;
     height: auto;

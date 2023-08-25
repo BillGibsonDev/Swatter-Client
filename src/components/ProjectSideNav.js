@@ -72,7 +72,7 @@ const ProjectSideNav = ({ user, projectSideNavRef }) => {
                 }
                 <Link to={`/${user.id}/projects/${project._id}/comments`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.Comments} alt="Comments" />Comments</Link>
                 <Link to={`/${user.id}/projects/${project._id}/sprints`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.Sprints} alt="Sprints" />Sprints</Link>
-                <Link to={`/${user.id}/projects/${project._id}/create-bug`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.AddBug} alt="Create Bug" />Create Bug</Link>
+                <Link to={`/${user.id}/projects/${project._id}/create-ticket`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.AddTicket} alt="Create Ticket" />Create Ticket</Link>
                 <Link to={`/${user.id}/projects/${project._id}/details`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.Details} alt="Details" />Details</Link>
                 <Link to={`/${user.id}/projects/${project._id}/archive`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.ArchiveIcon} alt="Archive" />Archive</Link>
                 <Link to={`/${user.id}/projects/${project._id}/activity`} onClick={() => toggleProjectSideNav(projectSideNavRef)}><img src={icons.ActivityIcon} alt="Activity" />Activity</Link>

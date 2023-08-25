@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 // components
-import ArchiveBugTable from "./components/ArchiveBugTable.js";
+import ArchiveTicketTable from "./components/ArchiveTicketTable.js";
 import BreadCrumbs from '../../components/Breadcrumbs.js';
 
 // loaders
@@ -51,9 +51,9 @@ const ArchivePage = ({ user }) => {
                 title={'Archive'}
             />
             <h1>{project.title}'s Archive</h1>
-            <ArchiveBugTable
+            <ArchiveTicketTable
                 project={project}
-                bugs={project.bugs}
+                tickets={project.tickets}
             />
         </StyledArchive>
     )

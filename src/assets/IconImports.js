@@ -6,7 +6,7 @@ import SearchIcon from './icons/searchWhite.png';
 import ProfileIcon from './icons/profileWhite.png';
 import HomeIcon from './icons/homeWhite.png';
 import RegisterIcon from './icons/taskIcon.png';
-import BugPictureIcon from './icons/bugWhite.png';
+import TicketPictureIcon from './icons/bugWhite.png';
 import FeatureIcon from './icons/featureYaleBlue.png';
 import EnhancementIcon from './icons/cog.png';
 import arrowRedIcon from "./icons/arrowRed.png";
@@ -18,7 +18,7 @@ import MenuIcon from "./icons/dotMenu.png";
 import RepoIcon from './icons/code.png';
 import GlobeIcon from './icons/globe.png';
 import DetailsIcon from './icons/panel.png';
-import AddBugIcon from './icons/plus.png';
+import AddTicketIcon from './icons/plus.png';
 import CommentsIcon from './icons/comments.png';
 import SprintsIcon from './icons/sprint.png';
 import RoundMenu from './icons/dot-menu-white.png';
@@ -46,14 +46,14 @@ export const Register = RegisterIcon;
 export const Repo = RepoIcon;
 export const Globe = GlobeIcon;
 export const Details = DetailsIcon;
-export const AddBug = AddBugIcon;
+export const AddTicket = AddTicketIcon;
 export const Comments = CommentsIcon;
 export const Sprints = SprintsIcon;
 export const ArchiveIcon = ArchivesIcon;
 export const ActivityIcon = ActivitiesIcon;
 
-// bug icons
-export const BugPicture = BugPictureIcon;
+// ticket icons
+export const TicketPicture = TicketPictureIcon;
 export const Feature = FeatureIcon;
 export const Enhancement = EnhancementIcon;
 export const ArrowRed = arrowRedIcon;

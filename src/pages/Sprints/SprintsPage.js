@@ -5,7 +5,7 @@ import styled from "styled-components";
 import * as palette from "../../styled/ThemeVariables";
 
 // components
-import SprintBugTable from "./components/SprintBugTable.js";
+import SprintTicketTable from "./components/SprintTicketTable.js";
 import BreadCrumbs from "../../components/Breadcrumbs";
 import { TitleContainer } from "./components/TitleContainer";
 import CreateSprint from "./sections/CreateSprint";
@@ -73,11 +73,11 @@ const SprintsPage = ({ user }) => {
           setSearchSprint={setSearchSprint}
         />
         : 
-          <div className='sprint-bug-table-wrapper'>
+          <div className='sprint-ticket-table-wrapper'>
             {
-              !project.bugs
+              !project.tickets
               ? <div className='undefined'>
-                  <h1>You've haven't entered any bugs</h1>
+                  <h1>You've haven't entered any tickets</h1>
                 </div>
               : 
               <>
@@ -120,7 +120,7 @@ const SprintsPage = ({ user }) => {
                     </>
                   }
                 </div>
-                <SprintBugTable
+                <SprintTicketTable
                   setRerender={setRerender}
                   rerender={rerender}
                   project={project}
@@ -246,7 +246,7 @@ const StyledPage = styled.section`
       }
     }
   }
-  .sprint-bug-table-wrapper {
+  .sprint-ticket-table-wrapper {
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;

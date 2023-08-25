@@ -79,7 +79,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
               </label>
             </div>
             <div className='form-container'>
-              <label>URL
+              <label>Website
                 <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
               </label>
               <label>Repository

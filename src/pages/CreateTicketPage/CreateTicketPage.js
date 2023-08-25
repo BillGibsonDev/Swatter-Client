@@ -23,7 +23,7 @@ import { showAlert } from "../../redux/actions/alert.js";
 // functions
 import { getProject } from '../../functions/getProject.js';
 
-const CreateBugPage = ({ user, showAlert }) => {
+const CreateTicketPage = ({ user, showAlert }) => {
   const { projectId } = useParams();
 
   const [ title, setTitle ] = useState("");
@@ -58,7 +58,7 @@ const CreateBugPage = ({ user, showAlert }) => {
     showAlert(message, type);
   }
 
-  const createBug = () => {
+  const createTicket = () => {
     if(!title){ handleAlert('Title', 'warning'); return; }; 
     if(!status){ handleAlert('Status', 'warning'); return; }; 
     if(!tag){ handleAlert('Tag', 'warning'); return; }; 
@@ -66,7 +66,7 @@ const CreateBugPage = ({ user, showAlert }) => {
     if(!description){ handleAlert('Description', 'warning'); return; }; 
     setLoading(true);
     let checkImages = images.filter(image => image.image !== '');
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/create`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
       {
         title,
         description,
@@ -86,7 +86,7 @@ const CreateBugPage = ({ user, showAlert }) => {
     .then((response) => {
       if(response.status === 200) {
         setLoading(false);
-        handleAlert('Bug created', 'success');
+        handleAlert('Ticket created', 'success');
       }
     })
     .catch((error) => {
@@ -103,7 +103,7 @@ const CreateBugPage = ({ user, showAlert }) => {
         projectTitle={project.title}
         title={'Create'}
       />
-      <h1>Create Bug</h1>
+      <h1>Create Ticket</h1>
       {
         isLoading ? <Loader />
         : <div className='form-wrapper'>
@@ -134,7 +134,7 @@ const CreateBugPage = ({ user, showAlert }) => {
             setImages={setImages}
           />
           <ButtonContainer 
-            createBug={createBug}
+            createTicket={createTicket}
           />
         </div>
       }
@@ -197,4 +197,4 @@ const mapDispatchToProps = {
   showAlert,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateBugPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTicketPage);

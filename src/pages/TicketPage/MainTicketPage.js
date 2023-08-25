@@ -5,7 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 // loaders
-import BugPageLoader from "../../loaders/BugPageLoader.js";
+import TicketPageLoader from "../../loaders/TicketPageLoader.js";
 
 // router
 import { useParams } from "react-router-dom";
@@ -17,25 +17,25 @@ import BreadCrumbs from "../../components/Breadcrumbs.js";
 import { connect } from "react-redux";
 
 // sections
-import BugPage from "./sections/BugPage/BugPage.js";
-import EditBugPage from "./sections/EditBugPage/EditBugPage.js";
+import TicketPage from "./sections/TicketPage/TicketPage.js";
+import EditTicketPage from "./sections/EditTicketPage/EditTicketPage.js";
 
-const MainBugPage = ({ user }) => {
-  const { projectId, bugId } = useParams();
-  const [ bug, setBug ] = useState([]);
+const MainTicketPage = ({ user }) => {
+  const { projectId, ticketId } = useParams();
+  const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
   const [ images, setImages ] = useState([]);
 
   useEffect(() => {
-    const getBug = (projectId, bugId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`, {
+    const getTicket = (projectId, ticketId) => {
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, {
         headers: {
           Authorization: user.token,
         }
       })
       .then((response) => {
-        setBug(response.data);
+        setTicket(response.data);
         setImages(response.data.images);
         setLoading(false);
       })
@@ -44,30 +44,30 @@ const MainBugPage = ({ user }) => {
         setLoading(false);
       });
     };
-    getBug(projectId, bugId);
-  }, [ projectId, bugId, isLoading, editing, user ]);
+    getTicket(projectId, ticketId);
+  }, [ projectId, ticketId, isLoading, editing, user ]);
 
   return (
     <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
         projectTitle={"Project"} 
-        title={bug.title}
+        title={ticket.title}
       />
       {
-        isLoading ? <BugPageLoader />
-        : !editing ? <BugPage 
+        isLoading ? <TicketPageLoader />
+        : !editing ? <TicketPage 
           setEditing={setEditing} 
-          bug={bug} 
+          ticket={ticket} 
           images={images}
-          bugId={bugId}
+          ticketId={ticketId}
           projectId={projectId}
           setLoading={setLoading}
         /> 
-        : <EditBugPage 
+        : <EditTicketPage 
             setEditing={setEditing} 
-            bug={bug}
-            bugId={bugId}
+            ticket={ticket}
+            ticketId={ticketId}
             projectId={projectId}
             user={user}
           />
@@ -105,4 +105,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MainBugPage);
+export default connect(mapStateToProps)(MainTicketPage);

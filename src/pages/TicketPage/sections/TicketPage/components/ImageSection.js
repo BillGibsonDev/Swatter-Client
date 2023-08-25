@@ -27,7 +27,7 @@ export default function ImageSection({ images, handleModal }) {
     }
 
     return (
-        <StyledImageSection className='bug-page-tabs' id="images">
+        <StyledImageSection className='ticket-page-tabs' id="images">
             {
                 !images || images.length === 0 
                 ? <h2>No images yet..</h2>

@@ -4,17 +4,17 @@ import styled from "styled-components";
 // functions
 import { handleDate } from "../../../../../functions/handleDates";
 
-export const InfoContainer = ({bug}) => {
+export const InfoContainer = ({ticket}) => {
   return (
-    <StyledBugSection>
-      <h2><span>Creator: </span>{bug.author}</h2>
-      <h2><span>Created: </span>{handleDate(bug.date)}</h2>
-      <h2><span>Updated: </span>{handleDate(bug.lastUpdate)}</h2>
-    </StyledBugSection>
+    <StyledTicketSection>
+      <h2><span>Creator: </span>{ticket.author}</h2>
+      <h2><span>Created: </span>{handleDate(ticket.date)}</h2>
+      <h2><span>Updated: </span>{handleDate(ticket.lastUpdate)}</h2>
+    </StyledTicketSection>
   );
 }
 
-const StyledBugSection = styled.article`
+const StyledTicketSection = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;

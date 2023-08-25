@@ -16,7 +16,7 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 // redux
 import { connect } from "react-redux";
 
-const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }) => {
+const TicketPage = ({ images, ticket, setEditing, ticketId, projectId, user, setLoading }) => {
 
   const DeleteAlertRef = useRef();
 
@@ -29,11 +29,11 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
     }
   };
 
-  const handleSprint = (bug) => {
-    if(!bug.sprint){
+  const handleSprint = (ticket) => {
+    if(!ticket.sprint){
       return 'None'
     } else {
-      return bug.sprint
+      return ticket.sprint
     }
   }
 
@@ -42,24 +42,24 @@ const BugPage = ({ images, bug, setEditing, bugId, projectId, user, setLoading }
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
       />
-      <div className='bug-wrapper'>
+      <div className='ticket-wrapper'>
         <div className='title-container'>
-          <h1>{bug.title}</h1>
-          <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit bug link' /></button>
+          <h1>{ticket.title}</h1>
+          <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit ticket link' /></button>
         </div>
         <div className='info-wrapper'>
           <div className='info-container'>
-            <h3><span>Tag: </span> {bug.tag}</h3>
-            <h3 className={bug.priority}><span>Priority: </span> {bug.priority}</h3>
-            <h3><span>Status: </span>{bug.status}</h3>
-            <h3><span>Sprint: </span>{handleSprint(bug)}</h3>
+            <h3><span>Tag: </span> {ticket.tag}</h3>
+            <h3 className={ticket.priority}><span>Priority: </span> {ticket.priority}</h3>
+            <h3><span>Status: </span>{ticket.status}</h3>
+            <h3><span>Sprint: </span>{handleSprint(ticket)}</h3>
           </div>
-          <InfoContainer bug={bug} />
+          <InfoContainer ticket={ticket} />
         </div>
-        <DescriptionBox description={bug.description} />
+        <DescriptionBox description={ticket.description} />
         <ButtonContainer />
         <ImageSection images={images} handleModal={handleModal} />
-        <CommentSection user={user} bugId={bugId} projectId={projectId} setLoading={setLoading}/>
+        <CommentSection user={user} ticketId={ticketId} projectId={projectId} setLoading={setLoading}/>
       </div>
     </StyledSection>
   );
@@ -69,7 +69,7 @@ const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 20px auto;
-  .bug-wrapper {
+  .ticket-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -138,4 +138,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(BugPage);
+export default connect(mapStateToProps)(TicketPage);

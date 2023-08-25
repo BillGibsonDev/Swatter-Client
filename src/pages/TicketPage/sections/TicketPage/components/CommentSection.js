@@ -6,11 +6,11 @@ import styled from "styled-components";
 import * as palette from "../../../../../styled/ThemeVariables.js";
 
 // components
-import Comment from "../components/Comment";
-import CommentInput from "../components/CommentInput.js";
+import Comment from "./Comment.js";
+import CommentInput from "./CommentInput.js";
 import { DeleteAlert } from "../../../../../components/DeleteAlert.js";
 
-export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
+export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 
   const DeleteAlertRef = useRef();
   const CommentContainerRef = useRef();
@@ -20,20 +20,24 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
 
   useEffect(() => {
     const getComments = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, {
+        headers: {
+          Authorization: user.token,
+        }
+      })
       .then((response) => {
-        setComments(response.data.bugs.comments);
+        setComments(response.data.tickets.comments);
       })
       .catch((err) => {
         console.log(err);
       });
     };
     getComments();
-  }, [ user, projectId, bugId ]);
+  }, [ user, projectId, ticketId ]);
 
   const deleteComment = (commentId) => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/comments/${commentId}`, {},
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}`, {},
       {
         headers: {
           Authorization: user.token
@@ -52,7 +56,7 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
   };
 
   return (
-    <StyledBugCommentSection className='bug-page-tabs active' id='comments'>
+    <StyledTicketCommentSection className='ticket-page-tabs active' id='comments'>
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteComment}
@@ -69,7 +73,7 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
                   return (
                     <Comment
                       comment={comment}
-                      bugId={bugId}
+                      ticketId={ticketId}
                       projectId={projectId}
                       key={index}
                       setLoading={setLoading}
@@ -82,17 +86,17 @@ export const CommentSection = ({ user, bugId, projectId, setLoading }) => {
             </div>
         }
         <CommentInput
-          bugId={bugId}
+          ticketId={ticketId}
           projectId={projectId}
           setLoading={setLoading}
           CommentContainerRef={CommentContainerRef}
         />
       </div>
-    </StyledBugCommentSection>
+    </StyledTicketCommentSection>
   );
 }
 
-const StyledBugCommentSection = styled.div`
+const StyledTicketCommentSection = styled.div`
   width: 90%;
   margin: 20px 0;
   height: 100%;

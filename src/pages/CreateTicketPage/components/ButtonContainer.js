@@ -1,26 +1,22 @@
 // styled
 import styled from "styled-components";
 
-// functions
-import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
+// redux
+import { connect } from "react-redux";
 
-export const ButtonContainer = ({ DeleteAlertRef, updateBug, setRerender, rerender}) => {
+const ButtonContainer = ({ createTicket }) => {
 
   return (
     <StyledButtonContainer>
-      <button onClick={() => { updateBug(); setRerender(!rerender); }}>Save</button>
-      <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
+      <button onClick={() => { createTicket() }}>Create</button>
     </StyledButtonContainer>
   );
 }
 
 const StyledButtonContainer = styled.article`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-top: 30px;
   button {
-    width: 40%;
+    width: 60%;
     max-width: 300px;
     height: 40px;
     cursor: pointer;
@@ -36,3 +32,11 @@ const StyledButtonContainer = styled.article`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ButtonContainer);

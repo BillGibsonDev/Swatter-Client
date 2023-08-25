@@ -3,43 +3,43 @@ import styled from 'styled-components';
 import * as palette from '../../../styled/ThemeVariables';
 
 // components
-import Bug from '../../ProjectPage/components/Bug.js';
+import Ticket from '../../ProjectPage/components/Ticket.js';
 
 // redux
 import { connect } from 'react-redux';
 
-const SprintBugTable = ({ project, searchSprint }) => {
+const SprintTicketTable = ({ project, searchSprint }) => {
 
-    const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
+    const ticketStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
     const handleSprintFilter = (status) => {
         let sprintArray = [];
         if (searchSprint){
-            sprintArray = project.bugs.filter(bug => bug.status === status).filter(bug => bug.sprint === searchSprint).slice().reverse()
+            sprintArray = project.tickets.filter(ticket => ticket.status === status).filter(ticket => ticket.sprint === searchSprint).slice().reverse()
         } else {
-            sprintArray = project.bugs.filter(bug => bug.status === status)
+            sprintArray = project.tickets.filter(ticket => ticket.status === status)
         }
         return sprintArray;
     }
 
     return (
-        <StyledBugTable>
+        <StyledTicketTable>
             { 
-                !project.bugs
+                !project.tickets
                 ? <div className="undefined">
-                    <h1>You've haven't entered any bugs</h1>
+                    <h1>You've haven't entered any tickets</h1>
                 </div>
                 : <>
                     {
-                        bugStatuses.map((status, index) => {
+                        ticketStatuses.map((status, index) => {
                             return (
-                                <div className="bugs-container" key={index}>
+                                <div className="tickets-container" key={index}>
                                     <h5>{status} <span>{ handleSprintFilter(status).length}</span></h5>
                                     {
-                                        handleSprintFilter(status).map((bug, index) => {
+                                        handleSprintFilter(status).map((ticket, index) => {
                                             return (
-                                                <Bug
-                                                    bug={bug}
+                                                <Ticket
+                                                    ticket={ticket}
                                                     project={project}
                                                     key={index}
                                                 />
@@ -52,11 +52,11 @@ const SprintBugTable = ({ project, searchSprint }) => {
                     }
                 </>
             }
-        </StyledBugTable>
+        </StyledTicketTable>
     )
 }
 
-const StyledBugTable = styled.div`
+const StyledTicketTable = styled.div`
     display: grid;
     grid-template-columns: 350px 350px 350px 350px;
     grid-row-gap: 10px;
@@ -66,7 +66,7 @@ const StyledBugTable = styled.div`
     width: 100%;
     margin-top: 20px;
     position: relative;
-    .bugs-container {
+    .tickets-container {
         width: 100%;
         background: black;
         padding: 10px;
@@ -96,4 +96,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SprintBugTable);
+export default connect(mapStateToProps)(SprintTicketTable);

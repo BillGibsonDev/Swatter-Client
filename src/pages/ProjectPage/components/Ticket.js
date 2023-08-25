@@ -13,11 +13,11 @@ import { handleDate } from '../../../functions/handleDates.js';
 // redux
 import { connect } from 'react-redux';
 
-const Bug = ({ user, project, bug }) => {
+const Ticket = ({ user, project, ticket }) => {
 
 	const handleSprintColor = (project) => {
 		if(project.sprints){
-			let sprintColor = project.sprints.find(sprint => sprint.title === bug.sprint)
+			let sprintColor = project.sprints.find(sprint => sprint.title === ticket.sprint)
 			if(sprintColor){
 				let color = sprintColor.color;
 				if(color){
@@ -31,8 +31,8 @@ const Bug = ({ user, project, bug }) => {
 
 	const handleTagImage = (tag) => {
 		switch (tag) {
-		case "Bug":
-			return icons.BugPicture;
+		case "Ticket":
+			return icons.TicketPicture;
 		case "Feature":
 			return icons.Feature;
 		case "Enhancement":
@@ -46,7 +46,7 @@ const Bug = ({ user, project, bug }) => {
 		}
 	}
 
-	const handleBugPriority = (priority) => {
+	const handleTicketPriority = (priority) => {
 		switch (priority) {
 		case "Standard":
 			return icons.ArrowGreen;
@@ -60,28 +60,28 @@ const Bug = ({ user, project, bug }) => {
 	}
 
     return (
-        <StyledBug className={bug.status}>
-			<Link to={`/${user.id}/projects/${project._id}/bugs/${bug._id}`}>
+        <StyledTicket className={ticket.status}>
+			<Link to={`/${user.id}/projects/${project._id}/tickets/${ticket._id}`}>
 				<div className="top-container">
-					<h2 id="title">{bug.title}</h2> 
+					<h2 id="title">{ticket.title}</h2> 
 				</div>
 				<div className="center-container">
-					<h2 id="date">{handleDate(bug.lastUpdate)}</h2>
-					<h2 id="sprint" style={handleSprintColor(project)}>{bug.sprint}</h2>
+					<h2 id="date">{handleDate(ticket.lastUpdate)}</h2>
+					<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
 				</div>
 				<div className="bottom-container">
 					<div className="status-icons-container">
-						<img src={handleTagImage(bug.tag)} alt={bug.tag} />
-						<img src={handleBugPriority(bug.priority)} alt={bug.priority} />
+						<img src={handleTagImage(ticket.tag)} alt={ticket.tag} />
+						<img src={handleTicketPriority(ticket.priority)} alt={ticket.priority} />
 					</div>
-				<h2 id={bug.author} className='author'>{bug.author}</h2>
+				<h2 id={ticket.author} className='author'>{ticket.author}</h2>
 				</div>
 			</Link>
-        </StyledBug>
+        </StyledTicket>
     )
 }
 
-const StyledBug = styled.div`
+const StyledTicket = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -143,4 +143,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Bug);
+export default connect(mapStateToProps)(Ticket);

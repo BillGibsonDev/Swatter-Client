@@ -6,14 +6,14 @@ import styled from "styled-components";
 //redux
 import { connect } from "react-redux";
 
-const CommentInput = ({ user, setLoading, projectId, bugId, CommentContainerRef }) => {
+const CommentInput = ({ user, setLoading, projectId, ticketId, CommentContainerRef }) => {
 
   const sendComment = () => {
     if (!document.getElementById("comment").value) {
       setLoading(false);
     } else {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/bugs/${bugId}/comments`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments`,
         {
           headers: {
             Authorization: user.token
@@ -21,7 +21,7 @@ const CommentInput = ({ user, setLoading, projectId, bugId, CommentContainerRef 
         },
         {
           projectId: projectId,
-          bugId: bugId,
+          ticketId: ticketId,
           comment: document.getElementById("comment").value,
           author: user.username,
         }

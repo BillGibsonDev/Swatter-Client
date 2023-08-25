@@ -3,7 +3,7 @@ import Loader from './Loader';
 // styled
 import styled from 'styled-components';
 
-export default function BugPageLoader() {
+export default function TicketPageLoader() {
 
     return (
         <StyledLoader>

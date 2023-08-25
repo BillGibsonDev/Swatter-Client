@@ -14,8 +14,8 @@ import ProjectSideNav from "./components/ProjectSideNav";
 import HomePage from "./pages/HomePage/HomePage.js";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
-import MainBugPage from "./pages/BugPage/MainBugPage.js";
-import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
+import MainTicketPage from "./pages/TicketPage/MainTicketPage.js";
+import CreateTicketPage from "./pages/CreateTicketPage/CreateTicketPage.js";
 
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
@@ -121,11 +121,11 @@ const App = () => {
         <ProjectSideNav projectSideNavRef={projectSideNavRef} />
         <Routes>
           <Route path='/' exact element={ <HomePage /> } />
-          <Route path='/:userId/projects/:projectId/bugs/:bugId' exact element={ <MainBugPage /> }  />
+          <Route path='/:userId/projects/:projectId/tickets/:ticketId' exact element={ <MainTicketPage /> }  />
           <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage /> } />
           <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
           <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
-          <Route path='/:userId/projects/:projectId/create-bug' exact element={ <CreateBugPage /> } />
+          <Route path='/:userId/projects/:projectId/create-ticket' exact element={ <CreateTicketPage /> } />
           <Route path='/:userId/projects/:projectId/details' exact element={ <ProjectDetailsPage /> } />
           <Route path='/users/:userId/profile' exact element={ <ProfilePage logout={logout} /> } />
           <Route path='/:userId/projects/:projectId/archive' exact element={ <ArchivePage />} />

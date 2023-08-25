@@ -3,42 +3,42 @@ import styled from 'styled-components';
 import * as palette from '../../../styled/ThemeVariables';
 
 // functions
-import { handleActiveBugs } from '../../../functions/handleActiveBugs';
+import { handleActiveTickets } from '../../../functions/handleActiveTickets';
 
 // components
-import Bug from './Bug.js';
+import Ticket from './Ticket.js';
 
-export default function BugTable({ project }) {
+export default function TicketTable({ project }) {
 
-    const bugStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
+    const ticketStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
-    let activeBugs = handleActiveBugs(true, project.bugs);
+    let activeTickets = handleActiveTickets(true, project.tickets);
 
-    activeBugs.sort((a, b) => {
+    activeTickets.sort((a, b) => {
         let dateA = new Date(a.lastUpdate);
         let dateB = new Date(b.lastUpdate);
         return dateA - dateB;
     })
 
     return (
-        <StyledBugTable>
+        <StyledTicketTable>
             { 
-                !project.bugs
+                !project.tickets
                 ? <div className="undefined">
-                    <h1>You've haven't entered any bugs</h1>
+                    <h1>You've haven't entered any tickets</h1>
                 </div>
                 : <>
                     {
-                        bugStatuses.map((status, index) => {
+                        ticketStatuses.map((status, index) => {
                             return (
-                                <div className="bugs-container" key={index}>
-                                    <h5>{status} <span>{activeBugs.filter(bug => bug.status === status).slice().reverse().length}</span></h5>
+                                <div className="tickets-container" key={index}>
+                                    <h5>{status} <span>{activeTickets.filter(ticket => ticket.status === status).slice().reverse().length}</span></h5>
                                     {
-                                       activeBugs.filter(bug => bug.status === status).slice().reverse().map((bug, index) => {
+                                       activeTickets.filter(ticket => ticket.status === status).slice().reverse().map((ticket, index) => {
                                             return (
-                                                <Bug
+                                                <Ticket
                                                     project={project}
-                                                    bug={bug}
+                                                    ticket={ticket}
                                                     key={index}
                                                 />
                                             )
@@ -50,11 +50,11 @@ export default function BugTable({ project }) {
                     }
                 </>
             }
-        </StyledBugTable>
+        </StyledTicketTable>
     )
 }
 
-const StyledBugTable = styled.div`
+const StyledTicketTable = styled.div`
     display: grid;
     grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;
@@ -68,7 +68,7 @@ const StyledBugTable = styled.div`
         display: none;
         width: none;
     } */
-    .bugs-container {
+    .tickets-container {
         width: 100%;
         background: black;
         padding: 6px;

@@ -6,7 +6,7 @@ export const ButtonContainer = () => {
 
   const handleTabs = (e, section) => {
     let i;
-    let tabs = document.getElementsByClassName("bug-page-tabs");
+    let tabs = document.getElementsByClassName("ticket-page-tabs");
     for (i = 0; i < tabs.length; i++) {
       tabs[i].style.display = "none";
     }

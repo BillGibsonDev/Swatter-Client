@@ -16,8 +16,6 @@ const SprintTicketTable = ({ project, searchSprint }) => {
         let sprintArray = [];
         if (searchSprint){
             sprintArray = project.tickets.filter(ticket => ticket.status === status).filter(ticket => ticket.sprint === searchSprint).slice().reverse()
-        } else {
-            sprintArray = project.tickets.filter(ticket => ticket.status === status)
         }
         return sprintArray;
     }
@@ -58,7 +56,7 @@ const SprintTicketTable = ({ project, searchSprint }) => {
 
 const StyledTicketTable = styled.div`
     display: grid;
-    grid-template-columns: 350px 350px 350px 350px;
+    grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
     height: 100%;
@@ -68,10 +66,9 @@ const StyledTicketTable = styled.div`
     position: relative;
     .tickets-container {
         width: 100%;
-        background: black;
         padding: 10px;
         background: #0b2849;
-        border-radius: 12px;
+        border-radius: ${palette.borderRadius};
         h5 {
             color: ${palette.helperGrey};
             padding: 10px;

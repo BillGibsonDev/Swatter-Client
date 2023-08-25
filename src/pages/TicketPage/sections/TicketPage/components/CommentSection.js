@@ -26,7 +26,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
         }
       })
       .then((response) => {
-        setComments(response.data.tickets.comments);
+        setComments(response.data.comments);
       })
       .catch((err) => {
         console.log(err);

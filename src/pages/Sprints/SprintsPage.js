@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 // styled
 import styled from "styled-components";
 import * as palette from "../../styled/ThemeVariables";
+import { StyledButton } from "../../styled/StyledButton";
 
 // components
 import SprintTicketTable from "./components/SprintTicketTable.js";
@@ -34,8 +35,6 @@ const SprintsPage = ({ user }) => {
   const [ editing, setEditing ] = useState(false);
   const [ creating, setCreating ] = useState(false);
 
-  
-
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -48,13 +47,13 @@ const SprintsPage = ({ user }) => {
       }
     };
     fetchProject();
-  }, [ projectId, user ]);
+  }, [ projectId, user, editing, creating ]);
 
   return (
     <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
-        projectTitle={project.projectTitle} 
+        projectTitle={project.title} 
         title={'Sprints'}
       />
       {
@@ -71,6 +70,7 @@ const SprintsPage = ({ user }) => {
           searchSprint={searchSprint}
           setEditing={setEditing}
           setSearchSprint={setSearchSprint}
+          setOptions={setOptions}
         />
         : 
           <div className='sprint-ticket-table-wrapper'>
@@ -82,7 +82,7 @@ const SprintsPage = ({ user }) => {
               : 
               <>
               <div className='button-wrapper'>
-              <button onClick={() => { setCreating(true); }}>New Sprint</button>
+              <StyledButton onClick={() => { setCreating(true); }}>New Sprint</StyledButton>
               {
                 !options
                 ? <></>
@@ -136,18 +136,13 @@ const SprintsPage = ({ user }) => {
 
 const StyledPage = styled.section`
   height: 100%;
-  max-height: 100vh;
-  width: 100%;
-  max-width: 80vw;
-  margin: 0 auto;
-  padding: 2%;
-  @media (max-width: 834px) {
-    width: 100%;
-    height: 100%;
-  }
-  @media (max-width: 428px) {
-    margin-left: 60px;
-  }
+  max-height: 80vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  overflow: hidden;
+  position: relative;
   .undefined {
     background: white;
     width: 100%;
@@ -159,13 +154,17 @@ const StyledPage = styled.section`
     margin: auto;
   }
   .button-wrapper {
-    max-width: 70vw;
     display: flex;
-    select,
+    width: auto;
     button {
+      margin: 0 4px;
+      height: 30px;
+    }
+    select {
+      margin: 0;
       cursor: pointer;
       height: 30px;
-      width: 150px;
+      width: 200px;
       option {
         font-size: 20px;
       }

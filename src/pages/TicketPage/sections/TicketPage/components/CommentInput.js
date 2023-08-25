@@ -71,10 +71,9 @@ const StyledCommentInput = styled.article`
     font-size: .8em;
   }
   button {
-    margin: 0;
-    margin-top: 4px;
+    margin: 6px auto;
     width: 100%;
-    max-width: 550px;
+    max-width: 350px;
     height: 30px;
     cursor: pointer;
     color: #0f4d92;

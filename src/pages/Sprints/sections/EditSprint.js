@@ -18,7 +18,15 @@ import Loader from "../../../loaders/Loader";
 // functions
 import { ButtonContainer }from "../components/ButtonContainer";
 
-const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSearchSprint }) => {
+const EditSprint = ({ 
+  user, 
+  projectId, 
+  setEditing, 
+  project, 
+  searchSprint, 
+  setSearchSprint, 
+  setOptions 
+}) => {
 
   const DeleteAlertRef = useRef();
 
@@ -30,10 +38,15 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
       setSprintId(project.sprints.find((sprint) => sprint.title === searchSprint)._id);
     }
     const handleSprint = (projectId, sprintId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}`,
+        {
+          headers: {
+            Authorization: user.token
+          }
+        })
       .then((response) => {
-        setSprint(response.data.sprints[0]);
-        setLastTitle(response.data.sprints[0].title)
+        setSprint(response.data);
+        setLastTitle(response.data.title);
       })
       .catch((err) => {
         console.log(err);
@@ -57,11 +70,6 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/update`,
       {
-        headers: {
-          Authorization: user.token
-        }
-      },
-      {
         projectId: projectId,
         sprintId: sprintId,
         goal: goal,
@@ -70,7 +78,12 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
         color: color,
         status: status,
         lastTitle: lastTitle
-      }
+      },      
+      {
+        headers: {
+          Authorization: user.token
+        }
+      },
     )
     .then((response) => {
       if (response.status === 200) {
@@ -84,7 +97,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
 
   const handleDeleteSprint = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/project/${projectId}/sprints/${sprintId}/delete`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/delete`,
       {
         sprintTitle: sprint.title
       },
@@ -95,7 +108,7 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
       }
     )
     .then((response) => {
-      if (response.data === 200) {
+      if (response.status === 200) {
         setLoading(false);
         setSearchSprint('');
         setEditing(false);

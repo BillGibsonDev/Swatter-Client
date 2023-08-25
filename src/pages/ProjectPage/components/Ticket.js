@@ -31,7 +31,7 @@ const Ticket = ({ user, project, ticket }) => {
 
 	const handleTagImage = (tag) => {
 		switch (tag) {
-		case "Ticket":
+		case "Bug":
 			return icons.TicketPicture;
 		case "Feature":
 			return icons.Feature;

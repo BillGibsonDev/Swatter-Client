@@ -75,7 +75,7 @@ const CommentPage = ({ user }) => {
   };
 
   return (
-    <StyledCommentPage>
+    <StyledPage>
       <BreadCrumbs
         projectId={projectId}
         projectTitle={project.title}
@@ -121,26 +121,26 @@ const CommentPage = ({ user }) => {
           />
         </div>
       }
-    </StyledCommentPage>
+    </StyledPage>
   );
 }
 
-const StyledCommentPage = styled.section`
-  width: 100%;
-  max-width: 1000px;
+const StyledPage = styled.section`
   height: 100%;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
+  max-height: 80vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  position: relative;
   .comment-section-wrapper {
     display: flex;
     flex-direction: column;
     margin-top: auto;
-    border: ${palette.whiteBorder2px};
     padding: 6px;
     .title-container {
       display: flex;
-      width: 95%;
+      width: 100%;
       justify-content: space-between;
       align-items: center;
       margin: 10px auto 20px auto;

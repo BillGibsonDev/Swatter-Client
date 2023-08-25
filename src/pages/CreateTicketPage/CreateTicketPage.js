@@ -101,7 +101,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
       <BreadCrumbs
         projectId={projectId}
         projectTitle={project.title}
-        title={'Create'}
+        title={'Create Ticket'}
       />
       <h1>Create Ticket</h1>
       {

@@ -62,7 +62,7 @@ export const Selector = ({
         }
     }
 
-    const ticketTags = [ 'Ticket', 'Feature', 'Enhancement', 'Task', 'Redesign']
+    const ticketTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign']
     const ticketPriority = [ 'Standard', 'Medium', 'High' ]
     const ticketStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ]
 

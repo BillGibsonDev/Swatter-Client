@@ -29,7 +29,7 @@ const BreadCrumbs = ({ user, projectId, projectTitle, title }) => {
 const StyledBreadCrumbs = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
   a {
     border: none;
     background: none;

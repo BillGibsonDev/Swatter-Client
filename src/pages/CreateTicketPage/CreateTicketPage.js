@@ -147,17 +147,8 @@ const StyledPage = styled.section`
   flex-direction: column;
   min-height: 96vh;
   height: 100%;
-  width: 70%;
-  margin: 20px auto;
-  @media (max-width: 834px) {
-    width: 80%;
-    height: 100%;
-    border-radius: 0;
-  }
-  @media (max-width: 428px) {
-    margin-left: 60px;
-    padding: 10px;
-  }
+  width: 80%;
+  margin: 0 auto;
   h1 {
     color: white;
     font-size: 2em;

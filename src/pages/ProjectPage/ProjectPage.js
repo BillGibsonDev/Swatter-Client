@@ -77,12 +77,10 @@ const ProjectPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   max-height: 80vh;
-  width: 90%;
+  width: 85%;
   display: flex;
   flex-direction: column;
-  margin: 10px auto;
-  overflow: hidden;
-  position: relative;
+  margin: 0 auto;
   .undefined {
     background: white;
     width: 100%;

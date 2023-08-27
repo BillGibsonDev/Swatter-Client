@@ -17,3 +17,6 @@ export const accentBorder2px = `2px solid ${accentColor}`;
 export const whiteBorder2px = `2px solid #fff`;
 export const titleBorder = `1px solid #fff`;
 export const borderRadius = '4px';
+
+// margins
+export const navMargining = '50px';

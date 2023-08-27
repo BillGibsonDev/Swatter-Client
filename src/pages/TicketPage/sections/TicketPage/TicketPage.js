@@ -68,7 +68,7 @@ const TicketPage = ({ images, ticket, setEditing, ticketId, projectId, user, set
 const StyledSection = styled.section`
   height: 100%;
   width: 100%;
-  margin: 20px auto;
+  margin: 0 auto;
   .ticket-wrapper {
     display: flex;
     flex-direction: column;

@@ -141,8 +141,6 @@ const StyledPage = styled.section`
   display: flex;
   flex-direction: column;
   margin: 10px auto;
-  overflow: hidden;
-  position: relative;
   .undefined {
     background: white;
     width: 100%;

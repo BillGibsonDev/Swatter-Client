@@ -76,7 +76,7 @@ const StyledProfilePage = styled.section`
     min-height: 60vh;
     width: 80%;
     max-width: 1000px;
-    margin: 10px auto;
+    margin: 0 auto;
     h1 {
 		font-size: ${palette.titleSize};
 		color: #ffffff;

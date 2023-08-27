@@ -128,10 +128,10 @@ const CommentPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   max-height: 80vh;
-  width: 90%;
+  width: 80%;
   display: flex;
   flex-direction: column;
-  margin: 10px auto;
+  margin: 0 auto;
   position: relative;
   .comment-section-wrapper {
     display: flex;

@@ -28,9 +28,7 @@ const ProjectDetailsPage = ({ user }) => {
   const [ project, setProject ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
-
   
-
   useEffect(() => {
     const fetchProject = async () => {
       try {
@@ -72,6 +70,7 @@ const ProjectDetailsPage = ({ user }) => {
           project={project}
           projectId={projectId}
           setEditing={setEditing}
+          user={user}
         />
       }
     </StyledPage>
@@ -80,8 +79,8 @@ const ProjectDetailsPage = ({ user }) => {
 
 const StyledPage = styled.section`
   height: 100%;
-  width: 70%;
-  margin: 20px auto;
+  width: 80%;
+  margin: 0 auto;
   #toggle-edit-button {
     width: 20px;
     height: 20px;

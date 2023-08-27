@@ -203,10 +203,7 @@ const EditTicketPage = ({ user, setEditing }) => {
 const StyledTicketSection = styled.section`
   height: 100%;
   width: 100%;
-  margin: 20px auto;
-  @media (max-width: 450px) {
-    margin: 0 auto;
-  }
+  margin: 0 auto;
   .ticket-container {
     display: flex;
     flex-direction: column;

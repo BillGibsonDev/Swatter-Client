@@ -78,13 +78,11 @@ const MainTicketPage = ({ user }) => {
 
 const StyledPage = styled.section`
   height: 100%;
-  width: 70%;
-  margin: 20px auto;
-  @media (max-width: 834px) {
-    width: 80%;
-    padding: 0;
-    margin: 0 5% 0 15%;
-  }
+  max-height: 80vh;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
   #toggle-edit-button {
     width: 20px;
     height: 20px;

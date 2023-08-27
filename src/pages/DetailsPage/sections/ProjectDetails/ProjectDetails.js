@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // styled
 import styled from "styled-components";
 import * as palette from "../../../../styled/ThemeVariables.js";
@@ -10,8 +12,12 @@ import Loader from "../../../../loaders/Loader.js";
 
 // function
 import { handleDate } from '../../../../functions/handleDates.js';
+import { MemberList } from "../../MemberList.js";
 
-export default function ProjectDetails({ project, isLoading, setEditing }) {
+export default function ProjectDetails({ project, isLoading, setEditing, user }) {
+
+  const [ addingMember, setAddingMember ] = useState(false);
+  const [ members, setMembers ] = useState(project.members);
 
   return (
     <StyledSection>
@@ -36,6 +42,14 @@ export default function ProjectDetails({ project, isLoading, setEditing }) {
             }
             <h6><span>Description:</span> {project.description}</h6>
           </div>
+          <MemberList 
+            members={members} 
+            setMembers={setMembers}
+            projectId={project._id} 
+            user={user}
+            setAddingMember={setAddingMember}
+            addingMember={addingMember}
+          />
         </>
       }
     </StyledSection>

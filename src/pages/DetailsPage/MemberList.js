@@ -71,7 +71,7 @@ export const MemberList = ({ user, members, projectId, addingMember, setAddingMe
 const StyledArticle = styled.article`
     width: 100%;
     max-width: 450px;
-    margin: 10px 0 0 6px;
+    margin-top: 10px;
     h2 {
         color: ${palette.helperGrey};
         font-size: 1em;

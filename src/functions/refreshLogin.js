@@ -1,7 +1,6 @@
 import axios from "axios"
 import { handleUser, } from "../redux/actions/user";
 import { handleTokens } from "./handleTokens";
-import { logout } from "./logout";
 
 export const refreshLogin = ( dispatch ) => {
     let user = {
@@ -15,7 +14,6 @@ export const refreshLogin = ( dispatch ) => {
         }
     })
     .then((response) => {
-        console.log(response.data);
         handleTokens(response.data.token, response.data.username, response.data.id);
         dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
     })

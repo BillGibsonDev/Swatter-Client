@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 // styled
@@ -7,22 +7,35 @@ import * as palette from '../../styled/ThemeVariables.js';
 
 // components
 import BreadCrumbs from '../../components/Breadcrumbs.js';
+import { DeleteAlert } from '../../components/DeleteAlert.js';
 
 // sections
 import { UpdateEmail } from './sections/UpdateEmail.js';
 import { UpdatePassword } from './sections/UpdatePassword.js';
 import { ProfileDetails } from './sections/ProfileDetails.js';
 
+// functions
+import { handleDeleteAlert } from '../../functions/handleDeleteAlert.js';
+
 // redux
 import { connect } from 'react-redux';
 
-const ProfilePage =({ user, logout }) => {
+// router
+import { useNavigate } from 'react-router-dom';
+import { DeleteAccount } from './sections/DeleteAccount.js';
 
-    if (!user){ logout(); };
+const ProfilePage =({ user }) => {
+
+    const DeleteAlertRef = useRef();
+    const navigate = useNavigate();
 
     const [ userData, setUserData ] = useState({});
     const [ editPassword, setEditingPassword ] = useState(false);
     const [ editEmail, setEditingEmail ] = useState(false);
+    const [ deleteAccount, setDeleteAccount ] = useState(false);
+
+    const [ password, setPassword ] = useState('');
+    const [ username, setUsername ] = useState('');
 
     useEffect(() => {
       const fetchUser = () => {
@@ -41,12 +54,46 @@ const ProfilePage =({ user, logout }) => {
       fetchUser();
     }, [ user ])
     
+    const handleDeleteAccount = () => {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/users/${user.id}/delete-account`,
+        {
+            username: username,
+            password: password,
+        }, 
+        {
+            headers: {
+                Authorization: user.token
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            localStorage.clear();
+            navigate('/');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <StyledProfilePage>
+            <DeleteAlert
+                handleDeleteAlert={handleDeleteAlert}
+                DeleteAlertRef={DeleteAlertRef}
+                deleteFunction={handleDeleteAccount}
+                title={'account'}
+            />
             <BreadCrumbs projectTitle={'Profile'} />
-            <h1>Profile</h1>
             {
-                editEmail ? 
+                deleteAccount ? 
+                    <DeleteAccount 
+                        setUsername={setUsername}
+                        setPassword={setPassword}
+                        handleDeleteAlert={handleDeleteAlert}
+                        DeleteAlertRef={DeleteAlertRef}
+                        setDeleteAccount={setDeleteAccount}
+                    />
+                : editEmail ? 
                     <UpdateEmail 
                         setEditingEmail={setEditingEmail}
                         editEmail={editEmail}
@@ -65,7 +112,8 @@ const ProfilePage =({ user, logout }) => {
                     editEmail={editEmail}
                     editPassword={editPassword}
                     userData={userData}
-                    logout={logout}
+                    deleteAcount={deleteAccount}
+                    setDeleteAccount={setDeleteAccount}
                 />
             }
         </StyledProfilePage>

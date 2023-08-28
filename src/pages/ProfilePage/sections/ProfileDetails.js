@@ -7,18 +7,29 @@ import { StyledButton } from '../../../styled/StyledButton.js';
 
 // functions
 import { handleDate } from '../../../functions/handleDates.js';
+import { logout } from '../../../functions/logout.js';
+
+// router
+import { useNavigate } from 'react-router-dom';
+
+// redux
+import { useDispatch } from 'react-redux';
 
 export const ProfileDetails =({ 
     userData,
-    logout, 
     setEditingEmail, 
     setEditingPassword,
     editEmail,
-    editPassword
+    editPassword,
+    setDeleteAccount,
+    deleteAcount
 }) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     
     return (
         <StyledSection>
+            <h1>Profile</h1>
             <div className="field-container">
                 <h2><span>Username: </span>{userData.username}</h2>
             </div>
@@ -34,7 +45,8 @@ export const ProfileDetails =({
         <div className="options-container">
             <StyledButton id="edit-email-button" onClick={() => setEditingEmail(!editEmail)}>Update Email</StyledButton>
             <StyledButton id="edit-password-button" onClick={() => setEditingPassword(!editPassword)}>Update Password</StyledButton>
-            <StyledButton id="signout-button" onClick={logout}>Sign Out</StyledButton>
+            <StyledButton id="signout-button" onClick={() => { logout(dispatch, navigate) }}>Sign Out</StyledButton>
+            <StyledButton id="delete-account-button" onClick={() => setDeleteAccount(!deleteAcount)}>Delete Account</StyledButton>
         </div>
         </StyledSection>
     )
@@ -75,8 +87,8 @@ const StyledSection = styled.section`
         button {
             margin: 20px 0;
         }
-        #edit-email-button {
-
+        #delete-account-button {
+            background: red;
         }
     }
 `;

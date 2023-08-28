@@ -32,6 +32,7 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
     
     return (
         <StyledSection>
+            <h1>Update Email</h1>
             <label>Email
                 <input type="text" value={userData.email} disabled={true} />
             </label>

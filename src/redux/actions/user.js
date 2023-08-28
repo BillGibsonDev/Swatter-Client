@@ -1,4 +1,4 @@
-import { HANDLE_USER } from '../constants/actionTypes.js';
+import { HANDLE_USER, LOGOUT } from '../constants/actionTypes.js';
 
 export const handleUser = ( token, username, id ) => {
   return {
@@ -6,7 +6,13 @@ export const handleUser = ( token, username, id ) => {
     payload: {
       token,
       username,
-      id,
+      id
     },
+  };
+}
+
+export const handleLogout = () => {
+  return {
+    type: LOGOUT,
   };
 }

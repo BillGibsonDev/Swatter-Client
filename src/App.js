@@ -34,21 +34,25 @@ import SignupPage from "./pages/SignupPage";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import { handleUser } from './redux/actions/user.js';
 import { showAlert } from "./redux/actions/alert";
 
-const App = () => {
+// functions
+import { handleTokens } from "./functions/handleTokens";
+import useTokenRefresh from "./functions/useTokenRefresh";
+
+const App = ({ user, isLoggedIn }) => {
+
+  useTokenRefresh();
   
   const projectSideNavRef = useRef();
 
   const [ password, setPassword ] = useState("");
   const [ username, setUsername ] = useState("");
-  const [ isLoggedIn, setLoggedIn ] = useState(false);
   const [ isLoading, setLoading ] = useState(false);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleLogin = () => {
@@ -63,8 +67,8 @@ const App = () => {
     )
     .then((response) => {
       if(response.status === 200){
+        handleTokens(response.data.token, response.data.username, response.data.id);
         dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
-        setLoggedIn(true);
         setLoading(false);
         navigate("/");
       }
@@ -73,19 +77,10 @@ const App = () => {
       console.log(error);
       localStorage.clear();
       setLoading(false);
-      setLoggedIn(false);
-      dispatch(showAlert(error, 'error'))
-      navigate("/login");
+      dispatch(showAlert(error, 'error'));
     });
   };
-
-  const logout = () => {
-    localStorage.clear();
-    setLoggedIn(false);
-    navigate("/login");
-    setLoading(false);
-  };
-
+  
   if(!isLoggedIn){
     return (
       <>
@@ -120,6 +115,7 @@ const App = () => {
         <Nav projectSideNavRef={projectSideNavRef} />
         <ProjectSideNav projectSideNavRef={projectSideNavRef} />
         <Routes>
+          <Route path='/login' element={<Navigate replace to="/" />}  />
           <Route path='/' exact element={ <HomePage /> } />
           <Route path='/:userId/projects/:projectId/tickets/:ticketId' exact element={ <MainTicketPage /> }  />
           <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage /> } />
@@ -127,7 +123,7 @@ const App = () => {
           <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
           <Route path='/:userId/projects/:projectId/create-ticket' exact element={ <CreateTicketPage /> } />
           <Route path='/:userId/projects/:projectId/details' exact element={ <ProjectDetailsPage /> } />
-          <Route path='/users/:userId/profile' exact element={ <ProfilePage logout={logout} /> } />
+          <Route path='/users/:userId/profile' exact element={ <ProfilePage /> } />
           <Route path='/:userId/projects/:projectId/archive' exact element={ <ArchivePage />} />
           <Route path='/features' exact element={ <FeaturesPage />} />
           <Route path='/:userId/projects/:projectId/activity' exact element={ <ProjectActivityPage />} />
@@ -142,5 +138,11 @@ const StyledApp = styled.section`
   display: flex;
 `;
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: !!state.user.token, // Check if token exists
+    user: state.user,
+  };
+};
 
+export default connect(mapStateToProps)(App);

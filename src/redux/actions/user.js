@@ -1,12 +1,18 @@
-import { HANDLE_USER } from '../constants/actionTypes.js';
+import { HANDLE_USER, LOGOUT } from '../constants/actionTypes.js';
 
-export const handleUser = ( username, role, token ) => {
+export const handleUser = ( token, username, id ) => {
   return {
     type: HANDLE_USER,
     payload: {
+      token,
       username,
-      role,
-      token
+      id
     },
+  };
+}
+
+export const handleLogout = () => {
+  return {
+    type: LOGOUT,
   };
 }

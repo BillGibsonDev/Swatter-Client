@@ -1,61 +1,43 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as palette from "../styled/ThemeVariables.js";
-
-// functions
-import { handleAlert } from "../functions/handleAlert.js";
+import { StyledButton } from "../styled/StyledButton.js";
 
 // components
 import Loader from "../loaders/Loader";
+import BreadCrumbs from "../components/Breadcrumbs.js";
 
 // redux
 import { connect } from "react-redux";
-import { Alert } from "../components/Alert.js";
-import { handleAdminAuth } from "../functions/handleAdminAuth.js";
-import { BreadCrumbs } from "../components/Breadcrumbs.js";
+import { showAlert } from "../redux/actions/alert.js";
 
-const CreateProjectPage = ({ user }) => {
+// router
+import { useNavigate } from "react-router-dom";
 
-  const AlertRef = useRef();
-  
-  const [ message, setMessage ] = useState('');
+const CreateProjectPage = ({ user, showAlert }) => {
 
-  const [projectTitle, setProjectTitle] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [projectLink, setProjectLink] = useState("");
-  const [projectImage, setProjectImage] = useState("");
-  const [isLoading, setLoading] = useState(false);
-  const [description, setDescription] = useState("");
-  const [repository, setRepository] = useState("");
-  const [projectLead, setProjectLead] = useState("");
-  const [projectType, setProjectType] = useState("");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleDate = () => {
-      const current = new Date();
-      const date = `${current.getMonth() + 1}/${current.getDate()}/${current.getFullYear()}`;
-      setStartDate(date);
-    };
-    handleDate();
-  }, [user]);
+  const [ title, setTitle ] = useState("");
+  const [ link, setLink ] = useState("");
+  const [ image, setImage ] = useState("");
+  const [ isLoading, setLoading ] = useState(false);
+  const [ description, setDescription ] = useState("");
+  const [ repository, setRepository ] = useState("");
 
-  const addProject = () => {
+  const createProject = () => {
+    if(!title){ showAlert('Title', 'warning'); return; };
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_ADD_PROJECT_URL}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/create`,
       {
-        projectTitle: projectTitle,
-        startDate: startDate,
-        author: user.username,
-        projectLink: projectLink,
-        projectImage: projectImage,
+        title,
+        link,
+        image,
         repository: repository,
         description: description,
-        projectKey: projectTitle.slice(0,2).toUpperCase(),
-        projectLead: projectLead,
-        projectType: projectType,
       },
       {
         headers: {
@@ -64,184 +46,111 @@ const CreateProjectPage = ({ user }) => {
       }
     )
     .then((response) => {
-      if(response !== 'Project Created!'){
+      if(response.status === 200){
+        showAlert('', 'success');
         setLoading(false);
-        setMessage("Server Error - Project not created");
-        handleAlert(AlertRef);
-      } else {
-        setLoading(false);
-        setMessage(`${projectTitle} Project Started!`);
-        handleAlert(AlertRef);
+        navigate('/')
       }
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
+      console.log(error);
+      showAlert(error, 'error');
       setLoading(false);
-      setMessage("Server Error - Project not created");
-      handleAlert(AlertRef);
     });
   };
 
   return (
-    <StyledProjectPage>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
+    <StyledPage>
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
       <h1>Start a Project</h1>
       {
-        user === null ? <h1>You are signed out</h1>
-        : isLoading ? <Loader />
+        isLoading ? <Loader />
         : 
         <div className='form-wrapper'>
-          <div className='top-form-container'>
-            <label>
-              Title
-              <input type='text' id='title' onChange={(event) => { setProjectTitle(event.target.value); }} />
-            </label>
-            <label>
-              URL
-              <input type='text' id='projectLink' onChange={(event) => { setProjectLink(event.target.value); }} />
-            </label>
-            <label>
-              Repository
-              <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
-            </label>
-            <label>
-              Lead
-              <input type='text' id='projectLead' onChange={(event) => { setProjectLead(event.target.value); }}/>
-            </label>
+          <div className="inputs-container">
+            <div className='form-container'>
+              <label>Title
+                <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
+              </label>
+              <label>Image
+                <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
+              </label>
+            </div>
+            <div className='form-container'>
+              <label>Website
+                <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
+              </label>
+              <label>Repository
+                <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
+              </label>
+            </div>
           </div>
-          <div className='bottom-form-container'>
-            <label>
-              Date
-              <input type='text' id='date' onChange={(event) => { setStartDate(event.target.value); }} />
-            </label>
-            <label>
-              Project Type
-              <input type='text' id='projectType' onChange={(event) => { setProjectType(event.target.value); }} />
-            </label>
-            <label>
-              Description
-              <input type='text' id='description' onChange={(event) => { setDescription(event.target.value); }} />
-            </label>
-            <label>
-              Image
-              <input type='text' id='image' onChange={(event) => { setProjectImage(event.target.value); }} />
-            </label>
-          </div>
+          <label id="description-label">Description
+            <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
+          </label>
         </div>
       }
-      {
-        handleAdminAuth(user)
-        ? <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-        : <button className='start-button' onClick={() => { addProject(); }}>Start</button>
-      }
-    </StyledProjectPage>
+      <StyledButton disabled={isLoading} onClick={() => { createProject(); }}>Start</StyledButton>
+    </StyledPage>
   );
 }
 
-const StyledProjectPage = styled.div`
+const StyledPage = styled.section`
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
-  width: 100%;
-  max-width: 1000px;
-  margin: 50px auto;
+  height: 100%;
+  width: 80%;
+  max-width: 800px;
+  margin: 1em auto;
   position: relative;
-  @media (max-width: 1160px) {
-    width: 80%;
-    left: 60px;
-  }
-  @media (max-width: 834px) {
-    left: 0;
-  }
-  @media (max-width: 750px) {
-    height: 40vh;
-    margin: 20px auto;
-  }
-  @media (max-width: 428px) {
-    margin-left: 65px;
-    width: 80vw;
-  }
   h1 {
     color: white;
     width: 100%;
-    margin: 10px auto;
     font-size: ${palette.titleSize};
-    @media (max-width: 750px) {
-      font-size: ${palette.subtitleSize};
-    }
   }
   .form-wrapper {
-    width: 100%;
-    margin: 10px auto;
-    display: flex;
-    justify-content: space-between;
-    @media (max-width: 750px) {
-      flex-direction: column;
-    }
-    .top-form-container,
-    .bottom-form-container {
-      margin: 0;
-      width: 45%;
-      @media (max-width: 600px) {
-        width: 100%;
-      }
-      label {
-        display: flex;
+    .inputs-container {
+      width: 100%;
+      margin: 10px auto;
+      display: flex;
+      justify-content: space-between;
+      @media (max-width: 750px) {
         flex-direction: column;
-        margin: 10px 0;
-        color: white;
+      }
+      .form-container {
+        width: 45%;
+        margin: auto;
         @media (max-width: 750px) {
+          width: 100%;
+        }
+        label {
+          display: flex;
+          flex-direction: column;
+          margin: 10px 0 0 0;
+          color: ${palette.labelColor};
           font-size: ${palette.labelSize};
-        }
-        @media (max-width: 428px) {
-          font-size: 1em;
-          margin: 10px 0;
-        }
-        input {
-          width: 400px;
-          font-size: 1em;
-          padding: 2px;
-          background: ${palette.helperGrey};
-          @media (max-width: 834px) {
+          input {
             width: 100%;
-          }
-          @media (max-width: 428px) {
-            height: 30px;
+            max-width: 350px;
+            font-size: 1em;
+            padding: 2px;
+            background: ${palette.helperGrey};
           }
         }
       }
     }
-  }
-  .start-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 40px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    font-size: ${palette.subtitleSize};
-    font-weight: 700;
-    background: #ffffff;
-    color: ${palette.accentColor};
-    &:hover {
-      color: #ffffff;
-      cursor: pointer;
-      background: #000000;
-      transition: 0.2s;
-      transform: scale(1.01);
-    }
-    @media (max-width: 750px) {
-      width: 100px;
-      font-size: ${palette.paraSize};
+    #description-label {
+      width: 100%;
+      font-size: ${palette.labelSize};
+      color: ${palette.labelColor};
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 2px;
+        background: ${palette.helperGrey};
+      }
     }
   }
 `;
@@ -252,4 +161,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CreateProjectPage);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProjectPage);

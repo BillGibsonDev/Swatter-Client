@@ -10,12 +10,12 @@ export default function HomePageLoader() {
             <div className="loading-wrapper">
                 <Loader />
             </div>
-            <div className="skelton-bug"></div>
-            <div className="skelton-bug"></div>
-            <div className="skelton-bug"></div>
-            <div className="skelton-bug"></div>
-            <div className="skelton-bug"></div>
-            <div className="skelton-bug"></div>
+            <div className="skelton-ticket"></div>
+            <div className="skelton-ticket"></div>
+            <div className="skelton-ticket"></div>
+            <div className="skelton-ticket"></div>
+            <div className="skelton-ticket"></div>
+            <div className="skelton-ticket"></div>
         </StyledLoader>
     )
 }
@@ -28,7 +28,7 @@ grid-template-columns: 1fr 1fr 1fr;
 grid-column-gap: 2%;
 grid-row-gap: 2%;
 position: relative;
-    .skelton-bug {
+    .skelton-ticket {
         display: flex;
         align-items: center;
         justify-content: center;

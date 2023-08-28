@@ -1,130 +1,86 @@
-import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 
 // styled
 import styled from "styled-components";
 
 // components
-import BugTable from "./components/BugTable.js";
-import { ProjectSideNav } from "./components/ProjectSideNav";
+import TicketTable from "./components/TicketTable.js";
 import { Searchbar } from "../../components/Searchbar";
-import SearchBugTable from "./components/SearchBugTable.js";
+import SearchTicketTable from "./components/SearchTicketTable.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
 
-// pop out sections
-import CommentSection from "./sections/CommentSection";
-
 // router
 import { useParams } from "react-router-dom";
 
-export const ProjectPage = ({projectSideNavRef}) => {
-  const commentSectionRef = useRef();
+// redux
+import { connect } from "react-redux";
+
+// functions
+import { getProject } from "../../functions/getProject.js";
+
+const ProjectPage = ({ user }) => {
 
   const { projectId } = useParams();
 
-  const [ project, setProject ] = useState([]);
+
+  const [ project, setProject ] = useState({});
   const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
-  const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
+  const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
 
   useEffect(() => {
-    const getProject = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then((response) => {
-        setProject(response.data);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject(user, projectId);
+        setProject(projectData);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
         setLoading(false);
-      });
+      }
     };
-    getProject(projectId);
-  }, [projectId, rerender]);
+    fetchProject();
+  }, [ projectId, user ]);
 
   return (
-    <StyledProjectPage>
-      <ProjectSideNav
-        project={project}
-        projectSideNavRef={projectSideNavRef}
-        commentSectionRef={commentSectionRef}
-      />
+    <StyledPage>
+      <Searchbar setSearchPhrase={setTicketSearchPhrase} />
       {
         isLoading ? <Loader />
-        : <div className='bug-table-wrapper'>
-            <Searchbar setSearchPhrase={setBugSearchPhrase} />
+        : <div className='ticket-table-wrapper'>
           {
-            !project.bugs ? 
+            !project.tickets ? 
               <div className='undefined'>
-                <h1>You've haven't entered any bugs</h1>
+                <h1>You've haven't entered any tickets</h1>
               </div>
-            : bugSearchPhrase ?
-              <SearchBugTable
-                project={project}
-                bugs={project.bugs}
-                bugSearchPhrase={bugSearchPhrase}
+            : ticketSearchPhrase ?
+              <SearchTicketTable
+                tickets={project.tickets}
+                ticketSearchPhrase={ticketSearchPhrase}
               />
             :
-              <BugTable
+              <TicketTable
                 setRerender={setRerender}
                 rerender={rerender}
                 project={project}
-                bugs={project.bugs}
-                bugSearchPhrase={bugSearchPhrase}
+                ticketSearchPhrase={ticketSearchPhrase}
               />
           }
         </div>
       }
-      <CommentSection
-        commentSectionRef={commentSectionRef}
-        setRerender={setRerender}
-        rerender={rerender}
-      />
-    </StyledProjectPage>
+    </StyledPage>
   );
 }
 
-const StyledProjectPage = styled.div`
+const StyledPage = styled.section`
   height: 100%;
-  max-height: 100vh;
-  width: 100%;
-  max-width: 80vw;
+  max-height: 80vh;
+  width: 85%;
   display: flex;
-  position: relative;
-  margin-left: 350px;
-  z-index: 2;
-  @media (max-width: 1440px) {
-    margin-left: 300px;
-  }
-  @media (max-width: 834px) {
-    width: 900px;
-    max-width: 85vw;
-    margin-left: 70px;
-  }
-  @media (max-width: 820px) {
-    width: 760px;
-  }
-  @media (max-width: 768px) {
-    width: 710px;
-  }
-  @media (max-width: 428px) {
-    width: 360px;
-    margin-left: 60px;
-  }
-  @media (max-width: 414px) {
-    width: 340px;
-  }
-  @media (max-width: 390px) {
-    width: 320px;
-  }
-  @media (max-width: 375px) {
-    width: 310px;
-  }
-  @media (max-width: 360px) {
-    width: 295px;
-  }
+  flex-direction: column;
+  margin: 0 auto;
   .undefined {
     background: white;
     width: 100%;
@@ -135,16 +91,19 @@ const StyledProjectPage = styled.div`
     align-items: center;
     margin: auto;
   }
-  .bug-table-wrapper {
-    overflow: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  .ticket-table-wrapper {
     position: relative;
-    width: 100vw;
+    width: 100%;
+    height: auto;
     display: flex;
-    &::-webkit-scrollbar {
-      display: none;
-      width: none;
-    }
+    overflow: hidden;
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProjectPage);

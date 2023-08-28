@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as palette from '../styled/ThemeVariables.js';
 
 // images
-import BugImage from '../assets/icons/bugYaleBlue.png'
+import TicketImage from '../assets/icons/bugYaleBlue.png'
 
 export default function LoginLoader() {
 
@@ -32,7 +32,7 @@ export default function LoginLoader() {
         <StyledLoader>
             <div className="loader-container">
                 <div className="loader">
-                    <img src={BugImage} alt="Loading Page" />
+                    <img src={TicketImage} alt="Loading Page" />
                 </div>
             </div>
             <h3 id="phrase">{loadingPhrases()}</h3>

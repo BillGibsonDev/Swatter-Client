@@ -45,7 +45,7 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
     .then((response) => {
         if(response.status === 200){
           setLoading(false);
-		  dispatch(showAlert("", 'success' ))
+		  dispatch(showAlert("", 'success' ));
           navigate("/login");
 		}
       })

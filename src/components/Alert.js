@@ -34,7 +34,7 @@ const Alert = ({ alert, hideAlert }) => {
 
     return (
         <StyledAlert>
-            <div className="alert-wrapper" style={{borderColor: alert.type !== 'success' ? 'red' : palette.accentColor}}>
+            <div className="alert-wrapper" style={{ borderColor: alert.type !== 'success' ? 'red' : palette.accentColor }}>
                 <h1>Swatter</h1>
                 <h2>Project Management</h2>
                 <div className="alert-container">

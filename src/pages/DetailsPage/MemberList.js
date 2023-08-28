@@ -1,17 +1,27 @@
+import { useState, useRef } from "react";
 import axios from "axios";
 
+// styles
 import styled from "styled-components";
 import { StyledButton } from "../../styled/StyledButton";
 import * as palette from '../../styled/ThemeVariables.js'
 
 // components
 import { AddMember } from "./sections/AddMember";
+import { DeleteAlert } from "../../components/DeleteAlert";
+
+// functions
+import { handleDeleteAlert } from "../../functions/handleDeleteAlert.js";
 
 export const MemberList = ({ user, members, projectId, addingMember, setAddingMember, setMembers }) => {
 
-    const removeMember = (id) => {
-        axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/members/${id}/remove`, {
-            memberId: id
+    const DeleteAlertRef = useRef();
+
+    const [ removedMember, setRemovedMember ] = useState('');
+
+    const removeMember = (memberId) => {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/members/${memberId}/remove`, {
+            memberId: memberId
         }, 
         {
             headers: {
@@ -30,6 +40,12 @@ export const MemberList = ({ user, members, projectId, addingMember, setAddingMe
 
   return (
     <StyledArticle>
+        <DeleteAlert
+            DeleteAlertRef={DeleteAlertRef}
+            deleteFunction={removeMember}
+            title={'member'}
+            id={removedMember}
+        />
         <h2>Member List</h2>
         <div className="member-list-wrapper">
             {
@@ -38,7 +54,7 @@ export const MemberList = ({ user, members, projectId, addingMember, setAddingMe
                     return (
                         <div className="member-container" key={index}>
                             <h4>{member.username}</h4>
-                            <button onClick={() => removeMember(member.memberId)}>Trash can here</button>
+                            <button onClick={() => { setRemovedMember(member.memberId); handleDeleteAlert(DeleteAlertRef)} }>Trash can here</button>
                         </div>
                     )
                 })

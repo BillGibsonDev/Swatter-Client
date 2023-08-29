@@ -19,6 +19,7 @@ import { getProject } from "../functions/getProject.js";
 
 // redux
 import { connect } from "react-redux";
+import { StyledButton } from "../styled/StyledButton.js";
 
 const ProjectActivityPage = ({ user }) => {
   const { projectId } = useParams();
@@ -26,6 +27,7 @@ const ProjectActivityPage = ({ user }) => {
   const [ project, setProject ] = useState({});
   const [ isLoading, setLoading ] = useState(true);
   const [ activities, setActivities ] = useState([]);
+  const [ showMore, setShowMore ] = useState(3)
 
   const handleDataSort = (data) => {
     const groupedData = {};
@@ -55,7 +57,6 @@ const ProjectActivityPage = ({ user }) => {
     const groupedArray = Object.values(groupedData);
     return groupedArray;
   };
-
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -87,16 +88,16 @@ const ProjectActivityPage = ({ user }) => {
         ? <h1>This project has no activity yet..</h1>
         : <>
           {
-            activities.map((activity, key) => {
+            activities.slice(0, showMore).map((activity, index) => {
               return (
-                <div className="activity-container" key={key}>
-                  <TitleContainer title={activity.date}/>
+                <div className="activity-container" key={index}>
+                  <TitleContainer title={activity.date} />
                   {
-                    activity.activities.map((activity, key) => {
+                    activity.activities.map((activity, index) => {
                       return (
-                        <div className="activity-info-container" key={key}>
+                        <div className="activity-info-container" key={index}>
                           <h6>{ handleActivityDate(activity.date)}</h6>
-                          <h5 key={key}><span>{activity.user} </span>{activity.activity}</h5>
+                          <h5><span>{activity.user} </span>{activity.activity}</h5>
                         </div>
                       )
                     })
@@ -104,6 +105,11 @@ const ProjectActivityPage = ({ user }) => {
                 </div>
               )
             })
+          }
+          {
+            activities.length > 3 
+            ? <StyledButton onClick={() => setShowMore(showMore + 3)}>Show More</StyledButton> 
+            :<></>
           }
         </>
       }

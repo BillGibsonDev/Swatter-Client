@@ -4,7 +4,7 @@ import styled from "styled-components";
 // components
 import Project from "./Project.js";
 
-export const SearchProjectTable = ({ projects, projectSearchPhrase }) => {
+export const SearchProjectTable = ({ user, projects, projectSearchPhrase }) => {
 
   const handleSearch = () => {
     let projectArray = [];
@@ -39,6 +39,7 @@ export const SearchProjectTable = ({ projects, projectSearchPhrase }) => {
         filteredProjects.slice().reverse().map((project, key) => {
           return (
             <Project
+              user={user}
               project={project}
               key={key}
             />

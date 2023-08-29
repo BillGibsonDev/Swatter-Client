@@ -58,6 +58,7 @@ const ProjectPage = ({ user }) => {
             : ticketSearchPhrase ?
               <SearchTicketTable
                 tickets={project.tickets}
+                project={project}
                 ticketSearchPhrase={ticketSearchPhrase}
               />
             :

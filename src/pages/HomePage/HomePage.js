@@ -45,8 +45,8 @@ const HomePage = ({ user }) => {
         : <>
             <Searchbar setSearchPhrase={setProjectSearchPhrase} />
             {
-              projectSearchPhrase 
-              ? <SearchProjectTable projectSearchPhrase={projectSearchPhrase} projects={projects} />
+              projectSearchPhrase && projectSearchPhrase.length > 2
+              ? <SearchProjectTable user={user} projectSearchPhrase={projectSearchPhrase} projects={projects} />
               : <ProjectTable projects={projects} user={user} />
             }
         </>

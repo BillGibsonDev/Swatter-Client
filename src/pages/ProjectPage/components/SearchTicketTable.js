@@ -5,7 +5,7 @@ import * as palette from '../../../styled/ThemeVariables';
 // components
 import Ticket from './Ticket.js';
 
-export default function SearchTicketTable({ tickets, ticketSearchPhrase }) {
+export default function SearchTicketTable({ project, tickets, ticketSearchPhrase }) {
 
     // save me :)
     // Object.keys(ticketObject).forEach((key) => {
@@ -59,6 +59,7 @@ export default function SearchTicketTable({ tickets, ticketSearchPhrase }) {
                             filteredTickets.map((ticket, index) => {
                                 return (
                                     <Ticket
+                                        project={project}
                                         ticket={ticket}
                                         key={index}
                                     />

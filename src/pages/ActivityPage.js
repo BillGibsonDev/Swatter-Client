@@ -62,8 +62,6 @@ const ProjectActivityPage = ({ user }) => {
     fetchProject();
   }, [ projectId, user ]);
 
-  console.log(activities)
-
   if( isLoading ){
     return <Loader />
   }

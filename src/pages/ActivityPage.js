@@ -11,9 +11,10 @@ import Loader from "../loaders/Loader.js";
 
 // components
 import BreadCrumbs from "../components/Breadcrumbs.js";
+import { TitleContainer }from '../components/TitleContainer.js';
 
 // functions
-import { handleDate } from "../functions/handleDates";
+import { handleDate, handleActivityDate } from "../functions/handleDates";
 import { getProject } from "../functions/getProject.js";
 
 // redux
@@ -24,12 +25,35 @@ const ProjectActivityPage = ({ user }) => {
 
   const [ project, setProject ] = useState({});
   const [ isLoading, setLoading ] = useState(true);
+  const [ activities, setActivities ] = useState([]);
+
+    const handleDataSort = (data) => {
+    const groupedData = {};
+    data.forEach(activity => {
+      let activityDate = new Date(activity.date).toISOString().split("T")[0];
+      const today = new Date(activity.date).toISOString().split("T")[0];
+
+      if(today === activityDate){ activityDate = 'Today'}
+      if (!groupedData[activityDate]) {
+        groupedData[activityDate] = {
+          date: activityDate,
+          activities: []
+        };
+      }
+      
+      groupedData[activityDate].activities.push(activity);
+    });
+    const groupedArray = Object.values(groupedData);
+
+    return groupedArray;
+  }
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
         const projectData = await getProject( user, projectId );
         setProject(projectData);
+        setActivities(handleDataSort(projectData.activities))
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -37,6 +61,8 @@ const ProjectActivityPage = ({ user }) => {
     };
     fetchProject();
   }, [ projectId, user ]);
+
+  console.log(activities)
 
   if( isLoading ){
     return <Loader />
@@ -50,15 +76,24 @@ const ProjectActivityPage = ({ user }) => {
         title={'Activity'}
       />
       {
-        !project.activities
+        !activities
         ? <h1>This project has no activity yet..</h1>
         : <>
           {
-            project.activities.map((activity, key) => {
+            activities.map((activity, key) => {
               return (
                 <div className="activity-container" key={key}>
-                  <h6>{handleDate(activity.date)}</h6>
-                  <h5><span>{activity.user} </span>{activity.activity}</h5>
+                  <TitleContainer title={activity.date === 'Today' ? activity.date : handleDate(activity.date)}/>
+                  {
+                    activity.activities.map((activity, key) => {
+                      return (
+                        <div className="activity-info-container" key={key}>
+                          <h6>{ handleActivityDate(activity.date)}</h6>
+                          <h5 key={key}><span>{activity.user} </span>{activity.activity}</h5>
+                        </div>
+                      )
+                    })
+                  }
                 </div>
               )
             })
@@ -75,11 +110,14 @@ const StyledPage = styled.section`
   margin: 10px auto;
   .activity-container {
     margin-bottom: 8px;
-    h6 {
-      color: #c5c5c5;
-    }
-    h5 {
-      color: white;
+    .activity-info-container {
+      margin-top: 8px;
+      h6 {
+        color: #c5c5c5;
+      }
+      h5 {
+        color: white;
+      }
     }
   }
 `;

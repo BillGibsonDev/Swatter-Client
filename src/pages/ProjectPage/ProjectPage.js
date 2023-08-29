@@ -24,7 +24,7 @@ export const ProjectPage = ({projectSideNavRef}) => {
 
   const { projectId } = useParams();
 
-  const [ project, setProject ] = useState([]);
+  const [ project, setProject ] = useState({});
   const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
   const [ bugSearchPhrase, setBugSearchPhrase ] = useState('');
@@ -142,9 +142,6 @@ const StyledProjectPage = styled.div`
     position: relative;
     width: 100vw;
     display: flex;
-    &::-webkit-scrollbar {
-      display: none;
-      width: none;
-    }
+    overflow: hidden;
   }
 `;

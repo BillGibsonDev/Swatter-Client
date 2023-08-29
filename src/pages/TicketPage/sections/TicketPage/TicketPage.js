@@ -2,9 +2,6 @@ import { useRef } from "react";
 // styled
 import styled from "styled-components";
 
-// images
-import EditIcon from "../../../../assets/icons/editIconWhite.png";
-
 // components
 import ImageSection from "./components/ImageSection.js";
 import { CommentSection } from "./components/CommentSection.js";
@@ -15,8 +12,9 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 
 // redux
 import { connect } from "react-redux";
+import { TitleContainer } from "../../../../components/TitleContainer";
 
-const TicketPage = ({ images, ticket, setEditing, ticketId, projectId, user, setLoading }) => {
+const TicketPage = ({ images, ticket, editing, setEditing, ticketId, projectId, user, setLoading }) => {
 
   const DeleteAlertRef = useRef();
 
@@ -43,10 +41,7 @@ const TicketPage = ({ images, ticket, setEditing, ticketId, projectId, user, set
         DeleteAlertRef={DeleteAlertRef}
       />
       <div className='ticket-wrapper'>
-        <div className='title-container'>
-          <h1>{ticket.title}</h1>
-          <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit ticket link' /></button>
-        </div>
+        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
         <div className='info-wrapper'>
           <div className='info-container'>
             <h3><span>Tag: </span> {ticket.tag}</h3>
@@ -74,21 +69,6 @@ const StyledSection = styled.section`
     flex-direction: column;
     width: 100%;
     margin: auto;
-    .title-container {
-      display: flex;
-      align-items: center;
-      @media (max-width: 450px) {
-        justify-content: space-between;
-      }
-      h1 {
-        color: white;
-        font-size: 2em;
-        margin: 10px 0;
-        @media (max-width: 450px) {
-          font-size: 1.5em;
-        }
-      }
-    }
     .info-wrapper {
       display: flex;
       width: 100%;

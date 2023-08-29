@@ -72,7 +72,7 @@ const ProjectActivityPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   width: 80%;
-  margin: auto;
+  margin: 10px auto;
   .activity-container {
     margin-bottom: 8px;
     h6 {

@@ -49,7 +49,7 @@ const ProjectPage = ({ user }) => {
       <Searchbar setSearchPhrase={setTicketSearchPhrase} />
       {
         isLoading ? <Loader />
-        : <div className='ticket-table-wrapper'>
+        : <>
           {
             !project.tickets ? 
               <div className='undefined'>
@@ -68,7 +68,7 @@ const ProjectPage = ({ user }) => {
                 ticketSearchPhrase={ticketSearchPhrase}
               />
           }
-        </div>
+        </>
       }
     </StyledPage>
   );
@@ -76,8 +76,7 @@ const ProjectPage = ({ user }) => {
 
 const StyledPage = styled.section`
   height: 100%;
-  max-height: 80vh;
-  width: 85%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -90,13 +89,6 @@ const StyledPage = styled.section`
     justify-content: center;
     align-items: center;
     margin: auto;
-  }
-  .ticket-table-wrapper {
-    position: relative;
-    width: 100%;
-    height: auto;
-    display: flex;
-    overflow: hidden;
   }
 `;
 

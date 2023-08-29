@@ -4,9 +4,6 @@ import axios from "axios";
 // styled
 import styled from "styled-components";
 
-// images
-import EditIcon from "../../../../assets/icons/editIconWhite.png";
-
 // functions
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
@@ -21,11 +18,12 @@ import { Images } from "./components/Images.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
+import { TitleContainer } from "../../../../components/TitleContainer.js";
 
 // router
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditTicketPage = ({ user, setEditing }) => {
+const EditTicketPage = ({ user, editing, setEditing }) => {
 
   const DeleteAlertRef = useRef();
 
@@ -150,10 +148,7 @@ const EditTicketPage = ({ user, setEditing }) => {
         isLoading ? <TicketPageLoader />
         : 
           <div className='ticket-container'>
-            <div className='title-container'>
-              <h1>{ticket.title}</h1>
-              <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit' /></button>
-            </div>
+            <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
             <div className='info-wrapper'>
               <InfoContainer ticket={ticket} />
               <div className='selector-container'>
@@ -209,33 +204,6 @@ const StyledTicketSection = styled.section`
     flex-direction: column;
     width: 100%;
     margin: auto;
-    .title-container {
-      display: flex;
-      align-items: center;
-      @media (max-width: 450px) {
-        justify-content: space-between;
-      }
-      h1 {
-        color: white;
-        font-size: 2em;
-        margin: 10px 0;
-        @media (max-width: 450px) {
-          font-size: 1.5em;
-        }
-      }
-      .selector-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 20px;
-        width: 100%;
-        margin: 10px 0 10px 0;
-        @media (max-width: 700px) {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
-    }
   }
 `;
 

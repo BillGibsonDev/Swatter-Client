@@ -54,32 +54,33 @@ export default function TicketTable({ project }) {
     )
 }
 
-const StyledBugTable = styled.div`
+const StyledTicketTable = styled.div`
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
     height: 100%;
-    max-height: 93vh;
     width: 100%;
     margin-top: 20px;
-    position: relative;
-    @media (max-width: 1440px){
-        grid-template-columns: 275px 275px 275px 275px;
-    }
-    @media (max-width: 834px){
-        grid-template-columns: 310px 310px 310px 310px;
-    }
-    @media (max-width: 428px){
-        grid-template-columns: 310px 310px 310px 310px;
-        width: 85vw;
-    }
-    .bugs-container {
+    /* scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+        width: none;
+    } */
+    .tickets-container {
         width: 100%;
         background: black;
         padding: 6px;
         background: #0b2849;
-        border-radius: 12px;
+        border-radius: ${palette.borderRadius};
+        height: 100%;
+        max-height: 85vh;
+        overflow: auto;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+            width: none;
+        }
         h5 {
             color: ${palette.helperGrey};
             padding: 10px;

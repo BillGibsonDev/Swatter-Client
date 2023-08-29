@@ -3,9 +3,7 @@ import styled from "styled-components";
 
 // components
 import Project from "./Project.js";
-
-export const ProjectTable = ({projects}) => {
-
+export const ProjectTable = ({ user, projects}) => {
   const sortByDate = (projects) => {
     return projects.sort((a, b) => {
       return new Date(a.lastUpdate) - new Date(b.lastUpdate);
@@ -18,6 +16,7 @@ export const ProjectTable = ({projects}) => {
         sortByDate(projects).slice().reverse().map((project, key) => {
           return (
             <Project
+              user={user}
               project={project}
               key={key}
             />
@@ -39,7 +38,7 @@ const StyledProjectTable = styled.div`
     grid-template-columns: 1fr 1fr;
   }
   @media (max-width: 838px) {
-    grid-template-columns: 75vw;
+    grid-template-columns: 1fr;
     row-gap: 8px;
     column-gap: 0;
   }

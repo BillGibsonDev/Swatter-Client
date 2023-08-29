@@ -1,35 +1,25 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as palette from '../../../styled/ThemeVariables.js';
-
-// functions
-import { handleAlert } from "../../../functions/handleAlert.js";
-import { handleUserAuth } from "../../../functions/handleUserAuth.js";
+import { StyledButton } from "../../../styled/StyledButton.js";
 
 // redux
 import { connect } from "react-redux";
 
-// components
-import { Alert } from "../../../components/Alert.js";
-
 const CreateSprint = ({ projectId, setCreating, user }) => {
 
-  const AlertRef = useRef();
-
-  const [ message, setMessage ] = useState('');
-  const [title, setTitle] = useState("");
-  const [goal, setGoal] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [color, setColor] = useState("");
-  const [status, setStatus] = useState("");
+  const [ title, setTitle ] = useState("");
+  const [ goal, setGoal ] = useState("");
+  const [ endDate, setEndDate ] = useState("");
+  const [ color, setColor ] = useState("");
+  const [ status ] = useState("Active");
 
   const handleCreateSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_CREATE_SPRINT_URL}/${projectId}`,
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/create`,
       {
-        projectId: projectId,
         goal: goal,
         title: title,
         endDate: endDate,
@@ -43,17 +33,13 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
       }
     )
     .then((response) => {
-      if (response.data !== "Sprint Created") {
-        setMessage("Server Error - Sprint not created");
-        handleAlert(AlertRef);
-      } else {
-        setMessage("Sprint Created!");
-        handleAlert(AlertRef);
+      if (response.status === 200) {
         setCreating(false);
       }
     })
     .catch((err) => {
       console.log(err);
+      setCreating(false);
     });
   };
 
@@ -61,55 +47,39 @@ const CreateSprint = ({ projectId, setCreating, user }) => {
 
   return (
     <StyledCreateSprint>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <div className='title-container'>
-        <h1>New Sprint</h1>
+        <h1>Create Sprint</h1>
         <button id='exit-btn' onClick={() => { setCreating(false); }}>
           Cancel
         </button>
       </div>
       <div className="form-wrapper">
-      <div className="form-container">
-      <label>
-        Title
-        <input type='text' id='title' onChange={(event) => { setTitle(event.target.value);}} />
-      </label>
-      <label>
-        Goal
-        <textarea type='text' id='goal' onChange={(event) => { setGoal(event.target.value); }} />
-      </label>
-      <label>
-        Status
-        <select name='status' defaultValue={"Active"} onChange={(event) => { setStatus(event.target.value);}}>
-          <option value='Active'>Active</option>
-          <option value='Completed'>Completed</option>
-        </select>
-      </label>
-      <label>
-        End Date
-        <input type='date' id='end-date' onChange={(event) => { setEndDate(event.target.value); }}/>
-      </label>
-      <label>
-        Color Code
-        <select id="color" onChange={(event) => { setColor(event.target.value); }}>
-          <option value=''>None</option>
-          {
-            sprintColors.map((color, key) => {
-              return ( <option key={key} value={color.toLowerCase()}>{color}</option>)
-            })
-          }
-        </select>
-      </label>
-      {
-        handleUserAuth(user)
-        ? <button onClick={() => { handleCreateSprint(); }}>Create</button>
-        : <button>Create</button>
-      }
-    </div>
+        <div className="form-container">
+        <label>
+          Title
+          <input type='text' id='title' onChange={(event) => { setTitle(event.target.value);}} />
+        </label>
+        <label>
+          Goal
+          <textarea type='text' id='goal' onChange={(event) => { setGoal(event.target.value); }} />
+        </label>
+        <label>
+          End Date
+          <input type='date' id='end-date' onChange={(event) => { setEndDate(event.target.value); }}/>
+        </label>
+        <label>
+          Color Code
+          <select id="color" onChange={(event) => { setColor(event.target.value); }}>
+            <option value=''>None</option>
+            {
+              sprintColors.map((color, key) => {
+                return ( <option key={key} value={color.toLowerCase()}>{color}</option>)
+              })
+            }
+          </select>
+        </label>
+        <StyledButton onClick={() => { handleCreateSprint(); }}>Create</StyledButton>
+      </div>
     </div>
     </StyledCreateSprint>
   );
@@ -121,6 +91,7 @@ const StyledCreateSprint = styled.section`
   width: 100%;
   max-width: 1000px;
   min-height: 50vh;
+  padding: 2px;
   .title-container {
     display: flex;
     max-width: 500px;

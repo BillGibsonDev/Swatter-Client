@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 // styled
 import styled from "styled-components";
 import * as palette from "../../../../styled/ThemeVariables.js";
@@ -8,36 +10,53 @@ import EditIcon from "../../../../assets/icons/editIconWhite.png";
 // loaders
 import Loader from "../../../../loaders/Loader.js";
 
-export default function ProjectDetails({ project, isLoading, setEditing}) {
+// function
+import { handleDate } from '../../../../functions/handleDates.js';
+import { MemberList } from "../../MemberList.js";
+
+export default function ProjectDetails({ project, isLoading, setEditing, user }) {
+
+  const [ addingMember, setAddingMember ] = useState(false);
+  const [ members, setMembers ] = useState(project.members);
 
   return (
-    <StyledDetails>
+    <StyledSection>
       {
         isLoading ? <Loader />
        : 
         <>
           <div className='title-container'>
-            <h1>{project.projectTitle}</h1>
+            <h1>{project.title}</h1>
             <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit' /></button>
           </div>
           <div className='container'>
-            <h6><span>Key:</span> {project.projectKey}</h6>
-            <h6><span>Type:</span> {project.projectType}</h6>
+            <h6><span>Started:</span> {handleDate(project.startDate)}</h6>
+            <h6><span>Last Update:</span> {handleDate(project.lastUpdate)}</h6>
+            {
+              project.link ? <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
+              : <h6><span>Website:</span> None</h6>
+            }
+            {
+              project.repository ? <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
+              : <h6><span>Repository:</span> None</h6>
+            }
             <h6><span>Description:</span> {project.description}</h6>
           </div>
-          <div className='container'>
-            <h6><span>Lead:</span> {project.projectLead}</h6>
-            <h6><span>Started:</span> {project.startDate}</h6>
-            <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
-            <a href={project.projectLink} target='_blank' rel='noreferrer'><span>Website:</span> {project.projectLink}</a>
-          </div>
+          <MemberList 
+            members={members} 
+            setMembers={setMembers}
+            projectId={project._id} 
+            user={user}
+            setAddingMember={setAddingMember}
+            addingMember={addingMember}
+          />
         </>
       }
-    </StyledDetails>
+    </StyledSection>
   );
 }
 
-const StyledDetails = styled.div`
+const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 20px auto;
@@ -59,9 +78,6 @@ const StyledDetails = styled.div`
       margin: 10px 0;
       font-size: 1em;
       color: white;
-      @media (max-width: 428px) {
-        margin: 20px 0;
-      }
       span {
         color: ${palette.helperGrey};
       }

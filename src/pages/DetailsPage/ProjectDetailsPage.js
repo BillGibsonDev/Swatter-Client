@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 // styled
 import styled from "styled-components";
@@ -7,81 +6,81 @@ import styled from "styled-components";
 // router
 import { useParams } from "react-router-dom";
 
+// redux
+import { connect } from "react-redux";
+
 // loaders
 import Loader from "../../loaders/Loader.js";
 
 // components
-import { BreadCrumbs } from "../../components/Breadcrumbs.js";
+import BreadCrumbs from "../../components/Breadcrumbs.js";
 
 //sections
 import ProjectDetails from "./sections/ProjectDetails/ProjectDetails.js";
 import EditProject from "./sections/EditProjectDetails/EditProject.js";
 
-export default function ProjectDetailsPage() {
+// functiomns
+import { getProject } from "../../functions/getProject.js";
+
+const ProjectDetailsPage = ({ user }) => {
   const { projectId } = useParams();
 
   const [ project, setProject ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
-
+  
   useEffect(() => {
-    const getProject = () => {
-      setLoading(true);
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then((response) => {
-        setProject(response.data);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject( user, projectId );
+        setProject(projectData);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     };
-    getProject(projectId);
-  }, [ projectId, editing ]);
+    fetchProject();
+  }, [projectId, user ]);
+
+  if( isLoading ){
+    return <Loader />
+  }
 
   return (
-    <StyledDetails>
+    <StyledPage>
+      <BreadCrumbs 
+        projectId={projectId}
+        projectTitle={project.title}
+        title={'Details'}
+      />
       {
-        isLoading ? <Loader />
-       : 
-        <>
-          <BreadCrumbs 
-            projectId={projectId}
-            projectTitle={project.projectTitle}
-            title={'Details'}
-          />
-          {
-            editing ? 
-            <EditProject
-              isLoading={isLoading}
-              setLoading={setLoading}
-              project={project}
-              projectId={projectId}
-              setEditing={setEditing}
-            />
-            : <ProjectDetails
-              isLoading={isLoading}
-              setLoading={setLoading}
-              project={project}
-              projectId={projectId}
-              setEditing={setEditing}
-            />
-          }
-        </>
+        editing ? 
+        <EditProject
+          isLoading={isLoading}
+          setLoading={setLoading}
+          project={project}
+          projectId={projectId}
+          setEditing={setEditing}
+          user={user}
+        />
+        : <ProjectDetails
+          isLoading={isLoading}
+          setLoading={setLoading}
+          project={project}
+          projectId={projectId}
+          setEditing={setEditing}
+          user={user}
+        />
       }
-    </StyledDetails>
+    </StyledPage>
   );
 }
 
-const StyledDetails = styled.div`
+const StyledPage = styled.section`
   height: 100%;
-  width: 70%;
-  margin: 20px auto;
-  @media (max-width: 834px) {
-    width: 80%;
-    padding: 0;
-    margin: 20px 5% 0 15%;
-  }
+  width: 80%;
+  margin: 0 auto;
   #toggle-edit-button {
     width: 20px;
     height: 20px;
@@ -95,3 +94,11 @@ const StyledDetails = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(ProjectDetailsPage);

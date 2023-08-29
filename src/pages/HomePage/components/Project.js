@@ -11,19 +11,19 @@ import PlaceholderImage from "../../../assets/images/imagePlaceholder.png";
 // functions
 import { handleDate } from "../../../functions/handleDates";
 
-export default function Project({ project }) {
+export default function Project({ user, project }) {
 
   return (
     <StyledProject>
-      <Link className='project-image-link' to={`/projects/${project._id}`}>
+      <Link className='project-image-link' to={`/${user.id}/projects/${project._id}`}>
         <img
           className='project-image'
-          src={!project.projectImage ? PlaceholderImage : project.projectImage}
+          src={!project.image ? PlaceholderImage : project.image}
           alt={project.title}
         />
       </Link>
       <div className="text-container">
-        <Link to={`/projects/${project._id}`}>{project.projectTitle}</Link>
+        <Link to={`${user.id}/projects/${project._id}`}>{project.title}</Link>
         {
           project.lastUpdate 
           ? <h2>Updated: {handleDate(project.lastUpdate)}</h2>
@@ -72,10 +72,6 @@ const StyledProject = styled.div`
       object-fit: cover;
     }
   }
-  @media (max-width: 450px) {
-    justify-content: center;
-    margin-left: 6px;
-  }
   .text-container {
     display: flex;
     position: relative;
@@ -85,7 +81,7 @@ const StyledProject = styled.div`
     height: 100%;
     @media (max-width: 450px){
       justify-content: center;
-      margin-left: 6px;
+      margin-left: 8px;
     }
     a {
       font-size: ${palette.subtitleSize};

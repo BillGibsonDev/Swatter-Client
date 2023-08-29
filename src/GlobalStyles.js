@@ -8,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
     }
     html {
         scroll-behavior: smooth;
-        background: #0e1a28;
+        background: #1c2633;
         font-family: 'Roboto Mono', monospace;
         letter-spacing: 1px;
         line-height: 1.5;

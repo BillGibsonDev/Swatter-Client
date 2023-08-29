@@ -6,26 +6,30 @@ import styled from "styled-components";
 import * as palette from "../../../styled/ThemeVariables";
 
 // functions
-
-import { handleAlert } from "../../../functions/handleAlert.js";
 import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
 
 // redux
 import { connect } from "react-redux";
 
 // components
-import { Alert } from "../../../components/Alert";
 import { DeleteAlert } from "../../../components/DeleteAlert";
+import Loader from "../../../loaders/Loader";
 
 // functions
-import ButtonContainer from "../components/ButtonContainer";
+import { ButtonContainer }from "../components/ButtonContainer";
 
-const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSearchSprint }) => {
+const EditSprint = ({ 
+  user, 
+  projectId, 
+  setEditing, 
+  project, 
+  searchSprint, 
+  setSearchSprint, 
+  setOptions 
+}) => {
 
-  const AlertRef = useRef();
   const DeleteAlertRef = useRef();
 
-  const [ message, setMessage ] = useState('');
   const [ sprint, setSprint ] = useState([]);
   const [ sprintId, setSprintId ] = useState(false);
 
@@ -34,10 +38,15 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
       setSprintId(project.sprints.find((sprint) => sprint.title === searchSprint)._id);
     }
     const handleSprint = (projectId, sprintId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_SPRINT_URL}/${projectId}/${sprintId}`)
+      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}`,
+        {
+          headers: {
+            Authorization: user.token
+          }
+        })
       .then((response) => {
-        setSprint(response.data.sprints[0]);
-        setLastTitle(response.data.sprints[0].title)
+        setSprint(response.data);
+        setLastTitle(response.data.title);
       })
       .catch((err) => {
         console.log(err);
@@ -46,22 +55,20 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
     if (sprintId) {
       handleSprint(projectId, sprintId);
     }
-  }, [project, projectId, searchSprint, sprintId ]);
+  }, [ user, project, projectId, searchSprint, sprintId ]);
 
-  const [title, setTitle] = useState(sprint.title);
-  const [goal, setGoal] = useState(sprint.goal);
-  const [endDate, setEndDate] = useState(sprint.endDate);
-  const [color, setColor] = useState(sprint.color);
-  const [status, setStatus] = useState(sprint.status);
+  const [ title, setTitle ] = useState(sprint.title);
+  const [ goal, setGoal ] = useState(sprint.goal);
+  const [ endDate, setEndDate ] = useState(sprint.endDate);
+  const [ color, setColor ] = useState(sprint.color);
+  const [ status, setStatus ] = useState(sprint.status);
   const [ lastTitle, setLastTitle ] = useState(sprint.title);
 
+  const [ isLoading, setLoading ] = useState(false);
+
   const handleUpdateSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_UPDATE_SPRINT_URL}/${projectId}/${sprintId}`,
-      {
-        headers: {
-          Authorization: user.token
-        }
-      },
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/update`,
       {
         projectId: projectId,
         sprintId: sprintId,
@@ -71,15 +78,16 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
         color: color,
         status: status,
         lastTitle: lastTitle
-      }
+      },      
+      {
+        headers: {
+          Authorization: user.token
+        }
+      },
     )
     .then((response) => {
-      if (response.data !== "Sprint Updated") {
-        setMessage("Server Error - Sprint not updated");
-        handleAlert(AlertRef);
-      } else {
-        setMessage(`Sprint Updated!`);
-        handleAlert(AlertRef);
+      if (response.status === 200) {
+        setLoading(false);
       }
     })
     .catch((err) => {
@@ -88,7 +96,8 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
   };
 
   const handleDeleteSprint = () => {
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_DELETE_SPRINT_URL}/${projectId}/${sprintId}`,
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/delete`,
       {
         sprintTitle: sprint.title
       },
@@ -98,17 +107,17 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
         }
       }
     )
-    .then(function (response) {
-      if (response.data !== "Sprint Deleted") {
-        setMessage("Server Error - Sprint Not Deleted!");
-        handleAlert(AlertRef);
-      } else {
-        setMessage(`${sprint.title} Deleted!`);
-        handleAlert(AlertRef);
+    .then((response) => {
+      if (response.status === 200) {
+        setLoading(false);
         setSearchSprint('');
         setEditing(false);
       }
-    });
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+    })
   };
 
   const sprintColors = [ 'Black', 'Blue', 'Brown', 'DarkRed', 'Green', 'Olive', 'Red', 'Slateblue', 'Tomato', 'Purple']
@@ -119,13 +128,11 @@ const EditSprint = ({ user, projectId, setEditing, project, searchSprint, setSea
     }
   }
 
+  if ( isLoading ){
+    return <Loader />
+  }
   return (
     <StyledEditSprint>
-      <Alert
-        message={message}
-        handleAlert={handleAlert}
-        AlertRef={AlertRef}
-      />
       <DeleteAlert
         handleDeleteAlert={handleDeleteAlert}
         DeleteAlertRef={DeleteAlertRef}

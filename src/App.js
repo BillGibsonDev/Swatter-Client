@@ -1,182 +1,148 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 // styles
 import GlobalStyles from "./GlobalStyles";
+import styled from 'styled-components';
 
 // components
 import Nav from "./components/Nav";
-import { Alert } from "./components/Alert";
+import Alert from "./components/Alert";
+import ProjectSideNav from "./components/ProjectSideNav";
 
 // pages
-import { HomePage } from "./pages/HomePage/HomePage.js";
-import { ProjectPage } from "./pages/ProjectPage/ProjectPage";
-import ProfilePage from "./pages/ProfilePage";
-import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage/HomePage.js";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+
+import MainTicketPage from "./pages/TicketPage/MainTicketPage.js";
+import CreateTicketPage from "./pages/CreateTicketPage/CreateTicketPage.js";
+
+import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
-import RegisterUserPage from "./pages/RegisterUserPage.js";
-import { MainBugPage }from "./pages/BugPage/MainBugPage.js";
-import CreateBugPage from "./pages/CreateBugPage/CreateBugPage.js";
-import { SprintsPage } from "./pages/Sprints/SprintsPage.js";
+import SprintsPage from "./pages/Sprints/SprintsPage.js";
 import ProjectDetailsPage from "./pages/DetailsPage/ProjectDetailsPage.js";
 import ArchivePage from "./pages/ArchivePage/Archive";
 import { FeaturesPage } from "./pages/FeaturesPage/FeaturesPage";
 import ProjectActivityPage from "./pages/ActivityPage";
+import CommentsPage from "./pages/CommentsPage/CommentsPage";
+
+// logged out pages
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 // router
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import { handleUser } from './redux/actions/user.js';
+import { showAlert } from "./redux/actions/alert";
 
-//functions
+// functions
 import { handleTokens } from "./functions/handleTokens";
-import { handleAlert } from "./functions/handleAlert";
+import useTokenRefresh from "./functions/useTokenRefresh";
 
-function App() {
+const App = ({ user, isLoggedIn }) => {
+
+  useTokenRefresh();
   
-  const AlertRef = useRef();
   const projectSideNavRef = useRef();
 
-  const [ message, setMessage ] = useState('')
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [ password, setPassword ] = useState("");
+  const [ username, setUsername ] = useState("");
+  const [ isLoading, setLoading ] = useState(false);
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let token = sessionStorage.getItem("token");
-    let username = sessionStorage.getItem("username");
-    const handlePageReload = (token) => {
-      setLoading(true);
-      setTimeout(() => {
-        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: token })
-        .then((response) => {
-          if(response.data === 'Token Not Valid'){
-            setLoggedIn(false);
-            setLoading(false);
-            sessionStorage.clear();
-            navigate("/LoginPage");
-          } else {
-            setLoggedIn(true);
-            setLoading(false);
-            dispatch(handleUser(username, response.data, token));
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          setLoggedIn(false);
-          setLoading(false);
-          sessionStorage.clear();
-          navigate("/LoginPage");
-        });
-      }, 1000);
-    }
-    if(token){
-      handlePageReload(token);
-    }
-  }, [ navigate, dispatch ]);
-
-  const login = () => {
-    if(!password || !username){
-      setMessage("Enter A Username or Password");
-      handleAlert(AlertRef);
-    } else {
-      setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_LOGIN_URL}`,
-        {
-          username: username,
-          password: password,
-        }
-      )
-      .then((response) => {
-        handleTokens(response.data, username);
-        axios.post(`${process.env.REACT_APP_BASE_URL}/validateTokens`, { token: response.data })
-        .then((res) => {
-          if(res.status === 200){
-            setLoggedIn(true);
-            setLoading(false);
-            dispatch(handleUser(username, res.data));
-            navigate("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          sessionStorage.clear();
-          setMessage("Wrong Username or Password");
-          handleAlert(AlertRef);
-          setLoading(false);
-          setLoggedIn(false);
-          navigate("/LoginPage");
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        sessionStorage.clear();
-        setMessage("Wrong Username or Password");
-        handleAlert(AlertRef);
-        setLoading(false);
-        setLoggedIn(false);
-        navigate("/LoginPage");
-      });
-    }
-  };
-
-  const logout = () => {
-    sessionStorage.clear();
-    setLoggedIn(false);
-    setPassword("");
-    setUsername("");
-    navigate("/LoginPage");
-    setLoading(false);
-  };
-
-  return (
-    <>
-      <GlobalStyles />
+  const handleLogin = () => {
+    if(!username){ dispatch(showAlert('Username', 'warning')); return; };
+    if(!password){ dispatch(showAlert('Password', 'warning')); return; };
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
       {
-        !isLoggedIn ? 
-          <>
-            <Alert
-              message={message}
-              handleAlert={handleAlert}
-              AlertRef={AlertRef}
-            />
+        username: username,
+        password: password,
+      }
+    )
+    .then((response) => {
+      if(response.status === 200){
+        handleTokens(response.data.token, response.data.username, response.data.id);
+        dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
+        setLoading(false);
+        navigate("/");
+      }
+      })
+    .catch((error) => {
+      console.log(error);
+      localStorage.clear();
+      setLoading(false);
+      dispatch(showAlert(error, 'error'));
+    });
+  };
+  
+  if(!isLoggedIn){
+    return (
+      <>
+        <Alert />
+        <GlobalStyles />
+        <Routes>
+          <Route path='/login' exact element={ 
             <LoginPage
-              login={login}
+              handleLogin={handleLogin}
               setUsername={setUsername}
               setPassword={setPassword}
               isLoading={isLoading}
-              message={message}
-              handleAlert={handleAlert}
-              AlertRef={AlertRef}
-            />
-          </>
-        : 
-        <>
-          <Nav logout={logout} projectSideNavRef={projectSideNavRef} />
-          <Routes>
-            <Route path='/' exact element={ <HomePage /> } />
-            <Route path='/:projectId/:bugId' exact element={ <MainBugPage /> }  />
-            <Route path='/projects/:projectId' exact element={ <ProjectPage projectSideNavRef={projectSideNavRef} /> } />
-            <Route path='/project/:projectId/sprints' exact element={ <SprintsPage /> } />
-            <Route path='/CreateProjectPage' exact element={ <CreateProjectPage /> } />
-            <Route path='/:projectId/CreateBugPage' exact element={ <CreateBugPage /> } />
-            <Route path='/:projectId/details' exact element={ <ProjectDetailsPage /> } />
-            <Route path='/ProfilePage' exact element={ <ProfilePage /> } />
-            <Route path='/RegisterUserPage' exact element={ <RegisterUserPage /> } />
-            <Route path='/:projectId/archive' exact element={ <ArchivePage />} />
-            <Route path='/features' exact element={ <FeaturesPage />} />
-            <Route path='/:projectId/activity' exact element={ <ProjectActivityPage />} />
-          </Routes>
-        </>
-      }
+            /> 
+          } />
+          <Route path='/signup' exact element={ 
+            <SignupPage
+              isLoading={isLoading}
+              setLoading={setLoading}
+            />     
+          } />
+          <Route path='/' element={<Navigate replace to="/login" />}  />
+        </Routes>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Alert />
+      <GlobalStyles />
+      <StyledApp>
+        <Nav projectSideNavRef={projectSideNavRef} />
+        <ProjectSideNav projectSideNavRef={projectSideNavRef} />
+        <Routes>
+          <Route path='/login' element={<Navigate replace to="/" />}  />
+          <Route path='/' exact element={ <HomePage /> } />
+          <Route path='/:userId/projects/:projectId/tickets/:ticketId' exact element={ <MainTicketPage /> }  />
+          <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage /> } />
+          <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />
+          <Route path='/:userId/create-project' exact element={ <CreateProjectPage /> } />
+          <Route path='/:userId/projects/:projectId/create-ticket' exact element={ <CreateTicketPage /> } />
+          <Route path='/:userId/projects/:projectId/details' exact element={ <ProjectDetailsPage /> } />
+          <Route path='/users/:userId/profile' exact element={ <ProfilePage /> } />
+          <Route path='/:userId/projects/:projectId/archive' exact element={ <ArchivePage />} />
+          <Route path='/features' exact element={ <FeaturesPage />} />
+          <Route path='/:userId/projects/:projectId/activity' exact element={ <ProjectActivityPage />} />
+          <Route path='/:userId/projects/:projectId/comments' exact element={ <CommentsPage />} />
+        </Routes>
+      </StyledApp>
     </>
   );
 }
-export default App;
+
+const StyledApp = styled.section`
+  display: flex;
+`;
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: !!state.user.token, // Check if token exists
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(App);

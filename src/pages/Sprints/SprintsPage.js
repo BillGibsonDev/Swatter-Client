@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 // styled
 import styled from "styled-components";
 import * as palette from "../../styled/ThemeVariables";
+import { StyledButton } from "../../styled/StyledButton";
 
 // components
-import SprintBugTable from "./components/SprintBugTable.js";
-import { BreadCrumbs } from "../../components/Breadcrumbs";
+import SprintTicketTable from "./components/SprintTicketTable.js";
+import BreadCrumbs from "../../components/Breadcrumbs";
 import { TitleContainer } from "./components/TitleContainer";
 import CreateSprint from "./sections/CreateSprint";
 import EditSprint from "./sections/EditSprint";
@@ -18,8 +18,13 @@ import Loader from "../../loaders/Loader";
 // router
 import { useParams } from "react-router-dom";
 
+// functions
+import { getProject } from "../../functions/getProject";
 
-export const SprintsPage = () => {
+// redux
+import { connect } from "react-redux";
+
+const SprintsPage = ({ user }) => {
   const { projectId } = useParams();
 
   const [searchSprint, setSearchSprint] = useState(false);
@@ -31,26 +36,24 @@ export const SprintsPage = () => {
   const [ creating, setCreating ] = useState(false);
 
   useEffect(() => {
-    const getProject = (projectId) => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${process.env.REACT_APP_GET_PROJECT_URL}/${projectId}`)
-      .then((response) => {
-        setProject(response.data);
-        setOptions(response.data.sprints);
+    const fetchProject = async () => {
+      try {
+        const projectData = await getProject( user, projectId );
+        setProject(projectData);
+        setOptions(projectData.sprints);
         setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
+      } catch (error) {
         setLoading(false);
-      });
+      }
     };
-    getProject(projectId);
-  }, [ projectId, rerender, editing, creating ]);
+    fetchProject();
+  }, [ projectId, user, editing, creating ]);
 
   return (
-    <StyledSprintSection>
+    <StyledPage>
       <BreadCrumbs 
         projectId={projectId}
-        projectTitle={project.projectTitle} 
+        projectTitle={project.title} 
         title={'Sprints'}
       />
       {
@@ -67,18 +70,19 @@ export const SprintsPage = () => {
           searchSprint={searchSprint}
           setEditing={setEditing}
           setSearchSprint={setSearchSprint}
+          setOptions={setOptions}
         />
         : 
-          <div className='sprint-bug-table-wrapper'>
+          <div className='sprint-ticket-table-wrapper'>
             {
-              !project.bugs
+              !project.tickets
               ? <div className='undefined'>
-                  <h1>You've haven't entered any bugs</h1>
+                  <h1>You've haven't entered any tickets</h1>
                 </div>
               : 
               <>
               <div className='button-wrapper'>
-              <button onClick={() => { setCreating(true); }}>New Sprint</button>
+              <StyledButton onClick={() => { setCreating(true); }}>New Sprint</StyledButton>
               {
                 !options
                 ? <></>
@@ -116,7 +120,7 @@ export const SprintsPage = () => {
                     </>
                   }
                 </div>
-                <SprintBugTable
+                <SprintTicketTable
                   setRerender={setRerender}
                   rerender={rerender}
                   project={project}
@@ -126,24 +130,17 @@ export const SprintsPage = () => {
             }
           </div>
       }
-    </StyledSprintSection>
+    </StyledPage>
   );
 }
 
-const StyledSprintSection = styled.div`
+const StyledPage = styled.section`
   height: 100%;
-  max-height: 100vh;
-  width: 100%;
-  max-width: 80vw;
-  margin: 0 auto;
-  padding: 2%;
-  @media (max-width: 834px) {
-    width: 100%;
-    height: 100%;
-  }
-  @media (max-width: 428px) {
-    margin-left: 60px;
-  }
+  max-height: 80vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
   .undefined {
     background: white;
     width: 100%;
@@ -155,13 +152,17 @@ const StyledSprintSection = styled.div`
     margin: auto;
   }
   .button-wrapper {
-    max-width: 70vw;
     display: flex;
-    select,
+    width: auto;
     button {
+      margin: 0 4px;
+      height: 30px;
+    }
+    select {
+      margin: 0;
       cursor: pointer;
       height: 30px;
-      width: 150px;
+      width: 200px;
       option {
         font-size: 20px;
       }
@@ -242,7 +243,7 @@ const StyledSprintSection = styled.div`
       }
     }
   }
-  .sprint-bug-table-wrapper {
+  .sprint-ticket-table-wrapper {
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -256,3 +257,11 @@ const StyledSprintSection = styled.div`
     }
   }
 `;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps)(SprintsPage);

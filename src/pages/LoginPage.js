@@ -6,55 +6,59 @@ import * as palette from '../styled/ThemeVariables';
 // loaders
 import LoginLoader from '../loaders/LoginLoader';
 
-export default function LoginPage({login, setUsername, setPassword, isLoading }) {
+// router
+import { Link } from 'react-router-dom';
+
+export default function LoginPage({handleLogin, setUsername, setPassword, isLoading }) {
 
 	return (
-		<StyledLoginPage>
+		<StyledPage>
 			<h1>Swatter</h1>
 			<h2>Project Management</h2>
 			{
 				isLoading ? <LoginLoader />
-				:  <form className="form-wrapper">
-					<label>Username
-						<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
-					</label>
-					<label>Password
-						<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
-					</label>
-					<StyledButton id="submit-button" type="submit" onClick={() =>{ login(); }}>Sign In</StyledButton>
-				</form>
+				:  
+				<>
+					<form className="form-wrapper">
+						<label>Username
+							<input type="text" onChange={(event) => { setUsername(event.target.value); }} />
+						</label>
+						<label>Password
+							<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
+						</label>
+						<StyledButton type="submit" onClick={() =>{ handleLogin(); }}>Sign In</StyledButton>
+					</form>
+					<div className="signup-container">
+						<p>Need an account?</p>
+						<Link to={'/signup'}>Sign up</Link>
+					</div>
+				</>
 			}
-			<div className="guest-container">
-				<h4>For Guests - (View Only)</h4>
-				<h5>Username: Guest</h5>
-				<h5>Password: Guest</h5>
-			</div>
-		</StyledLoginPage>
+		</StyledPage>
 	)
 }
 
-const StyledLoginPage = styled.div`
+const StyledPage = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	background: white;
-	min-height: 80vh;
+	min-height: 90vh;
 	border-radius: 4px;
 	width: 90%;
 	max-width: 1000px;
-	margin: 5% auto;
-	@media (max-width: 750px){
-		width: 95vh;
-	}
+	margin: 20px auto;
 	h1 {
+		margin-top: 20px;
 		font-size: 5em;
-		color: #0f4d92;
+		color: ${palette.accentColor};
+    	line-height: .9;
 	}
 	h2 {
 		font-size: 1em;
 		margin-bottom: 40px;
-		color: #0f4c92;
+		color: ${palette.accentColor};
 		text-align: center;
 	}
 	.form-wrapper {
@@ -78,33 +82,21 @@ const StyledLoginPage = styled.div`
 			margin-bottom: 20px;
 			font-size: 1em;
 		}
-		#submit-button {
-			color: #ffffff;
-			background: #0f4d92;
-			width: 200px;
-			height: 40px;
-			font-size: ${palette.subtitleSize};
-			&:hover{
-				color: #ffffff;
-				cursor: pointer;
-				background: #000000;
-				transition: 0.2s;
-			}
-		}
 	}
-	.guest-container {
-		margin-top: 40px;
+	.signup-container {
+		margin: 10px 0 20px 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		flex-direction: column;
-		h4 {
-			font-size: ${palette.paraSize};
+		p {
+			font-size: 1em;
 			color: #636363;
 		}
-		h5 {
-			color: #636363;
-			font-size: ${palette.paraSize};
+		a {
+			font-size: 1em;
+			margin-left: 4px;
+			text-decoration: underline;
+      		text-underline-position: under;
 		}
 	}
 `;

@@ -14,7 +14,7 @@ import BreadCrumbs from "../components/Breadcrumbs.js";
 import { TitleContainer }from '../components/TitleContainer.js';
 
 // functions
-import { handleDate, handleActivityDate } from "../functions/handleDates";
+import { handleActivityDate } from "../functions/handleDates";
 import { getProject } from "../functions/getProject.js";
 
 // redux
@@ -27,26 +27,35 @@ const ProjectActivityPage = ({ user }) => {
   const [ isLoading, setLoading ] = useState(true);
   const [ activities, setActivities ] = useState([]);
 
-    const handleDataSort = (data) => {
+  const handleDataSort = (data) => {
     const groupedData = {};
-    data.forEach(activity => {
-      let activityDate = new Date(activity.date).toISOString().split("T")[0];
-      const today = new Date(activity.date).toISOString().split("T")[0];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-      if(today === activityDate){ activityDate = 'Today'}
-      if (!groupedData[activityDate]) {
-        groupedData[activityDate] = {
-          date: activityDate,
+    data.forEach(activity => {
+      const activityDate = new Date(activity.date);
+      activityDate.setHours(0, 0, 0, 0);
+
+      let activityDateString = activityDate.toLocaleDateString();
+
+      if (today.getTime() === activityDate.getTime()) {
+        activityDateString = 'Today';
+      }
+
+      if (!groupedData[activityDateString]) {
+        groupedData[activityDateString] = {
+          date: activityDateString,
           activities: []
         };
       }
       
-      groupedData[activityDate].activities.push(activity);
+      groupedData[activityDateString].activities.push(activity);
     });
-    const groupedArray = Object.values(groupedData);
 
+    const groupedArray = Object.values(groupedData);
     return groupedArray;
-  }
+  };
+
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -81,7 +90,7 @@ const ProjectActivityPage = ({ user }) => {
             activities.map((activity, key) => {
               return (
                 <div className="activity-container" key={key}>
-                  <TitleContainer title={activity.date === 'Today' ? activity.date : handleDate(activity.date)}/>
+                  <TitleContainer title={activity.date}/>
                   {
                     activity.activities.map((activity, key) => {
                       return (

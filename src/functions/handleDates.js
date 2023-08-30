@@ -18,3 +18,10 @@ export const handleDate = (timestamp) => {
         return inputDate.toLocaleDateString(undefined, options);
     }
 }
+
+export const handleActivityDate = (timestamp) => {
+    const inputDate = new Date(timestamp);
+
+    const options = { hour: '2-digit', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
+    return inputDate.toLocaleTimeString(undefined, options);
+}

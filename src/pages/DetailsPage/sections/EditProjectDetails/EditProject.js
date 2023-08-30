@@ -8,15 +8,13 @@ import * as palette from "../../../../styled/ThemeVariables.js";
 // router
 import { useNavigate } from "react-router-dom";
 
-// images
-import EditIcon from "../../../../assets/icons/editIconWhite.png";
-
 // functions
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // components
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
+import { TitleContainer } from "../../../../components/TitleContainer.js";
 
 // loaders
 import Loader from "../../../../loaders/Loader.js";
@@ -24,7 +22,7 @@ import Loader from "../../../../loaders/Loader.js";
 // redux
 import { connect } from "react-redux";
 
-const EditProject = ({ user, setEditing, isLoading, setLoading, project, projectId }) => {
+const EditProject = ({ user, editing, setEditing, isLoading, setLoading, project, projectId }) => {
   
   const navigate = useNavigate();
 
@@ -92,10 +90,12 @@ const EditProject = ({ user, setEditing, isLoading, setLoading, project, project
         deleteFunction={deleteProject}
         title={project.title}
       />
-      <div className='title-container'>
-        <h1>Edit Project</h1>
-        <button id="toggle-edit-button" onClick={() => { setEditing(false)}}><img src={EditIcon} alt='edit' /></button>
-      </div>
+      <TitleContainer 
+        title={project.title}
+        type={'edit'}
+        stateChanger={setEditing}
+        state={editing}
+      />
       {
         isLoading ? <Loader />
         : 

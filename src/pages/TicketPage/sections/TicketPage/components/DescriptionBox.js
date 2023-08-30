@@ -15,18 +15,18 @@ export const DescriptionBox = ({ description }) => {
 }
 
 const StyledDescription = styled.article`
-    color: white;
-    font-size: 1em;
-    display: flex;
-    flex-direction: column;
-    margin: 50px 0;
-    border-top: 2px solid grey;
-    border-bottom: 2px solid grey;
-    padding: 50px 0;
-    h3 {
-      color: ${palette.helperGrey};
-    }
-    p {
-      margin-bottom: 16px;
-    }
+  color: white;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+  padding: 10px 0;
+  h3 {
+    color: ${palette.helperGrey};
+  }
+  p:not(:first-child) {
+    margin-top: 10px;
+  }
 `;

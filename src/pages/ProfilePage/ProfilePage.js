@@ -125,13 +125,6 @@ const StyledProfilePage = styled.section`
     width: 80%;
     max-width: 1000px;
     margin: 0 auto;
-    h1 {
-		font-size: ${palette.titleSize};
-		color: #ffffff;
-        margin: 10px 0;
-        width: 50%;
-        border-bottom: 2px #ffffff solid;
-    }
     .user-container {
         h2 {
             color: white;

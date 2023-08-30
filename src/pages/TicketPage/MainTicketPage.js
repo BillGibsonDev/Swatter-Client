@@ -58,6 +58,7 @@ const MainTicketPage = ({ user }) => {
         isLoading ? <TicketPageLoader />
         : !editing ? <TicketPage 
           setEditing={setEditing} 
+          editing={editing}
           ticket={ticket} 
           images={images}
           ticketId={ticketId}
@@ -66,6 +67,7 @@ const MainTicketPage = ({ user }) => {
         /> 
         : <EditTicketPage 
             setEditing={setEditing} 
+            editing={editing}
             ticket={ticket}
             ticketId={ticketId}
             projectId={projectId}
@@ -78,23 +80,11 @@ const MainTicketPage = ({ user }) => {
 
 const StyledPage = styled.section`
   height: 100%;
-  max-height: 80vh;
   width: 80%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  #toggle-edit-button {
-    width: 20px;
-    height: 20px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    margin-left: 10px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
+  margin-bottom: 20px;
 `;
 
 const mapStateToProps = (state) => {

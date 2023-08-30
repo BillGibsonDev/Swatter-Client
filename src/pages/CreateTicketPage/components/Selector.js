@@ -8,7 +8,10 @@ export const Selector = ({
     setPriority, 
     setStatus, 
     setSprint, 
-    sprintOptions }) => {
+    sprintOptions,
+    project,
+    setAssigned
+}) => {
 
     let sprints = [];
     const handleSprints = (sprintOptions) => {
@@ -26,6 +29,8 @@ export const Selector = ({
             return 'Status';
         } else if(label === 'Sprint'){
             return "Sprint";
+        } else if(label === 'Assigned User'){
+            return "Assigned User";
         }
     }
 
@@ -43,15 +48,21 @@ export const Selector = ({
                 handleSprints(sprintOptions);
                 return sprints;
             }
+        } else if(label === 'Assigned User'){
+            if(!project.members){
+                ticketAssigned.push(project.owner);
+                return ticketAssigned;
+            } else {
+                ticketAssigned.unshift(project.owner);
+                return ticketAssigned;
+            }
         }
     }
 
-    const ticketTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign']
-    const ticketPriority = [ 'Standard', 'Medium', 'High' ]
-    const ticketStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ]
-
-    let Label = handleLabels(label);
-    const Options = handleOptions(label);
+    const ticketTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign'];
+    const ticketPriority = [ 'High' ];
+    const ticketStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ];
+    const ticketAssigned = [];
 
     const handleStateFunction = (label, value) => {
         if (label === 'Tag'){
@@ -62,8 +73,13 @@ export const Selector = ({
             setStatus(value);
         } else if(label === 'Sprint'){
             setSprint(value);
+        } else if(label === 'Assigned User'){
+            setAssigned(value);
         }
     }
+
+    let Label = handleLabels(label);
+    let Options = handleOptions(label);
 
   return (
     <StyledSelector>{Label}:

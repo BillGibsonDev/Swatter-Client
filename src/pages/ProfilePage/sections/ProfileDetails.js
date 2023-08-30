@@ -4,6 +4,7 @@ import * as palette from '../../../styled/ThemeVariables.js';
 
 // components
 import { StyledButton } from '../../../styled/StyledButton.js';
+import { TitleContainer } from '../../../components/TitleContainer.js';
 
 // functions
 import { handleDate } from '../../../functions/handleDates.js';
@@ -29,7 +30,7 @@ export const ProfileDetails =({
     
     return (
         <StyledSection>
-            <h1>Profile</h1>
+            <TitleContainer title={'Profile'} />
             <div className="field-container">
                 <h2><span>Username: </span>{userData.username}</h2>
             </div>
@@ -42,12 +43,12 @@ export const ProfileDetails =({
             <div className="field-container">
                 <h2><span>Last Login: </span>{handleDate(userData.lastLogin)}</h2>
             </div>
-        <div className="options-container">
-            <StyledButton id="edit-email-button" onClick={() => setEditingEmail(!editEmail)}>Update Email</StyledButton>
-            <StyledButton id="edit-password-button" onClick={() => setEditingPassword(!editPassword)}>Update Password</StyledButton>
-            <StyledButton id="signout-button" onClick={() => { logout(dispatch, navigate) }}>Sign Out</StyledButton>
-            <StyledButton id="delete-account-button" onClick={() => setDeleteAccount(!deleteAcount)}>Delete Account</StyledButton>
-        </div>
+            <div className="options-container">
+                <StyledButton id="edit-email-button" onClick={() => setEditingEmail(!editEmail)}>Update Email</StyledButton>
+                <StyledButton id="edit-password-button" onClick={() => setEditingPassword(!editPassword)}>Update Password</StyledButton>
+                <StyledButton id="signout-button" onClick={() => { logout(dispatch, navigate) }}>Sign Out</StyledButton>
+                <StyledButton id="delete-account-button" onClick={() => setDeleteAccount(!deleteAcount)}>Delete Account</StyledButton>
+            </div>
         </StyledSection>
     )
 }

@@ -7,15 +7,16 @@ import { handleDate } from "../../../../../functions/handleDates";
 export const InfoContainer = ({ ticket }) => {
 
   return (
-    <StyledTicketPage>
+    <StyledArticle>
         <h2><span>Creator: </span>{ticket.author}</h2>
+        <h2><span>Assigned User: </span>{ ticket.assigned ? ticket.assigned : 'None'}</h2>
         <h2><span>Created: </span>{handleDate(ticket.date)}</h2>
         <h2><span>Updated: </span>{handleDate(ticket.lastUpdate)}</h2>
-    </StyledTicketPage>
+    </StyledArticle>
   );
 }
 
-const StyledTicketPage = styled.article`
+const StyledArticle = styled.article`
     width: 50%;
     margin: 10px 0;
     display: flex;

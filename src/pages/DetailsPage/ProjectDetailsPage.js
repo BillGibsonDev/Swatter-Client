@@ -55,13 +55,14 @@ const ProjectDetailsPage = ({ user }) => {
         title={'Details'}
       />
       {
-        editing ? 
+        editing && user.id === project.owner ? 
         <EditProject
           isLoading={isLoading}
           setLoading={setLoading}
           project={project}
           projectId={projectId}
           setEditing={setEditing}
+          editing={editing}
           user={user}
         />
         : <ProjectDetails
@@ -69,6 +70,7 @@ const ProjectDetailsPage = ({ user }) => {
           setLoading={setLoading}
           project={project}
           projectId={projectId}
+          editing={editing}
           setEditing={setEditing}
           user={user}
         />

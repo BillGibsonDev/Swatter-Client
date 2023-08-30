@@ -90,11 +90,13 @@ const StyledArticle = styled.article`
         .member-container {
             display: flex;
             align-items: center;
-            width: 95%;
+            width: 100%;
             background: white;
             margin: 4px auto;
             height: 30px;
+            padding: 0 8px;
             h4 {
+                font-weight: 400;
                 color: black;
                 padding: 6px;
                 margin-right: auto;

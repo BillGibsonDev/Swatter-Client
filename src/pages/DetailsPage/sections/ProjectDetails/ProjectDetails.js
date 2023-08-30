@@ -4,17 +4,15 @@ import { useState } from "react";
 import styled from "styled-components";
 import * as palette from "../../../../styled/ThemeVariables.js";
 
-// images
-import EditIcon from "../../../../assets/icons/editIconWhite.png";
-
 // loaders
 import Loader from "../../../../loaders/Loader.js";
 
 // function
 import { handleDate } from '../../../../functions/handleDates.js';
 import { MemberList } from "../../MemberList.js";
+import { TitleContainer } from "../../../../components/TitleContainer.js";
 
-export default function ProjectDetails({ project, isLoading, setEditing, user }) {
+export default function ProjectDetails({ project, isLoading, editing, setEditing, user }) {
 
   const [ addingMember, setAddingMember ] = useState(false);
   const [ members, setMembers ] = useState(project.members);
@@ -25,10 +23,12 @@ export default function ProjectDetails({ project, isLoading, setEditing, user })
         isLoading ? <Loader />
        : 
         <>
-          <div className='title-container'>
-            <h1>{project.title}</h1>
-            <button id="toggle-edit-button" onClick={() => { setEditing(true)}}><img src={EditIcon} alt='edit' /></button>
-          </div>
+          <TitleContainer 
+            title={project.title}
+            type={ user.id === project.ownerId ? 'edit' : '' }
+            stateChanger={setEditing}
+            state={editing}
+          />
           <div className='container'>
             <h6><span>Started:</span> {handleDate(project.startDate)}</h6>
             <h6><span>Last Update:</span> {handleDate(project.lastUpdate)}</h6>

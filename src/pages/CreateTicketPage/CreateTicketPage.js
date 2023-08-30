@@ -36,8 +36,9 @@ const CreateTicketPage = ({ user, showAlert }) => {
   const [ sprintOptions, setSprintOptions ] = useState([]);
   const [ project, setProject ] = useState({});
   const [ images, setImages ] = useState([]);
+  const [ assigned, setAssigned ] = useState('');
 
-  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint' ];
+  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint', 'Assigned User' ];
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -72,6 +73,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
         description,
         status,
         priority,
+        assigned,
         tag,
         sprint,
         checkImages,
@@ -121,7 +123,9 @@ const CreateTicketPage = ({ user, showAlert }) => {
                   setPriority={setPriority}
                   setStatus={setStatus}
                   setSprint={setSprint}
+                  setAssigned={setAssigned}
                   sprintOptions={sprintOptions}
+                  project={project}
                 />
               )
             })

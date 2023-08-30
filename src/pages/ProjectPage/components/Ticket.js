@@ -48,10 +48,6 @@ const Ticket = ({ user, project, ticket }) => {
 
 	const handleTicketPriority = (priority) => {
 		switch (priority) {
-		case "Standard":
-			return icons.ArrowGreen;
-		case "Medium":
-			return icons.ArrowYellow;
 		case "High":
 			return icons.ArrowRed;
 		default:
@@ -59,8 +55,9 @@ const Ticket = ({ user, project, ticket }) => {
 		};
 	}
 
+	// #ff000070
     return (
-        <StyledTicket className={ticket.status}>
+        <StyledTicket className={ticket.status} style={{ background: user.username === ticket.assigned ? '#8000ff6f': '' }}>
 			<Link to={`/${user.id}/projects/${project._id}/tickets/${ticket._id}`}>
 				<div className="top-container">
 					<h2 id="title">{ticket.title}</h2> 

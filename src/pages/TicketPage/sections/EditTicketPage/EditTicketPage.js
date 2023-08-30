@@ -31,6 +31,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
 
   const { projectId, ticketId } = useParams();
 
+  const [ project, setProject ] = useState({});
   const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ sprintOptions, setSprintOptions ] = useState([]);
@@ -41,9 +42,10 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
   const [ priority, setPriority ] = useState('');
   const [ tag, setTag ] = useState('');
   const [ sprint, setSprint ] = useState('');
+  const [ assigned, setAssigned ] = useState('');
 
   useEffect(() => {
-    const getSprints = () => {
+    const getSprints = async () => {
       axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}`, 
       {
         headers: {
@@ -51,6 +53,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
         }
       })
       .then((response) => {
+        setProject(response.data);
         setSprintOptions(response.data.sprints);
       })
       .catch((err) => {
@@ -72,6 +75,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
         setPriority(response.data.priority);
         setTag(response.data.tag);
         setSprint(response.data.sprint);
+        setAssigned(response.data.assigned);
         setLoading(false);
       })
       .catch((err) => {
@@ -80,7 +84,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
     };
     getSprints();
     getTicket();
-  }, [ projectId, ticketId, isLoading, rerender, user ]);
+  }, [ projectId, ticketId, isLoading, user ]);
 
   const updateTicket = () => {
     setLoading(true);
@@ -93,7 +97,8 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
         priority: priority,
         projectId: projectId,
         ticketId: ticket._id,
-        ticket: ticket
+        ticket: ticket,
+        assigned: assigned
       },
       {
         headers: {
@@ -134,7 +139,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
     })
   };
 
-  const sections = [ 'Tag', 'Priority', 'Status', 'Sprint' ];
+  const sections = [ 'Tag', 'Priority', 'Status', 'Sprint', 'Assigned User' ];
 
   return (
     <StyledTicketSection>
@@ -165,11 +170,14 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
                             sprint={sprint}
                             status={status}
                             priority={priority}
+                            assigned={assigned}
                             setTag={setTag}
                             setPriority={setPriority}
                             setStatus={setStatus}
                             setSprint={setSprint}
+                            setAssigned={setAssigned}
                             sprintOptions={sprintOptions}
+                            project={project}
                           />
                         )
                       })

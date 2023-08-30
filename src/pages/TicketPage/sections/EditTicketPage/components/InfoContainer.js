@@ -4,7 +4,7 @@ import styled from "styled-components";
 // functions
 import { handleDate } from "../../../../../functions/handleDates";
 
-export const InfoContainer = ({ticket}) => {
+export const InfoContainer = ({ticket, setAssigned}) => {
   return (
     <StyledTicketSection>
       <h2><span>Creator: </span>{ticket.author}</h2>

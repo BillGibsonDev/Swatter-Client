@@ -53,7 +53,11 @@ const ProjectSideNav = ({ user, projectSideNavRef }) => {
   return (
     <StyledSideNav ref={projectSideNavRef} style={{display: 'none' }}>
         <div className="sidenav-wrapper">
-            <div className="title-container" onClick={() => { navigate(`/${user.id}/projects/${project._id}`); toggleProjectSideNav(projectSideNavRef)}}>
+            <div className="title-container"
+                onClick={() => { 
+                    navigate(`/${user.id}/projects/${project._id}`); 
+                    toggleProjectSideNav(projectSideNavRef)
+                }}>
                 {
                     !project.image
                     ? <img id="default" src={images.DefaultImage} alt={project.title} />
@@ -63,7 +67,8 @@ const ProjectSideNav = ({ user, projectSideNavRef }) => {
             </div>
             <div className="menu-wrapper">
                 { 
-                    project.repository ? <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
+                    project.repository 
+                    ? <a href={project.repository} target="_blank" rel="noreferrer"><img src={icons.Repo} alt="Repository" />Repository</a>
                     : <></> 
                 }
                 { 

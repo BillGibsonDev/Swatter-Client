@@ -62,8 +62,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
   const createTicket = () => {
     if(!title){ handleAlert('Title', 'warning'); return; }; 
     if(!status){ handleAlert('Status', 'warning'); return; }; 
-    if(!tag){ handleAlert('Tag', 'warning'); return; }; 
-    if(!priority){ handleAlert('Priority', 'warning'); return; }; 
+    if(!tag){ handleAlert('Tag', 'warning'); return; };
     if(!description){ handleAlert('Description', 'warning'); return; }; 
     setLoading(true);
     let checkImages = images.filter(image => image.image !== '');

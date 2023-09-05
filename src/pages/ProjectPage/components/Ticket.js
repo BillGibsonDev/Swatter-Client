@@ -13,7 +13,7 @@ import { handleDate } from '../../../functions/handleDates.js';
 // redux
 import { connect } from 'react-redux';
 
-const Ticket = ({ user, project, ticket }) => {
+const Ticket = ({ user, project, ticket, seeAssigned }) => {
 
 	const handleSprintColor = (project) => {
 		if(project.sprints){
@@ -57,10 +57,11 @@ const Ticket = ({ user, project, ticket }) => {
 
 	// #ff000070
     return (
-        <StyledTicket className={ticket.status} style={{ background: user.username === ticket.assigned ? '#8000ff6f': '' }}>
+        <StyledTicket className={ticket.status} style={ seeAssigned ? { background: user.username === ticket.assigned ? '#8000ff6f': '' } : {}}>
 			<Link to={`/${user.id}/projects/${project._id}/tickets/${ticket._id}`}>
 				<div className="top-container">
 					<h2 id="title">{ticket.title}</h2> 
+					<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
 				</div>
 				<div className="center-container">
 					<h2 id="date">{handleDate(ticket.lastUpdate)}</h2>

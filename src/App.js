@@ -102,6 +102,7 @@ const App = ({ user, isLoggedIn }) => {
             />     
           } />
           <Route path='/' element={<Navigate replace to="/login" />}  />
+          <Route path='/home' element={<Navigate replace to="/login" />}  />
         </Routes>
       </>
     )
@@ -115,8 +116,9 @@ const App = ({ user, isLoggedIn }) => {
         <Nav projectSideNavRef={projectSideNavRef} />
         <ProjectSideNav projectSideNavRef={projectSideNavRef} />
         <Routes>
-          <Route path='/login' element={<Navigate replace to="/" />}  />
-          <Route path='/' exact element={ <HomePage /> } />
+          <Route path='/login' element={<Navigate replace to="/home" />}  />
+          <Route path='/' element={<Navigate replace to="/home" />}  />
+          <Route path='/home' exact element={ <HomePage /> } />
           <Route path='/:userId/projects/:projectId/tickets/:ticketId' exact element={ <MainTicketPage /> }  />
           <Route path='/:userId/projects/:projectId' exact element={ <ProjectPage /> } />
           <Route path='/:userId/projects/:projectId/sprints' exact element={ <SprintsPage /> } />

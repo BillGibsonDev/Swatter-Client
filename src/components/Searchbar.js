@@ -17,7 +17,6 @@ export const Searchbar = ({ setSearchPhrase }) => {
 
 const StyledSearchbar = styled.form`
     position: relative;
-    top: 10px;
     background: white;
     display: flex;
     align-items: center;

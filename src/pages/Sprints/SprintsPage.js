@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 // styled
 import styled from "styled-components";
-import * as palette from "../../styled/ThemeVariables";
 import { StyledButton } from "../../styled/StyledButton";
 
 // components
@@ -60,6 +59,7 @@ const SprintsPage = ({ user }) => {
         isLoading ? <Loader />
         : creating ? <CreateSprint
           setCreating={setCreating}
+          creating={creating}
           projectId={projectId}
         />
         : editing ? <EditSprint
@@ -68,6 +68,7 @@ const SprintsPage = ({ user }) => {
           setRerender={setRerender}
           project={project}
           searchSprint={searchSprint}
+          editing={editing}
           setEditing={setEditing}
           setSearchSprint={setSearchSprint}
           setOptions={setOptions}
@@ -82,53 +83,53 @@ const SprintsPage = ({ user }) => {
               : 
               <>
               <div className='button-wrapper'>
-              <StyledButton onClick={() => { setCreating(true); }}>New Sprint</StyledButton>
-              {
-                !options
-                ? <></>
-                : 
-                  <select onChange={(e) => { setSearchSprint(e.target.value); setRerender(!rerender);}}>
-                    <option value=''></option>
-                    {
-                      options.map((sprint, key) => {
-                        return (
-                          <option key={key} id={sprint._id} value={`${sprint.title}`}>
-                            {sprint.title}
-                          </option>
-                        );
-                      })
-                    }
-                  </select>
-              }
-            </div>
-                <div className='sprint-list-wrapper'>
-                  {
-                    !project.sprints ? <></>
-                    : 
-                    <>
+                <StyledButton onClick={() => { setCreating(true); }}>New Sprint</StyledButton>
+                {
+                  !options
+                  ? <></>
+                  : 
+                    <select onChange={(e) => { setSearchSprint(e.target.value); setRerender(!rerender);}}>
+                      <option value=''></option>
                       {
-                        project.sprints.filter((sprint) => sprint.title === searchSprint).map((sprint, key) => {
+                        options.map((sprint, key) => {
                           return (
-                            <TitleContainer
-                              key={key}
-                              sprint={sprint}
-                              setEditing={setEditing}
-                            />
+                            <option key={key} id={sprint._id} value={`${sprint.title}`}>
+                              {sprint.title}
+                            </option>
                           );
                         })
                       }
-                    </>
-                  }
-                </div>
-                <SprintTicketTable
-                  setRerender={setRerender}
-                  rerender={rerender}
-                  project={project}
-                  searchSprint={searchSprint}
-                />
-              </>
-            }
-          </div>
+                    </select>
+                }
+              </div>
+              <div className='sprint-list-wrapper'>
+                {
+                  !project.sprints ? <></>
+                  : 
+                  <>
+                    {
+                      project.sprints.filter((sprint) => sprint.title === searchSprint).map((sprint, key) => {
+                        return (
+                          <TitleContainer
+                            key={key}
+                            sprint={sprint}
+                            setEditing={setEditing}
+                          />
+                        );
+                      })
+                    }
+                  </>
+                }
+              </div>
+              <SprintTicketTable
+                setRerender={setRerender}
+                rerender={rerender}
+                project={project}
+                searchSprint={searchSprint}
+              />
+            </>
+          }
+        </div>
       }
     </StyledPage>
   );
@@ -163,8 +164,9 @@ const StyledPage = styled.section`
       cursor: pointer;
       height: 30px;
       width: 200px;
+      padding-left: 4px;
       option {
-        font-size: 20px;
+        font-size: 1em;
       }
     }
   }
@@ -178,69 +180,6 @@ const StyledPage = styled.section`
       align-items: center;
       flex-direction: column;
       height: 10vh;
-      @media (max-width: 450px) {
-        margin-top: 20px;
-      }
-      .title-container {
-        display: flex;
-        width: 600px;
-        margin-right: auto;
-        align-items: center;
-        h4 {
-          color: white;
-          font-size: 30px;
-          margin-top: auto;
-          margin-right: 16px;
-        }
-        button {
-          width: 30px;
-          height: 30px;
-          z-index: 3;
-          background: none;
-          border: none;
-          @media (max-width: 450px) {
-            margin-bottom: 0;
-            width: 24px;
-            height: 24px;
-          }
-          #edit-button {
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-            &:hover {
-              transform: scale(1.05);
-            }
-          }
-        }
-      }
-      #status {
-        width: 100%;
-        color: white;
-        @media (max-width: 450px) {
-          margin-bottom: 6px;
-        }
-        span {
-          color: ${palette.helperGrey};
-        }
-      }
-      .info-container {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        @media (max-width: 450px) {
-          flex-direction: column;
-        }
-        h5 {
-          color: white;
-          @media (max-width: 450px) {
-            margin-bottom: 6px;
-          }
-          span {
-            color: ${palette.helperGrey};
-          }
-        }
-      }
     }
   }
   .sprint-ticket-table-wrapper {

@@ -11,7 +11,7 @@ export const handleDate = (timestamp) => {
     const currentDate = new Date();
 
     if (sameDate(inputDate, currentDate)) {
-        const options = { hour: '2-digit', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
+        const options = { hour: 'numeric', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
         return inputDate.toLocaleTimeString(undefined, options);
     } else {
         const options = { year:'numeric', month:'short', day:'numeric' };
@@ -22,6 +22,6 @@ export const handleDate = (timestamp) => {
 export const handleActivityDate = (timestamp) => {
     const inputDate = new Date(timestamp);
 
-    const options = { hour: '2-digit', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
+    const options = { hour: 'numeric', minute: '2-digit', seconds: '2-digit', timeZoneName: 'short' };
     return inputDate.toLocaleTimeString(undefined, options);
 }

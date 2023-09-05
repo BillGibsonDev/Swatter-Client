@@ -24,11 +24,10 @@ const ProjectPage = ({ user }) => {
 
   const { projectId } = useParams();
 
-
   const [ project, setProject ] = useState({});
-  const [ rerender, setRerender ] = useState(false);
   const [ isLoading, setLoading ] = useState(true);
   const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
+  const [ seeAssigned, setSeeAssigned ] = useState(true);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -42,11 +41,24 @@ const ProjectPage = ({ user }) => {
       }
     };
     fetchProject();
-  }, [ projectId, user ]);
+  }, [ projectId, user, seeAssigned ]);
+
+  const handleSeeAssignedValue = (checked) => {
+    if(checked){
+      setSeeAssigned(true);
+    } else {
+      setSeeAssigned(false);
+    }
+  }
 
   return (
     <StyledPage>
-      <Searchbar setSearchPhrase={setTicketSearchPhrase} />
+      <div className="search-container">
+        <Searchbar setSearchPhrase={setTicketSearchPhrase} />
+        <label>Assigned
+          <input type="checkbox" id="assigned" checked={seeAssigned} onChange={(e) => { handleSeeAssignedValue(e.target.checked)}} />
+        </label> 
+      </div>
       {
         isLoading ? <Loader />
         : <>
@@ -63,10 +75,8 @@ const ProjectPage = ({ user }) => {
               />
             :
               <TicketTable
-                setRerender={setRerender}
-                rerender={rerender}
                 project={project}
-                ticketSearchPhrase={ticketSearchPhrase}
+                seeAssigned={seeAssigned}
               />
           }
         </>
@@ -80,7 +90,7 @@ const StyledPage = styled.section`
   width: 90%;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 10px auto 0 auto;
   .undefined {
     background: white;
     width: 100%;
@@ -90,6 +100,28 @@ const StyledPage = styled.section`
     justify-content: center;
     align-items: center;
     margin: auto;
+  }
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      color: white;
+      @media (max-width: 600px) {
+        margin-top: 10px;
+      }
+      input {
+        margin-left: 6px;
+      }
+    }
   }
 `;
 

@@ -9,13 +9,16 @@ const ButtonContainer = ({ createTicket }) => {
 
   return (
     <StyledButtonContainer>
-      <StyledButton onClick={() => { createTicket() }}>Create</StyledButton>
+      <StyledButton id="create-btn" onClick={() => { createTicket() }}>Create</StyledButton>
     </StyledButtonContainer>
   );
 }
 
 const StyledButtonContainer = styled.article`
-  margin-top: 30px;
+  margin: 30px auto;
+  #create-btn {
+    margin: 0 ;
+  }
 `;
 
 const mapStateToProps = (state) => {

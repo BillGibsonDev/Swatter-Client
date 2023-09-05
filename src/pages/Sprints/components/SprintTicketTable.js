@@ -20,35 +20,35 @@ const SprintTicketTable = ({ project, searchSprint }) => {
         return sprintArray;
     }
 
+    if(!project.tickets){
+        return(
+            <div className="undefined">
+                <h1>You've haven't entered any tickets</h1>
+            </div>
+        )
+    }
+
     return (
         <StyledTicketTable>
-            { 
-                !project.tickets
-                ? <div className="undefined">
-                    <h1>You've haven't entered any tickets</h1>
-                </div>
-                : <>
-                    {
-                        ticketStatuses.map((status, index) => {
-                            return (
-                                <div className="tickets-container" key={index}>
-                                    <h5>{status} <span>{ handleSprintFilter(status).length}</span></h5>
-                                    {
-                                        handleSprintFilter(status).map((ticket, index) => {
-                                            return (
-                                                <Ticket
-                                                    ticket={ticket}
-                                                    project={project}
-                                                    key={index}
-                                                />
-                                            )
-                                        })
-                                    }
-                                </div>
-                            )
-                        })
-                    }
-                </>
+            {
+                ticketStatuses.map((status, index) => {
+                    return (
+                        <div className="tickets-container" key={index}>
+                            <h5>{status} <span>{ handleSprintFilter(status).length}</span></h5>
+                            {
+                                handleSprintFilter(status).map((ticket, index) => {
+                                    return (
+                                        <Ticket
+                                            ticket={ticket}
+                                            project={project}
+                                            key={index}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                })
             }
         </StyledTicketTable>
     )

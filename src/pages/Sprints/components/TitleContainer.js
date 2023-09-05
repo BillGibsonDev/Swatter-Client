@@ -10,7 +10,7 @@ import { handleDate } from "../../../functions/handleDates";
 
 export const TitleContainer = ({ sprint, setEditing }) => {
   
-  const handleEndDate = (x) => {
+  const handleDeadline = (x) => {
     let newArr = x.split(/[ -]+/);
     return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
   };
@@ -26,7 +26,7 @@ export const TitleContainer = ({ sprint, setEditing }) => {
       <div className='info-container'>
         <h5 id='status'><span>Status: </span>{ sprint.status === "" ? 'None' : sprint.status }</h5>
         <h5><span>Updated:</span> { handleDate(sprint.updated) }</h5>
-        <h5><span>End date: </span>{!sprint.endDate ? 'None' : handleEndDate(sprint.endDate)}</h5>
+        <h5><span>Deadline: </span>{!sprint.deadline ? 'None' : handleDeadline(sprint.deadline)}</h5>
         <h5 id='status'><span>Goal: </span>{ sprint.goal === "" ? 'None' : sprint.goal }</h5>
       </div>
     </StyledTitleContainer>

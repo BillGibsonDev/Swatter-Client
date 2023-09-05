@@ -98,7 +98,8 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
         projectId: projectId,
         ticketId: ticket._id,
         ticket: ticket,
-        assigned: assigned
+        assigned: assigned,
+        sprint: sprint,
       },
       {
         headers: {
@@ -120,7 +121,7 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
 
   const deleteTicket = () => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, {},  
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/delete`, {},  
       {
         headers: {
           Authorization: user.token

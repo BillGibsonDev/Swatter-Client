@@ -8,7 +8,7 @@ import { handleActiveTickets } from '../../../functions/handleActiveTickets';
 // components
 import Ticket from './Ticket.js';
 
-export default function TicketTable({ project }) {
+export default function TicketTable({ project, seeAssigned }) {
 
     const ticketStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
@@ -17,38 +17,41 @@ export default function TicketTable({ project }) {
     activeTickets.sort((a, b) => {
         let dateA = new Date(a.lastUpdate);
         let dateB = new Date(b.lastUpdate);
-        return dateA - dateB;
+        return dateB - dateA;
     })
+
+    if(!project.tickets){
+        return (
+            <StyledTicketTable>
+                <div className="undefined">
+                    <h1>You've haven't entered any tickets</h1>
+                </div>
+            </StyledTicketTable>
+        )
+    }
 
     return (
         <StyledTicketTable>
-            { 
-                !project.tickets
-                ? <div className="undefined">
-                    <h1>You've haven't entered any tickets</h1>
-                </div>
-                : <>
-                    {
-                        ticketStatuses.map((status, index) => {
-                            return (
-                                <div className="tickets-container" key={index}>
-                                    <h5>{status} <span>{activeTickets.filter(ticket => ticket.status === status).slice().reverse().length}</span></h5>
-                                    {
-                                       activeTickets.filter(ticket => ticket.status === status).slice().reverse().map((ticket, index) => {
-                                            return (
-                                                <Ticket
-                                                    project={project}
-                                                    ticket={ticket}
-                                                    key={index}
-                                                />
-                                            )
-                                        })
-                                    }
-                                </div>
-                            )
-                        })
-                    }
-                </>
+            {
+                ticketStatuses.map((status, index) => {
+                    return (
+                        <div className="tickets-container" key={index}>
+                            <h5>{status} <span>{activeTickets.filter(ticket => ticket.status === status).length}</span></h5>
+                            {
+                                activeTickets.filter(ticket => ticket.status === status).map((ticket, index) => {
+                                    return (
+                                        <Ticket
+                                            seeAssigned={seeAssigned}
+                                            project={project}
+                                            ticket={ticket}
+                                            key={index}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    )
+                })
             }
         </StyledTicketTable>
     )

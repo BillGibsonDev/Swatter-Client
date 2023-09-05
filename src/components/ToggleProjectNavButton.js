@@ -48,7 +48,7 @@ const StyledButton = styled.button`
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 6px 0;
     position: absolute;
     z-index: 2;
     top: 0;

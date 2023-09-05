@@ -17,10 +17,12 @@ import Loader from "../../../loaders/Loader";
 
 // functions
 import { ButtonContainer }from "../components/ButtonContainer";
+import { TitleContainer } from "../../../components/TitleContainer";
 
 const EditSprint = ({ 
   user, 
   projectId, 
+  editing,
   setEditing, 
   project, 
   searchSprint, 
@@ -59,7 +61,7 @@ const EditSprint = ({
 
   const [ title, setTitle ] = useState(sprint.title);
   const [ goal, setGoal ] = useState(sprint.goal);
-  const [ endDate, setEndDate ] = useState(sprint.endDate);
+  const [ deadline, setDeadline ] = useState(sprint.deadline);
   const [ color, setColor ] = useState(sprint.color);
   const [ status, setStatus ] = useState(sprint.status);
   const [ lastTitle, setLastTitle ] = useState(sprint.title);
@@ -74,7 +76,7 @@ const EditSprint = ({
         sprintId: sprintId,
         goal: goal,
         title: title,
-        endDate: endDate,
+        deadline: deadline,
         color: color,
         status: status,
         lastTitle: lastTitle
@@ -99,7 +101,7 @@ const EditSprint = ({
     setLoading(true);
     axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/delete`,
       {
-        sprintTitle: sprint.title
+        sprintTitle: sprint.title,
       },
       {
         headers: {
@@ -139,10 +141,12 @@ const EditSprint = ({
         deleteFunction={handleDeleteSprint}
         title={sprint.title}
       />
-      <div className='title-container'>
-        <h1>Edit {sprint.title}</h1>
-        <button id='exit-btn' onClick={() => { setEditing(false) }}>Cancel</button>
-      </div>
+      <TitleContainer 
+        title={'Create Sprint'} 
+        stateChanger={setEditing} 
+        state={editing} 
+        type={'cancel'} 
+      />
       <div className="form-wrapper">
         <div className='form-container'>
         <label>
@@ -184,10 +188,10 @@ const EditSprint = ({
           End Date
           <input
             type='date'
-            defaultValue={sprint.endDate}
-            id='end-date'
+            defaultValue={sprint.deadline}
+            id='deadline'
             onChange={(event) => {
-              setEndDate(event.target.value);
+              setDeadline(event.target.value);
             }}
           />
         </label>
@@ -213,27 +217,13 @@ const EditSprint = ({
 };
 
 const StyledEditSprint = styled.section`
- display: flex;
+  display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   max-width: 1000px;
   min-height: 50vh;
-  .title-container {
-    display: flex;
-    width: 100%;
-    max-width: 500px;
-    justify-content: space-between;
-    align-items: center;
-    h1 {
-      color: white;
-      font-size: ${palette.titleSize};
-    }
-    button {
-      width: 100px;
-      border: none;
-      padding: 8px 0;
-      cursor: pointer;
-    }
+  @media (max-width: 838px) {
+    margin: auto;
   }
   .form-wrapper {
     width: 100%;

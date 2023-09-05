@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
+
 // styles
 import styled from 'styled-components';
 import * as palette from '../styled/ThemeVariables';
 
 // router
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // icons
 import * as icon from '../assets/IconImports.js';
@@ -16,12 +18,25 @@ import { ToggleProjectNavButton }from './ToggleProjectNavButton.js';
 
 const Nav = ({ user, projectSideNavRef }) => {
 
+    const location = useLocation();
+    const CreateProjectRef = useRef()
+
+    useEffect(() => {
+        const handleLocation = () => {
+            let urlCheck = location.pathname.includes('/home');
+            let link = CreateProjectRef.current;
+            if(!urlCheck){ link.style.display = 'none'};
+            if(urlCheck){ link.style.display = 'block'};
+        }
+        handleLocation();
+    }, [ location ]);
+
     return (
         <StyledNav>
-            <Link to="/"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
+            <Link to="/home"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
             <Link to={`/users/${user.id}/profile`}><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
-            <Link id="add-button" to={`/${user.id}/create-project`}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
             <Link to="/features"><img src={icon.Help} alt="Features" /><span className="tooltiptext">Features</span></Link>
+            <Link ref={CreateProjectRef} id="add-button" to={`/${user.id}/create-project`}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
             <ToggleProjectNavButton projectSideNavRef={projectSideNavRef} />
         </StyledNav>
     )

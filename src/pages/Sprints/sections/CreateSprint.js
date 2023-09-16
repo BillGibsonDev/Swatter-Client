@@ -22,10 +22,6 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
   const [ color, setColor ] = useState("");
   const [ status ] = useState("Active");
 
-  const handleAlert = ( message, type ) => {
-    showAlert(message, type);
-  };
-
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required('A Title is required')
@@ -58,13 +54,14 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
           setCreating(false);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error);
         setCreating(false);
+        showAlert(error, 'error');
       });
     })
     .catch((validationError) => {
-      handleAlert(validationError, 'error');
+      showAlert(validationError, 'error');
     });
   };
 
@@ -161,6 +158,7 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
+
 const mapDispatchToProps = {
   showAlert,
 };

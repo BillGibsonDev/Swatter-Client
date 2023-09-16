@@ -4,11 +4,11 @@ import styled from "styled-components";
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
 
-export const ButtonContainer = ({ DeleteAlertRef, updateTicket, setRerender, rerender}) => {
+export const ButtonContainer = ({ DeleteAlertRef, updateTicket }) => {
 
   return (
     <StyledButtonContainer>
-      <button onClick={() => { updateTicket(); setRerender(!rerender); }}>Save</button>
+      <button onClick={(event) => { updateTicket(event); }}>Save</button>
       <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
     </StyledButtonContainer>
   );

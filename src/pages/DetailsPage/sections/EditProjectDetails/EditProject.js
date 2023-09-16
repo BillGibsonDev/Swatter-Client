@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -21,8 +22,9 @@ import Loader from "../../../../loaders/Loader.js";
 
 // redux
 import { connect } from "react-redux";
+import { showAlert } from "../../../../redux/actions/alert.js";
 
-const EditProject = ({ user, editing, setEditing, isLoading, setLoading, project, projectId }) => {
+const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoading, project, projectId }) => {
   
   const navigate = useNavigate();
 
@@ -54,32 +56,52 @@ const EditProject = ({ user, editing, setEditing, isLoading, setLoading, project
   const [ description, setDescription ] = useState(project.description);
   const [ repository, setRepository ] = useState(project.repository);
 
-  const updateProject = () => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/edit`,
-      {
-        title: title,
-        link: link,
-        image: image,
-        repository: repository,
-        description: description,
-      },
-      {
-        headers: {
-          Authorization: user.token
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required('Title is required')
+      .min(3, 'Title must be at least 3 characters')
+      .max(30, 'Title cannot exceed 30 characters'),
+    link: Yup.string()
+      .url('Invalid url format'),
+    repository: Yup.string()
+      .url('Invalid url format'),
+    description: Yup.string()
+      .max(500, 'Descriptions can not be longer than 500 characters')
+  });
+
+  const updateProject = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ title, link, repository, description })
+    .then(() => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/edit`,
+        {
+          title: title,
+          link: link,
+          image: image,
+          repository: repository,
+          description: description,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
-      }
-    )
-    .then((response) => {
-      if (response.status === 200) {
-        setEditing(false);
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setEditing(false);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setLoading(false);
-      }
+      })
     })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-    })
+    .catch((validationError) => {
+			showAlert(validationError, 'error');
+		});
   };
 
   return (
@@ -225,4 +247,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditProject);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProject);

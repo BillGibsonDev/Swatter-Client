@@ -5,7 +5,7 @@ import { StyledButton } from '../../../styled/StyledButton.js';
 export const ButtonContainer = ({ handleDeleteAlert, handleUpdateSprint, DeleteAlertRef }) => {
   return (
     <StyledButtonContainer>
-      <StyledButton onClick={() => { handleUpdateSprint(); }}>Update</StyledButton>
+      <StyledButton onClick={(event) => { handleUpdateSprint(event); }}>Update</StyledButton>
       <StyledButton id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</StyledButton>
     </StyledButtonContainer>
   )

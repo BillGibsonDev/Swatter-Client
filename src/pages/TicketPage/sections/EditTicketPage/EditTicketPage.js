@@ -38,7 +38,6 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
   const [ isLoading, setLoading ] = useState(true);
   const [ sprintOptions, setSprintOptions ] = useState([]);
   const [ images, setImages ] = useState([]);
-  const [ rerender, setRerender ] = useState(true);
   const [ status, setStatus ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ priority, setPriority ] = useState('');
@@ -90,7 +89,8 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
 
     const validationSchema = Yup.object().shape({
       description: Yup.string()
-        .max(500, 'Descriptions can not be longer than 500 characters')
+        .required('A Description is required')
+        .max(500, 'Descriptions can not exceed 500 characters')
     });
 
   const updateTicket = () => {
@@ -118,6 +118,14 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
       )
       .then((response) => {
         if (response.status === 200) {
+          setTicket(response.data);
+          setImages(response.data.images);
+          setStatus(response.data.status);
+          setDescription(response.data.description);
+          setPriority(response.data.priority);
+          setTag(response.data.tag);
+          setSprint(response.data.sprint);
+          setAssigned(response.data.assigned);
           setEditing(false);
           setLoading(false);
         }
@@ -209,9 +217,7 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
       <Images setImages={setImages} images={images} />
       <ButtonContainer 
         DeleteAlertRef={DeleteAlertRef} 
-        updateTicket={updateTicket} 
-        rerender={rerender}
-        setRerender={setRerender}
+        updateTicket={updateTicket}
       />
     </StyledTicketSection>
   );

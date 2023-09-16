@@ -1,17 +1,29 @@
+import { useState } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
 
 //redux
 import { connect } from "react-redux";
+import { showAlert } from "../../../../../redux/actions/alert";
 
-const CommentInput = ({ user, setLoading, projectId, ticketId, CommentContainerRef }) => {
+const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, CommentContainerRef, showAlert }) => {
 
-  const sendComment = () => {
-    if (!document.getElementById("comment").value) {
-      setLoading(false);
-    } else {
+  const [ comment, setComment ] = useState('');
+
+  const validationSchema = Yup.object().shape({
+    comment: Yup.string()
+      .required('A comment is required')
+      .min(6, 'Comments must be at least 6 characters')
+      .max(240, 'Comments can not exceed 240 characters'),
+  });
+
+  const sendComment = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ comment })
+    .then(() => {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments`,
         {
@@ -20,15 +32,14 @@ const CommentInput = ({ user, setLoading, projectId, ticketId, CommentContainerR
           }
         },
         {
-          projectId: projectId,
-          ticketId: ticketId,
-          comment: document.getElementById("comment").value,
-          author: user.username,
+          comment: comment,
         }
       )
       .then((response) => {
         if (response.status === 200) {
           setLoading(false);
+          setComment('');
+          setComments(response.data);
           document.getElementById("comment").value = "";
           let container = CommentContainerRef.current;
           setTimeout(() => {
@@ -40,7 +51,10 @@ const CommentInput = ({ user, setLoading, projectId, ticketId, CommentContainerR
         console.log(err);
         setLoading(false);
       })
-    }
+    })
+    .catch((validationError) => {
+			showAlert(validationError, 'error');
+		});
   };
 
   return (
@@ -49,8 +63,9 @@ const CommentInput = ({ user, setLoading, projectId, ticketId, CommentContainerR
         placeholder='Add a comment'
         name='comment'
         id='comment'
+        onChange={(e) => { setComment(e.target.value)}}
       />
-      <button onClick={(e) => { sendComment()}}>Send</button>
+      <button onClick={(event) => { sendComment(event)}}>Send</button>
     </StyledCommentInput>
   );
 }
@@ -96,4 +111,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CommentInput);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentInput);

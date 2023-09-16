@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -10,6 +11,7 @@ import { handleDeleteAlert } from "../../../functions/handleDeleteAlert.js";
 
 // redux
 import { connect } from "react-redux";
+import { showAlert } from "../../../redux/actions/alert";
 
 // components
 import { DeleteAlert } from "../../../components/DeleteAlert";
@@ -27,7 +29,7 @@ const EditSprint = ({
   project, 
   searchSprint, 
   setSearchSprint, 
-  setOptions 
+  showAlert
 }) => {
 
   const DeleteAlertRef = useRef();
@@ -68,32 +70,49 @@ const EditSprint = ({
 
   const [ isLoading, setLoading ] = useState(false);
 
-  const handleUpdateSprint = () => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/update`,
-      {
-        projectId: projectId,
-        sprintId: sprintId,
-        goal: goal,
-        title: title,
-        deadline: deadline,
-        color: color,
-        status: status,
-        lastTitle: lastTitle
-      },      
-      {
-        headers: {
-          Authorization: user.token
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required('A Title is required')
+      .min(3, 'Title must be at least 3 characters')
+      .max(30, 'Title cannot exceed 30 characters'),
+    goal: Yup.string()
+      .max(500, 'Descriptions can not exceed 500 characters')
+  });
+
+  const handleUpdateSprint = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ title, goal })
+    .then(() => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/${sprintId}/update`,
+        {
+          projectId: projectId,
+          sprintId: sprintId,
+          goal: goal,
+          title: title,
+          deadline: deadline,
+          color: color,
+          status: status,
+          lastTitle: lastTitle
+        },      
+        {
+          headers: {
+            Authorization: user.token
+          }
+        },
+      )
+      .then((response) => {
+        if(response.status === 200) {
+          setLoading(false);
         }
-      },
-    )
-    .then((response) => {
-      if (response.status === 200) {
-        setLoading(false);
-      }
+      })
+      .catch((error) => {
+        console.log(error);
+        showAlert(error, 'error');
+      });
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((validationError) => {
+      showAlert(validationError, 'error');
     });
   };
 
@@ -265,4 +284,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditSprint);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditSprint);

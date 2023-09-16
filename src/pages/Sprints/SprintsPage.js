@@ -26,11 +26,11 @@ import { connect } from "react-redux";
 const SprintsPage = ({ user }) => {
   const { projectId } = useParams();
 
-  const [searchSprint, setSearchSprint] = useState(false);
-  const [options, setOptions] = useState([]);
-  const [project, setProject] = useState([]);
-  const [rerender, setRerender] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const [ searchSprint, setSearchSprint ] = useState(false);
+  const [ options, setOptions ] = useState([]);
+  const [ project, setProject ] = useState([]);
+  const [ rerender, setRerender ] = useState(false);
+  const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
   const [ creating, setCreating ] = useState(false);
 

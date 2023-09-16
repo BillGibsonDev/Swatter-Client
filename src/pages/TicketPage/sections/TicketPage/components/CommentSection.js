@@ -46,6 +46,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
     )
     .then((response) => {
       if (response.status === 200) {
+        setComments(response.data);
         setLoading(false);
       }
     })
@@ -90,6 +91,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
           projectId={projectId}
           setLoading={setLoading}
           CommentContainerRef={CommentContainerRef}
+          setComments={setComments}
         />
       </div>
     </StyledTicketCommentSection>

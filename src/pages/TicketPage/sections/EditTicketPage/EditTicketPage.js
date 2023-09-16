@@ -118,14 +118,6 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
       )
       .then((response) => {
         if (response.status === 200) {
-          setTicket(response.data);
-          setImages(response.data.images);
-          setStatus(response.data.status);
-          setDescription(response.data.description);
-          setPriority(response.data.priority);
-          setTag(response.data.tag);
-          setSprint(response.data.sprint);
-          setAssigned(response.data.assigned);
           setEditing(false);
           setLoading(false);
         }

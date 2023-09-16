@@ -26,7 +26,7 @@ export default function LoginPage({handleLogin, setUsername, setPassword, isLoad
 						<label>Password
 							<input type="password" onChange={(event) => { setPassword(event.target.value); }} />
 						</label>
-						<StyledButton type="submit" onClick={() =>{ handleLogin(); }}>Sign In</StyledButton>
+						<StyledButton type="submit" onClick={(event) =>{ handleLogin(event); }}>Sign In</StyledButton>
 					</form>
 					<div className="signup-container">
 						<p>Need an account?</p>

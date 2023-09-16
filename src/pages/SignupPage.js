@@ -45,7 +45,6 @@ export default function SignupPage({ isLoading, setLoading }) {
 		confirmPassword: Yup.string()
 			.required('Please confirm your password')
 			.oneOf([Yup.ref('password')], 'Passwords must match'), 
-
 	});
 
 	const handleSignup = (event) => {

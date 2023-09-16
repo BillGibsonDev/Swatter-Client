@@ -37,7 +37,8 @@ const StyledTitle = styled.article`
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px #ffffff solid;
-    max-width: 50%;
+    min-width: 50%;
+    width: auto;
     @media (max-width: 420px) {
         max-width: 90%;
         min-width: 300px;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -21,30 +22,49 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
   const [ color, setColor ] = useState("");
   const [ status ] = useState("Active");
 
-  const createSprint = () => {
-    if(!title){ handleAlert('Title', 'warning'); return; }; 
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/create`,
-      {
-        goal: goal,
-        title: title,
-        deadline: deadline,
-        color: color,
-        status: status,
-      },
-      {
-        headers: {
-          Authorization: user.token
+  const handleAlert = ( message, type ) => {
+    showAlert(message, type);
+  };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required('A Title is required')
+      .min(3, 'Title must be at least 3 characters')
+      .max(30, 'Title cannot exceed 30 characters'),
+    goal: Yup.string()
+      .max(500, 'Descriptions can not exceed 500 characters')
+  });
+
+  const createSprint = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ title, goal })
+    .then(() => {
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/sprints/create`,
+        {
+          goal: goal,
+          title: title,
+          deadline: deadline,
+          color: color,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
-      }
-    )
-    .then((response) => {
-      if (response.status === 200) {
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setCreating(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setCreating(false);
-      }
+      });
     })
-    .catch((err) => {
-      console.log(err);
-      setCreating(false);
+    .catch((validationError) => {
+      handleAlert(validationError, 'error');
     });
   };
 
@@ -60,10 +80,6 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
     'Purple', 
     'Yellow'
   ];
-
-  const handleAlert = ( message, type ) => {
-    showAlert(message, type);
-  };
 
   const inputFields = [
     { 
@@ -116,7 +132,7 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
             )
           })
         }
-        <StyledButton id="create-btn" onClick={() => { createSprint(); }}>Create</StyledButton>
+        <StyledButton id="create-btn" onClick={(event) => { createSprint(event); }}>Create</StyledButton>
       </div>
     </StyledCreateSprint>
   );

@@ -9,7 +9,7 @@ const ButtonContainer = ({ createTicket }) => {
 
   return (
     <StyledButtonContainer>
-      <StyledButton id="create-btn" onClick={() => { createTicket() }}>Create</StyledButton>
+      <StyledButton id="create-btn" onClick={(event) => { createTicket(event) }}>Create</StyledButton>
     </StyledButtonContainer>
   );
 }

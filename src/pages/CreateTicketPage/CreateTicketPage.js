@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -59,42 +60,59 @@ const CreateTicketPage = ({ user, showAlert }) => {
     showAlert(message, type);
   }
 
-  const createTicket = () => {
-    if(!title){ handleAlert('Title', 'warning'); return; }; 
-    if(!status){ handleAlert('Status', 'warning'); return; }; 
-    if(!tag){ handleAlert('Tag', 'warning'); return; };
-    if(!description){ handleAlert('Description', 'warning'); return; }; 
-    setLoading(true);
-    let checkImages = images.filter(image => image.image !== '');
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
-      {
-        title,
-        description,
-        status,
-        priority,
-        assigned,
-        tag,
-        sprint,
-        checkImages,
-        author: user.username
-      },
-      {
-        headers: {
-          Authorization: user.token
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required('Title is required')
+      .min(3, 'Title must be at least 3 characters')
+      .max(30, 'Title cannot exceed 30 characters'),
+    status: Yup.string()
+      .required('A Status is required'),
+    tag: Yup.string()
+      .required('A Tag is required'),
+    description: Yup.string()
+      .required('A Description is required')
+      .max(500, 'Descriptions can not exceed 500 characters')
+  });
+
+  const createTicket = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ title, status, tag, description })
+    .then(() => {
+      setLoading(true);
+      let checkImages = images.filter(image => image.image !== '');
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
+        {
+          title,
+          description,
+          status,
+          priority,
+          assigned,
+          tag,
+          sprint,
+          checkImages,
+          author: user.username
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
-      }
-    )
-    .then((response) => {
-      if(response.status === 200) {
+      )
+      .then((response) => {
+        if(response.status === 200) {
+          setLoading(false);
+          handleAlert('Ticket created', 'success');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
         setLoading(false);
-        handleAlert('Ticket created', 'success');
-      }
+        handleAlert(error, 'error');
+      })
     })
-    .catch((error) => {
-      console.log(error);
-      setLoading(false);
-      handleAlert(error, 'error');
-    })
+    .catch((validationError) => {
+			showAlert(validationError, 'error');
+		});
   };
 
   return (

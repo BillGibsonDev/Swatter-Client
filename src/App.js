@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styles
 import GlobalStyles from "./GlobalStyles";
@@ -55,30 +56,45 @@ const App = ({ user, isLoggedIn }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogin = () => {
-    if(!username){ dispatch(showAlert('Username', 'warning')); return; };
-    if(!password){ dispatch(showAlert('Password', 'warning')); return; };
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
-      {
-        username: username,
-        password: password,
-      }
-    )
-    .then((response) => {
-      if(response.status === 200){
-        handleTokens(response.data.token, response.data.username, response.data.id);
-        dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
-        setLoading(false);
-        navigate("/");
-      }
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must be at least 3 characters')
+      .max(20, 'Username cannot exceed 20 characters'),
+    password: Yup.string()
+      .required('Password is required')
+      .min(6, 'Password must be at least 6 characters'),
+  });
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ username, password })
+    .then(() => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
+        {
+          username: username,
+          password: password,
+        }
+      )
+      .then((response) => {
+        if(response.status === 200){
+          handleTokens(response.data.token, response.data.username, response.data.id);
+          dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
+          setLoading(false);
+          navigate("/");
+        }
       })
-    .catch((error) => {
-      console.log(error);
-      localStorage.clear();
-      setLoading(false);
-      dispatch(showAlert(error, 'error'));
-    });
+      .catch((error) => {
+        console.log(error);
+        localStorage.clear();
+        setLoading(false);
+        dispatch(showAlert(error, 'error'));
+      });
+    })
+    .catch((validationError) => {
+			dispatch(showAlert(validationError, 'error'));
+		});
   };
   
   if(!isLoggedIn){
@@ -142,7 +158,7 @@ const StyledApp = styled.section`
 
 const mapStateToProps = (state) => {
   return {
-    isLoggedIn: !!state.user.token, // Check if token exists
+    isLoggedIn: !!state.user.token,
     user: state.user,
   };
 };

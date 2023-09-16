@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import * as Yup from 'yup';
 
 // styled
 import styled from 'styled-components';
@@ -16,45 +17,64 @@ import LoginLoader from '../loaders/LoginLoader';
 import { useDispatch } from 'react-redux';
 import { showAlert } from '../redux/actions/alert';
 
-export default function SignupPage({ isLoading, setLoading, setMessage, handleAlert, AlertRef }) {
+export default function SignupPage({ isLoading, setLoading }) {
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-  const [ password, setPassword ] = useState("");
-  const [ confirmPassword, setConfirmPassword ] = useState("");
-  const [ username, setUsername ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ confirmEmail, setConfirmEmail ] = useState("");
+	const [ password, setPassword ] = useState("");
+	const [ confirmPassword, setConfirmPassword ] = useState("");
+	const [ username, setUsername ] = useState("");
+	const [ email, setEmail ] = useState("");
+	const [ confirmEmail, setConfirmEmail ] = useState("");
 
-  const handleSignup = () => {
-    if(!username){ dispatch(showAlert("Username", 'warning' )); return; };
-	if(username.length > 20){ dispatch(showAlert("Usernames must be 20 characters or less", 'error' )); return; };
-	if(!password){ dispatch(showAlert("Password", 'warning' )); return; };
-    if(password !== confirmPassword){ dispatch(showAlert("Passwords do not match", 'error' )); return; };
-	if(password.length < 8){ dispatch(showAlert("Passwords must be 8 characters or more", 'error' )); return; };
-    if(email !== confirmEmail){ dispatch(showAlert("Emails do not match", 'error' )); return; };
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/users/signup`,
-      {
-        username: username,
-        email: email,
-        password: password,
-      }
-    )
-    .then((response) => {
-        if(response.status === 200){
-          setLoading(false);
-		  dispatch(showAlert("", 'success' ));
-          navigate("/login");
-		}
-      })
-      .catch((error) => {
-        console.log(error);
-		setLoading(false);
-		dispatch(showAlert(error, 'error' ))
-      });
-  };
+	const validationSchema = Yup.object().shape({
+		username: Yup.string()
+			.required('Username is required')
+			.min(3, 'Username must be at least 3 characters')
+			.max(20, 'Username cannot exceed 20 characters'),
+		email: Yup.string()
+			.required('Email is required')
+			.email('Invalid email format'),
+		confirmEmail: Yup.string()
+			.required('Please confirm your email')
+			.oneOf([Yup.ref('email')], 'Emails must match'),
+		password: Yup.string()
+			.required('Password is required')
+			.min(6, 'Password must be at least 6 characters'),
+		confirmPassword: Yup.string()
+			.required('Please confirm your password')
+			.oneOf([Yup.ref('password')], 'Passwords must match'), 
+
+	});
+
+	const handleSignup = (event) => {
+		event.preventDefault();
+		validationSchema.validate({ username, email, confirmEmail, password, confirmPassword })
+		.then(() => {
+			setLoading(true);
+			axios.post(`${process.env.REACT_APP_BASE_URL}/users/signup`, {
+				username: username,
+				email: email,
+				password: password,
+			})
+			.then((response) => {
+				if (response.status === 200) {
+					setLoading(false);
+					dispatch(showAlert('', 'success'));
+					navigate('/login');
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				setLoading(false);
+				dispatch(showAlert(error, 'error'));
+			});
+		})
+		.catch((validationError) => {
+			dispatch(showAlert(validationError, 'error'));
+		});
+	};
 
 	return (
 		<StyledPage>
@@ -79,7 +99,7 @@ export default function SignupPage({ isLoading, setLoading, setMessage, handleAl
           			<label>Confirm Password
 						<input type="password" onChange={(event) => { setConfirmPassword(event.target.value); }} />
 					</label>
-					<StyledButton type="submit" onClick={() =>{ handleSignup(); }}>Create Account</StyledButton>
+					<StyledButton type="submit" onClick={(event) =>{ handleSignup(event); }}>Create Account</StyledButton>
 				</form>
 			}
 			<div className="login-container">

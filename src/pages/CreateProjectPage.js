@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -28,35 +29,54 @@ const CreateProjectPage = ({ user, showAlert }) => {
   const [ description, setDescription ] = useState("");
   const [ repository, setRepository ] = useState("");
 
-  const createProject = () => {
-    if(!title){ showAlert('Title', 'warning'); return; };
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/create`,
-      {
-        title,
-        link,
-        image,
-        repository: repository,
-        description: description,
-      },
-      {
-        headers: {
-          Authorization: user.token
+  const validationSchema = Yup.object().shape({
+    title: Yup.string()
+      .required('Title is required')
+      .min(3, 'Title must be at least 3 characters')
+      .max(30, 'Title cannot exceed 30 characters'),
+    link: Yup.string()
+      .url('Invalid url format'),
+    repository: Yup.string()
+      .url('Invalid url format'),
+    description: Yup.string()
+      .max(500, 'Descriptions can not be longer than 500 characters')
+  });
+
+  const createProject = (event) => {
+    event.preventDefault();
+    validationSchema.validate({ title, link, repository, description })
+    .then(() => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/create`,
+        {
+          title,
+          link,
+          image,
+          repository: repository,
+          description: description,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
-      }
-    )
-    .then((response) => {
-      if(response.status === 200){
-        showAlert('', 'success');
+      )
+      .then((response) => {
+        if(response.status === 200){
+          showAlert('', 'success');
+          setLoading(false);
+          navigate('/')
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        showAlert(error, 'error');
         setLoading(false);
-        navigate('/')
-      }
+      });
     })
-    .catch((error) => {
-      console.log(error);
-      showAlert(error, 'error');
-      setLoading(false);
-    });
+    .catch((validationError) => {
+			showAlert(validationError, 'error');
+		});
   };
 
   return (
@@ -92,7 +112,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
           </label>
         </div>
       }
-      <StyledButton disabled={isLoading} onClick={() => { createProject(); }}>Start</StyledButton>
+      <StyledButton disabled={isLoading} onClick={(event) => { createProject(event); }}>Start</StyledButton>
     </StyledPage>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
@@ -9,6 +10,7 @@ import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
 
 // redux
 import { connect } from "react-redux";
+import { showAlert } from "../../../../redux/actions/alert.js";
 
 // components
 import TicketPageLoader from "../../../../loaders/TicketPageLoader.js";
@@ -23,7 +25,7 @@ import { TitleContainer } from "../../../../components/TitleContainer.js";
 // router
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditTicketPage = ({ user, editing, setEditing }) => {
+const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
 
   const DeleteAlertRef = useRef();
 
@@ -86,37 +88,48 @@ const EditTicketPage = ({ user, editing, setEditing }) => {
     getTicket();
   }, [ projectId, ticketId, isLoading, user ]);
 
+    const validationSchema = Yup.object().shape({
+      description: Yup.string()
+        .max(500, 'Descriptions can not be longer than 500 characters')
+    });
+
   const updateTicket = () => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/update`,
-      {
-        title: ticket.title,
-        description: description,
-        status: status,
-        tag: tag,
-        priority: priority,
-        projectId: projectId,
-        ticketId: ticket._id,
-        ticket: ticket,
-        assigned: assigned,
-        sprint: sprint,
-      },
-      {
-        headers: {
-          Authorization: user.token
+    validationSchema.validate({ description })
+    .then(() => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/update`,
+        {
+          title: ticket.title,
+          description: description,
+          status: status,
+          tag: tag,
+          priority: priority,
+          projectId: projectId,
+          ticketId: ticket._id,
+          ticket: ticket,
+          assigned: assigned,
+          sprint: sprint,
+        },
+        {
+          headers: {
+            Authorization: user.token
+          }
         }
-      }
-    )
-    .then((response) => {
-      if (response.status === 200) {
-        setEditing(false);
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setEditing(false);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         setLoading(false);
-      }
+      })
     })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-    })
+    .catch((validationError) => {
+			showAlert(validationError, 'error');
+		});
   };
 
   const deleteTicket = () => {
@@ -222,4 +235,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(EditTicketPage);
+const mapDispatchToProps = {
+  showAlert,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditTicketPage);

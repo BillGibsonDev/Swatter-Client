@@ -1,5 +1,6 @@
 // styled
 import styled from "styled-components";
+import * as palette from '../styled/ThemeVariables.js';
 
 // images
 import RoundMenu from "../assets/icons/dot-menu-white.png";
@@ -24,7 +25,7 @@ export const ToggleProjectNavButton = ({ projectSideNavRef }) => {
     if(!urlCheck){
       return 'none';
     } else {
-      return 'block';
+      return 'flex';
     }
   }
 
@@ -37,9 +38,18 @@ export const ToggleProjectNavButton = ({ projectSideNavRef }) => {
 }
 
 const StyledButton = styled.button`
-  background: none;
+  margin-bottom: 20px;
+  padding: 6px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
+  background: none;
   cursor: pointer;
+  &:hover {
+    background: ${palette.accentColor};
+  }
   .tooltiptext {
     visibility: hidden;
     width: 100%;
@@ -56,8 +66,8 @@ const StyledButton = styled.button`
   }
   img {
     transition: 0.2s;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
   #arrow-button:hover .tooltiptext,
   #arrow-button:active .tooltiptext {

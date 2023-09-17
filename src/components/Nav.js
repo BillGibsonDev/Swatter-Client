@@ -26,7 +26,7 @@ const Nav = ({ user, projectSideNavRef }) => {
             let urlCheck = location.pathname.includes('/home');
             let link = CreateProjectRef.current;
             if(!urlCheck){ link.style.display = 'none'};
-            if(urlCheck){ link.style.display = 'block'};
+            if(urlCheck){ link.style.display = 'flex'};
         }
         handleLocation();
     }, [ location ]);
@@ -54,8 +54,12 @@ const StyledNav = styled.div`
     left: 0;
     top: 0;
     a {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+        padding: 6px;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .tooltiptext {
             visibility: hidden;
             width: 100%;
@@ -70,19 +74,13 @@ const StyledNav = styled.div`
             top: 0;
             left: 105%;
         }
+        &:hover {
+            background: ${palette.accentColor};
+        }
     }
     a:hover .tooltiptext, a:active .tooltiptext {
         visibility: visible;
         transition-delay: 1s;
-    }
-    a {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 6px;
-        &:hover {
-            background: ${palette.accentColor};
-        }
     }
     img {
         width: 25px;

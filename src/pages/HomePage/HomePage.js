@@ -58,7 +58,7 @@ const HomePage = ({ user }) => {
 const StyledHomePage = styled.section`
   width: 80%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 10px auto;
   min-height: 80vh;
   display: flex;
   flex-direction: column;

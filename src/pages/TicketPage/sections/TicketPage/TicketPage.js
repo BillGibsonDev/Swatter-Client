@@ -3,7 +3,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 
 // components
-import ImageSection from "./components/ImageSection.js";
+import { UpdateSection } from "./components/UpdateSection.js";
 import { CommentSection } from "./components/CommentSection.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
@@ -14,18 +14,9 @@ import { DescriptionBox } from "./components/DescriptionBox.js";
 import { connect } from "react-redux";
 import { TitleContainer } from "../../../../components/TitleContainer";
 
-const TicketPage = ({ images, ticket, editing, setEditing, ticketId, projectId, user, setLoading }) => {
+const TicketPage = ({updates, ticket, editing, setEditing, ticketId, projectId, user, setLoading }) => {
 
   const DeleteAlertRef = useRef();
-
-  const handleModal = (index) => {
-    let modal = document.getElementById(index);
-    if (modal.style.display === "block") {
-      modal.style.display = "none";
-    } else {
-      modal.style.display = "block";
-    }
-  };
 
   const handleSprint = (ticket) => {
     if(!ticket.sprint){
@@ -53,7 +44,7 @@ const TicketPage = ({ images, ticket, editing, setEditing, ticketId, projectId, 
         </div>
         <DescriptionBox description={ticket.description} />
         <ButtonContainer />
-        <ImageSection images={images} handleModal={handleModal} />
+        <UpdateSection updates={updates} />
         <CommentSection user={user} ticketId={ticketId} projectId={projectId} setLoading={setLoading}/>
       </div>
     </StyledSection>

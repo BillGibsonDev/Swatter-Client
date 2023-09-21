@@ -30,16 +30,6 @@ export const ProjectTable = ({ user, projects}) => {
 const StyledProjectTable = styled.div`
   width: 100%;
   margin: 30px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 20px;
-  row-gap: 20px;
-  @media (max-width: 1050px) {
-    grid-template-columns: 1fr 1fr;
-  }
-  @media (max-width: 838px) {
-    grid-template-columns: 1fr;
-    row-gap: 8px;
-    column-gap: 0;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `;

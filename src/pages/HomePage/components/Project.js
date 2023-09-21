@@ -38,6 +38,7 @@ const StyledProject = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 350px;
   position: relative;
   background: #5c5c5c73;
   border-radius: 4px;

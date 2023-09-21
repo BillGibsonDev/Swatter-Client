@@ -33,12 +33,9 @@ export const FeaturesPage = () => {
 }
 
 const StyledPage = styled.section`
-  width: 60%;
+  width: 80%;
   margin: 20px auto;
-  @media (max-width: 834px){
-    width: 70%;
-    text-align: center;
-  }
+  max-width: 1000px;
   h1, h2 {
     color: white;
   }
@@ -51,6 +48,10 @@ const StyledPage = styled.section`
     text-align: center;
     h1 {
       font-size: 2em;
+    }
+    p {
+      max-width: 600px;
+      margin: auto;
     }
     h2 {
       font-size: 2em;

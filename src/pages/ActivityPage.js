@@ -84,7 +84,7 @@ const ProjectActivityPage = ({ user }) => {
         title={'Activity'}
       />
       {
-        !activities
+        activities.length === 0 
         ? <h1>This project has no activity yet..</h1>
         : <>
           {
@@ -121,6 +121,9 @@ const StyledPage = styled.section`
   height: 100%;
   width: 80%;
   margin: 10px auto;
+  h1 {
+    color: white;
+  }
   .activity-container {
     margin-bottom: 8px;
     .activity-info-container {

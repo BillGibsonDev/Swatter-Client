@@ -147,8 +147,6 @@ const StyledPage = styled.section`
           width: 100%;
         }
         label {
-          display: flex;
-          flex-direction: column;
           margin: 10px 0 0 0;
           color: ${palette.labelColor};
           font-size: ${palette.labelSize};

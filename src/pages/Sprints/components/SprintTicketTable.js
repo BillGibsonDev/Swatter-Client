@@ -63,7 +63,6 @@ const StyledTicketTable = styled.div`
     max-height: 93vh;
     width: 100%;
     margin-top: 20px;
-    position: relative;
     .tickets-container {
         width: 100%;
         padding: 10px;

@@ -57,9 +57,6 @@ const StyledComment = styled.div`
   box-shadow: 3px 3px 3px #5252528d;
   position: relative;
   justify-content: space-around;
-  @media (max-width: 728px) {
-    max-width: 80%;
-  }
   .comment-wrapper {
     width: 95%;
     margin: 10px auto;

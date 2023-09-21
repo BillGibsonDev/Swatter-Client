@@ -136,8 +136,6 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
 };
 
 const StyledCreateSprint = styled.section`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   max-width: 1000px;
   min-height: 50vh;
@@ -145,8 +143,6 @@ const StyledCreateSprint = styled.section`
   .form-wrapper {
     width: 100%;
     margin: 16px auto;
-    display: flex;
-    flex-direction: column;
   }
   #create-btn {
     margin: 10px 0 0 0;

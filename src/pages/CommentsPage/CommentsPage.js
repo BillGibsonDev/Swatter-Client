@@ -74,6 +74,10 @@ const CommentPage = ({ user }) => {
     container.scrollTo(0, document.body.scrollHeight);
   };
 
+  if(isLoading){
+    return <Loader />
+  }
+
   return (
     <StyledPage>
       <BreadCrumbs
@@ -87,40 +91,37 @@ const CommentPage = ({ user }) => {
         title={'comment'}
         commentId={commentId}
       />
-      {
-        isLoading ? <Loader />
-        : <div className='comment-section-wrapper'>
-          <div className='title-container'>
-            <h1>Comments</h1>
-          </div>
-          {
-            comments.length === 0 || !comments 
-            ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
-            : <div className='comment-container' ref={CommentContainerRef}>
-              {
-                comments.map((comment, index) => {
-                  return (
-                    <Comment
-                      comment={comment}
-                      projectId={projectId}
-                      key={index}
-                      setLoading={setLoading}
-                      setCommentId={setCommentId}
-                      DeleteAlertRef={DeleteAlertRef}
-                    />
-                  );
-                })
-              }
-            </div>
-          }
-          <CommentInput
-            setLoading={setLoading}
-            setComments={setComments}
-            projectId={projectId}
-            CommentContainerRef={CommentContainerRef}
-          />
+      <div className='comment-section-wrapper'>
+        <div className='title-container'>
+          <h1>Comments</h1>
         </div>
-      }
+        {
+          comments.length === 0 || !comments 
+          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
+          : <div className='comment-container' ref={CommentContainerRef}>
+            {
+              comments.map((comment, index) => {
+                return (
+                  <Comment
+                    comment={comment}
+                    projectId={projectId}
+                    key={index}
+                    setLoading={setLoading}
+                    setCommentId={setCommentId}
+                    DeleteAlertRef={DeleteAlertRef}
+                  />
+                );
+              })
+            }
+          </div>
+        }
+        <CommentInput
+          setLoading={setLoading}
+          setComments={setComments}
+          projectId={projectId}
+          CommentContainerRef={CommentContainerRef}
+        />
+      </div>
     </StyledPage>
   );
 }
@@ -129,13 +130,9 @@ const StyledPage = styled.section`
   height: 100%;
   max-height: 80vh;
   width: 80%;
-  display: flex;
-  flex-direction: column;
+  max-width: 500px;
   margin: 0 auto;
-  position: relative;
   .comment-section-wrapper {
-    display: flex;
-    flex-direction: column;
     margin-top: auto;
     padding: 6px;
     .title-container {
@@ -143,10 +140,10 @@ const StyledPage = styled.section`
       width: 100%;
       justify-content: space-between;
       align-items: center;
-      margin: 10px auto 20px auto;
+      margin: 10px auto;
       h1 {
         color: #ffffff;
-        width: 60%;
+        width: 100%;
         border-bottom: ${palette.titleBorder};
       }
     }

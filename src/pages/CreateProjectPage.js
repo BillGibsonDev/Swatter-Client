@@ -45,8 +45,9 @@ const CreateProjectPage = ({ user, showAlert }) => {
       .max(500, 'Descriptions can not be longer than 500 characters')
   });
 
-  const createProject = (event) => {
+  const createProject = async (event) => {
     event.preventDefault();
+    const imageURL = await handleImages(image)
     validationSchema.validate({ title, link, repository, description })
     .then(() => {
       setLoading(true);
@@ -54,9 +55,9 @@ const CreateProjectPage = ({ user, showAlert }) => {
         {
           title,
           link,
-          image,
-          repository: repository,
-          description: description,
+          image: imageURL,
+          repository,
+          description,
         },
         {
           headers: {
@@ -98,7 +99,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
                 <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
               </label>
               <label>Image
-                <input type='file' id='image' onChange={(event) => { setImage(handleImages(event.target.files[0])); }} />
+                <input type='file' id='image' onChange={(event) => { setImage(event.target.files[0]); }} />
               </label>
             </div>
             <div className='form-container'>
@@ -121,13 +122,10 @@ const CreateProjectPage = ({ user, showAlert }) => {
 }
 
 const StyledPage = styled.section`
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 80%;
   max-width: 800px;
-  margin: 1em auto;
-  position: relative;
+  margin: 10px auto;
   h1 {
     color: white;
     width: 100%;

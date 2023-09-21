@@ -17,8 +17,6 @@ export default function ProjectDetails({ project, isLoading, editing, setEditing
   const [ addingMember, setAddingMember ] = useState(false);
   const [ members, setMembers ] = useState(project.members);
 
-  console.log(user.id === project.ownerId)
-
   if(isLoading){
     return <Loader />
   }

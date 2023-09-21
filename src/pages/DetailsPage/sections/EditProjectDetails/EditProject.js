@@ -166,7 +166,7 @@ const EditProject = ({ user, showAlert, setProject, editing, setEditing, isLoadi
         <label id="description-label">Description
           <textarea 
             id='description' 
-            defaultValue={project.repository} 
+            defaultValue={project.description} 
             onChange={(event) => { setDescription(event.target.value); }} 
           />
         </label>
@@ -185,9 +185,7 @@ const StyledSection = styled.section`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  max-width: 800px;
-  margin: 1em auto;
-  position: relative;
+  margin: 10px auto;
   .title-container {
     display: flex;
     width: 100%;
@@ -209,7 +207,7 @@ const StyledSection = styled.section`
       }
       .form-container {
         width: 45%;
-        margin: auto;
+        margin: auto 0;
         @media (max-width: 750px) {
           width: 100%;
         }

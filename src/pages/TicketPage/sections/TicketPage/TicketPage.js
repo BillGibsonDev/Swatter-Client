@@ -57,8 +57,6 @@ const StyledSection = styled.section`
   width: 100%;
   margin: 0 auto;
   .ticket-wrapper {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     margin: auto;
     .info-wrapper {
@@ -89,12 +87,6 @@ const StyledSection = styled.section`
             font-size: 1em;
             margin-right: 6px;
           }
-        }
-        .Standard {
-          color: lightgreen;
-        }
-        .Medium {
-          color: yellow;
         }
         .High {
           color: red;

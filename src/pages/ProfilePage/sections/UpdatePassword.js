@@ -32,7 +32,6 @@ export const UpdatePassword =({ user, editPassword, setEditingPassword }) => {
     
     return (
         <StyledSection>
-            <h1>Update Password</h1>
             <label>Password
                 <input type="password" onChange={(event) => { setPassword(event.target.value); }} />
             </label>
@@ -51,8 +50,6 @@ export const UpdatePassword =({ user, editPassword, setEditingPassword }) => {
 }
 
 const StyledSection = styled.section`
-    display: flex;
-    flex-direction: column;
     label {
         font-weight: bold;
         font-size: ${palette.labelSize};

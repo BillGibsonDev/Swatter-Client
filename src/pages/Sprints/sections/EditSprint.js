@@ -236,14 +236,9 @@ const EditSprint = ({
 };
 
 const StyledEditSprint = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
   min-height: 50vh;
-  @media (max-width: 838px) {
-    margin: auto;
-  }
   .form-wrapper {
     width: 100%;
     margin: 16px auto;

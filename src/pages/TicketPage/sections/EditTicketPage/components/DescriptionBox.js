@@ -30,6 +30,7 @@ const StyledDescriptionBox = styled.label`
     font-weight: 400;
     font-size: ${palette.labelSize};
     width: 100%;
+    max-width: 500px;
     textarea {
         padding: 2px;
         font-size: 1em;

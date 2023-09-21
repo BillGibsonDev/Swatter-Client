@@ -23,7 +23,7 @@ export default function Project({ user, project }) {
         />
       </Link>
       <div className="text-container">
-        <Link to={`${user.id}/projects/${project._id}`}>{project.title}</Link>
+        <Link to={`/${user.id}/projects/${project._id}`}>{project.title}</Link>
         {
           project.lastUpdate 
           ? <h2>Updated: {handleDate(project.lastUpdate)}</h2>

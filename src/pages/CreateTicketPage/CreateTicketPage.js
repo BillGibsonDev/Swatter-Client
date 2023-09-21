@@ -118,6 +118,10 @@ const CreateTicketPage = ({ user, showAlert }) => {
 		});
   };
 
+  if(isLoading){
+    return <Loader />
+  }
+
   return (
     <StyledPage>
       <BreadCrumbs
@@ -125,43 +129,39 @@ const CreateTicketPage = ({ user, showAlert }) => {
         projectTitle={project.title}
         title={'Create Ticket'}
       />
-      <h1>Create Ticket</h1>
-      {
-        isLoading ? <Loader />
-        : <div className='form-wrapper'>
-          <label>
-            Title
-            <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
-          </label>
-          {
-            sections.map((section, key) =>{
-              return (
-                <Selector
-                  key={key}
-                  label={section}
-                  setTag={setTag}
-                  setPriority={setPriority}
-                  setStatus={setStatus}
-                  setSprint={setSprint}
-                  setAssigned={setAssigned}
-                  sprintOptions={sprintOptions}
-                  project={project}
-                />
-              )
-            })
-          }
-          <DescriptionBox
-            setDescription={setDescription}
-          />
-          <Images
-            images={images}
-            setImages={setImages}
-          />
-          <ButtonContainer 
-            createTicket={createTicket}
-          />
+      <h1>Create Ticket</h1><div className='form-wrapper'>
+        <label>
+          Title
+          <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
+        </label>
+        {
+          sections.map((section, key) =>{
+            return (
+              <Selector
+                key={key}
+                label={section}
+                setTag={setTag}
+                setPriority={setPriority}
+                setStatus={setStatus}
+                setSprint={setSprint}
+                setAssigned={setAssigned}
+                sprintOptions={sprintOptions}
+                project={project}
+              />
+            )
+          })
+        }
+        <DescriptionBox
+          setDescription={setDescription}
+        />
+        <Images
+          images={images}
+          setImages={setImages}
+        />
+        <ButtonContainer 
+          createTicket={createTicket}
+        />
         </div>
-      }
     </StyledPage>
   );
 }

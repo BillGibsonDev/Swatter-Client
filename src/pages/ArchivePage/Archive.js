@@ -60,11 +60,11 @@ const ArchivePage = ({ user }) => {
 }
 
 const StyledArchive = styled.section`
+    height: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    min-height: 50vh;
-    margin: 0 auto;
+    margin: 10px auto 0 auto;
     h1 {
       color: white;
       font-size: 1.5em;

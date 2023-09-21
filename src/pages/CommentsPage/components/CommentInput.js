@@ -72,8 +72,7 @@ const CommentInput = ({ user, setLoading, projectId, CommentContainerRef, setCom
   );
 }
 
-const StyledCommentInput = styled.div`
-  margin: auto 0 0 0;
+const StyledCommentInput = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -27,19 +27,19 @@ export const ButtonContainer = () => {
 }
 
 const StyledButtonContainer = styled.article`
-    border-bottom: 2px solid white;
-    width: 80%;
-    button {
-      border: 1px solid ${palette.helperGrey};
-      font-size: 16px;
-      border-radius: 0;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      cursor: pointer;
-      padding: 8px 12px;
-    }
-    .active {
-      background: black;
-      color: white;
-    }
+  border-bottom: 2px solid white;
+  width: 80%;
+  button {
+    border: 1px solid ${palette.helperGrey};
+    font-size: 1em;
+    border-radius: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+    padding: 8px 12px;
+  }
+  .active {
+    background: black;
+    color: white;
+  }
 `;

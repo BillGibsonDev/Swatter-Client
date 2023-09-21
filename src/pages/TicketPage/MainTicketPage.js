@@ -78,10 +78,7 @@ const MainTicketPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 `;
 
 const mapStateToProps = (state) => {

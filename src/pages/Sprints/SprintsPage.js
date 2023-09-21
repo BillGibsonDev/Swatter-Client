@@ -138,10 +138,8 @@ const SprintsPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   max-height: 80vh;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  margin: 10px auto;
+  width: 80%;
+  margin: 0 auto;
   .undefined {
     background: white;
     width: 100%;
@@ -186,10 +184,7 @@ const StyledPage = styled.section`
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    position: relative;
     width: 100%;
-    display: flex;
-    flex-direction: column;
     &::-webkit-scrollbar {
       display: none;
       width: none;

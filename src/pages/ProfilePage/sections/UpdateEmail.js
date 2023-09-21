@@ -32,7 +32,6 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
     
     return (
         <StyledSection>
-            <h1>Update Email</h1>
             <label>Email
                 <input type="text" value={userData.email} disabled={true} />
             </label>
@@ -56,6 +55,9 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
 const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
+    h1 {
+
+    }
     label {
         font-weight: bold;
         font-size: ${palette.labelSize};

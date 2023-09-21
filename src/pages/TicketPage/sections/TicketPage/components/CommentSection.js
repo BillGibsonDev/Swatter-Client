@@ -64,28 +64,23 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
         commentId={commentId}
       />
       <div className='comment-section-wrapper'>
-        {
-          comments.length === 0 
-          ? <h3>No comments yet..</h3>
-          : 
-            <div className='comment-container' ref={CommentContainerRef}>
-              {
-                comments.map((comment, index) => {
-                  return (
-                    <Comment
-                      comment={comment}
-                      ticketId={ticketId}
-                      projectId={projectId}
-                      key={index}
-                      setLoading={setLoading}
-                      DeleteAlertRef={DeleteAlertRef}
-                      setCommentId={setCommentId}
-                    />
-                  );
-                })
-              }
-            </div>
-        }
+        <div className='comment-container' ref={CommentContainerRef}>
+          {
+            comments.map((comment, index) => {
+              return (
+                <Comment
+                  comment={comment}
+                  ticketId={ticketId}
+                  projectId={projectId}
+                  key={index}
+                  setLoading={setLoading}
+                  DeleteAlertRef={DeleteAlertRef}
+                  setCommentId={setCommentId}
+                />
+              );
+            })
+          }
+        </div>
         <CommentInput
           ticketId={ticketId}
           projectId={projectId}
@@ -101,8 +96,6 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 const StyledSection = styled.article`
   color: white;
   font-size: 1em;
-  display: flex;
-  flex-direction: column;
   margin: 20px 0;
   padding: 10px 0;
   .comment-section-wrapper {

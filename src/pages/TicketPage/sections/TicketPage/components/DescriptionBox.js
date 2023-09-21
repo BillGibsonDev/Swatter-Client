@@ -17,8 +17,6 @@ export const DescriptionBox = ({ description }) => {
 const StyledDescription = styled.article`
   color: white;
   font-size: 1em;
-  display: flex;
-  flex-direction: column;
   margin: 20px 0;
   padding: 10px 0;
   h2 {

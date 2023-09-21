@@ -79,14 +79,10 @@ export const Images = ({images, setImages}) => {
 }
 
 const StyledImageSection = styled.article`
-  display: flex;
-  flex-direction: column;
   margin: 20px 0;
   max-width: 500px;
   .image-container {
-    display: flex;
     width: 100%;
-    flex-direction: column;
     margin-bottom: 20px;
     border: 1px solid ${palette.helperGrey};
     padding: 6px;
@@ -101,9 +97,7 @@ const StyledImageSection = styled.article`
       max-width: 500px;
       margin: 20px auto;
       label {
-        display: flex;
         color: white;
-        flex-direction: column;
         margin: 10px 0;
         font-size: ${palette.labelSize};
         input {

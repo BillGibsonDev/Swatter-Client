@@ -14,7 +14,7 @@ export const ButtonContainer = () => {
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(section).style.display = "block";
+    document.getElementById(section).style.display = "flex";
     e.currentTarget.className += " active";
   };
 

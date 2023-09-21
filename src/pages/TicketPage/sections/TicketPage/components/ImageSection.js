@@ -34,94 +34,80 @@ export const ImageSection = ({ images, handleModal }) => {
 
     return (
         <StyledImageSection className='ticket-page-tabs' id="images">
-            <div className="images-wrapper">
-                { 
-                    images.map((image, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="image-container">
-                                    { handleImages(image, index) }
-                                    { handleCaptions(image) }
-                                </div>
-                                <div className="modal" id={index}>
-                                    <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
-                                    <img className="modal-image" src={image.image} alt={image.caption} />
-                                    <p id="caption">{image.caption}</p>
-                                </div>
-                            </div>  
-                        )
-                    })
-                }
-            </div>
+            { 
+                images.map((image, index) => {
+                    return (
+                        <div key={index}>
+                            <div className="image-container">
+                                { handleImages(image, index) }
+                                { handleCaptions(image) }
+                            </div>
+                            <div className="modal" id={index}>
+                                <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
+                                <img className="modal-image" src={image.image} alt={image.caption} />
+                                <p id="caption">{image.caption}</p>
+                            </div>
+                        </div>  
+                    )
+                })
+            }
         </StyledImageSection >
     )
 }
 
-const StyledImageSection = styled.div`
+const StyledImageSection = styled.article`
     display: none;
+    flex-wrap: wrap;
     height: 100%;
     width: 100%;
     margin-top: 20px;
-    max-width: 500px;
+    max-width: 1000px;
     h2 {
         color: ${palette.helperGrey};
         font-size: 1em;
         font-weight: 400;
     }
-    .images-wrapper {
-        display: flex;
-        max-width: 500px;
+    .image-container {
         width: 100%;
-        height: auto;
-        grid-gap: 20px;
-        overflow-x: auto;
-        .image-container {
-            display: flex;
-            flex-direction: column;
+        max-width: 250px;
+        height: 100%;
+        img {
+            cursor: pointer;
             width: 100%;
-            height: 100%;
-            margin: auto;
-            img {
-                cursor: pointer;
-                width: 100%;
-                height: 80%;
-            }
-            p {
-                padding-top: 6px;
-                font-size: 1em;
-                text-align: center;
-                color: white;
-                background: #2c272771;
-            }
+            height: 80%;
+        }
+        p {
+            padding-top: 6px;
+            font-size: 1em;
+            text-align: center;
+            color: white;
+            max-width: 100%;
         }
     }
     .modal {
         display: none; 
         position: fixed; 
         z-index: 1; 
-        padding-top: 100px; 
         left: 0;
         top: 0;
         width: 100%; 
         height: 100%; 
         overflow: auto; 
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.9); 
+        background-color: rgba(0, 0, 0, 0.8); 
         .modal-image {
-            margin: auto;
+            margin: 10px auto;
             display: block;
             width: 80%;
             max-width: 700px;
-                #caption {
-                margin: auto;
-                display: block;
-                width: 80%;
-                max-width: 700px;
-                text-align: center;
-                color: ${palette.helperGrey};
-                padding: 10px 0;
-                height: 150px;
-            }
+        }
+        p {
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: ${palette.helperGrey};
+            padding: 10px 0;
+            margin: 20px auto;
         }
         .close-button {
             position: absolute;

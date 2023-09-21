@@ -11,7 +11,7 @@ export default function LoginLoader() {
         const phrases = [ 
             'Signing In..',
             'Yes, Still Signing In..', 
-            'Free Servers are slow :)', 
+            'Free Servers :)', 
             'I believe!', 
             'Wow, you have the patiences..',
             'Still Signing In..'

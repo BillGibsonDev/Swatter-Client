@@ -105,12 +105,13 @@ const StyledImageSection = styled.article`
           height: 30px;
           padding: 2px;
           background: ${palette.helperGrey};
+          color: black;
         }
       }
       #delete {
         width: 100%;
         border: 2px solid red;
-        margin: 0 auto;
+        margin: 10px auto 0 auto;
       }
     }
   }

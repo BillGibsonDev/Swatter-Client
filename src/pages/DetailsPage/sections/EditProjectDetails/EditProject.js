@@ -222,6 +222,7 @@ const StyledSection = styled.section`
             max-width: 350px;
             font-size: 1em;
             padding: 2px;
+            color: black;
             background: ${palette.helperGrey};
           }
         }

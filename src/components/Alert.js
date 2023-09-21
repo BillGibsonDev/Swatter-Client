@@ -56,7 +56,6 @@ const StyledAlert = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${palette.accentColorTransparent};
     text-align: center;
     .alert-wrapper {
         position: fixed;

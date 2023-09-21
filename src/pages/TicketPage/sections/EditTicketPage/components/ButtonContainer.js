@@ -3,13 +3,14 @@ import styled from "styled-components";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
+import { StyledButton } from "../../../../../styled/StyledButton.js";
 
 export const ButtonContainer = ({ DeleteAlertRef, updateTicket }) => {
 
   return (
     <StyledButtonContainer>
-      <button onClick={(event) => { updateTicket(event); }}>Save</button>
-      <button id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
+      <StyledButton onClick={(event) => { updateTicket(event); }}>Save</StyledButton>
+      <StyledButton id='delete'onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</StyledButton>
     </StyledButtonContainer>
   );
 }
@@ -20,15 +21,7 @@ const StyledButtonContainer = styled.article`
   justify-content: space-between;
   margin-top: 30px;
   button {
-    width: 40%;
-    max-width: 300px;
-    height: 40px;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 1em;
-    transition: 0.2s;
+    margin: 0;
     &:hover {
       color: #ffffff;
       background: #000000;

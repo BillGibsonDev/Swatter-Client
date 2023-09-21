@@ -20,8 +20,8 @@ export const ButtonContainer = () => {
 
   return (
     <StyledButtonContainer>
-        <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>Comments</button>
-        <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
+      <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>Comments</button>
+      <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
     </StyledButtonContainer>
   );
 }

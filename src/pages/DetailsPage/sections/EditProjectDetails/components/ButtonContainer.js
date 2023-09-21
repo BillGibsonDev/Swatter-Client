@@ -5,7 +5,7 @@ import { StyledButton } from '../../../../../styled/StyledButton.js';
 export const ButtonContainer = ({  handleDeleteAlert, editProject, DeleteAlertRef }) => {
   return (
     <StyledButtonContainer>
-      <StyledButton onClick={() => { editProject(); }}>Update</StyledButton>
+      <StyledButton onClick={(event) => { editProject(event); }}>Update</StyledButton>
       <StyledButton id='delete' onClick={() => { handleDeleteAlert(DeleteAlertRef); }}>Delete</StyledButton>
     </StyledButtonContainer>
   )

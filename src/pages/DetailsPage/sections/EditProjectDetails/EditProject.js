@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 // functions
 import { handleDeleteAlert } from "../../../../functions/handleDeleteAlert.js";
-
+import { handleImages } from '../../../../functions/handleImages.js';
+ 
 // components
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
@@ -24,7 +25,7 @@ import Loader from "../../../../loaders/Loader.js";
 import { connect } from "react-redux";
 import { showAlert } from "../../../../redux/actions/alert.js";
 
-const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoading, project, projectId }) => {
+const EditProject = ({ user, showAlert, setProject, editing, setEditing, isLoading, setLoading, project, projectId }) => {
   
   const navigate = useNavigate();
 
@@ -69,18 +70,19 @@ const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoadi
       .max(500, 'Descriptions can not be longer than 500 characters')
   });
 
-  const updateProject = (event) => {
+  const updateProject = async (event) => {
     event.preventDefault();
+    const imageURL = await handleImages(image);
     validationSchema.validate({ title, link, repository, description })
     .then(() => {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/edit`,
         {
-          title: title,
-          link: link,
-          image: image,
-          repository: repository,
-          description: description,
+          title,
+          link,
+          image: imageURL,
+          repository,
+          description,
         },
         {
           headers: {
@@ -90,6 +92,7 @@ const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoadi
       )
       .then((response) => {
         if (response.status === 200) {
+          setProject(response.data)
           setEditing(false);
           setLoading(false);
         }
@@ -103,6 +106,10 @@ const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoadi
 			showAlert(validationError, 'error');
 		});
   };
+
+  if(isLoading){
+    return <Loader />
+  }
 
   return (
     <StyledSection>
@@ -118,57 +125,52 @@ const EditProject = ({ user, showAlert, editing, setEditing, isLoading, setLoadi
         stateChanger={setEditing}
         state={editing}
       />
-      {
-        isLoading ? <Loader />
-        : 
-        <div className='form-wrapper'>
-          <div className="inputs-container">
-            <div className='form-container'>
-              <label>Title
-                <input 
-                  type='text' 
-                  id='title' 
-                  defaultValue={project.title}
-                  onChange={(event) => { setTitle(event.target.value); }} 
-                />
-              </label>
-              <label>Image
-                <input 
-                  type='text' 
-                  id='image' 
-                  defaultValue={project.image}
-                  onChange={(event) => { setImage(event.target.value); }} 
-                />
-              </label>
-            </div>
-            <div className='form-container'>
-              <label>Website
-                <input 
-                  type='text' 
-                  id='link' 
-                  defaultValue={project.link}
-                  onChange={(event) => { setLink(event.target.value); }} 
-                />
-              </label>
-              <label>Repository
-                <input 
-                  type='text' 
-                  id='repository' 
-                  defaultValue={project.repository}
-                  onChange={(event) => { setRepository(event.target.value); }} 
-                />
-              </label>
-            </div>
+      <div className='form-wrapper'>
+        <div className="inputs-container">
+          <div className='form-container'>
+            <label>Title
+              <input 
+                type='text' 
+                id='title' 
+                defaultValue={project.title}
+                onChange={(event) => { setTitle(event.target.value); }} 
+              />
+            </label>
+            <label>Image
+              <input 
+                type='file' 
+                id='image' 
+                onChange={(event) => { setImage(event.target.files[0]); }} 
+              />
+            </label>
           </div>
-          <label id="description-label">Description
-            <textarea 
-              id='description' 
-              defaultValue={project.repository} 
-              onChange={(event) => { setDescription(event.target.value); }} 
-            />
-          </label>
+          <div className='form-container'>
+            <label>Website
+              <input 
+                type='text' 
+                id='link' 
+                defaultValue={project.link}
+                onChange={(event) => { setLink(event.target.value); }} 
+              />
+            </label>
+            <label>Repository
+              <input 
+                type='text' 
+                id='repository' 
+                defaultValue={project.repository}
+                onChange={(event) => { setRepository(event.target.value); }} 
+              />
+            </label>
+          </div>
         </div>
-      }
+        <label id="description-label">Description
+          <textarea 
+            id='description' 
+            defaultValue={project.repository} 
+            onChange={(event) => { setDescription(event.target.value); }} 
+          />
+        </label>
+      </div>
       <ButtonContainer
         editProject={updateProject}
         handleDeleteAlert={handleDeleteAlert}

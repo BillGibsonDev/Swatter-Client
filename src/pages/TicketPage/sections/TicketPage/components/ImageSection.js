@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import * as palette from '../../../../../styled/ThemeVariables.js';
 
-export default function ImageSection({ images, handleModal }) {
+export const ImageSection = ({ images, handleModal }) => {
 
     const handleImages = (image, index) => {
         if(!image.image){
@@ -26,31 +26,33 @@ export default function ImageSection({ images, handleModal }) {
         }
     }
 
+    if(images.length === 0){
+        <StyledImageSection>
+            <h2>No images yet..</h2>
+        </StyledImageSection>
+    }
+
     return (
         <StyledImageSection className='ticket-page-tabs' id="images">
-            {
-                !images || images.length === 0 
-                ? <h2>No images yet..</h2>
-                : <div className="images-wrapper">
-                    { 
-                        images.map((image, index) => {
-                            return (
-                                <div key={index}>
-                                    <div className="image-container">
-                                        {handleImages(image, index)}
-                                        {handleCaptions(image)}
-                                    </div>
-                                    <div className="modal" id={index}>
-                                        <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
-                                        <img className="modal-image" src={image.image} alt={image.caption} />
-                                        <p id="caption">{image.caption}</p>
-                                    </div>
-                                </div>  
-                            )
-                        })
-                    }
-                </div>
-            }
+            <div className="images-wrapper">
+                { 
+                    images.map((image, index) => {
+                        return (
+                            <div key={index}>
+                                <div className="image-container">
+                                    { handleImages(image, index) }
+                                    { handleCaptions(image) }
+                                </div>
+                                <div className="modal" id={index}>
+                                    <button className="close-button" onClick={() => { handleModal(index)} }>&times;</button>
+                                    <img className="modal-image" src={image.image} alt={image.caption} />
+                                    <p id="caption">{image.caption}</p>
+                                </div>
+                            </div>  
+                        )
+                    })
+                }
+            </div>
         </StyledImageSection >
     )
 }
@@ -59,10 +61,8 @@ const StyledImageSection = styled.div`
     display: none;
     height: 100%;
     width: 100%;
-    margin: 20px auto auto 0;
-    @media (max-width: 834px){
-        width: 90%;
-    }
+    margin-top: 20px;
+    max-width: 500px;
     h2 {
         color: ${palette.helperGrey};
         font-size: 1em;
@@ -70,26 +70,21 @@ const StyledImageSection = styled.div`
     }
     .images-wrapper {
         display: flex;
-        grid-gap: 20px;
-        width: 70%;
+        max-width: 500px;
+        width: 100%;
         height: auto;
+        grid-gap: 20px;
         overflow-x: auto;
-        @media (max-width: 850px){
-            width: 90%;
-        }
-        @media (max-width: 450px){
-            width: 100%;
-        }
         .image-container {
             display: flex;
             flex-direction: column;
             width: 100%;
             height: 100%;
+            margin: auto;
             img {
                 cursor: pointer;
                 width: 100%;
                 height: 80%;
-                border: 1px solid white;
             }
             p {
                 padding-top: 6px;
@@ -99,45 +94,46 @@ const StyledImageSection = styled.div`
                 background: #2c272771;
             }
         }
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
-            padding-top: 100px; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.9); 
-            .modal-image {
+    }
+    .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1; 
+        padding-top: 100px; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.9); 
+        .modal-image {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+                #caption {
                 margin: auto;
                 display: block;
                 width: 80%;
                 max-width: 700px;
-                 #caption {
-                    margin: auto;
-                    display: block;
-                    width: 80%;
-                    max-width: 700px;
-                    text-align: center;
-                    color: ${palette.helperGrey};
-                    padding: 10px 0;
-                    height: 150px;
-                }
-            }
-            .close-button {
-                position: absolute;
-                top: 15px;
-                right: 35px;
-                color: #f1f1f1;
-                font-size: 40px;
-                font-weight: bold;
-                cursor: pointer;
-                background: none;
-                border: none;
+                text-align: center;
+                color: ${palette.helperGrey};
+                padding: 10px 0;
+                height: 150px;
             }
         }
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
     }
+    
 `;

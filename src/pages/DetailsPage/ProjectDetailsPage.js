@@ -55,11 +55,12 @@ const ProjectDetailsPage = ({ user }) => {
         title={'Details'}
       />
       {
-        editing && user.id === project.owner ? 
+        editing && user.id === project.ownerId ? 
         <EditProject
           isLoading={isLoading}
           setLoading={setLoading}
           project={project}
+          setProject={setProject}
           projectId={projectId}
           setEditing={setEditing}
           editing={editing}

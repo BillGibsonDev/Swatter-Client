@@ -37,7 +37,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 
   const deleteComment = (commentId) => {
     setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}`, {},
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}/delete`, {},
       {
         headers: {
           Authorization: user.token
@@ -57,7 +57,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
   };
 
   return (
-    <StyledTicketCommentSection className='ticket-page-tabs active' id='comments'>
+    <StyledSection className='ticket-page-tabs active' id='comments'>
       <DeleteAlert
         DeleteAlertRef={DeleteAlertRef}
         deleteFunction={deleteComment}
@@ -66,7 +66,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
       <div className='comment-section-wrapper'>
         {
           comments.length === 0 
-          ? <h2>No comments yet..</h2>
+          ? <h3>No comments yet..</h3>
           : 
             <div className='comment-container' ref={CommentContainerRef}>
               {
@@ -94,24 +94,26 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
           setComments={setComments}
         />
       </div>
-    </StyledTicketCommentSection>
+    </StyledSection>
   );
 }
 
-const StyledTicketCommentSection = styled.div`
-  width: 90%;
+const StyledSection = styled.article`
+  color: white;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
   margin: 20px 0;
-  height: 100%;
-  min-height: 30vh;
-  max-width: 550px;
+  padding: 10px 0;
   .comment-section-wrapper {
     display: flex;
     width: 100%;
+    max-width: 600px;
     height: 100%;
     min-height: 30vh;
     flex-direction: column;
     align-items: center;
-    h2 {
+    h3 {
       color: ${palette.helperGrey};
       font-size: 1em;
       font-weight: 400;

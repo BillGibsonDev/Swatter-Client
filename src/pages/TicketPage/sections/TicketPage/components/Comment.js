@@ -23,20 +23,16 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
       return { margin: "10px auto 10px 0"};
     }
   }
-
+  
   return (
-    <StyledComment style={handleCommentAuthor(comment.author)}>
+    <StyledComment style={handleCommentAuthor(comment.user)}>
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={comment.author}>{comment.author}<span>{handleDate(comment.lastUpdate)}</span></h3>
-          <div className='dropdown'>
-            <button className='dropbtn'>
-              <img src={icon.Menu} alt='Menu' />
-            </button>
-            <div className='dropdown-content'>
-              <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}>Delete</button>
-            </div>
-          </div>
+          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span></h3>
+          {
+            user.username !== comment.user ? <></>
+            : <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}><img src={icon.Trash} alt="Delete" /></button>
+          }
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
       </div>
@@ -47,13 +43,13 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
 const StyledComment = styled.div`
   display: flex;
   max-width: 90%;
-  max-width: 500px;
+  max-width: 400px;
   width: auto;
   height: auto;
   margin: 10px auto;
-  background: #dfdfdf;
+  background: #000000b3;
   border-radius: 4px;
-  box-shadow: 3px 3px 3px #5252528d;
+  box-shadow: 2px 2px 4px #5252528d;
   position: relative;
   justify-content: space-around;
   .comment-wrapper {
@@ -70,72 +66,32 @@ const StyledComment = styled.div`
         font-size: .8em;
         display: flex;
         align-items: center;
+        color: white;
         span {
           margin-left: 10px;
-          font-size: .6em;
-          color: #575757;
+          font-size: .8em;
+          color: ${palette.helperGrey};
         }
       }
-      .dropdown {
-        position: relative;
-        display: inline-block;
-        .dropbtn {
-          color: white;
-          font-size: 16px;
-          border: none;
-          background: none;
-          cursor: pointer;
-          padding: 0;
-          height: 25px;
-          width: 25px;
-          img {
-            height: 25px;
-            width: 25px;
-          }
+      button {
+        color: #ff0000;
+        padding: 2px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        &:hover {
+          background: white;
         }
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          right: 90%;
-          top: 0;
-          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-          z-index: 1;
-          background: ${palette.helperGrey};
-          button {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border: none;
-            background: none;
-            cursor: pointer;
-            &:hover {
-              background: white;
-            }
-          }
+        img {
+          width: 20px;
+          height: 20px;
         }
-      }
-      .dropdown:hover .dropdown-content,
-      .dropdown:active .dropdown-content,
-      .dropdown:focus .dropdown-content {
-        display: block;
-      }
-      .dropdown:hover .dropbtn,
-      .dropdown:active .dropdown-content,
-      .dropdown:focus .dropdown-content {
-        background-color: ${palette.helperGrey};
       }
     }
     .comment-text-container {
       p {
         margin-bottom: 12px;
       }
-    }
-    #Gibby {
-      color: #008ee0;
-    }
-    #Moose {
-      color: #0dbe7a;
     }
     p {
       font-size: .8em;

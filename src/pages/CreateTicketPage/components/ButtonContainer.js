@@ -15,10 +15,8 @@ const ButtonContainer = ({ createTicket }) => {
 }
 
 const StyledButtonContainer = styled.article`
-  margin: 30px auto;
-  #create-btn {
-    margin: 0 ;
-  }
+  max-width: 500px;
+  width: 100%;
 `;
 
 const mapStateToProps = (state) => {

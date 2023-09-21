@@ -127,9 +127,6 @@ const StyledSelector = styled.label`
     font-size: ${palette.labelSize};
     width: 100%;
     max-width: 500px;
-    @media (max-width: 450px) {
-        margin: 10px 0;
-    }
     select {
         padding: 6px 0;
         cursor: pointer;

@@ -22,6 +22,7 @@ import SprintsIcon from './icons/sprint.png';
 import RoundMenu from './icons/dot-menu-white.png';
 import ArchivesIcon from './icons/archive.png';
 import ActivitiesIcon from './icons/wave.png';
+import TrashCanIcon from './icons/trashCan196ecf.png';
 
 import CircleCheckboxIcon from './icons/circleCheckFilled196ecf.png';
 import TriangleWarningIcon from './icons/triangleWarningFilled196ecf.png';
@@ -58,6 +59,7 @@ export const ArrowRed = arrowRedIcon;
 export const Task = TaskIcon;
 export const Redesign = RedesignIcon;
 export const Menu = MenuIcon;
+export const Trash = TrashCanIcon;
 
 // general icons
 export const Edit= EditIcon;

@@ -14,7 +14,7 @@ import Loader from "../../loaders/Loader.js";
 import { Selector } from './components/Selector.js';
 import BreadCrumbs from '../../components/Breadcrumbs.js';
 import { DescriptionBox } from './components/DescriptionBox.js';
-import { Images } from './components/Images.js';
+import { Images } from '../../components/Images.js';
 import ButtonContainer from './components/ButtonContainer.js';
 
 // redux
@@ -56,9 +56,12 @@ const CreateTicketPage = ({ user, showAlert }) => {
     fetchProject();
   }, [ user, projectId ]);
 
-  const handleAlert = ( message, type ) => {
-    showAlert(message, type);
-  }
+  const validatonImageSchema = Yup.object().shape({
+    image: Yup.string(),
+    caption: Yup.string()
+      .min(3, 'A caption must be at least 3 characters')
+      .max(160, 'A caption can not exceed 160 characters')
+  })
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -71,7 +74,8 @@ const CreateTicketPage = ({ user, showAlert }) => {
       .required('A Tag is required'),
     description: Yup.string()
       .required('A Description is required')
-      .max(500, 'Descriptions can not exceed 500 characters')
+      .max(500, 'Descriptions can not exceed 500 characters'),
+    images: Yup.array().of(validatonImageSchema),
   });
 
   const createTicket = (event) => {
@@ -79,7 +83,6 @@ const CreateTicketPage = ({ user, showAlert }) => {
     validationSchema.validate({ title, status, tag, description })
     .then(() => {
       setLoading(true);
-      let checkImages = images.filter(image => image.image !== '');
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
         {
           title,
@@ -89,7 +92,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
           assigned,
           tag,
           sprint,
-          checkImages,
+          images,
           author: user.username
         },
         {
@@ -101,13 +104,13 @@ const CreateTicketPage = ({ user, showAlert }) => {
       .then((response) => {
         if(response.status === 200) {
           setLoading(false);
-          handleAlert('Ticket created', 'success');
+          showAlert('Ticket created', 'success');
         }
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        handleAlert(error, 'error');
+        showAlert(error, 'error');
       })
     })
     .catch((validationError) => {

@@ -22,10 +22,10 @@ import EditTicketPage from "./sections/EditTicketPage/EditTicketPage.js";
 
 const MainTicketPage = ({ user }) => {
   const { projectId, ticketId } = useParams();
+
   const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
-  const [ images, setImages ] = useState([]);
 
   useEffect(() => {
     const getTicket = (projectId, ticketId) => {
@@ -36,7 +36,6 @@ const MainTicketPage = ({ user }) => {
       })
       .then((response) => {
         setTicket(response.data);
-        setImages(response.data.images);
         setLoading(false);
       })
       .catch((err) => {
@@ -59,8 +58,7 @@ const MainTicketPage = ({ user }) => {
         : !editing ? <TicketPage 
           setEditing={setEditing} 
           editing={editing}
-          ticket={ticket} 
-          images={images}
+          ticket={ticket}
           ticketId={ticketId}
           projectId={projectId}
           setLoading={setLoading}
@@ -71,7 +69,6 @@ const MainTicketPage = ({ user }) => {
             ticket={ticket}
             ticketId={ticketId}
             projectId={projectId}
-            user={user}
           />
       }
     </StyledPage>

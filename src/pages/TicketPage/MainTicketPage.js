@@ -26,7 +26,6 @@ const MainTicketPage = ({ user }) => {
   const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ editing, setEditing ] = useState(false);
-  const [ updates, setUpdates ] = useState([]);
 
   useEffect(() => {
     const getTicket = (projectId, ticketId) => {
@@ -37,7 +36,6 @@ const MainTicketPage = ({ user }) => {
       })
       .then((response) => {
         setTicket(response.data);
-        setUpdates(response.data.updates);
         setLoading(false);
       })
       .catch((err) => {
@@ -60,8 +58,7 @@ const MainTicketPage = ({ user }) => {
         : !editing ? <TicketPage 
           setEditing={setEditing} 
           editing={editing}
-          ticket={ticket} 
-          updates={updates}
+          ticket={ticket}
           ticketId={ticketId}
           projectId={projectId}
           setLoading={setLoading}
@@ -72,7 +69,6 @@ const MainTicketPage = ({ user }) => {
             ticket={ticket}
             ticketId={ticketId}
             projectId={projectId}
-            user={user}
           />
       }
     </StyledPage>

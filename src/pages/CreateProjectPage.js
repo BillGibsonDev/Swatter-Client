@@ -18,6 +18,9 @@ import { showAlert } from "../redux/actions/alert.js";
 // router
 import { useNavigate } from "react-router-dom";
 
+// functions
+import { handleImages } from '../functions/handleImages.js';
+
 const CreateProjectPage = ({ user, showAlert }) => {
 
   const navigate = useNavigate();
@@ -95,7 +98,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
                 <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
               </label>
               <label>Image
-                <input type='text' id='image' onChange={(event) => { setImage(event.target.value); }} />
+                <input type='file' id='image' onChange={(event) => { setImage(handleImages(event.target.files[0])); }} />
               </label>
             </div>
             <div className='form-container'>

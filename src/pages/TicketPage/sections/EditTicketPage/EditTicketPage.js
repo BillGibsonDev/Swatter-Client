@@ -16,34 +16,31 @@ import { showAlert } from "../../../../redux/actions/alert.js";
 import TicketPageLoader from "../../../../loaders/TicketPageLoader.js";
 import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { Selector } from "./components/Selector.js";
-import { Images } from "./components/Images.js";
+import { Images } from "../../../../components/Images.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
 import { TitleContainer } from "../../../../components/TitleContainer.js";
 
 // router
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
+const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectId, ticketId }) => {
 
   const DeleteAlertRef = useRef();
 
   const navigate = useNavigate();
 
-  const { projectId, ticketId } = useParams();
-
   const [ project, setProject ] = useState({});
-  const [ ticket, setTicket ] = useState([]);
   const [ isLoading, setLoading ] = useState(true);
   const [ sprintOptions, setSprintOptions ] = useState([]);
-  const [ images, setImages ] = useState([]);
-  const [ status, setStatus ] = useState('');
-  const [ description, setDescription ] = useState('');
-  const [ priority, setPriority ] = useState('');
-  const [ tag, setTag ] = useState('');
-  const [ sprint, setSprint ] = useState('');
-  const [ assigned, setAssigned ] = useState('');
+  const [ images, setImages ] = useState(ticket.images);
+  const [ status, setStatus ] = useState(ticket.status);
+  const [ description, setDescription ] = useState(ticket.description);
+  const [ priority, setPriority ] = useState(ticket.priority);
+  const [ tag, setTag ] = useState(ticket.tag);
+  const [ sprint, setSprint ] = useState(ticket.sprint);
+  const [ assigned, setAssigned ] = useState(ticket.assigned);
 
   useEffect(() => {
     const getSprints = async () => {
@@ -56,36 +53,15 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
       .then((response) => {
         setProject(response.data);
         setSprintOptions(response.data.sprints);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    };
-    const getTicket = () => {
-      axios.get(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}`, 
-      {
-        headers: {
-          Authorization: user.token
-        }
-      })
-      .then((response) => {
-        setTicket(response.data);
-        setImages(response.data.images);
-        setStatus(response.data.status);
-        setDescription(response.data.description);
-        setPriority(response.data.priority);
-        setTag(response.data.tag);
-        setSprint(response.data.sprint);
-        setAssigned(response.data.assigned);
         setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
     };
     getSprints();
-    getTicket();
-  }, [ projectId, ticketId, isLoading, user ]);
+  }, [ projectId, ticketId, user ]);
 
     const validationSchema = Yup.object().shape({
       description: Yup.string()
@@ -109,6 +85,7 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
           ticket: ticket,
           assigned: assigned,
           sprint: sprint,
+          images: images,
         },
         {
           headers: {
@@ -180,11 +157,11 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
                           <Selector
                             key={key}
                             label={section}
-                            tag={tag}
-                            sprint={sprint}
                             status={status}
                             priority={priority}
                             assigned={assigned}
+                            tag={tag}
+                            speint
                             setTag={setTag}
                             setPriority={setPriority}
                             setStatus={setStatus}
@@ -202,7 +179,7 @@ const EditTicketPage = ({ user, showAlert, editing, setEditing }) => {
             </div>
             <DescriptionBox
               setDescription={setDescription}
-              description={description}
+              description={ticket.description}
             />
           </div>
       }

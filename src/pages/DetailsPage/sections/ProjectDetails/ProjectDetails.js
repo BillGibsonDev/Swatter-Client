@@ -17,41 +17,42 @@ export default function ProjectDetails({ project, isLoading, editing, setEditing
   const [ addingMember, setAddingMember ] = useState(false);
   const [ members, setMembers ] = useState(project.members);
 
+  console.log(user.id === project.ownerId)
+
+  if(isLoading){
+    return <Loader />
+  }
+
   return (
     <StyledSection>
-      {
-        isLoading ? <Loader />
-       : 
-        <>
-          <TitleContainer 
-            title={project.title}
-            type={ user.id === project.ownerId ? 'edit' : '' }
-            stateChanger={setEditing}
-            state={editing}
-          />
-          <div className='container'>
-            <h6><span>Started:</span> {handleDate(project.startDate)}</h6>
-            <h6><span>Last Update:</span> {handleDate(project.lastUpdate)}</h6>
-            {
-              project.link ? <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
-              : <h6><span>Website:</span> None</h6>
-            }
-            {
-              project.repository ? <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
-              : <h6><span>Repository:</span> None</h6>
-            }
-            <h6><span>Description:</span> {project.description}</h6>
-          </div>
-          <MemberList 
-            members={members} 
-            setMembers={setMembers}
-            projectId={project._id} 
-            user={user}
-            setAddingMember={setAddingMember}
-            addingMember={addingMember}
-          />
-        </>
-      }
+      <TitleContainer 
+        title={project.title}
+        type={ user.id === project.ownerId ? 'edit' : '' }
+        stateChanger={setEditing}
+        state={editing}
+      />
+      <div className='container'>
+        { project.image ? <img id="project-image" src={project.image} alt={project.title} /> : <></> }
+        <h6><span>Started:</span> {handleDate(project.startDate)}</h6>
+        <h6><span>Last Update:</span> {handleDate(project.lastUpdate)}</h6>
+        {
+          project.link ? <a href={project.link} target='_blank' rel='noreferrer'><span>Website:</span> {project.link}</a>
+          : <h6><span>Website:</span> None</h6>
+        }
+        {
+          project.repository ? <a href={project.repository} target='_blank' rel='noreferrer'><span>Repository:</span> {project.repository}</a>
+          : <h6><span>Repository:</span> None</h6>
+        }
+        <h6><span>Description:</span> {project.description ? project.description : 'None'}</h6>
+      </div>
+      <MemberList 
+        members={members} 
+        setMembers={setMembers}
+        projectId={project._id} 
+        user={user}
+        setAddingMember={setAddingMember}
+        addingMember={addingMember}
+      />
     </StyledSection>
   );
 }
@@ -74,6 +75,10 @@ const StyledSection = styled.section`
   .container {
     display: flex; 
     flex-direction: column;
+    #project-image {
+      width: 300px;
+      margin: 10px 0;
+    }
     h6, a {
       margin: 10px 0;
       font-size: 1em;

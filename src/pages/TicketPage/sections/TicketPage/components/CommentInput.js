@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 
 // styled
 import styled from "styled-components";
+import { StyledButton } from '../../../../../styled/StyledButton.js';
 
 //redux
 import { connect } from "react-redux";
@@ -25,14 +26,14 @@ const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, Comm
     validationSchema.validate({ comment })
     .then(() => {
       setLoading(true);
-      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments`,
+      axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/create`,
+        {
+          comment: comment,
+        },        
         {
           headers: {
             Authorization: user.token
           }
-        },
-        {
-          comment: comment,
         }
       )
       .then((response) => {
@@ -65,7 +66,7 @@ const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, Comm
         id='comment'
         onChange={(e) => { setComment(e.target.value)}}
       />
-      <button onClick={(event) => { sendComment(event)}}>Send</button>
+      <StyledButton onClick={(event) => { sendComment(event)}}>Send</StyledButton>
     </StyledCommentInput>
   );
 }
@@ -76,32 +77,15 @@ const StyledCommentInput = styled.article`
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  max-width: 500px;
   textarea {
     background: #d6d6d6;
     padding: 6px;
     min-height: 70px;
     height: auto;
-    max-width: 550px;
+    overflow-y: visible;
     width: 100%;
     font-size: .8em;
-  }
-  button {
-    margin: 6px auto;
-    width: 100%;
-    max-width: 350px;
-    height: 30px;
-    cursor: pointer;
-    color: #0f4d92;
-    background: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    font-weight: 700;
-    transition: 0.2s;
-    &:hover {
-      background: #000000;
-      color: white;
-    }
   }
 `;
 

@@ -132,6 +132,10 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
 
   const sections = [ 'Tag', 'Priority', 'Status', 'Sprint', 'Assigned User' ];
 
+  if(isLoading){
+    return <TicketPageLoader />
+  }
+
   return (
     <StyledTicketSection>
       <DeleteAlert
@@ -140,49 +144,45 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
         deleteFunction={deleteTicket}
         title={ticket.title}
       />
-      {
-        isLoading ? <TicketPageLoader />
-        : 
-          <div className='ticket-container'>
-            <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
-            <div className='info-wrapper'>
-              <InfoContainer ticket={ticket} />
-              <div className='selector-container'>
+      <div className='ticket-container'>
+        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
+        <div className='info-wrapper'>
+          <InfoContainer ticket={ticket} />
+          <div className='selector-container'>
+            {
+              !tag || !sprintOptions ? <></>
+              : <>
                 {
-                  !tag || !sprintOptions ? <></>
-                  : <>
-                    {
-                      sections.map((section, key) =>{
-                        return (
-                          <Selector
-                            key={key}
-                            label={section}
-                            status={status}
-                            priority={priority}
-                            assigned={assigned}
-                            tag={tag}
-                            speint
-                            setTag={setTag}
-                            setPriority={setPriority}
-                            setStatus={setStatus}
-                            setSprint={setSprint}
-                            setAssigned={setAssigned}
-                            sprintOptions={sprintOptions}
-                            project={project}
-                          />
-                        )
-                      })
-                    }
-                  </>
+                  sections.map((section, key) =>{
+                    return (
+                      <Selector
+                        key={key}
+                        label={section}
+                        status={status}
+                        priority={priority}
+                        assigned={assigned}
+                        tag={tag}
+                        sprint={sprint}
+                        setTag={setTag}
+                        setPriority={setPriority}
+                        setStatus={setStatus}
+                        setSprint={setSprint}
+                        setAssigned={setAssigned}
+                        sprintOptions={sprintOptions}
+                        project={project}
+                      />
+                    )
+                  })
                 }
-              </div>
-            </div>
-            <DescriptionBox
-              setDescription={setDescription}
-              description={ticket.description}
-            />
+              </>
+            }
           </div>
-      }
+        </div>
+        <DescriptionBox
+          setDescription={setDescription}
+          description={ticket.description}
+        />
+      </div>
       <Images setImages={setImages} images={images} />
       <ButtonContainer 
         DeleteAlertRef={DeleteAlertRef} 

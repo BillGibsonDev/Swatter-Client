@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import * as palette from "../../../../../styled/ThemeVariables.js";
 
-export const ButtonContainer = () => {
+export const ButtonContainer = (images) => {
 
   const handleTabs = (e, section) => {
     let i;
@@ -21,16 +21,19 @@ export const ButtonContainer = () => {
   return (
     <StyledButtonContainer>
       <button className='tablinks active' onClick={(e) => { handleTabs(e, "comments"); }}>Comments</button>
-      <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
+      {
+        images.length === 0 ? <></>
+        :  <button className='tablinks' onClick={(e) => { handleTabs(e, "images"); }}>Images</button>
+      }
     </StyledButtonContainer>
   );
 }
 
 const StyledButtonContainer = styled.article`
-  border-bottom: 2px solid white;
-  width: 80%;
+  border-bottom: ${palette.greyBorder};
+  width: 100%;
   button {
-    border: 1px solid ${palette.helperGrey};
+    border: ${palette.greyBorder};
     font-size: 1em;
     border-radius: 0;
     border-top-left-radius: 4px;

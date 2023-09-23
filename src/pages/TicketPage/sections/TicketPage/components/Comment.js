@@ -8,33 +8,23 @@ import * as palette from "../../../../../styled/ThemeVariables";
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
 import { handleDate } from "../../../../../functions/handleDates";
 
-// images
-import * as icon from '../../../../../assets/IconImports.js'
-
 // redux
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
-
-  const handleCommentAuthor = (author) => {
-    if(author === user.username){
-      return { margin: "10px 0 10px auto"};
-    } else {
-      return { margin: "10px auto 10px 0"};
-    }
-  }
   
   return (
-    <StyledComment style={handleCommentAuthor(comment.user)}>
+    <StyledComment>
       <div className='comment-wrapper'>
         <div className='comment-title-container'>
-          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span></h3>
-          {
-            user.username !== comment.user ? <></>
-            : <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}><img src={icon.Trash} alt="Delete" /></button>
-          }
+          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span><span>{comment.edited ? 'Edited' : null}</span></h3>
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
+        <div className="link-container">
+          <button disabled={user.username !== comment.user}>Edit</button>
+          <button disabled={user.username !== comment.user}>Delete</button>
+        </div>
       </div>
     </StyledComment>
   );
@@ -42,16 +32,13 @@ const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
 
 const StyledComment = styled.div`
   display: flex;
-  max-width: 90%;
-  max-width: 400px;
   width: auto;
   height: auto;
   margin: 10px auto;
-  background: #000000b3;
-  border-radius: 4px;
-  box-shadow: 2px 2px 4px #5252528d;
   position: relative;
   justify-content: space-around;
+  border: ${palette.greyBorder};
+  border-radius: 4px;
   .comment-wrapper {
     width: 95%;
     margin: 10px auto;
@@ -61,7 +48,6 @@ const StyledComment = styled.div`
       width: 100%;
       height: 20px;
       align-items: center;
-      margin-bottom: 10px;
       h3 {
         font-size: .8em;
         display: flex;
@@ -69,7 +55,7 @@ const StyledComment = styled.div`
         color: white;
         span {
           margin-left: 10px;
-          font-size: .8em;
+          font-size: .7em;
           color: ${palette.helperGrey};
         }
       }
@@ -90,12 +76,22 @@ const StyledComment = styled.div`
     }
     .comment-text-container {
       p {
+        font-size: .8em;
+        font-weight: 400;
         margin-bottom: 12px;
       }
     }
-    p {
-      font-size: .8em;
-      font-weight: 400;
+    .link-container {
+      width: 100px;
+      display: flex;
+      justify-content: space-between;
+      button {
+        font-size: .7em;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: ${palette.helperGrey};
+      }
     }
   }
 `;

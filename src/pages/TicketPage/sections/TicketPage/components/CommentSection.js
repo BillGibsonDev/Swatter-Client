@@ -13,7 +13,6 @@ import { DeleteAlert } from "../../../../../components/DeleteAlert.js";
 export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 
   const DeleteAlertRef = useRef();
-  const CommentContainerRef = useRef();
 
   const [ comments, setComments ] = useState([]);
   const [ commentId, setCommentId] = useState();
@@ -64,7 +63,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
         commentId={commentId}
       />
       <div className='comment-section-wrapper'>
-        <div className='comment-container' ref={CommentContainerRef}>
+        <div className='comment-container'>
           {
             comments.map((comment, index) => {
               return (
@@ -85,7 +84,6 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
           ticketId={ticketId}
           projectId={projectId}
           setLoading={setLoading}
-          CommentContainerRef={CommentContainerRef}
           setComments={setComments}
         />
       </div>
@@ -96,7 +94,7 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 const StyledSection = styled.article`
   color: white;
   font-size: 1em;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 10px 0;
   .comment-section-wrapper {
     display: flex;

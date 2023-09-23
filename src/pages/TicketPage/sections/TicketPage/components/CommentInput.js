@@ -17,7 +17,7 @@ const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, Comm
   const validationSchema = Yup.object().shape({
     comment: Yup.string()
       .required('A comment is required')
-      .min(6, 'Comments must be at least 6 characters')
+      .min(2, 'Comments must be at least 2 characters')
       .max(240, 'Comments can not exceed 240 characters'),
   });
 
@@ -42,10 +42,6 @@ const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, Comm
           setComment('');
           setComments(response.data);
           document.getElementById("comment").value = "";
-          let container = CommentContainerRef.current;
-          setTimeout(() => {
-            container.scrollTo(0, document.body.scrollHeight);
-          }, 1000);
         }
       })
       .catch((err) => {
@@ -72,16 +68,15 @@ const CommentInput = ({ user, setComments, setLoading, projectId, ticketId, Comm
 }
 
 const StyledCommentInput = styled.article`
-  margin: 10px 0;
+  margin: 4px 0 0 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  max-width: 500px;
   textarea {
     background: #d6d6d6;
     padding: 6px;
-    min-height: 70px;
+    min-height: 40px;
     height: auto;
     overflow-y: visible;
     width: 100%;

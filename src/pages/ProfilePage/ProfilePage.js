@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 // router
 import { useNavigate } from 'react-router-dom';
 import { DeleteAccount } from './sections/DeleteAccount.js';
+import { UpdateAvatar } from './sections/UpdateAvatar.js';
 
 const ProfilePage =({ user }) => {
 
@@ -33,6 +34,7 @@ const ProfilePage =({ user }) => {
     const [ editPassword, setEditingPassword ] = useState(false);
     const [ editEmail, setEditingEmail ] = useState(false);
     const [ deleteAccount, setDeleteAccount ] = useState(false);
+    const [ editAvatar, setEditingAvatar ] = useState(false);
 
     const [ password, setPassword ] = useState('');
     const [ username, setUsername ] = useState('');
@@ -106,11 +108,20 @@ const ProfilePage =({ user }) => {
                         editPassword={editPassword}
                         user={user} 
                     />
+                : editAvatar ? 
+                    <UpdateAvatar
+                        setEditingAvatar={setEditingAvatar}
+                        editAvatar={editAvatar}
+                        user={user} 
+                        userData={userData}
+                    />
                 : <ProfileDetails
                     setEditingEmail={setEditingEmail}
                     setEditingPassword={setEditingPassword}
                     editEmail={editEmail}
                     editPassword={editPassword}
+                    setEditingAvatar={setEditingAvatar}
+                    editAvatar={editAvatar}
                     userData={userData}
                     deleteAcount={deleteAccount}
                     setDeleteAccount={setDeleteAccount}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 // styled
@@ -8,14 +8,10 @@ import * as palette from "../../../../../styled/ThemeVariables.js";
 // components
 import Comment from "./Comment.js";
 import CommentInput from "./CommentInput.js";
-import { DeleteAlert } from "../../../../../components/DeleteAlert.js";
 
 export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 
-  const DeleteAlertRef = useRef();
-
   const [ comments, setComments ] = useState([]);
-  const [ commentId, setCommentId] = useState();
 
   useEffect(() => {
     const getComments = () => {
@@ -34,34 +30,8 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
     getComments();
   }, [ user, projectId, ticketId ]);
 
-  const deleteComment = (commentId) => {
-    setLoading(true);
-    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}/delete`, {},
-      {
-        headers: {
-          Authorization: user.token
-        }
-      }
-    )
-    .then((response) => {
-      if (response.status === 200) {
-        setComments(response.data);
-        setLoading(false);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-    });
-  };
-
   return (
     <StyledSection className='ticket-page-tabs active' id='comments'>
-      <DeleteAlert
-        DeleteAlertRef={DeleteAlertRef}
-        deleteFunction={deleteComment}
-        commentId={commentId}
-      />
       <div className='comment-section-wrapper'>
         <div className='comment-container'>
           {
@@ -71,10 +41,9 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
                   comment={comment}
                   ticketId={ticketId}
                   projectId={projectId}
+                  setComments={setComments}
                   key={index}
                   setLoading={setLoading}
-                  DeleteAlertRef={DeleteAlertRef}
-                  setCommentId={setCommentId}
                 />
               );
             })

@@ -1,4 +1,9 @@
+import { useRef } from 'react';
 import { marked } from "marked";
+import axios from 'axios';
+
+// components
+import { DeleteAlert }from '../../../../../components/DeleteAlert.js';
 
 // styled
 import styled from "styled-components";
@@ -10,17 +15,51 @@ import { handleElapsedTime } from "../../../../../functions/handleDates";
 
 // redux
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
-const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
+const Comment = ({ comment, user, projectId, ticketId, setComments, setLoading }) => {
   
+  const DeleteAlertRef = useRef();
+
+  const deleteComment = (commentId) => {
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}/delete`, {},
+      {
+        headers: {
+          Authorization: user.token
+        }
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        setComments(response.data);
+        setLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+  };
+
   return (
     <StyledComment>
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+        id={comment._id}
+      />
       <div className='comment-wrapper'>
-        <h3 id={comment.user}>{comment.user}<span>{handleElapsedTime(comment.date)}</span><span>{comment.edited ? 'Edited' : null}</span></h3>
+        <div className="info-container">
+          {
+            comment.userAvatar ? <img src={comment.userAvatar} alt="" />
+            :<></>
+          }
+          <h3>{comment.user}<span>{handleElapsedTime(comment.date)}</span><span>{comment.edited ? 'Edited' : null}</span></h3>
+        </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
         <div className="link-container">
-          <button disabled={user.username !== comment.user} onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef);}}>Delete</button>
+          <button disabled={user.username !== comment.user} onClick={() => { handleDeleteAlert(DeleteAlertRef);}}>Delete</button>
         </div>
       </div>
     </StyledComment>
@@ -41,16 +80,25 @@ const StyledComment = styled.article`
   .comment-wrapper {
     width: 95%;
     margin: 6px auto;
-    h3 {
-      font-size: .8em;
+    .info-container {
       display: flex;
-      align-items: center;
-      color: black;
-      font-weight: 700;
-      span {
-        margin-left: 10px;
+      img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
+      h3 {
         font-size: .8em;
-        color: ${palette.accentColor};
+        display: flex;
+        align-items: center;
+        color: black;
+        font-weight: 700;
+        span {
+          margin-left: 10px;
+          font-size: .8em;
+          color: ${palette.accentColor};
+        }
       }
     }
     .comment-text-container {

@@ -38,6 +38,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
   const [ project, setProject ] = useState({});
   const [ images, setImages ] = useState([]);
   const [ assigned, setAssigned ] = useState('');
+  const [ link, setLink ] = useState('');
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint', 'Assigned User' ];
 
@@ -75,12 +76,14 @@ const CreateTicketPage = ({ user, showAlert }) => {
     description: Yup.string()
       .required('A Description is required')
       .max(500, 'Descriptions can not exceed 500 characters'),
+    link: Yup.string()
+      .url('Links must be valid urls'),
     images: Yup.array().of(validatonImageSchema),
   });
 
   const createTicket = (event) => {
     event.preventDefault();
-    validationSchema.validate({ title, status, tag, description })
+    validationSchema.validate({ title, status, tag, description, link })
     .then(() => {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
@@ -93,7 +96,8 @@ const CreateTicketPage = ({ user, showAlert }) => {
           tag,
           sprint,
           images,
-          author: user.username
+          author: user.username,
+          link
         },
         {
           headers: {
@@ -151,6 +155,10 @@ const CreateTicketPage = ({ user, showAlert }) => {
             )
           })
         }
+        <label>
+          Link
+          <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
+        </label>
         <DescriptionBox
           setDescription={setDescription}
         />

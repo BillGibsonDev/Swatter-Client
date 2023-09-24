@@ -41,6 +41,7 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
   const [ tag, setTag ] = useState(ticket.tag);
   const [ sprint, setSprint ] = useState(ticket.sprint);
   const [ assigned, setAssigned ] = useState(ticket.assigned);
+  const [ link, setLink ] = useState(ticket.link);
 
   useEffect(() => {
     const getSprints = async () => {
@@ -86,6 +87,7 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
           assigned: assigned,
           sprint: sprint,
           images: images,
+          link: link
         },
         {
           headers: {
@@ -147,7 +149,7 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
       <div className='ticket-container'>
         <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
         <div className='info-wrapper'>
-          <InfoContainer ticket={ticket} />
+          <InfoContainer ticket={ticket} setLink={setLink} />
           <div className='selector-container'>
             {
               !tag || !sprintOptions ? <></>
@@ -183,7 +185,11 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
           description={ticket.description}
         />
       </div>
-      <Images setImages={setImages} images={images} />
+      <Images 
+        setImages={setImages} 
+        images={images} 
+        editing={true}
+      />
       <ButtonContainer 
         DeleteAlertRef={DeleteAlertRef} 
         updateTicket={updateTicket}

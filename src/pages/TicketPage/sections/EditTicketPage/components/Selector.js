@@ -101,7 +101,7 @@ export const Selector = ({
     let Options = handleOptions(label);
 
   return (
-    <StyledSelector>{Label}:
+    <StyledSelector>{Label}
         <select value={handleDefaultValue(Label)} onChange={(e) => { handleStateFunction(Label, e.target.value);}}>
         {
             Label === 'Sprint' || 'Assigned User' ? <option value=''>None</option> : <></>

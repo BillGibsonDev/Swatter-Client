@@ -83,39 +83,39 @@ const CreateProjectPage = ({ user, showAlert }) => {
 		});
   };
 
+  if(isLoading){
+    return <Loader />;
+  }
+
   return (
     <StyledPage>
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
       <h1>Start a Project</h1>
-      {
-        isLoading ? <Loader />
-        : 
-        <div className='form-wrapper'>
-          <div className="inputs-container">
-            <div className='form-container'>
-              <label>Title
-                <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
-              </label>
-              <label>Image
-                <input type='file' id='image' onChange={(event) => { setImage(event.target.files[0]); }} />
-              </label>
-            </div>
-            <div className='form-container'>
-              <label>Website
-                <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
-              </label>
-              <label>Repository
-                <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
-              </label>
-            </div>
+      <div className='form-wrapper'>
+        <div className="inputs-container">
+          <div className='form-container'>
+            <label>Title
+              <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
+            </label>
+            <label>Image
+              <input type='file' id='image' onChange={(event) => { setImage(event.target.files[0]); }} />
+            </label>
           </div>
-          <label id="description-label">Description
-            <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
-          </label>
+          <div className='form-container'>
+            <label>Website
+              <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
+            </label>
+            <label>Repository
+              <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
+            </label>
+          </div>
         </div>
-      }
+        <label id="description-label">Description
+          <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
+        </label>
+      </div>
       <StyledButton disabled={isLoading} onClick={(event) => { createProject(event); }}>Start</StyledButton>
     </StyledPage>
   );

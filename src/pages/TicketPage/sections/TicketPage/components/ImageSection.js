@@ -4,7 +4,7 @@ import * as palette from '../../../../../styled/ThemeVariables.js';
 
 export const ImageSection = ({ images }) => {
 
-    const handleImages = (image, index) => {
+    const handleImages = (image) => {
         if(!image.image){
             return <h2>No Images</h2>;
         } else {
@@ -23,36 +23,33 @@ export const ImageSection = ({ images }) => {
             { 
                 images.map((image, index) => {
                     return (
-                        <div key={index}>
-                            <a href={image.image} target='_blank' rel='noreferrer'>
-                                { handleImages(image, index) }
-                            </a>
-                        </div>  
+                        <a href={image.image} target='_blank' rel='noreferrer' key={index}>
+                            { handleImages(image) }
+                        </a> 
                     )
                 })
             }
-        </StyledImageSection >
+        </StyledImageSection>
     )
 }
 
 const StyledImageSection = styled.article`
     display: none;
     flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
-    margin-top: 20px;
-    max-width: 1000px;
-    h2 {
-        color: ${palette.helperGrey};
-        font-size: 1em;
-        font-weight: 400;
-    }
+    margin: 0;
+    padding: 2px;
+    border: ${palette.greyBorder};
+    border-radius: ${palette.borderRadius};
     a {
         width: 100%;
-        max-width: 200px;
+        max-width: 250px;
         height: 100%;
+        cursor: pointer;
+        padding: 2px;
+        margin: 4px;
+        border: ${palette.greyBorder};
+        border-radius: ${palette.borderRadius};
         img {
-            cursor: pointer;
             width: 100%;
             height: 100%;
         }

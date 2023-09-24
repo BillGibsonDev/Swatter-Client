@@ -10,7 +10,7 @@ export const Images = ({ images, setImages }) => {
 
   const handleAddFields = () => {
     const values = [...images];
-    values.push({ caption: "", image: "" });
+    values.push({ image: "" });
     setImages(values);
   };
 
@@ -28,9 +28,7 @@ export const Images = ({ images, setImages }) => {
     if (event.target.id === "image") {
       const imageURL = await handleImages(event.target.files[0])
       values[index].image = imageURL;
-    } else if (event.target.id === "caption") {
-      values[index].caption = event.target.value;
-    }
+    } 
     setImages(values);
   };
 
@@ -53,15 +51,6 @@ export const Images = ({ images, setImages }) => {
                   type='file'
                   id='image'
                   name='image'
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-              </label>
-              <label>Caption
-                <input
-                  type='text'
-                  id='caption'
-                  name='caption'
-                  defaultValue={image.caption}
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </label>

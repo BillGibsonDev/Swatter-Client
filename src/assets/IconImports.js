@@ -23,6 +23,7 @@ import RoundMenu from './icons/dot-menu-white.png';
 import ArchivesIcon from './icons/archive.png';
 import ActivitiesIcon from './icons/wave.png';
 import TrashCanIcon from './icons/trashCan196ecf.png';
+import LinkIcon from './icons/linkWhite.png';
 
 import CircleCheckboxIcon from './icons/circleCheckFilled196ecf.png';
 import TriangleWarningIcon from './icons/triangleWarningFilled196ecf.png';
@@ -60,6 +61,7 @@ export const Task = TaskIcon;
 export const Redesign = RedesignIcon;
 export const Menu = MenuIcon;
 export const Trash = TrashCanIcon;
+export const Link = LinkIcon;
 
 // general icons
 export const Edit= EditIcon;

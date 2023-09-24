@@ -56,8 +56,7 @@ const MainTicketPage = ({ user }) => {
       {
         isLoading ? <TicketPageLoader />
         : !editing ? <TicketPage 
-          setEditing={setEditing} 
-          editing={editing}
+          setEditing={setEditing}
           ticket={ticket}
           ticketId={ticketId}
           projectId={projectId}

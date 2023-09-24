@@ -35,10 +35,9 @@ export const DetailsSection = ({ ticket, setEditing }) => {
 
   return (
     <StyledArticle>
-        <button id="edit-btn" onClick={() => setEditing(true)}><span><img src={icons.Edit} alt="" /></span>Edit</button>
-        <h3><span><img src={handleTagImage(ticket.tag)} alt="Tag" /></span> {ticket.tag}</h3>
+        <h3><span><img src={handleTagImage(ticket.tag)} alt="Tag" /></span>{ticket.tag}</h3>
         {
-            ticket.priority ? <h3 className={ticket.priority}><span><img src={handleTicketPriorityImage(ticket.priority)} alt="Priority" /></span> {ticket.priority}</h3>
+            ticket.priority ? <h3><span><img src={handleTicketPriorityImage(ticket.priority)} alt="Priority" /></span> {ticket.priority}</h3>
             : <></>
         }
         <h3>{ticket.status}</h3>
@@ -47,44 +46,49 @@ export const DetailsSection = ({ ticket, setEditing }) => {
             : <></>
         }
         {
-            ticket.link ? <a href={ticket.link} target="_blank" rel="noreferrer"><img src={icons.Globe} alt="Link" /></a>
+            ticket.link ? <a href={ticket.link} target="_blank" rel="noreferrer"><img src={icons.Link} alt="Link" /></a>
             : <></>
         }
+        <button id="edit-btn" onClick={() => setEditing(true)}><span><img src={icons.Edit} alt="" /></span>Edit</button>
     </StyledArticle>
   );
 }
 
 const StyledArticle = styled.article`
     height: 100%;
-    width: 100%;
     margin: 4px 0 0 0;
     display: flex;
     flex-wrap: wrap;
     #edit-btn {
         cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+            background: black;
+        }
     }
     h3, button {
         border: none;
         color: #ffffff;
-        background: #000000;
+        background: ${palette.accentColor};
         font-size: .8em; 
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 400;
+        font-weight: 600;
         padding: 2px 8px;
         height: 28px;
+        border-radius: 4px;
+        margin: 0 2px;
         span {
             color: ${palette.helperGrey};
             font-weight: 400;
             margin-right: 6px;
+            width: 20px;
+            height: 20px;
             img {
                 width: 20px;
                 height: 20px;
             }
         }
-    }
-    .High {
-        color: red;
     }
 `;

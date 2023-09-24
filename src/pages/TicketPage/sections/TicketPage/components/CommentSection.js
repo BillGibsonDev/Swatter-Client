@@ -94,16 +94,14 @@ export const CommentSection = ({ user, ticketId, projectId, setLoading }) => {
 const StyledSection = styled.article`
   color: white;
   font-size: 1em;
-  margin: 10px 0;
-  padding: 10px 0;
+  margin: 0;
+  padding: 2px;
+  border: ${palette.greyBorder};
+  border-radius: ${palette.borderRadius};
   .comment-section-wrapper {
-    display: flex;
     width: 100%;
-    max-width: 600px;
     height: 100%;
     min-height: 30vh;
-    flex-direction: column;
-    align-items: center;
     h3 {
       color: ${palette.helperGrey};
       font-size: 1em;
@@ -112,8 +110,17 @@ const StyledSection = styled.article`
     }
     .comment-container {
       width: 100%;
-      max-height: 400px;
+      max-height: 300px;
       overflow-y: auto;
+      ::-webkit-scrollbar {
+        width: 8px; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+      }
+      scrollbar-width: thin;
+      scrollbar-color: #888 transparent;
       @media (max-width: 428px) {
         max-height: 40vh;
       }

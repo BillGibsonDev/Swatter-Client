@@ -33,7 +33,7 @@ const StyledBreadCrumbs = styled.div`
   a {
     border: none;
     background: none;
-    font-size: .8em;
+    font-size: .7em;
     color: ${pallette.helperGrey};
     cursor: pointer;
     &:hover {
@@ -41,7 +41,7 @@ const StyledBreadCrumbs = styled.div`
     }
   }
   p {
-    font-size: .8em;
+    font-size: .7em;
     color: ${pallette.helperGrey};
   }
   span {

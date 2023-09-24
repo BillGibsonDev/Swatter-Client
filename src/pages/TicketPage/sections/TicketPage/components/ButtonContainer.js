@@ -30,11 +30,10 @@ export const ButtonContainer = (images) => {
 }
 
 const StyledButtonContainer = styled.article`
-  border-bottom: ${palette.greyBorder};
   width: 100%;
   button {
     border: ${palette.greyBorder};
-    font-size: 1em;
+    font-size: .8em;
     border-radius: 0;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;

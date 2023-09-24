@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import PlaceholderImage from "../../../assets/images/imagePlaceholder.png";
 
 // functions
-import { handleDate } from "../../../functions/handleDates";
+import { handleElapsedTime } from "../../../functions/handleDates";
 
 export default function Project({ user, project }) {
 
@@ -26,7 +26,7 @@ export default function Project({ user, project }) {
         <Link to={`/${user.id}/projects/${project._id}`}>{project.title}</Link>
         {
           project.lastUpdate 
-          ? <h2>Updated: {handleDate(project.lastUpdate)}</h2>
+          ? <h2>Updated: {handleElapsedTime(project.lastUpdate)}</h2>
           : <></>
         }
       </div>

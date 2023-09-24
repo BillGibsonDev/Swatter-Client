@@ -46,8 +46,8 @@ const StyledTitle = styled.article`
     h1 {
 		font-size: ${palette.titleSize};
 		color: #ffffff;
-        @media (max-width: 420px) {
-            font-size: 1em;
+        @media (max-width: 640px) {
+            font-size: 1.2em;
         }
     }
     button {

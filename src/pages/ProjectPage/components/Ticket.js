@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import * as icons from '../../../assets/IconImports.js';
 
 // function
-import { handleDate } from '../../../functions/handleDates.js';
+import { handleElapsedTime } from '../../../functions/handleDates.js';
 
 // redux
 import { connect } from 'react-redux';
@@ -64,7 +64,7 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
 					<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
 				</div>
 				<div className="center-container">
-					<h2 id="date">{handleDate(ticket.lastUpdate)}</h2>
+					<h2 id="date">{handleElapsedTime(ticket.lastUpdate)}</h2>
 					<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
 				</div>
 				<div className="bottom-container">

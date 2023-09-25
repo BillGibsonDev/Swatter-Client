@@ -20,7 +20,7 @@ const TicketPage = ({ ticket, setEditing, ticketId, projectId, user, setLoading 
       <div className="title-wrapper">
         <div className="title-container">
           <TitleContainer title={ticket.title} samePage={false}/>
-          <DetailsSection ticket={ticket} setEditing={setEditing} />
+          <DetailsSection ticket={ticket} user={user} projectId={projectId} setEditing={setEditing} />
         </div>
         <InfoContainer ticket={ticket} />
       </div>

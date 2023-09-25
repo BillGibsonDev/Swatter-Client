@@ -5,7 +5,10 @@ import * as palette from '../../../../../styled/ThemeVariables.js';
 // icons
 import * as icons from '../../../../../assets/IconImports.js';
 
-export const DetailsSection = ({ ticket, setEditing }) => {
+// router
+import { Link } from "react-router-dom";
+
+export const DetailsSection = ({ ticket, user, projectId, setEditing }) => {
 
   const handleTagImage = (tag) => {
 		switch (tag) {
@@ -42,7 +45,7 @@ export const DetailsSection = ({ ticket, setEditing }) => {
             : <></>
         }
         {
-            ticket.sprint ? <h3><span><img src={icons.Sprints} alt="Sprint" /></span>{ticket.sprint}</h3>
+            ticket.sprint ? <Link id="sprint-link" to={`/${user.id}/projects/${projectId}/sprints`} ><img id="sprint-link-img" src={icons.SprintWhite} alt="" />{ticket.sprint}</Link>
             : <></>
         }
         {
@@ -59,7 +62,7 @@ const StyledArticle = styled.article`
     margin: 4px 0 0 0;
     display: flex;
     flex-wrap: wrap;
-    #edit-btn, #link {
+    #edit-btn, #link, #sprint-link {
         cursor: pointer;
         transition: 0.2s;
         &:hover {
@@ -82,6 +85,9 @@ const StyledArticle = styled.article`
         img {
             width: 20px;
             height: 20px;
+        }
+        #sprint-link-img {
+            margin-right: 2px;
         }
         span {
             color: ${palette.helperGrey};

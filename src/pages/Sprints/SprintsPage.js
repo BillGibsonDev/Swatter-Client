@@ -45,6 +45,10 @@ const SprintsPage = ({ user }) => {
     fetchProject();
   }, [ projectId, user, editing, creating ]);
 
+  if(isLoading){
+    return <Loader />;
+  };
+
   return (
     <StyledPage>
       <BreadCrumbs 
@@ -53,10 +57,8 @@ const SprintsPage = ({ user }) => {
         title={'Sprints'}
       />
       {
-        isLoading ? <Loader />
-        : creating ? <CreateSprint
+        creating ? <CreateSprint
           setCreating={setCreating}
-          creating={creating}
           projectId={projectId}
         />
         : editing ? <EditSprint

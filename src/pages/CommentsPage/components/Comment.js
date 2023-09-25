@@ -1,130 +1,124 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 import { marked } from "marked";
+import axios from 'axios';
+
+// components
+import { DeleteAlert }from '../../../components/DeleteAlert.js';
 
 // styled
 import styled from "styled-components";
 import * as palette from "../../../styled/ThemeVariables";
 
-// images
-import Menu from "../../../assets/icons/dotMenu.png";
+// functions
+import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
+import { handleElapsedTime } from "../../../functions/handleDates";
 
 // redux
 import { connect } from "react-redux";
 
-// functions
-import { handleDeleteAlert } from "../../../functions/handleDeleteAlert";
-import { toggleRef } from "../../../functions/toggleRef";
-import { handleDate } from "../../../functions/handleDates";
+const Comment = ({ comment, user, projectId, setComments, setLoading }) => {
+  
+  const DeleteAlertRef = useRef();
 
-const Comment = ({ comment, user, setCommentId, DeleteAlertRef }) => {
-
-  const DropDownRef = useRef();
-
-  const handleCommentAuthor = (author) => {
-    if(author === user.username){
-      return { margin: "10px 10px 10px auto", background: `${palette.accentColor}`, color: 'white'};
-    } else {
-      return { margin: "10px auto 10px 10px", background: "white" };
-    }
-  }
+  const deleteComment = (commentId) => {
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/comments/${commentId}/delete`, {},
+      {
+        headers: {
+          Authorization: user.token
+        }
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        setComments(response.data);
+        setLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+  };
 
   return (
-    <StyledComment style={handleCommentAuthor(comment.user)}>
+    <StyledComment>
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+        id={comment._id}
+      />
       <div className='comment-wrapper'>
-        <div className='comment-title-container'>
-          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span></h3>
-          <div className='dropdown'>
-            <button className='drop-down-btn' onClick={() => { toggleRef(DropDownRef)}}><img src={Menu} alt='Menu' /></button>
-            <div className='dropdown-content' ref={DropDownRef} style={{display: 'none'}}>
-              <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); toggleRef(DropDownRef)}}>Delete</button>
-            </div>
-          </div>
+        <div className="info-container">
+          {
+            comment.userAvatar ? <img src={comment.userAvatar} alt="" />
+            :<></>
+          }
+          <h3>{comment.user}<span>{handleElapsedTime(comment.date)}</span><span>{comment.edited ? 'Edited' : null}</span></h3>
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
+        <div className="link-container">
+          <button disabled={user.username !== comment.user} onClick={() => { handleDeleteAlert(DeleteAlertRef);}}>Delete</button>
+        </div>
       </div>
     </StyledComment>
   );
 }
 
-const StyledComment = styled.div`
+const StyledComment = styled.article`
   display: flex;
-  max-width: 60%;
   width: auto;
   height: auto;
-  margin: 10px auto;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 3px 3px 3px #5252528d;
-  position: relative;
   justify-content: space-around;
+  border: ${palette.accentBorder1px};
+  border-radius: ${palette.borderRadius};
+  &:not(:first-child){
+    margin: 4px auto;
+  }
   .comment-wrapper {
     width: 95%;
-    margin: 10px auto;
-    .comment-title-container {
+    margin: 6px auto;
+    .info-container {
       display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: 20px;
-      align-items: center;
-      margin-bottom: 10px;
+      img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
       h3 {
         font-size: .8em;
         display: flex;
         align-items: center;
+        font-weight: 700;
         span {
           margin-left: 10px;
           font-size: .8em;
-          color: #dadada;
-        }
-      }
-      .dropdown {
-        position: relative;
-        display: inline-block;
-        .drop-down-btn {
-          color: white;
-          font-size: 16px;
-          border: none;
-          background: none;
-          cursor: pointer;
-          padding: 0;
-          height: 25px;
-          width: 25px;
-          img {
-            height: 25px;
-            width: 25px;
-          }
-        }
-        .dropdown-content {
-          position: absolute;
-          right: 10%;
-          top: 99%;
-          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-          z-index: 1;
-          background: ${palette.helperGrey};
-          border-radius: 4px;
-          button {
-            color: #ff0000;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border: 1px solid black;
-            background: none;
-            cursor: pointer;
-            &:hover {
-              background: white;
-            }
-          }
+          color: ${palette.accentColor};
         }
       }
     }
     .comment-text-container {
+      margin-top: 4px;
       p {
+        font-size: .8em;
+        font-weight: 400;
         margin-bottom: 12px;
+        word-wrap: break-word;
       }
     }
-    p {
-      font-size: .8em;
-      font-weight: 400;
+    .link-container {
+      width: 100px;
+      display: flex;
+      justify-content: space-between;
+      button {
+        font-size: .7em;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: ${palette.helperGrey};
+      }
     }
   }
 `;

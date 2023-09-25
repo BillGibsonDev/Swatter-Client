@@ -14,7 +14,7 @@ import { showAlert } from "../../../redux/actions/alert.js";
 import { TitleContainer } from "../../../components/TitleContainer.js";
 import { InputFields } from "../../../components/InputFields.js";
 
-const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => {
+const CreateSprint = ({ showAlert, projectId, setCreating, user }) => {
 
   const [ title, setTitle ] = useState("");
   const [ goal, setGoal ] = useState("");

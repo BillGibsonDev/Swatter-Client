@@ -46,6 +46,10 @@ const MainTicketPage = ({ user }) => {
     getTicket(projectId, ticketId);
   }, [ projectId, ticketId, isLoading, editing, user ]);
 
+  if(isLoading){
+    return <TicketPageLoader />;
+  };
+
   return (
     <StyledPage>
       <BreadCrumbs 
@@ -54,8 +58,7 @@ const MainTicketPage = ({ user }) => {
         title={ticket.title}
       />
       {
-        isLoading ? <TicketPageLoader />
-        : !editing ? <TicketPage 
+        !editing ? <TicketPage 
           setEditing={setEditing}
           ticket={ticket}
           ticketId={ticketId}
@@ -64,7 +67,6 @@ const MainTicketPage = ({ user }) => {
         /> 
         : <EditTicketPage 
             setEditing={setEditing} 
-            editing={editing}
             ticket={ticket}
             ticketId={ticketId}
             projectId={projectId}

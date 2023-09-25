@@ -10,6 +10,7 @@ import { StyledButton } from "../styled/StyledButton.js";
 // components
 import Loader from "../loaders/Loader";
 import BreadCrumbs from "../components/Breadcrumbs.js";
+import { TitleContainer } from "../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
@@ -92,7 +93,10 @@ const CreateProjectPage = ({ user, showAlert }) => {
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
-      <h1>Start a Project</h1>
+      <TitleContainer
+        title={'Start A Project'}
+        samePage={false}
+      />
       <div className='form-wrapper'>
         <div className="inputs-container">
           <div className='form-container'>

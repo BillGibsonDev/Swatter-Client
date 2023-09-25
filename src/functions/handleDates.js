@@ -32,15 +32,18 @@ export const handleElapsedTime = (dateString) => {
 
   const timeDifference = currentDate - targetDate;
 
+  const elapsedSeconds = Math.floor(timeDifference / 1000);
   const elapsedMinutes = Math.floor(timeDifference / (1000 * 60));
   const elapsedHours = Math.floor(timeDifference / (1000 * 60 * 60));
   const elapsedDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-  if (elapsedMinutes < 60) {
+  if (elapsedSeconds < 60) {
+    return `${elapsedSeconds} second${elapsedSeconds !== 1 ? 's' : ''} ago`;
+  } else if (elapsedMinutes < 60) {
     return `${elapsedMinutes} minute${elapsedMinutes !== 1 ? 's' : ''} ago`;
   } else if (elapsedHours < 24) {
     return `${elapsedHours} hour${elapsedHours !== 1 ? 's' : ''} ago`;
   } else {
     return `${elapsedDays} day${elapsedDays !== 1 ? 's' : ''} ago`;
   }
-}
+};

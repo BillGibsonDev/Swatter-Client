@@ -25,7 +25,7 @@ import { TitleContainer } from "../../../../components/TitleContainer.js";
 // router
 import { useNavigate } from "react-router-dom";
 
-const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectId, ticketId }) => {
+const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticketId }) => {
 
   const DeleteAlertRef = useRef();
 

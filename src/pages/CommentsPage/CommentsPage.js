@@ -11,6 +11,7 @@ import CommentInput from "./components/CommentInput.js";
 import { DeleteAlert } from "../../components/DeleteAlert.js";
 import Loader from "../../loaders/Loader.js";
 import BreadCrumbs from '../../components/Breadcrumbs.js';
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 // router
 import { useParams } from "react-router-dom";
@@ -24,7 +25,6 @@ import { getProject } from "../../functions/getProject.js";
 const CommentPage = ({ user }) => {
 
   const DeleteAlertRef = useRef();
-  const CommentContainerRef = useRef();
 
   const { projectId } = useParams();
 
@@ -69,11 +69,6 @@ const CommentPage = ({ user }) => {
     })
   };
 
-  let container = CommentContainerRef.current;
-  if(container){
-    container.scrollTo(0, document.body.scrollHeight);
-  };
-
   if(isLoading){
     return <Loader />
   }
@@ -92,18 +87,17 @@ const CommentPage = ({ user }) => {
         commentId={commentId}
       />
       <div className='comment-section-wrapper'>
-        <div className='title-container'>
-          <h1>Comments</h1>
-        </div>
+        <TitleContainer title={'Comments'} samePage={false} />
         {
           comments.length === 0 || !comments 
-          ? <h1 style={{ color: "white", textAlign: "center", fontSize: "1.5em" }}>No comments yet..</h1>
-          : <div className='comment-container' ref={CommentContainerRef}>
+          ? <></>
+          : <div className='comment-container'>
             {
               comments.map((comment, index) => {
                 return (
                   <Comment
                     comment={comment}
+                    setComments={setComments}
                     projectId={projectId}
                     key={index}
                     setLoading={setLoading}
@@ -119,7 +113,6 @@ const CommentPage = ({ user }) => {
           setLoading={setLoading}
           setComments={setComments}
           projectId={projectId}
-          CommentContainerRef={CommentContainerRef}
         />
       </div>
     </StyledPage>
@@ -127,32 +120,38 @@ const CommentPage = ({ user }) => {
 }
 
 const StyledPage = styled.section`
-  height: 100%;
-  max-height: 80vh;
-  width: 80%;
-  max-width: 500px;
+  color: white;
+  font-size: 1em;
   margin: 0 auto;
+  padding: 2px;
+  width: 90%;
   .comment-section-wrapper {
-    margin-top: auto;
-    padding: 6px;
-    .title-container {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px auto;
-      h1 {
-        color: #ffffff;
-        width: 100%;
-        border-bottom: ${palette.titleBorder};
-      }
+    width: 100%;
+    height: 100%;
+    min-height: 30vh;
+    h3 {
+      color: ${palette.helperGrey};
+      font-size: 1em;
+      font-weight: 400;
+      margin-right: auto;
     }
     .comment-container {
-      min-height: 65vh;
-      max-height: 65vh;
+      width: 100%;
+      max-height: 300px;
       overflow-y: auto;
+      border: ${palette.greyBorder};
+      border-radius: ${palette.borderRadius};
+      ::-webkit-scrollbar {
+        width: 8px; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+      }
+      scrollbar-width: thin;
+      scrollbar-color: #888 transparent;
       @media (max-width: 428px) {
-        max-height: 80%;
+        max-height: 40vh;
       }
     }
   }

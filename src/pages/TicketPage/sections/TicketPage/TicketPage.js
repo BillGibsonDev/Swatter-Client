@@ -7,6 +7,7 @@ import { CommentSection } from "./components/CommentSection.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
+import { TitleContainer } from "../../../../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
@@ -18,7 +19,7 @@ const TicketPage = ({ ticket, setEditing, ticketId, projectId, user, setLoading 
     <StyledSection>
       <div className="title-wrapper">
         <div className="title-container">
-          <h1>{ticket.title}</h1>
+          <TitleContainer title={ticket.title} samePage={false}/>
           <DetailsSection ticket={ticket} setEditing={setEditing} />
         </div>
         <InfoContainer ticket={ticket} />

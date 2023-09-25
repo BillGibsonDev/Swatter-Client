@@ -16,8 +16,6 @@ export const TitleContainer = ({ title, samePage, stateChanger }) => {
 const StyledTitle = styled.article`
     display: flex;
     align-items: center;
-    min-width: 50%;
-    width: auto;
     h1 {
 		font-size: ${palette.titleSize};
 		color: #ffffff;

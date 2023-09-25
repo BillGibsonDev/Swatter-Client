@@ -16,6 +16,7 @@ import BreadCrumbs from '../../components/Breadcrumbs.js';
 import { DescriptionBox } from './components/DescriptionBox.js';
 import { Images } from '../../components/Images.js';
 import ButtonContainer from './components/ButtonContainer.js';
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
@@ -133,7 +134,11 @@ const CreateTicketPage = ({ user, showAlert }) => {
         projectTitle={project.title}
         title={'Create Ticket'}
       />
-      <h1>Create Ticket</h1><div className='form-wrapper'>
+      <TitleContainer 
+        title={'Create Ticket'} 
+        samePage={false} 
+      />
+      <div className='form-wrapper'>
         <label>
           Title
           <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />

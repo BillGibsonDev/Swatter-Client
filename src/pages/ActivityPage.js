@@ -12,6 +12,7 @@ import Loader from "../loaders/Loader.js";
 
 // components
 import BreadCrumbs from "../components/Breadcrumbs.js";
+import { TitleContainer } from "../components/TitleContainer.js";
 
 // functions
 import { handleActivityDate } from "../functions/handleDates";
@@ -20,7 +21,6 @@ import { getProject } from "../functions/getProject.js";
 // redux
 import { connect } from "react-redux";
 import { StyledButton } from "../styled/StyledButton.js";
-import { TitleContainer } from "../components/TitleContainer.js";
 
 const ProjectActivityPage = ({ user }) => {
   const { projectId } = useParams();

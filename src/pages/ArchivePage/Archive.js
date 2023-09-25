@@ -6,6 +6,7 @@ import styled from "styled-components";
 // components
 import ArchiveTicketTable from "./components/ArchiveTicketTable.js";
 import BreadCrumbs from '../../components/Breadcrumbs.js';
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -18,7 +19,6 @@ import { connect } from "react-redux";
 
 // functions
 import { getProject } from "../../functions/getProject.js";
-import { TitleContainer } from "../../components/TitleContainer.js";
 
 const ArchivePage = ({ user }) => {
 

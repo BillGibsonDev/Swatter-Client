@@ -16,8 +16,6 @@ import { showAlert } from "../../../redux/actions/alert";
 // components
 import { DeleteAlert } from "../../../components/DeleteAlert";
 import Loader from "../../../loaders/Loader";
-
-// functions
 import { ButtonContainer }from "../components/ButtonContainer";
 import { TitleContainer } from "../../../components/TitleContainer";
 

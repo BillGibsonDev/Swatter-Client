@@ -142,40 +142,35 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
         deleteFunction={deleteTicket}
         title={ticket.title}
       />
-      <div className='ticket-container'>
-        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'cancel'} />
-        <div className='info-wrapper'>
-          <InfoContainer ticket={ticket} setLink={setLink} />
-          <div className='selector-container'>
-            {
-              !tag || !sprintOptions ? <></>
-              : <>
-                {
-                  sections.map((section, key) =>{
-                    return (
-                      <Selector
-                        key={key}
-                        label={section}
-                        status={status}
-                        priority={priority}
-                        assigned={assigned}
-                        tag={tag}
-                        sprint={sprint}
-                        setTag={setTag}
-                        setPriority={setPriority}
-                        setStatus={setStatus}
-                        setSprint={setSprint}
-                        setAssigned={setAssigned}
-                        sprintOptions={sprintOptions}
-                        project={project}
-                      />
-                    )
-                  })
-                }
-              </>
-            }
-          </div>
-        </div>
+      <TitleContainer 
+        title={ticket.title} 
+        samePage={true} 
+        stateChanger={setEditing} 
+      />
+        <InfoContainer ticket={ticket} setLink={setLink} />
+        <div className='selector-container'>
+          {
+            sections.map((section, key) =>{
+              return (
+                <Selector
+                  key={key}
+                  label={section}
+                  status={status}
+                  priority={priority}
+                  assigned={assigned}
+                  tag={tag}
+                  sprint={sprint}
+                  setTag={setTag}
+                  setPriority={setPriority}
+                  setStatus={setStatus}
+                  setSprint={setSprint}
+                  setAssigned={setAssigned}
+                  sprintOptions={sprintOptions}
+                  project={project}
+                />
+              )
+            })
+          }
         <DescriptionBox
           setDescription={setDescription}
           description={ticket.description}
@@ -198,12 +193,6 @@ const StyledTicketSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  .ticket-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: auto;
-  }
 `;
 
 const mapStateToProps = (state) => {

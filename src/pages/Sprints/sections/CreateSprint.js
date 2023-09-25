@@ -110,9 +110,8 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
     <StyledCreateSprint>
       <TitleContainer 
         title={'Create Sprint'} 
-        stateChanger={setCreating} 
-        state={creating} 
-        type={'cancel'} 
+        samePage={true}
+        stateChanger={setCreating}
       />
       <div className="form-wrapper">
         {

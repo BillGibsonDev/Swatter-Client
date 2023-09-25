@@ -161,10 +161,9 @@ const EditSprint = ({
         title={sprint.title}
       />
       <TitleContainer 
-        title={'Create Sprint'} 
+        title={'Edit Sprint'} 
+        samePage={true}
         stateChanger={setEditing} 
-        state={editing} 
-        type={'cancel'} 
       />
       <div className="form-wrapper">
         <div className='form-container'>
@@ -252,9 +251,7 @@ const StyledEditSprint = styled.section`
       width: 100%;
       max-width: 500px;
       label {
-        display: flex;
         color: white;
-        flex-direction: column;
         margin: 10px 0;
         width: 100%;
         max-width: 500px;

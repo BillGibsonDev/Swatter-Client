@@ -15,8 +15,12 @@ export const TitleContainer = ({ sprint, setEditing }) => {
     return `${newArr[1]}/${newArr[2]}/${newArr[0]}`;
   };
 
+  if(!sprint){
+    return <></>;
+  }
+
   return (
-    <StyledTitleContainer>
+    <StyledArticle>
       <div className='title-container'>
         <h4>{sprint.title}</h4>
         <button onClick={() => { setEditing(true); }} >
@@ -29,14 +33,11 @@ export const TitleContainer = ({ sprint, setEditing }) => {
         <h5><span>Deadline: </span>{!sprint.deadline ? 'None' : handleDeadline(sprint.deadline)}</h5>
         <h5 id='status'><span>Goal: </span>{ sprint.goal === "" ? 'None' : sprint.goal }</h5>
       </div>
-    </StyledTitleContainer>
+    </StyledArticle>
   );
 }
 
-const StyledTitleContainer = styled.article`
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
+const StyledArticle = styled.article`
   .title-container {
     display: flex;
     width: 100%;
@@ -45,7 +46,6 @@ const StyledTitleContainer = styled.article`
     h4 {
       color: white;
       font-size: 2em;
-      margin-top: auto;
       margin-right: 16px;
     }
     button {
@@ -72,7 +72,6 @@ const StyledTitleContainer = styled.article`
     }
   }
   .info-container {
-    margin: 10px 0;
     h5 {
       color: white;
       margin-bottom: 6px;

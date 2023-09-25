@@ -41,7 +41,7 @@ const StyledButtonContainer = styled.article`
     padding: 8px 12px;
   }
   .active {
-    background: black;
+    background: ${palette.accentColor};
     color: white;
   }
 `;

@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 
 // functions
 import { getProject } from "../../functions/getProject.js";
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 const ArchivePage = ({ user }) => {
 
@@ -50,7 +51,10 @@ const ArchivePage = ({ user }) => {
                 projectTitle={project.title}
                 title={'Archive'}
             />
-            <h1>{project.title}'s Archive</h1>
+            <TitleContainer
+                title={`${project.title} Archive`}
+                samePage={false}
+            />
             <ArchiveTicketTable
                 project={project}
                 tickets={project.tickets}

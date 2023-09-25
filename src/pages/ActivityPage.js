@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 // styled
 import styled from "styled-components";
+import * as palette from '../styled/ThemeVariables.js';
 
 // router
 import { useParams } from "react-router-dom";
@@ -11,7 +12,6 @@ import Loader from "../loaders/Loader.js";
 
 // components
 import BreadCrumbs from "../components/Breadcrumbs.js";
-import { TitleContainer }from '../components/TitleContainer.js';
 
 // functions
 import { handleActivityDate } from "../functions/handleDates";
@@ -20,6 +20,7 @@ import { getProject } from "../functions/getProject.js";
 // redux
 import { connect } from "react-redux";
 import { StyledButton } from "../styled/StyledButton.js";
+import { TitleContainer } from "../components/TitleContainer.js";
 
 const ProjectActivityPage = ({ user }) => {
   const { projectId } = useParams();
@@ -83,15 +84,19 @@ const ProjectActivityPage = ({ user }) => {
         projectTitle={project.title}
         title={'Activity'}
       />
+      <TitleContainer 
+        title={`${project.title} Activity`}
+        samePage={false}
+      />
       {
         activities.length === 0 
-        ? <h1>This project has no activity yet..</h1>
+        ? <h2>This project has no activity yet..</h2>
         : <>
           {
             activities.slice(0, showMore).map((activity, index) => {
               return (
                 <div className="activity-container" key={index}>
-                  <TitleContainer title={activity.date} />
+                  <h2>{activity.date}</h2>
                   {
                     activity.activities.map((activity, index) => {
                       return (
@@ -121,11 +126,11 @@ const StyledPage = styled.section`
   height: 100%;
   width: 80%;
   margin: 10px auto;
-  h1 {
-    color: white;
+  h2 {
+    color: ${palette.accentColor};
   }
   .activity-container {
-    margin-bottom: 8px;
+    margin: 10px 0;
     .activity-info-container {
       margin-top: 8px;
       h6 {

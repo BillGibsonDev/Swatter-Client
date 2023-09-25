@@ -112,9 +112,9 @@ const ProjectActivityPage = ({ user }) => {
             })
           }
           {
-            activities.length > 3 
-            ? <StyledButton onClick={() => setShowMore(showMore + 3)}>Show More</StyledButton> 
-            :<></>
+            activities.length <= showMore ? <></>
+            : activities.length > 3 ? <StyledButton onClick={() => setShowMore(showMore + 3)}>Show More</StyledButton>
+            : <></>
           }
         </>
       }

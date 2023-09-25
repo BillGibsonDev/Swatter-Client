@@ -4,6 +4,7 @@ import axios from 'axios';
 
 // components
 import { DeleteAlert }from '../../../../../components/DeleteAlert.js';
+import { Timer } from '../../../../../components/Timer.js';
 
 // styled
 import styled from "styled-components";
@@ -11,7 +12,6 @@ import * as palette from "../../../../../styled/ThemeVariables";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
-import { handleElapsedTime } from "../../../../../functions/handleDates";
 
 // redux
 import { connect } from "react-redux";
@@ -55,7 +55,7 @@ const Comment = ({ comment, user, projectId, ticketId, setComments, setLoading }
             comment.userAvatar ? <img src={comment.userAvatar} alt="" />
             :<></>
           }
-          <h3>{comment.user}<span>{handleElapsedTime(comment.date)}</span><span>{comment.edited ? 'Edited' : null}</span></h3>
+          <h2>{comment.user}<span><Timer date={comment.date} /></span><span>{comment.edited ? 'Edited' : null}</span></h2>
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
         <div className="link-container">
@@ -87,7 +87,7 @@ const StyledComment = styled.article`
         border-radius: 50%;
         margin-right: 4px;
       }
-      h3 {
+      h2 {
         font-size: .8em;
         display: flex;
         align-items: center;
@@ -96,6 +96,9 @@ const StyledComment = styled.article`
           margin-left: 10px;
           font-size: .8em;
           color: ${palette.accentColor};
+          h3 {
+            font-size: .8em;
+          }
         }
       }
     }

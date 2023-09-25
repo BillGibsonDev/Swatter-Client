@@ -2,8 +2,8 @@
 import styled from "styled-components";
 import * as palette from '../../../../../styled/ThemeVariables.js';
 
-// functions
-import { handleElapsedTime } from "../../../../../functions/handleDates";
+// components
+import { Timer } from "../../../../../components/Timer.js";
 
 export const InfoContainer = ({ ticket }) => {
 
@@ -11,9 +11,9 @@ export const InfoContainer = ({ ticket }) => {
     <StyledArticle id="details">
       <h2><span>Creator:</span>{ticket.author}</h2>
       <h2><span>Assigned:</span>{ ticket.assigned ? ticket.assigned : 'No'}</h2>
-      <h2><span>Created:</span>{handleElapsedTime(ticket.date)}</h2>
+      <h2><span>Created:</span><Timer date={ticket.date} /></h2>
       {
-        ticket.lastUpdate ? <h2><span>Updated:</span>{handleElapsedTime(ticket.lastUpdate)}</h2>
+        ticket.lastUpdate ? <h2><span>Updated:</span><Timer date={ticket.lastUpdate} /></h2>
         : <></>
       }
     </StyledArticle>
@@ -25,10 +25,11 @@ const StyledArticle = styled.article`
   max-width: 370px;
   display: flex;
   flex-wrap: wrap;
-  h2 {
+  h2, h3 {
     color: white;
     font-size: .8em;
     display: flex;
+    align-items: center;
     flex-wrap: nowrap;
     margin: 4px 0;
     font-weight: 400;

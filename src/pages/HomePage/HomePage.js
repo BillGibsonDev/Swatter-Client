@@ -55,8 +55,7 @@ const HomePage = ({ user }) => {
 }
 
 const StyledHomePage = styled.section`
-  width: 80%;
-  max-width: 1200px;
+  width: 90%;
   margin: 10px auto;
   min-height: 80vh;
 `;

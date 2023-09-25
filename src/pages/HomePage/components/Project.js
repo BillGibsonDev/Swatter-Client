@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 // images
 import PlaceholderImage from "../../../assets/images/imagePlaceholder.png";
 
-// functions
-import { handleElapsedTime } from "../../../functions/handleDates";
+// components
+import { Timer } from "../../../components/Timer";
 
 export default function Project({ user, project }) {
 
@@ -24,11 +24,7 @@ export default function Project({ user, project }) {
       </Link>
       <div className="text-container">
         <Link to={`/${user.id}/projects/${project._id}`}>{project.title}</Link>
-        {
-          project.lastUpdate 
-          ? <h2>Updated: {handleElapsedTime(project.lastUpdate)}</h2>
-          : <></>
-        }
+        <Timer id="date" date={ project.lastUpdate ? project.lastUpdate : project.date } />
       </div>
     </StyledProject>
   );
@@ -93,10 +89,11 @@ const StyledProject = styled.div`
         margin-bottom: 0;
       }
     }
-    h2 {
+    h3 {
       font-size: .8em;
       color: white;
       font-weight: 200;
+      display: flex;
     }
   }
 `;

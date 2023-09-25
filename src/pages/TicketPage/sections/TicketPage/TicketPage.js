@@ -16,9 +16,13 @@ const TicketPage = ({ ticket, setEditing, ticketId, projectId, user, setLoading 
 
   return (
     <StyledSection>
-      <h1>{ticket.title}</h1>
-      <DetailsSection ticket={ticket} setEditing={setEditing} />
-      <InfoContainer ticket={ticket} />
+      <div className="title-wrapper">
+        <div className="title-container">
+          <h1>{ticket.title}</h1>
+          <DetailsSection ticket={ticket} setEditing={setEditing} />
+        </div>
+        <InfoContainer ticket={ticket} />
+      </div>
       <DescriptionBox description={ticket.description} />
       <ButtonContainer images={ticket.images} />
       <ImageSection images={ticket.images} />
@@ -31,6 +35,11 @@ const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 0 auto;
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
   h1 {
     color: #fff;
     font-size: 1.5em;

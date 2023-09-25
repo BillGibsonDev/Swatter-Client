@@ -24,12 +24,10 @@ const StyledDescription = styled.article`
     font-size: .8em;
   }
   #description {
-    color: black;
     padding: 4px;
     border: ${palette.accentBorder1px};
     border-radius: ${palette.borderRadius};
     min-height: 60px;
-    background: ${palette.helperGrey};
     font-size: .8em;
   }
   p:not(:first-child) {

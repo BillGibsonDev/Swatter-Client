@@ -35,18 +35,18 @@ export const DetailsSection = ({ ticket, setEditing }) => {
 
   return (
     <StyledArticle>
+        <h3>{ticket.status}</h3>
         <h3><span><img src={handleTagImage(ticket.tag)} alt="Tag" /></span>{ticket.tag}</h3>
         {
             ticket.priority ? <h3><span><img src={handleTicketPriorityImage(ticket.priority)} alt="Priority" /></span> {ticket.priority}</h3>
             : <></>
         }
-        <h3>{ticket.status}</h3>
         {
             ticket.sprint ? <h3><span><img src={icons.Sprints} alt="Sprint" /></span>{ticket.sprint}</h3>
             : <></>
         }
         {
-            ticket.link ? <a href={ticket.link} target="_blank" rel="noreferrer"><img src={icons.Link} alt="Link" /></a>
+            ticket.link ? <a id="link" href={ticket.link} target="_blank" rel="noreferrer"><img src={icons.Link} alt="Link" /></a>
             : <></>
         }
         <button id="edit-btn" onClick={() => setEditing(true)}><span><img src={icons.Edit} alt="" /></span>Edit</button>
@@ -59,14 +59,14 @@ const StyledArticle = styled.article`
     margin: 4px 0 0 0;
     display: flex;
     flex-wrap: wrap;
-    #edit-btn {
+    #edit-btn, #link {
         cursor: pointer;
         transition: 0.2s;
         &:hover {
             background: black;
         }
     }
-    h3, button {
+    h3, button, a {
         border: none;
         color: #ffffff;
         background: ${palette.accentColor};
@@ -79,16 +79,16 @@ const StyledArticle = styled.article`
         height: 28px;
         border-radius: 4px;
         margin: 0 2px;
+        img {
+            width: 20px;
+            height: 20px;
+        }
         span {
             color: ${palette.helperGrey};
             font-weight: 400;
             margin-right: 6px;
             width: 20px;
             height: 20px;
-            img {
-                width: 20px;
-                height: 20px;
-            }
         }
     }
 `;

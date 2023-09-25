@@ -73,7 +73,6 @@ const StyledComment = styled.article`
   justify-content: space-around;
   border: ${palette.accentBorder1px};
   border-radius: ${palette.borderRadius};
-  background: ${palette.helperGrey};
   &:not(:first-child){
     margin: 4px auto;
   }
@@ -92,7 +91,6 @@ const StyledComment = styled.article`
         font-size: .8em;
         display: flex;
         align-items: center;
-        color: black;
         font-weight: 700;
         span {
           margin-left: 10px;
@@ -102,11 +100,11 @@ const StyledComment = styled.article`
       }
     }
     .comment-text-container {
+      margin-top: 4px;
       p {
         font-size: .8em;
         font-weight: 400;
         margin-bottom: 12px;
-        color: black;
         word-wrap: break-word;
       }
     }
@@ -119,7 +117,7 @@ const StyledComment = styled.article`
         border: none;
         background: none;
         cursor: pointer;
-        color: black;
+        color: ${palette.helperGrey};
       }
     }
   }

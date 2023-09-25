@@ -76,14 +76,10 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/update`,
         {
-          title: ticket.title,
           description: description,
           status: status,
           tag: tag,
           priority: priority,
-          projectId: projectId,
-          ticketId: ticket._id,
-          ticket: ticket,
           assigned: assigned,
           sprint: sprint,
           images: images,
@@ -147,7 +143,7 @@ const EditTicketPage = ({ user, ticket, showAlert, editing, setEditing, projectI
         title={ticket.title}
       />
       <div className='ticket-container'>
-        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
+        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'cancel'} />
         <div className='info-wrapper'>
           <InfoContainer ticket={ticket} setLink={setLink} />
           <div className='selector-container'>

@@ -155,6 +155,7 @@ const StyledPage = styled.section`
           color: ${palette.labelColor};
           font-size: ${palette.labelSize};
           input {
+            color: black;
             width: 100%;
             max-width: 350px;
             font-size: 1em;

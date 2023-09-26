@@ -19,7 +19,7 @@ const StyledTitle = styled.article`
     h1 {
 		font-size: ${palette.titleSize};
 		color: #ffffff;
-        margin-left: 6px;
+        margin-left: 10px;
         @media (max-width: 640px) {
             font-size: 1.2em;
         }

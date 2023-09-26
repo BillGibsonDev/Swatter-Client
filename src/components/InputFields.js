@@ -38,8 +38,6 @@ export const InputFields = ({ type, label, required, func, options }) => {
 
 const StyledContainer = styled.article`
     max-width: 500px;
-    display: flex;
-    flex-direction: column;
     margin-bottom: 10px;
     label {
         display: flex;

@@ -14,7 +14,7 @@ import Loader from "../../loaders/Loader.js";
 import { Selector } from './components/Selector.js';
 import BreadCrumbs from '../../components/Breadcrumbs.js';
 import { DescriptionBox } from './components/DescriptionBox.js';
-import { Images } from '../../components/Images.js';
+import { Images } from './components/Images.js';
 import ButtonContainer from './components/ButtonContainer.js';
 import { TitleContainer } from "../../components/TitleContainer.js";
 

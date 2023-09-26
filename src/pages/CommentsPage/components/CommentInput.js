@@ -97,7 +97,7 @@ const StyledCommentInput = styled.article`
     border-radius: 0;
     border-top-left-radius: ${palette.borderRadius};
     border-bottom-left-radius: ${palette.borderRadius};
-    transition: height 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
     border: ${palette.greyBorder};
     &:focus {
       outline: none;

@@ -21,8 +21,6 @@ export const DescriptionBox = ({setDescription}) => {
 }
 
 const StyledDescriptionBox = styled.label`
-    display: flex;
-    flex-direction: column;
     color: white;
     margin: 10px 0;
     font-weight: 400;

@@ -1,9 +1,9 @@
 // styled
 import styled from "styled-components";
+import { StyledButton } from "../../../../../styled/StyledButton.js";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
-import { StyledButton } from "../../../../../styled/StyledButton.js";
 
 export const ButtonContainer = ({ DeleteAlertRef, updateTicket }) => {
 

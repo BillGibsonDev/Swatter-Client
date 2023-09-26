@@ -27,6 +27,7 @@ export const ProfileDetails =({
     setDeleteAccount,
     deleteAcount
 }) => {
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     

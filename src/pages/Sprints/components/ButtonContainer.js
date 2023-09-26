@@ -11,7 +11,7 @@ export const ButtonContainer = ({ handleDeleteAlert, handleUpdateSprint, DeleteA
   )
 }
 
-const StyledButtonContainer = styled.div`
+const StyledButtonContainer = styled.article`
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -43,8 +43,6 @@ export const UpdateAvatar =({ userData, user,  editAvatar, setEditingAvatar }) =
 }
 
 const StyledSection = styled.section`
-    display: flex;
-    flex-direction: column;
     img {
         max-width: 400px;
         border-radius: 50%;

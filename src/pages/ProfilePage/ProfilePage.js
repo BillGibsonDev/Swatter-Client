@@ -172,9 +172,6 @@ const StyledProfilePage = styled.section`
         button {
             margin: 20px 0;
         }
-        #edit-email-button {
-
-        }
     }
 `;
 

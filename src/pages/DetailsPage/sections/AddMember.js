@@ -46,8 +46,8 @@ export const AddMember = ({ user, projectId, setAddingMember, setMembers }) => {
 }
 
 const StyledArticle = styled.article`
-text-align: center;
-margin: 10px 0;
+    text-align: center;
+    margin: 10px 0;
     label {
         font-size: 1em;
         color: white;

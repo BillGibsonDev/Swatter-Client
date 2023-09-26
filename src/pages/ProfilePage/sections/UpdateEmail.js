@@ -53,8 +53,6 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
 }
 
 const StyledSection = styled.section`
-    display: flex;
-    flex-direction: column;
     h1 {
 
     }

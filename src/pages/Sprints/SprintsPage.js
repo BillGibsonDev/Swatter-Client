@@ -7,6 +7,7 @@ import styled from "styled-components";
 import BreadCrumbs from "../../components/Breadcrumbs";
 import CreateSprint from "./sections/CreateSprint";
 import EditSprint from "./sections/EditSprint";
+import { SprintSection } from "./sections/SprintSection";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -19,7 +20,6 @@ import { getProject } from "../../functions/getProject";
 
 // redux
 import { connect } from "react-redux";
-import { SprintSection } from "./sections/SprintSection";
 
 const SprintsPage = ({ user }) => {
   const { projectId } = useParams();

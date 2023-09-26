@@ -67,7 +67,7 @@ export default function TicketTable({ project, seeAssigned }) {
     )
 }
 
-const StyledTicketTable = styled.div`
+const StyledTicketTable = styled.section`
     display: grid;
     grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;

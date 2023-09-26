@@ -50,7 +50,7 @@ export const SearchProjectTable = ({ user, projects, projectSearchPhrase }) => {
   );
 }
 
-const StyledProjectTable = styled.div`
+const StyledProjectTable = styled.section`
   width: 100%;
   margin: 30px auto;
   display: flex;

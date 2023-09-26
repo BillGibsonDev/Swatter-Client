@@ -30,7 +30,7 @@ export default function Project({ user, project }) {
   );
 }
 
-const StyledProject = styled.div`
+const StyledProject = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;

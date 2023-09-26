@@ -60,20 +60,16 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
     return (
         <StyledTicket className={ticket.status} style={ seeAssigned ? { background: user.username === ticket.assigned ? '#8000ff6f': '' } : {}}>
 			<Link to={`/${user.id}/projects/${project._id}/tickets/${ticket._id}`}>
-				<div className="top-container">
-					<h2 id="title">{ticket.title}</h2> 
-					<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
-				</div>
-				<div className="center-container">
-					<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
-					<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
-				</div>
+				<h2 id="title">{ticket.title}</h2> 
+				<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
+				<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
 				<div className="bottom-container">
 					<div className="status-icons-container">
 						<img src={handleTagImage(ticket.tag)} alt={ticket.tag} />
+						<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
 						<img src={handleTicketPriority(ticket.priority)} alt={ticket.priority} />
 					</div>
-				<h2 id={ticket.author} className='author'>{ticket.author}</h2>
+					<h2 id={ticket.author} className='author'>{ticket.author}</h2>
 				</div>
 			</Link>
         </StyledTicket>
@@ -86,6 +82,7 @@ const StyledTicket = styled.article`
 	flex-direction: column;
 	width: 99%;
 	margin: 2% auto;
+	padding: 6px 0;
 	border-radius: 4px;
 	cursor: pointer;
 	border: 1px solid white;
@@ -94,49 +91,56 @@ const StyledTicket = styled.article`
 	h2 {
 		font-size: .8em;
 		font-weight: 400;
+		width: 90%;
+		margin: 0 auto;
 	}
 	#title {
 		color: #ffffff;
-		margin-right: 8px;
+		font-size: 1em;
 	}
-	#key {
-		margin-bottom: auto;
-	}
-	#date, .author, #sprint, #key {
+	#date, .author, #key {
 		color: #c5c5c5;
 		font-size: .7em;
 		font-weight: 400;
 	}
-	.center-container, .bottom-container, .top-container {
+	h3, #sprint {
+		font-size: .8em;
+		font-weight: 400;
+		margin: auto auto 4px auto;
+		width: 90%;
+		border-radius: ${palette.borderRadius};
+		color: ${palette.helperGrey};
+	}
+	h3 {
+		margin-bottom: 6px;
+	}
+	#sprint {
+		color: white;
+		width: fit-content;
+		max-width: fit-content;
+		margin-left: 5%;
+	}
+	.bottom-container, .top-container {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		width: 90%;
 		height: 50%;
-		margin: 10px auto;
+		margin: 4px auto;
+		.author {
+			margin-right: 0;
+			width: auto;
+		}
 		.status-icons-container {
+			display: flex;
+			align-items: center;
+			width: fit-content;
+			#key {
+				margin: 0 10px;
+			}
 			img {
 				width: 20px;
-				&:first-child {
-					margin-right: 10px;
-				}
 			}
-		}
-	}
-	.center-container {
-		display: flex;
-		flex-direction: column;
-		h3 {
-			color: ${palette.helperGrey};
-			margin: 4px auto 0 0;
-			font-weight: 400;
-			font-size: .7em;
-		}
-		#sprint {
-			color: white;
-			border-radius: 4px;
-			font-weight: 200;
-			margin-right: auto;
 		}
 	}
 `;

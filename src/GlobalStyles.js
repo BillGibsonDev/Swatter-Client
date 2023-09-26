@@ -30,6 +30,9 @@ const GlobalStyles = createGlobalStyle`
         letter-spacing: 1px;
         border-radius: 4px;
     }
+    button, a {
+        cursor: pointer;
+    }
     input, textarea{
         background: lightgrey;
     }

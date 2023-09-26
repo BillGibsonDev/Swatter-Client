@@ -54,7 +54,7 @@ export const MemberList = ({ user, members, projectId, addingMember, setAddingMe
                     return (
                         <div className="member-container" key={index}>
                             <h4>{member.username}</h4>
-                            <button onClick={() => { setRemovedMember(member.memberId); handleDeleteAlert(DeleteAlertRef)} }>Trash can here</button>
+                            <button onClick={() => { setRemovedMember(member.memberId); handleDeleteAlert(DeleteAlertRef)} }>Remove</button>
                         </div>
                     )
                 })
@@ -103,6 +103,15 @@ const StyledArticle = styled.article`
             }
             button {
                 margin-right: 6px;
+                padding: 2px 4px;
+                font-weight: 600;
+                background: red;
+                color: white;
+                transition: 0.2s ease-in-out;
+                &:hover {
+                    color: black;
+                    background: white;
+                }
             }
         }
     }

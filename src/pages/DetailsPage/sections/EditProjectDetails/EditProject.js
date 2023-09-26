@@ -121,9 +121,8 @@ const EditProject = ({ user, showAlert, setProject, editing, setEditing, isLoadi
       />
       <TitleContainer 
         title={project.title}
-        type={'edit'}
+        samePage={true}
         stateChanger={setEditing}
-        state={editing}
       />
       <div className='form-wrapper'>
         <div className="inputs-container">
@@ -181,8 +180,6 @@ const EditProject = ({ user, showAlert, setProject, editing, setEditing, isLoadi
 }
 
 const StyledSection = styled.section`
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
   margin: 10px auto;

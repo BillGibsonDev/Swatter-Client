@@ -73,7 +73,7 @@ export default function SearchTicketTable({ project, tickets, ticketSearchPhrase
     )
 }
 
-const StyledTicketTable = styled.div`
+const StyledTicketTable = styled.section`
     display: flex;
     height: 100%;
     max-height: 93vh;

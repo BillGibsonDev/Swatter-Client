@@ -16,8 +16,6 @@ import { showAlert } from "../../../redux/actions/alert";
 // components
 import { DeleteAlert } from "../../../components/DeleteAlert";
 import Loader from "../../../loaders/Loader";
-
-// functions
 import { ButtonContainer }from "../components/ButtonContainer";
 import { TitleContainer } from "../../../components/TitleContainer";
 
@@ -161,10 +159,9 @@ const EditSprint = ({
         title={sprint.title}
       />
       <TitleContainer 
-        title={'Create Sprint'} 
+        title={'Edit Sprint'} 
+        samePage={true}
         stateChanger={setEditing} 
-        state={editing} 
-        type={'cancel'} 
       />
       <div className="form-wrapper">
         <div className='form-container'>
@@ -236,14 +233,9 @@ const EditSprint = ({
 };
 
 const StyledEditSprint = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
   min-height: 50vh;
-  @media (max-width: 838px) {
-    margin: auto;
-  }
   .form-wrapper {
     width: 100%;
     margin: 16px auto;
@@ -257,9 +249,7 @@ const StyledEditSprint = styled.section`
       width: 100%;
       max-width: 500px;
       label {
-        display: flex;
         color: white;
-        flex-direction: column;
         margin: 10px 0;
         width: 100%;
         max-width: 500px;

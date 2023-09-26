@@ -1,4 +1,3 @@
-import { useRef } from "react";
 // styled
 import styled from "styled-components";
 
@@ -7,47 +6,28 @@ import { ImageSection } from "./components/ImageSection.js";
 import { CommentSection } from "./components/CommentSection.js";
 import { ButtonContainer } from "./components/ButtonContainer.js";
 import { InfoContainer } from "./components/InfoContainer.js";
-import { DeleteAlert } from "../../../../components/DeleteAlert.js";
 import { DescriptionBox } from "./components/DescriptionBox.js";
+import { TitleContainer } from "../../../../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
-import { TitleContainer } from "../../../../components/TitleContainer";
+import { DetailsSection } from "./components/DetailsContainer.js";
 
-const TicketPage = ({ ticket, editing, setEditing, ticketId, projectId, user, setLoading }) => {
-
-  const DeleteAlertRef = useRef();
-
-  const handleModal = (index) => {
-    let modal = document.getElementById(index);
-    if (modal.style.display === "block") {
-      modal.style.display = "none";
-    } else {
-      modal.style.display = "block";
-    }
-  };
+const TicketPage = ({ ticket, setEditing, ticketId, projectId, user, setLoading }) => {
 
   return (
     <StyledSection>
-      <DeleteAlert
-        DeleteAlertRef={DeleteAlertRef}
-      />
-      <div className='ticket-wrapper'>
-        <TitleContainer title={ticket.title} stateChanger={setEditing} state={editing} type={'edit'} />
-        <div className='info-wrapper'>
-          <div className='info-container'>
-            <h3><span>Tag: </span> {ticket.tag}</h3>
-            <h3 className={ticket.priority}><span>Priority: </span> { ticket.priority ? ticket.priority : 'None'}</h3>
-            <h3><span>Status: </span>{ticket.status}</h3>
-            <h3><span>Sprint: </span>{ ticket.sprint ? ticket.sprint : 'None'}</h3>
-          </div>
-          <InfoContainer ticket={ticket} />
+      <div className="title-wrapper">
+        <div className="title-container">
+          <TitleContainer title={ticket.title} samePage={false}/>
+          <DetailsSection ticket={ticket} user={user} projectId={projectId} setEditing={setEditing} />
         </div>
-        <DescriptionBox description={ticket.description} />
-        <ButtonContainer />
-        <ImageSection images={ticket.images} handleModal={handleModal}/>
-        <CommentSection user={user} ticketId={ticketId} projectId={projectId} setLoading={setLoading}/>
+        <InfoContainer ticket={ticket} />
       </div>
+      <DescriptionBox description={ticket.description} />
+      <ButtonContainer images={ticket.images} />
+      <ImageSection images={ticket.images} />
+      <CommentSection user={user} ticketId={ticketId} projectId={projectId} setLoading={setLoading} />
     </StyledSection>
   );
 }
@@ -56,50 +36,16 @@ const StyledSection = styled.section`
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  .ticket-wrapper {
+  .title-wrapper {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: auto;
-    .info-wrapper {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      @media (max-width: 450px) {
-        flex-direction: column;
-      }
-      .info-container {
-        width: 50%;
-        margin: 10px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        @media (max-width: 450px) {
-          width: 90%;
-        }
-        h3 {
-          color: white;
-          font-size: 1em;
-          display: flex;
-          margin: 4px 0;
-          font-weight: 400;
-          span {
-            color: #cecece;
-            font-weight: 400;
-            font-size: 1em;
-            margin-right: 6px;
-          }
-        }
-        .Standard {
-          color: lightgreen;
-        }
-        .Medium {
-          color: yellow;
-        }
-        .High {
-          color: red;
-        }
-      }
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  h1 {
+    color: #fff;
+    font-size: 1.5em;
+    @media (max-width: 428px) {
+      font-size: 1.2em;
     }
   }
 `;

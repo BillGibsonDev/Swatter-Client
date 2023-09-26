@@ -51,6 +51,10 @@ const ProjectPage = ({ user }) => {
     }
   }
 
+  if(isLoading){
+    return <Loader />
+  }
+
   return (
     <StyledPage>
       <div className="search-container">
@@ -60,26 +64,17 @@ const ProjectPage = ({ user }) => {
         </label> 
       </div>
       {
-        isLoading ? <Loader />
-        : <>
-          {
-            !project.tickets ? 
-              <div className='undefined'>
-                <h1>You've haven't entered any tickets</h1>
-              </div>
-            : ticketSearchPhrase ?
-              <SearchTicketTable
-                tickets={project.tickets}
-                project={project}
-                ticketSearchPhrase={ticketSearchPhrase}
-              />
-            :
-              <TicketTable
-                project={project}
-                seeAssigned={seeAssigned}
-              />
-          }
-        </>
+        ticketSearchPhrase ?
+          <SearchTicketTable
+            tickets={project.tickets}
+            project={project}
+            ticketSearchPhrase={ticketSearchPhrase}
+          />
+        :
+          <TicketTable
+            project={project}
+            seeAssigned={seeAssigned}
+          />
       }
     </StyledPage>
   );
@@ -88,19 +83,7 @@ const ProjectPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   width: 90%;
-  display: flex;
-  flex-direction: column;
   margin: 10px auto 0 auto;
-  .undefined {
-    background: white;
-    width: 100%;
-    min-height: 80vh;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-  }
   .search-container {
     display: flex;
     align-items: center;

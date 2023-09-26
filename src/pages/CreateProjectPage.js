@@ -10,6 +10,7 @@ import { StyledButton } from "../styled/StyledButton.js";
 // components
 import Loader from "../loaders/Loader";
 import BreadCrumbs from "../components/Breadcrumbs.js";
+import { TitleContainer } from "../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
@@ -45,8 +46,9 @@ const CreateProjectPage = ({ user, showAlert }) => {
       .max(500, 'Descriptions can not be longer than 500 characters')
   });
 
-  const createProject = (event) => {
+  const createProject = async (event) => {
     event.preventDefault();
+    const imageURL = await handleImages(image)
     validationSchema.validate({ title, link, repository, description })
     .then(() => {
       setLoading(true);
@@ -54,9 +56,9 @@ const CreateProjectPage = ({ user, showAlert }) => {
         {
           title,
           link,
-          image,
-          repository: repository,
-          description: description,
+          image: imageURL,
+          repository,
+          description,
         },
         {
           headers: {
@@ -82,52 +84,52 @@ const CreateProjectPage = ({ user, showAlert }) => {
 		});
   };
 
+  if(isLoading){
+    return <Loader />;
+  }
+
   return (
     <StyledPage>
       <BreadCrumbs
         projectTitle={'Create Project'}
       />
-      <h1>Start a Project</h1>
-      {
-        isLoading ? <Loader />
-        : 
-        <div className='form-wrapper'>
-          <div className="inputs-container">
-            <div className='form-container'>
-              <label>Title
-                <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
-              </label>
-              <label>Image
-                <input type='file' id='image' onChange={(event) => { setImage(handleImages(event.target.files[0])); }} />
-              </label>
-            </div>
-            <div className='form-container'>
-              <label>Website
-                <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
-              </label>
-              <label>Repository
-                <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
-              </label>
-            </div>
+      <TitleContainer
+        title={'Start A Project'}
+        samePage={false}
+      />
+      <div className='form-wrapper'>
+        <div className="inputs-container">
+          <div className='form-container'>
+            <label>Title
+              <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
+            </label>
+            <label>Image
+              <input type='file' id='image' onChange={(event) => { setImage(event.target.files[0]); }} />
+            </label>
           </div>
-          <label id="description-label">Description
-            <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
-          </label>
+          <div className='form-container'>
+            <label>Website
+              <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
+            </label>
+            <label>Repository
+              <input type='text' id='repository' onChange={(event) => { setRepository(event.target.value); }} />
+            </label>
+          </div>
         </div>
-      }
+        <label id="description-label">Description
+          <textarea id='description' onChange={(event) => { setDescription(event.target.value); }} />
+        </label>
+      </div>
       <StyledButton disabled={isLoading} onClick={(event) => { createProject(event); }}>Start</StyledButton>
     </StyledPage>
   );
 }
 
 const StyledPage = styled.section`
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 80%;
   max-width: 800px;
-  margin: 1em auto;
-  position: relative;
+  margin: 10px auto;
   h1 {
     color: white;
     width: 100%;
@@ -149,12 +151,11 @@ const StyledPage = styled.section`
           width: 100%;
         }
         label {
-          display: flex;
-          flex-direction: column;
           margin: 10px 0 0 0;
           color: ${palette.labelColor};
           font-size: ${palette.labelSize};
           input {
+            color: black;
             width: 100%;
             max-width: 350px;
             font-size: 1em;

@@ -6,6 +6,7 @@ import styled from "styled-components";
 // components
 import ArchiveTicketTable from "./components/ArchiveTicketTable.js";
 import BreadCrumbs from '../../components/Breadcrumbs.js';
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -50,7 +51,10 @@ const ArchivePage = ({ user }) => {
                 projectTitle={project.title}
                 title={'Archive'}
             />
-            <h1>{project.title}'s Archive</h1>
+            <TitleContainer
+                title={`${project.title} Archive`}
+                samePage={false}
+            />
             <ArchiveTicketTable
                 project={project}
                 tickets={project.tickets}
@@ -60,11 +64,11 @@ const ArchivePage = ({ user }) => {
 }
 
 const StyledArchive = styled.section`
+    height: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    min-height: 50vh;
-    margin: 0 auto;
+    margin: 10px auto 0 auto;
     h1 {
       color: white;
       font-size: 1.5em;

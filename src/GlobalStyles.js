@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
     html {
         scroll-behavior: smooth;
         background: #1c2633;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Nunito', sans-serif;
         letter-spacing: 1px;
         line-height: 1.5;
         @media (max-width: 1450px){
@@ -20,13 +20,13 @@ const GlobalStyles = createGlobalStyle`
         } 
     }
     body {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Nunito', sans-serif;
     }
     a {
         text-decoration: none;
     }
     button, a, label, input, textarea {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Nunito', sans-serif;
         letter-spacing: 1px;
         border-radius: 4px;
     }

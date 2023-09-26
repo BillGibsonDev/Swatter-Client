@@ -38,30 +38,26 @@ const HomePage = ({ user }) => {
     getProjects();
   }, [ user ]);
 
+  if(isLoading){
+    <HomePageLoader />
+  }
+
   return (
     <StyledHomePage>
+      <Searchbar setSearchPhrase={setProjectSearchPhrase} />
       {
-        isLoading ? <HomePageLoader />
-        : <>
-            <Searchbar setSearchPhrase={setProjectSearchPhrase} />
-            {
-              projectSearchPhrase && projectSearchPhrase.length > 2
-              ? <SearchProjectTable user={user} projectSearchPhrase={projectSearchPhrase} projects={projects} />
-              : <ProjectTable projects={projects} user={user} />
-            }
-        </>
+        projectSearchPhrase && projectSearchPhrase.length > 2
+        ? <SearchProjectTable user={user} projectSearchPhrase={projectSearchPhrase} projects={projects} />
+        : <ProjectTable projects={projects} user={user} />
       }
     </StyledHomePage>
   );
 }
 
 const StyledHomePage = styled.section`
-  width: 80%;
-  max-width: 1200px;
+  width: 90%;
   margin: 10px auto;
   min-height: 80vh;
-  display: flex;
-  flex-direction: column;
 `;
 
 const mapStateToProps = (state) => {

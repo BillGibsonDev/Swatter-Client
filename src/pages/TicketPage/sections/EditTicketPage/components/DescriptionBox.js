@@ -23,13 +23,12 @@ export const DescriptionBox = ({setDescription, description}) => {
 }
 
 const StyledDescriptionBox = styled.label`
-    display: flex;
-    flex-direction: column;
     color: white;
     margin: 10px 0;
     font-weight: 400;
     font-size: ${palette.labelSize};
     width: 100%;
+    max-width: 500px;
     textarea {
         padding: 2px;
         font-size: 1em;

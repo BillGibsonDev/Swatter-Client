@@ -1,5 +1,6 @@
 // styled
 import styled from 'styled-components';
+import * as palette from '../../../styled/ThemeVariables.js';
 
 // router
 import { Link } from 'react-router-dom';
@@ -7,8 +8,8 @@ import { Link } from 'react-router-dom';
 // icons
 import * as icons from '../../../assets/IconImports.js';
 
-// function
-import { handleDate } from '../../../functions/handleDates.js';
+// components
+import { Timer } from '../../../components/Timer.js';
 
 // redux
 import { connect } from 'react-redux';
@@ -64,8 +65,8 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
 					<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
 				</div>
 				<div className="center-container">
-					<h2 id="date">{handleDate(ticket.lastUpdate)}</h2>
 					<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
+					<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
 				</div>
 				<div className="bottom-container">
 					<div className="status-icons-container">
@@ -79,7 +80,7 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
     )
 }
 
-const StyledTicket = styled.div`
+const StyledTicket = styled.article`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -123,14 +124,19 @@ const StyledTicket = styled.div`
 		}
 	}
 	.center-container {
+		display: flex;
 		flex-direction: column;
-		#date, #sprint {
-			margin-right: auto;
+		h3 {
+			color: ${palette.helperGrey};
+			margin: 4px auto 0 0;
+			font-weight: 400;
+			font-size: .7em;
 		}
 		#sprint {
 			color: white;
 			border-radius: 4px;
 			font-weight: 200;
+			margin-right: auto;
 		}
 	}
 `;

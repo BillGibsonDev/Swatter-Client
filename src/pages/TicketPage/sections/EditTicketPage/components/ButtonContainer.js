@@ -1,9 +1,9 @@
 // styled
 import styled from "styled-components";
+import { StyledButton } from "../../../../../styled/StyledButton.js";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert.js";
-import { StyledButton } from "../../../../../styled/StyledButton.js";
 
 export const ButtonContainer = ({ DeleteAlertRef, updateTicket }) => {
 
@@ -18,10 +18,11 @@ export const ButtonContainer = ({ DeleteAlertRef, updateTicket }) => {
 const StyledButtonContainer = styled.article`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 20px;
+  max-width: 500px;
   button {
-    margin: 0;
+    margin: auto;
+    max-width: 240px;
     &:hover {
       color: #ffffff;
       background: #000000;

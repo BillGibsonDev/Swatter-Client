@@ -1,7 +1,10 @@
 // styled
 import styled from "styled-components";
 import * as palette from "../../../styled/ThemeVariables.js";
-import { StyledButton } from '../../../styled/StyledButton.js';
+import { StyledButton } from "../../../styled/StyledButton.js";
+
+// icons
+import TrashCan from '../../../assets/icons/trashcanRed.png';
 
 // functions
 import { handleImages } from "../../../functions/handleImages.js";
@@ -10,7 +13,7 @@ export const Images = ({ images, setImages }) => {
 
   const handleAddFields = () => {
     const values = [...images];
-    values.push({ caption: "", image: "" });
+    values.push({ image: "" });
     setImages(values);
   };
 
@@ -28,13 +31,11 @@ export const Images = ({ images, setImages }) => {
     if (event.target.id === "image") {
       const imageURL = await handleImages(event.target.files[0])
       values[index].image = imageURL;
-    } else if (event.target.id === "caption") {
-      values[index].caption = event.target.value;
-    }
+    } 
     setImages(values);
   };
 
-  if(!images || images.length <= 0){
+  if(images.length === 0){
     return (
       <StyledImageSection>
         <StyledButton id="add-btn" onClick={() => { handleAddFields(); }}>Add Image</StyledButton>
@@ -47,25 +48,18 @@ export const Images = ({ images, setImages }) => {
       {
         images.map((image, index) => {
           return (
-            <div className='input-container' key={index}>
-              <label>Image
+            <div className="image-container" key={index}>
+              <img className='preview-image' id='image' src={image.image} alt={image.image}/>
+              <label>
                 <input
-                  type='file'
-                  id='image'
-                  name='image'
-                  onChange={(event) => handleInputChange(index, event)}
-                />
+                    type='file'
+                    id='image'
+                    name='image'
+                    placeholder={image.image}
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+                  <button id='delete' onClick={() => { handleRemoveFields(index);}}><img src={TrashCan} alt="Remove" /></button>
               </label>
-              <label>Caption
-                <input
-                  type='text'
-                  id='caption'
-                  name='caption'
-                  defaultValue={image.caption}
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-              </label>
-              <StyledButton id='delete' onClick={() => { handleRemoveFields(index);}}>Remove Image</StyledButton>
             </div>
           );
         })
@@ -76,35 +70,42 @@ export const Images = ({ images, setImages }) => {
 }
 
 const StyledImageSection = styled.article`
-  display: flex;
-  flex-direction: column;
   margin: 20px 0;
-  .input-container {
+  max-width: 500px;
+  .image-container {
     width: 100%;
-    max-width: 500px;
+    padding: 6px;
     margin-bottom: 20px;
+    img {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      border: 1px solid ${palette.helperGrey};
+    }
     label {
       display: flex;
-      color: white;
-      flex-direction: column;
-      margin: 10px 0;
-      font-size: ${palette.labelSize};
+      align-items: center;
+      flex-direction: row;
+      background: ${palette.helperGrey};
+      padding: 4px;
       input {
+        color: black;
         width: 100%;
-        height: 30px;
-        padding: 2px;
-        background: ${palette.helperGrey};
       }
-    }
-    #delete {
-      width: 100%;
-      border: 2px solid red;
-      margin: 0 auto;
+      #delete {
+        border: none;
+        margin-right: 2px;
+        img {
+          width: 24px;
+        }
+      }
     }
   }
   #add-btn {
     max-width: 500px;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
+    background: #7e7e7e;
+    color: #ffffff;
   }
 `;

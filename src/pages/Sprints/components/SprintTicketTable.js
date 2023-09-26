@@ -54,21 +54,33 @@ const SprintTicketTable = ({ project, searchSprint }) => {
     )
 }
 
-const StyledTicketTable = styled.div`
+const StyledTicketTable = styled.section`
     display: grid;
     grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
     height: 100%;
-    max-height: 93vh;
     width: 100%;
     margin-top: 20px;
-    position: relative;
+    /* scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+        width: none;
+    } */
     .tickets-container {
         width: 100%;
-        padding: 10px;
+        background: black;
+        padding: 6px;
         background: #0b2849;
         border-radius: ${palette.borderRadius};
+        height: 100%;
+        max-height: 85vh;
+        overflow: auto;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+            width: none;
+        }
         h5 {
             color: ${palette.helperGrey};
             padding: 10px;
@@ -81,7 +93,7 @@ const StyledTicketTable = styled.div`
             display: flex;
             &:hover {
                 background: #000000;
-                border: 1px black solid;
+                border: 1px #ffffff63 solid;
             }
         }
     }

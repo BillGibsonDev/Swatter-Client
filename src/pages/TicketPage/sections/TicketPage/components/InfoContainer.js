@@ -1,41 +1,44 @@
 // styled
 import styled from "styled-components";
+import * as palette from '../../../../../styled/ThemeVariables.js';
 
-// functions
-import { handleDate } from "../../../../../functions/handleDates";
+// components
+import { Timer } from "../../../../../components/Timer.js";
 
 export const InfoContainer = ({ ticket }) => {
 
   return (
-    <StyledArticle>
-        <h2><span>Creator: </span>{ticket.author}</h2>
-        <h2><span>Assigned User: </span>{ ticket.assigned ? ticket.assigned : 'None'}</h2>
-        <h2><span>Created: </span>{handleDate(ticket.date)}</h2>
-        <h2><span>Updated: </span>{handleDate(ticket.lastUpdate)}</h2>
+    <StyledArticle id="details">
+      <h2><span>Creator:</span>{ticket.author}</h2>
+      <h2><span>Assigned:</span>{ ticket.assigned ? ticket.assigned : 'No'}</h2>
+      <h2><span>Created:</span><Timer date={ticket.date} /></h2>
+      {
+        ticket.lastUpdate ? <h2><span>Updated:</span><Timer date={ticket.lastUpdate} /></h2>
+        : <></>
+      }
     </StyledArticle>
   );
 }
 
 const StyledArticle = styled.article`
-    width: 50%;
-    margin: 10px 0;
+  width: 100%;
+  max-width: 370px;
+  display: flex;
+  flex-wrap: wrap;
+  h2, h3 {
+    color: white;
+    font-size: .8em;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    @media (max-width: 450px) {
-        width: 100%;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin: 4px 0;
+    font-weight: 400;
+    max-width: 185px;
+    width: 100%;
+    span {
+      color: ${palette.helperGrey};
+      font-weight: 400;
+      margin-right: 4px;
     }
-    h2 {
-        color: white;
-        font-size: 1em;
-        display: flex;
-        margin: 4px 6px 4px 0;
-        font-weight: 400;
-        span {
-            color: #cecece;
-            font-weight: 400;
-            font-size: 1em;
-            margin-right: 6px;
-        }
-    }
+  }
 `;

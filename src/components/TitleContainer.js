@@ -1,33 +1,14 @@
 import styled from "styled-components";
 import * as palette from '../styled/ThemeVariables.js';
 
-import EditIcon from '../assets/icons/editIconWhite.png';
+import { BackButton } from "./BackButton.js";
 
-export const TitleContainer = ({ title, stateChanger, state, type }) => {
-
-    if(!type){
-        return (
-            <StyledTitle>
-                <h1>{title}</h1>
-            </StyledTitle>
-        )
-    }
-
-    if(type === 'cancel'){
-        return (
-            <StyledTitle>
-                <h1>{title}</h1>
-                <button onClick={() => { stateChanger(!state)}}>Cancel</button>
-            </StyledTitle>
-        )
-    }
+export const TitleContainer = ({ title, samePage, stateChanger }) => {
 
     return (
         <StyledTitle>
+            <BackButton samePage={samePage} stateChanger={stateChanger} />
             <h1>{title}</h1>
-            <button id="edit-btn" onClick={() => { stateChanger(!state)}}>
-                <img src={EditIcon} alt={`edit ${title}`} />
-            </button>
         </StyledTitle>
     )
 }
@@ -35,37 +16,12 @@ export const TitleContainer = ({ title, stateChanger, state, type }) => {
 const StyledTitle = styled.article`
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px #ffffff solid;
-    min-width: 50%;
-    width: auto;
-    @media (max-width: 420px) {
-        max-width: 90%;
-        min-width: 300px;
-    }
     h1 {
 		font-size: ${palette.titleSize};
 		color: #ffffff;
-        @media (max-width: 420px) {
-            font-size: 1em;
+        margin-left: 10px;
+        @media (max-width: 640px) {
+            font-size: 1.2em;
         }
-    }
-    button {
-        padding: 2px 6px;
-        cursor: pointer;
-        @media (max-width: 420px) {
-            font-size: 1em;
-        }
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-    #edit-btn {
-        border: none;
-        background: none;
-        width: 20px;
-        height: 20px;
-        padding: 0;
     }
 `;

@@ -21,18 +21,17 @@ export default function HomePageLoader() {
 }
 
 const StyledLoader = styled.div`
-width: 90%;
-margin: 1% auto;
-display: grid;
-grid-template-columns: 1fr 1fr 1fr;
-grid-column-gap: 2%;
-grid-row-gap: 2%;
-position: relative;
+    width: 90%;
+    margin: 1% auto;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
     .skelton-ticket {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
+        max-width: 300px;
         height: 300px;
         margin: 10px auto;
         position: relative;

@@ -14,7 +14,7 @@ import { showAlert } from "../../../redux/actions/alert.js";
 import { TitleContainer } from "../../../components/TitleContainer.js";
 import { InputFields } from "../../../components/InputFields.js";
 
-const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => {
+const CreateSprint = ({ showAlert, projectId, setCreating, user }) => {
 
   const [ title, setTitle ] = useState("");
   const [ goal, setGoal ] = useState("");
@@ -110,9 +110,8 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
     <StyledCreateSprint>
       <TitleContainer 
         title={'Create Sprint'} 
-        stateChanger={setCreating} 
-        state={creating} 
-        type={'cancel'} 
+        samePage={true}
+        stateChanger={setCreating}
       />
       <div className="form-wrapper">
         {
@@ -136,8 +135,6 @@ const CreateSprint = ({ showAlert, projectId, creating, setCreating, user }) => 
 };
 
 const StyledCreateSprint = styled.section`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   max-width: 1000px;
   min-height: 50vh;
@@ -145,8 +142,6 @@ const StyledCreateSprint = styled.section`
   .form-wrapper {
     width: 100%;
     margin: 16px auto;
-    display: flex;
-    flex-direction: column;
   }
   #create-btn {
     margin: 10px 0 0 0;

@@ -117,8 +117,6 @@ const StyledSideNav = styled.div`
             margin: 2px;
         }
         h5 {
-            display: flex;
-            flex-direction: column;
             margin-left: 8px;
             font-size: 1em;
             word-wrap: break-word;

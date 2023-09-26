@@ -50,18 +50,9 @@ export const SearchProjectTable = ({ user, projects, projectSearchPhrase }) => {
   );
 }
 
-const StyledProjectTable = styled.div`
+const StyledProjectTable = styled.section`
   width: 100%;
   margin: 30px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 20px;
-  row-gap: 20px;
-  @media (max-width: 1050px) {
-    grid-template-columns: 1fr 1fr;
-  }
-  @media (max-width: 450px) {
-    grid-template-columns: 75vw;
-    row-gap: 20px;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `;

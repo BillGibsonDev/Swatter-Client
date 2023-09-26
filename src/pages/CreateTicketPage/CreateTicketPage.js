@@ -14,8 +14,9 @@ import Loader from "../../loaders/Loader.js";
 import { Selector } from './components/Selector.js';
 import BreadCrumbs from '../../components/Breadcrumbs.js';
 import { DescriptionBox } from './components/DescriptionBox.js';
-import { Images } from '../../components/Images.js';
+import { Images } from './components/Images.js';
 import ButtonContainer from './components/ButtonContainer.js';
+import { TitleContainer } from "../../components/TitleContainer.js";
 
 // redux
 import { connect } from "react-redux";
@@ -38,6 +39,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
   const [ project, setProject ] = useState({});
   const [ images, setImages ] = useState([]);
   const [ assigned, setAssigned ] = useState('');
+  const [ link, setLink ] = useState('');
 
   const sections = [ 'Status', 'Tag', 'Priority', 'Sprint', 'Assigned User' ];
 
@@ -75,12 +77,14 @@ const CreateTicketPage = ({ user, showAlert }) => {
     description: Yup.string()
       .required('A Description is required')
       .max(500, 'Descriptions can not exceed 500 characters'),
+    link: Yup.string()
+      .url('Links must be valid urls'),
     images: Yup.array().of(validatonImageSchema),
   });
 
   const createTicket = (event) => {
     event.preventDefault();
-    validationSchema.validate({ title, status, tag, description })
+    validationSchema.validate({ title, status, tag, description, link })
     .then(() => {
       setLoading(true);
       axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/create`,
@@ -93,7 +97,8 @@ const CreateTicketPage = ({ user, showAlert }) => {
           tag,
           sprint,
           images,
-          author: user.username
+          author: user.username,
+          link
         },
         {
           headers: {
@@ -118,6 +123,10 @@ const CreateTicketPage = ({ user, showAlert }) => {
 		});
   };
 
+  if(isLoading){
+    return <Loader />
+  }
+
   return (
     <StyledPage>
       <BreadCrumbs
@@ -125,43 +134,47 @@ const CreateTicketPage = ({ user, showAlert }) => {
         projectTitle={project.title}
         title={'Create Ticket'}
       />
-      <h1>Create Ticket</h1>
-      {
-        isLoading ? <Loader />
-        : <div className='form-wrapper'>
-          <label>
-            Title
-            <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
-          </label>
-          {
-            sections.map((section, key) =>{
-              return (
-                <Selector
-                  key={key}
-                  label={section}
-                  setTag={setTag}
-                  setPriority={setPriority}
-                  setStatus={setStatus}
-                  setSprint={setSprint}
-                  setAssigned={setAssigned}
-                  sprintOptions={sprintOptions}
-                  project={project}
-                />
-              )
-            })
-          }
-          <DescriptionBox
-            setDescription={setDescription}
-          />
-          <Images
-            images={images}
-            setImages={setImages}
-          />
-          <ButtonContainer 
-            createTicket={createTicket}
-          />
+      <TitleContainer 
+        title={'Create Ticket'} 
+        samePage={false} 
+      />
+      <div className='form-wrapper'>
+        <label>
+          Title
+          <input type='text' id='title' onChange={(event) => { setTitle(event.target.value); }} />
+        </label>
+        {
+          sections.map((section, key) =>{
+            return (
+              <Selector
+                key={key}
+                label={section}
+                setTag={setTag}
+                setPriority={setPriority}
+                setStatus={setStatus}
+                setSprint={setSprint}
+                setAssigned={setAssigned}
+                sprintOptions={sprintOptions}
+                project={project}
+              />
+            )
+          })
+        }
+        <label>
+          Link
+          <input type='text' id='link' onChange={(event) => { setLink(event.target.value); }} />
+        </label>
+        <DescriptionBox
+          setDescription={setDescription}
+        />
+        <Images
+          images={images}
+          setImages={setImages}
+        />
+        <ButtonContainer 
+          createTicket={createTicket}
+        />
         </div>
-      }
     </StyledPage>
   );
 }

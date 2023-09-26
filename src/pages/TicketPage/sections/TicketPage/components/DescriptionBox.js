@@ -8,7 +8,7 @@ export const DescriptionBox = ({ description }) => {
 
   return (
     <StyledDescription>
-      <h2>Description:</h2>
+      <h2>Description</h2>
       <div id='description' dangerouslySetInnerHTML={{  __html: marked(description)}}></div>
     </StyledDescription>
   );
@@ -17,16 +17,18 @@ export const DescriptionBox = ({ description }) => {
 const StyledDescription = styled.article`
   color: white;
   font-size: 1em;
-  display: flex;
-  flex-direction: column;
   margin: 20px 0;
-  padding: 10px 0;
   h2 {
     color: ${palette.helperGrey};
-    border-bottom: 2px solid grey;
-    margin-bottom: 6px;
     font-weight: 400;
-    font-size: 1em;
+    font-size: .8em;
+  }
+  #description {
+    padding: 4px;
+    border: ${palette.accentBorder1px};
+    border-radius: ${palette.borderRadius};
+    min-height: 60px;
+    font-size: .8em;
   }
   p:not(:first-child) {
     margin-top: 10px;

@@ -1,4 +1,10 @@
+import { useRef } from 'react';
 import { marked } from "marked";
+import axios from 'axios';
+
+// components
+import { DeleteAlert }from '../../../../../components/DeleteAlert.js';
+import { Timer } from '../../../../../components/Timer.js';
 
 // styled
 import styled from "styled-components";
@@ -6,96 +12,116 @@ import * as palette from "../../../../../styled/ThemeVariables";
 
 // functions
 import { handleDeleteAlert } from "../../../../../functions/handleDeleteAlert";
-import { handleDate } from "../../../../../functions/handleDates";
-
-// images
-import * as icon from '../../../../../assets/IconImports.js'
 
 // redux
 import { connect } from "react-redux";
 
-const Comment = ({ comment, DeleteAlertRef, user, setCommentId }) => {
-
-  const handleCommentAuthor = (author) => {
-    if(author === user.username){
-      return { margin: "10px 0 10px auto"};
-    } else {
-      return { margin: "10px auto 10px 0"};
-    }
-  }
+const Comment = ({ comment, user, projectId, ticketId, setComments, setLoading }) => {
   
+  const DeleteAlertRef = useRef();
+
+  const deleteComment = (commentId) => {
+    setLoading(true);
+    axios.post(`${process.env.REACT_APP_BASE_URL}/${user.id}/projects/${projectId}/tickets/${ticketId}/comments/${commentId}/delete`, {},
+      {
+        headers: {
+          Authorization: user.token
+        }
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        setComments(response.data);
+        setLoading(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+  };
+
   return (
-    <StyledComment style={handleCommentAuthor(comment.user)}>
+    <StyledComment>
+      <DeleteAlert
+        DeleteAlertRef={DeleteAlertRef}
+        deleteFunction={deleteComment}
+        title={'comment'}
+        id={comment._id}
+      />
       <div className='comment-wrapper'>
-        <div className='comment-title-container'>
-          <h3 id={comment.user}>{comment.user}<span>{handleDate(comment.date)}</span></h3>
+        <div className="info-container">
           {
-            user.username !== comment.user ? <></>
-            : <button onClick={() => { setCommentId(comment._id); handleDeleteAlert(DeleteAlertRef); }}><img src={icon.Trash} alt="Delete" /></button>
+            comment.userAvatar ? <img src={comment.userAvatar} alt="" />
+            :<></>
           }
+          <h2>{comment.user}<span><Timer date={comment.date} /></span><span>{comment.edited ? 'Edited' : null}</span></h2>
         </div>
         <div className="comment-text-container" dangerouslySetInnerHTML={{  __html: marked(comment.comment)}}></div>
+        <div className="link-container">
+          <button disabled={user.username !== comment.user} onClick={() => { handleDeleteAlert(DeleteAlertRef);}}>Delete</button>
+        </div>
       </div>
     </StyledComment>
   );
 }
 
-const StyledComment = styled.div`
+const StyledComment = styled.article`
   display: flex;
-  max-width: 90%;
-  max-width: 400px;
   width: auto;
   height: auto;
-  margin: 10px auto;
-  background: #000000b3;
-  border-radius: 4px;
-  box-shadow: 2px 2px 4px #5252528d;
-  position: relative;
   justify-content: space-around;
+  border: ${palette.accentBorder1px};
+  border-radius: ${palette.borderRadius};
+  &:not(:first-child){
+    margin: 4px auto;
+  }
   .comment-wrapper {
     width: 95%;
-    margin: 10px auto;
-    .comment-title-container {
+    margin: 6px auto;
+    .info-container {
       display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: 20px;
-      align-items: center;
-      margin-bottom: 10px;
-      h3 {
+      img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 4px;
+      }
+      h2 {
         font-size: .8em;
         display: flex;
         align-items: center;
-        color: white;
+        font-weight: 700;
         span {
           margin-left: 10px;
           font-size: .8em;
-          color: ${palette.helperGrey};
-        }
-      }
-      button {
-        color: #ff0000;
-        padding: 2px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        &:hover {
-          background: white;
-        }
-        img {
-          width: 20px;
-          height: 20px;
+          color: ${palette.accentColor};
+          h3 {
+            font-size: .8em;
+          }
         }
       }
     }
     .comment-text-container {
+      margin-top: 4px;
       p {
+        font-size: .8em;
+        font-weight: 400;
         margin-bottom: 12px;
+        word-wrap: break-word;
       }
     }
-    p {
-      font-size: .8em;
-      font-weight: 400;
+    .link-container {
+      width: 100px;
+      display: flex;
+      justify-content: space-between;
+      button {
+        font-size: .7em;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: ${palette.helperGrey};
+      }
     }
   }
 `;

@@ -22,9 +22,12 @@ export const ProfileDetails =({
     setEditingPassword,
     editEmail,
     editPassword,
+    editAvatar,
+    setEditingAvatar,
     setDeleteAccount,
     deleteAcount
 }) => {
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
@@ -46,6 +49,7 @@ export const ProfileDetails =({
             <div className="options-container">
                 <StyledButton id="edit-email-button" onClick={() => setEditingEmail(!editEmail)}>Update Email</StyledButton>
                 <StyledButton id="edit-password-button" onClick={() => setEditingPassword(!editPassword)}>Update Password</StyledButton>
+                <StyledButton id="edit-avatar-button" onClick={() => setEditingAvatar(!editAvatar)}>Update Avatar</StyledButton>
                 <StyledButton id="signout-button" onClick={() => { logout(dispatch, navigate) }}>Sign Out</StyledButton>
                 <StyledButton id="delete-account-button" onClick={() => setDeleteAccount(!deleteAcount)}>Delete Account</StyledButton>
             </div>

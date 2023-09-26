@@ -15,8 +15,18 @@ export default function TicketTable({ project, seeAssigned }) {
     let activeTickets = handleActiveTickets(true, project.tickets);
 
     activeTickets.sort((a, b) => {
-        let dateA = new Date(a.lastUpdate);
-        let dateB = new Date(b.lastUpdate);
+        let ticketDateA = a.lastUpdate;
+        let ticketDateB = b.lastUpdate;
+        if(!ticketDateA && !ticketDateB){
+            ticketDateA = a.date;
+            ticketDateB = b.date;
+        } else if(!a.lastUpdate){
+            ticketDateA = a.date;
+        } else if(!b.lastUpdate){
+            ticketDateB = b.date;
+        } 
+        let dateA = new Date(ticketDateA);
+        let dateB = new Date(ticketDateB);
         return dateB - dateA;
     })
 
@@ -57,7 +67,7 @@ export default function TicketTable({ project, seeAssigned }) {
     )
 }
 
-const StyledTicketTable = styled.div`
+const StyledTicketTable = styled.section`
     display: grid;
     grid-template-columns: 310px 310px 310px 310px;
     grid-row-gap: 10px;

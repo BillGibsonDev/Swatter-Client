@@ -46,6 +46,10 @@ const MainTicketPage = ({ user }) => {
     getTicket(projectId, ticketId);
   }, [ projectId, ticketId, isLoading, editing, user ]);
 
+  if(isLoading){
+    return <TicketPageLoader />;
+  };
+
   return (
     <StyledPage>
       <BreadCrumbs 
@@ -54,10 +58,8 @@ const MainTicketPage = ({ user }) => {
         title={ticket.title}
       />
       {
-        isLoading ? <TicketPageLoader />
-        : !editing ? <TicketPage 
-          setEditing={setEditing} 
-          editing={editing}
+        !editing ? <TicketPage 
+          setEditing={setEditing}
           ticket={ticket}
           ticketId={ticketId}
           projectId={projectId}
@@ -65,7 +67,6 @@ const MainTicketPage = ({ user }) => {
         /> 
         : <EditTicketPage 
             setEditing={setEditing} 
-            editing={editing}
             ticket={ticket}
             ticketId={ticketId}
             projectId={projectId}
@@ -78,10 +79,7 @@ const MainTicketPage = ({ user }) => {
 const StyledPage = styled.section`
   height: 100%;
   width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 `;
 
 const mapStateToProps = (state) => {

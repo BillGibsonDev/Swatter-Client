@@ -119,6 +119,7 @@ export const Selector = ({
 }
 
 const StyledSelector = styled.label`
+    display: block;
     color: white;
     margin: 10px 0;
     font-weight: 400;

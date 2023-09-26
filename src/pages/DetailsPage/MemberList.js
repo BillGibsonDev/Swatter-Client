@@ -90,7 +90,7 @@ const StyledArticle = styled.article`
         .member-container {
             display: flex;
             align-items: center;
-            width: 100%;
+            width: 95%;
             background: white;
             margin: 4px auto;
             height: 30px;

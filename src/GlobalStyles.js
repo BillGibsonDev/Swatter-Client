@@ -32,6 +32,7 @@ const GlobalStyles = createGlobalStyle`
     }
     button, a {
         cursor: pointer;
+        transition: 0.2s ease-in-out;
     }
     input, textarea{
         background: lightgrey;

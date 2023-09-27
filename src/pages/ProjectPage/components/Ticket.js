@@ -103,7 +103,7 @@ const StyledTicket = styled.article`
 		font-size: .7em;
 		font-weight: 400;
 	}
-	h3, #sprint {
+	p, #sprint {
 		font-size: .8em;
 		font-weight: 400;
 		margin: auto auto 4px auto;
@@ -111,7 +111,7 @@ const StyledTicket = styled.article`
 		border-radius: ${palette.borderRadius};
 		color: ${palette.helperGrey};
 	}
-	h3 {
+	p {
 		margin-bottom: 6px;
 	}
 	#sprint {

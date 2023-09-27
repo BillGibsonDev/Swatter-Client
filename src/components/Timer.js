@@ -17,6 +17,6 @@ export const Timer = ({ date }) => {
   }, [ date ]);
 
   return (
-    <h3>{elapsedTime}</h3>
+    <p>{elapsedTime}</p>
   );
 }

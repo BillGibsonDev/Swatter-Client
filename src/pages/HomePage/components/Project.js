@@ -89,7 +89,7 @@ const StyledProject = styled.article`
         margin-bottom: 0;
       }
     }
-    h3 {
+    p {
       font-size: .8em;
       color: white;
       font-weight: 200;

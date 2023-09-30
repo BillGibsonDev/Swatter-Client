@@ -35,7 +35,7 @@ const Nav = ({ user, projectSideNavRef }) => {
         <StyledNav>
             <Link to="/home"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
             <Link to={`/users/${user.id}/profile`}><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
-            <Link to="/features"><img src={icon.Help} alt="Features" /><span className="tooltiptext">Features</span></Link>
+            <Link to="/guide"><img src={icon.Help} alt="Guide" /><span className="tooltiptext">Guide</span></Link>
             <Link ref={CreateProjectRef} id="add-button" to={`/${user.id}/create-project`}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
             <ToggleProjectNavButton projectSideNavRef={projectSideNavRef} />
         </StyledNav>

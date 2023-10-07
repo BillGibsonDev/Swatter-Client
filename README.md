@@ -15,7 +15,7 @@ SERVER-VARIABLE/login
 username: String,
 password: String,
 
-returns 
+> returns 
 {
     token: String,
     id: String,

@@ -15,13 +15,15 @@ SERVER-VARIABLE/login
 username: String,
 password: String,
 
-> returns 
+returns 
+```
 {
     token: String,
     id: String,
     username: String,
     avatar: String,
 }
+```
 
 *last login is created when the user logs in successfully*
 

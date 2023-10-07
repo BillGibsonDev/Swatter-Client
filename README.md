@@ -8,14 +8,12 @@
 
 ### User Requests
 
-#### USER Login
+#### USER - Login
 ```
-axios.post(`${SERVER-VARIABLE}/users/login`,
-    {
-        username: username,
-        password: password,
-    }
-)
+axios.post(`${SERVER-VARIABLE}/users/login`, {
+    username: username,
+    password: password,
+})
 ```
 
 returns JSON
@@ -28,5 +26,41 @@ returns JSON
 }
 ```
 
-*last login is created when the user logs in successfully*
+*last login is updated on the server when the user logs in successfully*
 
+#### USER - Sign up
+```
+axios.post(`${SERVER-VARIABLE}/users/signup`, {
+    username: username,
+    email: email,
+    password: password,
+})
+```
+
+returns JSON
+```
+{
+    'Account created'
+}
+```
+
+#### USER - Delete Account
+```
+axios.post(`${SERVER-VARIABLE}/users/${user.id}/delete-account`,
+{
+    username: username,
+    password: password,
+}, 
+{
+    headers: {
+        Authorization: token
+    }
+})
+```
+
+returns JSON
+```
+{
+    'Account Deleted'
+}
+```

@@ -18,7 +18,7 @@ export const UpdateAvatar =({ userData, user,  editAvatar, setEditingAvatar }) =
     const handleAvatarUpdate = async () => {
         if(!avatar){ return; };
         const avatarURL = await handleImages(avatar);
-        axios.post(`${process.env.REACT_APP_BASE_URL}/users/:${user.id}/update/avatar`, {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/users/${user.id}/update/avatar`, {
             avatar: avatarURL
         }, 
         {

@@ -18,7 +18,7 @@ export const UpdatePassword =({ user, editPassword, setEditingPassword }) => {
         if(!password){ return; };
         if(!newPassword){ return; };
         if(newPassword !== confirmPassword){ return; };
-        axios.post(`${process.env.REACT_APP_BASE_URL}/users/:${user.id}/update/password`, {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/users/${user.id}/update/password`, {
             username: user.username,
             password,
             newPassword

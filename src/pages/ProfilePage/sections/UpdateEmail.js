@@ -18,7 +18,7 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
         if(!password){ return; };
         if(!newEmail){ return; };
         if(newEmail !== confirmEmail){ return; };
-        axios.post(`${process.env.REACT_APP_BASE_URL}/users/:${user.id}/update/email`, {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/users/${user.id}/update/email`, {
             username: user.username,
             password,
             newEmail

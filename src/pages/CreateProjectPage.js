@@ -94,7 +94,7 @@ const CreateProjectPage = ({ user, showAlert }) => {
         projectTitle={'Create Project'}
       />
       <TitleContainer
-        title={'Start A Project'}
+        title={'Create Project'}
         samePage={false}
       />
       <div className='form-wrapper'>

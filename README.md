@@ -9,13 +9,16 @@
 ### User Requests
 
 #### USER Login
+```
+axios.post(`${SERVER-VARIABLE}/users/login`,
+    {
+        username: username,
+        password: password,
+    }
+)
+```
 
-SERVER-VARIABLE/login
-
-username: String,
-password: String,
-
-returns 
+returns JSON
 ```
 {
     token: String,

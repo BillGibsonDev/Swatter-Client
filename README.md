@@ -4,15 +4,30 @@
 
 [Backend Code](https://github.com/BillGibsonDev/Swatter-Server)
 
+## Getting Started
+
+### NPM Packages
+
+```
+axios 
+marked 
+moment
+react-redux 
+redux-thunk
+react-router-dom 
+styled-components
+yup
+```
+
 ## Documentation for Requests
 
 ### User Requests
 
 #### USER - Login
 ```
-axios.post(`${SERVER-VARIABLE}/users/login`, {
-    username: username,
-    password: password,
+axios.post(`{SERVER-VARIABLE}/users/login`, {
+    username: String,
+    password: String,
 })
 ```
 
@@ -30,10 +45,10 @@ returns JSON
 
 #### USER - Sign up
 ```
-axios.post(`${SERVER-VARIABLE}/users/signup`, {
-    username: username,
-    email: email,
-    password: password,
+axios.post(`{SERVER-VARIABLE}/users/signup`, {
+    username: String,
+    email: String,
+    password: String,
 })
 ```
 
@@ -46,10 +61,10 @@ returns JSON
 
 #### USER - Delete Account
 ```
-axios.post(`${SERVER-VARIABLE}/users/${user.id}/delete-account`,
+axios.post(`{SERVER-VARIABLE}/users/{USER-ID}/delete-account`,
 {
-    username: username,
-    password: password,
+    username: String,
+    password: String,
 }, 
 {
     headers: {
@@ -63,4 +78,51 @@ returns JSON
 {
     'Account Deleted'
 }
+```
+
+### Project Requests
+
+#### PROJECT - Create Project
+```
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/create`,
+{
+    title: String,
+    link: String,
+    image: String,
+    repository: String,
+    description: String,
+},
+{
+    headers: {
+        Authorization: token
+    }
+})
+```
+
+#### PROJECT - Update Project
+
+```
+axios.post(`{SERVER-VARIABLE}/${USER-ID}/projects/{PROJECT-ID}/edit`,
+{
+    title: String,
+    link: String,
+    image: String,
+    repository: String,
+    description: String,
+},
+{
+    headers: {
+        Authorization: token
+    }
+})
+```
+#### PROJECT - Delete Project
+
+```
+axios.delete(`{SERVER-VARIABLE}/${USER-ID}/projects/{PROJECT-ID}/delete`,
+{
+    headers: {
+        Authorization: token
+    }
+})
 ```

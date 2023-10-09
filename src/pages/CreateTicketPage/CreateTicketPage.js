@@ -97,7 +97,6 @@ const CreateTicketPage = ({ user, showAlert }) => {
           tag,
           sprint,
           images,
-          author: user.username,
           link
         },
         {

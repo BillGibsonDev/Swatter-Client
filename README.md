@@ -23,7 +23,7 @@ yup
 
 ### User Requests
 
-#### USER - Login
+#### Login
 ```
 axios.post(`{SERVER-VARIABLE}/users/login`, {
     username: String,
@@ -31,7 +31,7 @@ axios.post(`{SERVER-VARIABLE}/users/login`, {
 })
 ```
 
-returns JSON
+Returns JSON
 ```
 {
     token: String,
@@ -43,7 +43,7 @@ returns JSON
 
 *last login is updated on the server when the user logs in successfully*
 
-#### USER - Sign up
+#### Sign up
 ```
 axios.post(`{SERVER-VARIABLE}/users/signup`, {
     username: String,
@@ -52,14 +52,14 @@ axios.post(`{SERVER-VARIABLE}/users/signup`, {
 })
 ```
 
-returns JSON
+Returns JSON
 ```
 {
     'Account created'
 }
 ```
 
-#### USER - Delete Account
+#### Delete Account
 ```
 axios.post(`{SERVER-VARIABLE}/users/{USER-ID}/delete-account`,
 {
@@ -73,7 +73,7 @@ axios.post(`{SERVER-VARIABLE}/users/{USER-ID}/delete-account`,
 })
 ```
 
-returns JSON
+Returns JSON
 ```
 {
     'Account Deleted'
@@ -82,7 +82,60 @@ returns JSON
 
 ### Project Requests
 
-#### PROJECT - Create Project
+#### Get Projects
+```
+axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects`,
+    {
+    headers: {
+        Authorization: token,
+    },
+});
+```
+
+Returns the project objects
+```
+{
+    _id: String,
+    title: String,
+    link: String,
+    image: String,
+    repository: String,
+    description: String,
+    lastUpdate: String,
+    members: Array
+    tickets: Array
+    comments: Array
+}
+```
+
+#### Get Project
+```
+axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}`,
+    {
+    headers: {
+        Authorization: token,
+    },
+});
+```
+
+Returns the project object
+```
+{
+    _id: String,
+    title: String,
+    link: String,
+    image: String,
+    repository: String,
+    description: String,
+    lastUpdate: String,
+    members: Array
+    tickets: Array
+    comments: Array
+}
+```
+
+
+#### Create Project
 ```
 axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/create`,
 {
@@ -99,10 +152,16 @@ axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/create`,
 })
 ```
 
-#### PROJECT - Update Project
-
+Returns
 ```
-axios.post(`{SERVER-VARIABLE}/${USER-ID}/projects/{PROJECT-ID}/edit`,
+{
+    'Project Created!
+}
+```
+
+#### Update Project
+```
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/edit`,
 {
     title: String,
     link: String,
@@ -116,13 +175,108 @@ axios.post(`{SERVER-VARIABLE}/${USER-ID}/projects/{PROJECT-ID}/edit`,
     }
 })
 ```
-#### PROJECT - Delete Project
 
+Returns the updated project object
 ```
-axios.delete(`{SERVER-VARIABLE}/${USER-ID}/projects/{PROJECT-ID}/delete`,
+{
+    _id: String,
+    title: String,
+    link: String,
+    image: String,
+    repository: String,
+    description: String,
+    lastUpdate: String,
+    members: Array
+    tickets: Array
+    comments: Array
+}
+```
+
+#### Delete Project
+```
+axios.delete(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/delete`,
 {
     headers: {
         Authorization: token
     }
 })
+```
+
+Returns
+```
+{
+    '{PROJECT-TITLE} deleted'
+}
+```
+
+### Ticket Requests
+
+#### Create Ticket
+```
+axios.post(`{VARIABLE-ID}/{USER-ID}/projects/{PROJECT-ID}/tickets/create`,
+{
+    title: String,
+    description: String,
+    status: String,
+    priority: String,
+    assigned: String,
+    tag: String,
+    sprint: String,
+    images: Array,
+    link: String
+},
+{
+    headers: {
+        Authorization: token
+    }
+})
+```
+
+*ticket author is created on the server*
+
+Returns
+```
+{
+    'Ticket Created'
+}
+```
+
+#### Update Ticket
+```
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/tickets/{TICKET-ID}/update`,
+    {
+        description: String,
+        status: String,
+        tag: String,
+        priority: String,
+        assigned: String,
+        sprint: String,
+        images: Array,
+        link: String
+    },
+    {
+        headers: {
+            Authorization: token
+        }
+    }
+)
+```
+
+*titles can not be edited*
+
+Returns updated ticket object
+```
+{
+    _id: String,
+    title; String,
+    description: String,
+    status: String,
+    tag: String,
+    priority: String,
+    assigned: String,
+    sprint: String,
+    images: Array,
+    comments: Array,
+    link: String
+}
 ```

@@ -26,6 +26,7 @@ import ArchivePage from "./pages/ArchivePage/Archive";
 import { GuidePage } from "./pages/GuidePage/GuidePage";
 import ProjectActivityPage from "./pages/ActivityPage";
 import CommentsPage from "./pages/CommentsPage/CommentsPage";
+import { UnknownPath } from "./pages/404Page";
 
 // logged out pages
 import LoginPage from "./pages/LoginPage";
@@ -119,6 +120,7 @@ const App = ({ user, isLoggedIn }) => {
           } />
           <Route path='/' element={<Navigate replace to="/login" />}  />
           <Route path='/home' element={<Navigate replace to="/login" />}  />
+          <Route path="*" element={<UnknownPath /> }  />
         </Routes>
       </>
     )
@@ -146,6 +148,8 @@ const App = ({ user, isLoggedIn }) => {
           <Route path='/guide' exact element={ <GuidePage />} />
           <Route path='/:userId/projects/:projectId/activity' exact element={ <ProjectActivityPage />} />
           <Route path='/:userId/projects/:projectId/comments' exact element={ <CommentsPage />} />
+
+          <Route path="*" element={<UnknownPath /> }  />
         </Routes>
       </StyledApp>
     </>

@@ -61,8 +61,12 @@ const StyledNav = styled.div`
         justify-content: center;
         align-items: center;
         .tooltiptext {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             visibility: hidden;
             width: 100%;
+            height: 100%;
             min-width: 160px;
             background-color: black;
             color: #fff;
@@ -71,7 +75,6 @@ const StyledNav = styled.div`
             padding: 5px 0;
             position: absolute;
             z-index: 2000;
-            top: 0;
             left: 105%;
         }
         &:hover {

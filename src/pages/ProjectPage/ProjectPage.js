@@ -89,7 +89,7 @@ const StyledPage = styled.section`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     height: auto;
     @media (max-width: 600px) {
       flex-direction: column;

@@ -42,7 +42,7 @@ const Nav = ({ user, projectSideNavRef }) => {
     )
 }
 
-const StyledNav = styled.div`
+const StyledNav = styled.nav`
     height: 100vh;
     width: 40px;
     display: flex;

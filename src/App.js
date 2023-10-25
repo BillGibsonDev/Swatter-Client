@@ -26,7 +26,7 @@ import ArchivePage from "./pages/ArchivePage/Archive";
 import { GuidePage } from "./pages/GuidePage/GuidePage";
 import ProjectActivityPage from "./pages/ActivityPage";
 import CommentsPage from "./pages/CommentsPage/CommentsPage";
-import { UnknownPath } from "./pages/404Page";
+import UnknownPath from "./pages/404Page";
 
 // logged out pages
 import LoginPage from "./pages/LoginPage";

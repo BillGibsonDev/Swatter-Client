@@ -30,7 +30,7 @@ const GlobalStyles = createGlobalStyle`
         letter-spacing: 1px;
         border-radius: 4px;
     }
-    button, a {
+    button, a, select, option{
         cursor: pointer;
         transition: 0.2s ease-in-out;
     }

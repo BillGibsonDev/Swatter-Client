@@ -8,11 +8,11 @@ import { handleActiveTickets } from '../../../functions/handleActiveTickets';
 // components
 import Ticket from './Ticket.js';
 
-export default function TicketTable({ project, seeAssigned }) {
+export default function TicketTable({ project, seeAssigned, ticketTimeFrame }) {
 
     const ticketStatuses = ['Open', 'Underway', 'Reviewing', 'Completed'];
 
-    let activeTickets = handleActiveTickets(true, project.tickets);
+    let activeTickets = handleActiveTickets(true, project.tickets, ticketTimeFrame);
 
     activeTickets.sort((a, b) => {
         let ticketDateA = a.lastUpdate;

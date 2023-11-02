@@ -28,6 +28,7 @@ const ProjectPage = ({ user }) => {
   const [ isLoading, setLoading ] = useState(true);
   const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
   const [ seeAssigned, setSeeAssigned ] = useState(true);
+  const [ ticketTimeFrame, setTicketTimeFrame ] = useState(30);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -58,10 +59,22 @@ const ProjectPage = ({ user }) => {
   return (
     <StyledPage>
       <div className="search-container">
-        <Searchbar setSearchPhrase={setTicketSearchPhrase} />
+        <Searchbar setSearchPhrase={setTicketSearchPhrase} set/>
         <label>Assigned
           <input type="checkbox" id="assigned" checked={seeAssigned} onChange={(e) => { handleSeeAssignedValue(e.target.checked)}} />
         </label> 
+        <label>
+          <select 
+            name="time-frame" 
+            id="time-frame" 
+            onChange={(e) => setTicketTimeFrame(e.target.value)}
+          >
+            <option value="30">30 days</option>
+            <option value="60">60 days</option>
+            <option value="90">90 days</option>
+            <option value="All">All</option>
+          </select>
+        </label>
       </div>
       {
         ticketSearchPhrase ?
@@ -74,6 +87,7 @@ const ProjectPage = ({ user }) => {
           <TicketTable
             project={project}
             seeAssigned={seeAssigned}
+            ticketTimeFrame={ticketTimeFrame}
           />
       }
     </StyledPage>
@@ -89,7 +103,7 @@ const StyledPage = styled.section`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 500px;
+    max-width: 650px;
     height: auto;
     @media (max-width: 600px) {
       flex-direction: column;
@@ -104,6 +118,10 @@ const StyledPage = styled.section`
       input {
         margin-left: 6px;
       }
+    }
+    #time-frame {
+      padding: 0 10px;
+      cursor: pointer;
     }
   }
 `;

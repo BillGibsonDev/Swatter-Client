@@ -69,7 +69,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
     title: Yup.string()
       .required('Title is required')
       .min(3, 'Title must be at least 3 characters')
-      .max(30, 'Title cannot exceed 30 characters'),
+      .max(40, 'Title cannot exceed 40 characters'),
     status: Yup.string()
       .required('A Status is required'),
     tag: Yup.string()
@@ -97,7 +97,6 @@ const CreateTicketPage = ({ user, showAlert }) => {
           tag,
           sprint,
           images,
-          author: user.username,
           link
         },
         {

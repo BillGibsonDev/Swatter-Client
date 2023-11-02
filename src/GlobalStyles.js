@@ -30,7 +30,7 @@ const GlobalStyles = createGlobalStyle`
         letter-spacing: 1px;
         border-radius: 4px;
     }
-    button, a {
+    button, a, select, option{
         cursor: pointer;
         transition: 0.2s ease-in-out;
     }
@@ -50,6 +50,9 @@ const GlobalStyles = createGlobalStyle`
             color: #ff0000;
             transform: scale(1.02);
         }
+    }
+    li {
+        list-style-position: inside;
     }
 `;
 

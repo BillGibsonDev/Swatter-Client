@@ -51,8 +51,12 @@ const StyledButton = styled.button`
     background: ${palette.accentColor};
   }
   .tooltiptext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     visibility: hidden;
     width: 100%;
+    height: 100%;
     min-width: 160px;
     background-color: black;
     color: #fff;
@@ -69,8 +73,8 @@ const StyledButton = styled.button`
     width: 25px;
     height: 25px;
   }
-  #arrow-button:hover .tooltiptext,
-  #arrow-button:active .tooltiptext {
+  &:hover .tooltiptext,
+  &:active .tooltiptext {
     visibility: visible;
     transition-delay: 1s;
   }

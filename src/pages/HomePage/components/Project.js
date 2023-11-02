@@ -34,7 +34,7 @@ const StyledProject = styled.article`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 350px;
+  max-width: 450px;
   position: relative;
   background: #5c5c5c73;
   border-radius: 4px;

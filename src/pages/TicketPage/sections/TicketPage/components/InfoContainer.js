@@ -12,10 +12,7 @@ export const InfoContainer = ({ ticket }) => {
       <h2><span>Creator:</span>{ticket.author}</h2>
       <h2><span>Assigned:</span>{ ticket.assigned ? ticket.assigned : 'No'}</h2>
       <h2><span>Created:</span><Timer date={ticket.date} /></h2>
-      {
-        ticket.lastUpdate ? <h2><span>Updated:</span><Timer date={ticket.lastUpdate} /></h2>
-        : <></>
-      }
+      <h2><span>Updated:</span>{ ticket.lastUpdate ? <Timer date={ticket.lastUpdate} /> : 'No'}</h2>
     </StyledArticle>
   );
 }

@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 
-export const handleActiveTickets = ( active, tickets ) => {
+export const handleActiveTickets = ( active, tickets, timeFrame ) => {
     let activeArray = [];
     let inactiveArray = [];
     for ( let i = 0; tickets.length > i; i++ ){
@@ -11,10 +11,12 @@ export const handleActiveTickets = ( active, tickets ) => {
            ticketDate = tickets[i].date.split(",");
         }
         const days = moment(ticketDate[0]).diff(moment(), 'days');
-        if(days>-30){
-            activeArray.push(tickets[i])
+        if(days>-timeFrame){
+            activeArray.push(tickets[i]);
+        } else if(timeFrame === 'All'){
+            return tickets;
         } else {
-            inactiveArray.push(tickets[i])
+            inactiveArray.push(tickets[i]);
         }
     }
     if(active){

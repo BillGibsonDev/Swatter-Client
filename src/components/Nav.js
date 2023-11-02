@@ -35,14 +35,14 @@ const Nav = ({ user, projectSideNavRef }) => {
         <StyledNav>
             <Link to="/home"><img src={icon.Home} alt="Home" /><span className="tooltiptext">Home</span></Link>
             <Link to={`/users/${user.id}/profile`}><img src={icon.Profile} alt="Profile" /><span className="tooltiptext">Profile</span></Link>
-            <Link to="/features"><img src={icon.Help} alt="Features" /><span className="tooltiptext">Features</span></Link>
+            <Link to="/guide"><img src={icon.Help} alt="Guide" /><span className="tooltiptext">Guide</span></Link>
             <Link ref={CreateProjectRef} id="add-button" to={`/${user.id}/create-project`}><img src={icon.Add} alt="Create Project"/><span className="tooltiptext">Create Project</span></Link>
             <ToggleProjectNavButton projectSideNavRef={projectSideNavRef} />
         </StyledNav>
     )
 }
 
-const StyledNav = styled.div`
+const StyledNav = styled.nav`
     height: 100vh;
     width: 40px;
     display: flex;
@@ -61,8 +61,12 @@ const StyledNav = styled.div`
         justify-content: center;
         align-items: center;
         .tooltiptext {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             visibility: hidden;
             width: 100%;
+            height: 100%;
             min-width: 160px;
             background-color: black;
             color: #fff;
@@ -71,7 +75,6 @@ const StyledNav = styled.div`
             padding: 5px 0;
             position: absolute;
             z-index: 2000;
-            top: 0;
             left: 105%;
         }
         &:hover {

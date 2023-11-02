@@ -51,6 +51,9 @@ const GlobalStyles = createGlobalStyle`
             transform: scale(1.02);
         }
     }
+    li {
+        list-style-position: inside;
+    }
 `;
 
 export default GlobalStyles;

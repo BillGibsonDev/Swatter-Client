@@ -9,7 +9,7 @@ import LoginLoader from '../loaders/LoginLoader';
 // router
 import { Link } from 'react-router-dom';
 
-export default function LoginPage({handleLogin, setUsername, setPassword, isLoading }) {
+export default function LoginPage({ handleLogin, setUsername, setPassword, isLoading, handleGuestLogin }) {
 
 	return (
 		<StyledPage>
@@ -32,13 +32,14 @@ export default function LoginPage({handleLogin, setUsername, setPassword, isLoad
 						<p>Need an account?</p>
 						<Link to={'/signup'}>Sign up</Link>
 					</div>
+					<StyledButton id="tour-button" onClick={() => { handleGuestLogin()}}>I'm Just Here For The Tour</StyledButton>
 				</>
 			}
 		</StyledPage>
 	)
 }
 
-const StyledPage = styled.div`
+const StyledPage = styled.section`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -98,5 +99,8 @@ const StyledPage = styled.div`
 			text-decoration: underline;
       		text-underline-position: under;
 		}
+	}
+	#tour-button {
+		background: grey;
 	}
 `;

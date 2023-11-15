@@ -29,7 +29,7 @@ const ProfilePage =({ user }) => {
 
     const DeleteAlertRef = useRef();
     const navigate = useNavigate();
-
+    
     const [ userData, setUserData ] = useState({});
     const [ editPassword, setEditingPassword ] = useState(false);
     const [ editEmail, setEditingEmail ] = useState(false);
@@ -68,7 +68,7 @@ const ProfilePage =({ user }) => {
             }
         })
         .then((response) => {
-            console.log(response);
+            console.log(response.data);
             localStorage.clear();
             navigate('/');
         })

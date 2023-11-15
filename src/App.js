@@ -97,6 +97,30 @@ const App = ({ user, isLoggedIn }) => {
 			dispatch(showAlert(validationError, 'error'));
 		});
   };
+
+    const handleGuestLogin = () => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
+        {
+          username: 'Guest',
+          password: 'Guest1',
+        }
+      )
+      .then((response) => {
+        if(response.status === 200){
+          handleTokens(response.data.token, response.data.username, response.data.id);
+          dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
+          setLoading(false);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        localStorage.clear();
+        setLoading(false);
+        dispatch(showAlert(error, 'error'));
+      });
+    };
   
   if(!isLoggedIn){
     return (
@@ -109,6 +133,7 @@ const App = ({ user, isLoggedIn }) => {
               handleLogin={handleLogin}
               setUsername={setUsername}
               setPassword={setPassword}
+              handleGuestLogin={handleGuestLogin}
               isLoading={isLoading}
             /> 
           } />

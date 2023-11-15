@@ -5,7 +5,7 @@ export const IntroSection = () => {
   return (
     <StyledSection>
       <div className="wrapper">
-        <h2 id="Introduction">Introduction</h2>
+        <h2 id="Introduction">Welcome to Swatter</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
           Voluptas nobis aspernatur cupiditate ducimus facere beatae voluptatum, temporibus corporis amet autem molestiae, dignissimos ab exercitationem rem cumque, 
           veritatis maxime explicabo sint! Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
@@ -40,6 +40,9 @@ const StyledSection = styled.section`
   margin: 10px;
   display: flex;
   position: relative;
+  h2 {
+    font-size: ${palette.titleSize};
+  }
   h4 {
     color: white;
     font-size: 1.2em;

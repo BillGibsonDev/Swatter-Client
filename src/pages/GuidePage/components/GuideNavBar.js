@@ -18,14 +18,6 @@ export const MainNavbar = () => {
             </div>
         </div>
         <div className="dropdown-wrapper">
-            <a href="#Accounts">Accounts</a>
-            <div className="dropdown-container">
-                <a href="#Create-Account">Create Account</a>
-                <a href="#Update-Account">Update Account</a>
-                <a href="#Deleting-Account">Deleting Account</a>
-            </div>
-        </div>
-        <div className="dropdown-wrapper">
             <a href="#Projects">Projects</a>
             <div className="dropdown-container">
                 <a href="#Create-A-Project">Creating A Project</a>
@@ -41,14 +33,6 @@ export const MainNavbar = () => {
                 <a href="#Creating-Tickets">Creating Tickets</a>
                 <a href="#Editing-Tickets">Editing Tickets</a>
                 <a href="#Comments-For-Tickets">Comments for Tickets</a>
-            </div>
-        </div>
-        <div className="dropdown-wrapper">
-            <a href="#Sprints">Sprints</a>
-            <div className="dropdown-container">
-                <a href="#Creating-Sprints">Creating Sprints</a>
-                <a href="#The-Sprint-Table">The Sprint Table</a>
-                <a href="#Editing-Sprints">Editing Sprints</a>
             </div>
         </div>
     </ StyledNav>

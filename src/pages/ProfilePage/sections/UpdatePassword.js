@@ -8,11 +8,17 @@ import * as palette from '../../../styled/ThemeVariables.js';
 // components
 import { StyledButton } from '../../../styled/StyledButton.js';
 
+// redux
+import { useDispatch } from 'react-redux';
+import { showAlert } from '../../../redux/actions/alert.js';
+
 export const UpdatePassword =({ user, editPassword, setEditingPassword }) => {
 
     const [ password, setPassword ] = useState('');
     const [ newPassword, setNewPassword ] = useState('');
     const [ confirmPassword, setConfirmPassword ] = useState('');
+
+    const dispatch = useDispatch();
 
     const handlePasswordUpdate = () => {
         if(!password){ return; };
@@ -27,6 +33,12 @@ export const UpdatePassword =({ user, editPassword, setEditingPassword }) => {
             headers: {
                 Authorization: user.token
             }
+        })
+        .then((response) => {
+            dispatch(showAlert(response, 'success'));
+        })
+        .catch((error) => {
+            dispatch(showAlert(error.response.data, 'error'));
         })
     }
     

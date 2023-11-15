@@ -90,7 +90,7 @@ const App = ({ user, isLoggedIn }) => {
         console.log(error);
         localStorage.clear();
         setLoading(false);
-        dispatch(showAlert(error, 'error'));
+        dispatch(showAlert(error.response.data, 'error'));
       });
     })
     .catch((validationError) => {

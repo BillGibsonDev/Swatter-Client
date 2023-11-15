@@ -18,7 +18,8 @@ import { ProfileDetails } from './sections/ProfileDetails.js';
 import { handleDeleteAlert } from '../../functions/handleDeleteAlert.js';
 
 // redux
-import { connect } from 'react-redux';
+import { useDispatch ,connect } from 'react-redux';
+import { showAlert } from '../../redux/actions/alert';
 
 // router
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +30,8 @@ const ProfilePage =({ user }) => {
 
     const DeleteAlertRef = useRef();
     const navigate = useNavigate();
-    
+    const dispatch = useDispatch();
+
     const [ userData, setUserData ] = useState({});
     const [ editPassword, setEditingPassword ] = useState(false);
     const [ editEmail, setEditingEmail ] = useState(false);
@@ -68,12 +70,12 @@ const ProfilePage =({ user }) => {
             }
         })
         .then((response) => {
-            console.log(response.data);
+            console.log(response);
             localStorage.clear();
             navigate('/');
         })
         .catch((error) => {
-            console.log(error);
+            dispatch(showAlert(error.response.data, 'error'));
         })
     }
 

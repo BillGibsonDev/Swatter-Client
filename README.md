@@ -23,12 +23,28 @@ yup
 
 ### User Requests
 
+Requests require an Authorization header to be sent with most API calls, excluding login and sign up functions.
+
+#### A Sample Request May Look Like: 
+```
+axios.post(URL-HERE,
+    {
+        dataField: data,
+    },
+    {
+        headers: {
+            Authorization: token
+        }
+    }
+);
+```
+
 #### Login
 ```
 axios.post(`{SERVER-VARIABLE}/users/login`, {
     username: String,
     password: String,
-})
+});
 ```
 
 Returns JSON
@@ -49,7 +65,7 @@ axios.post(`{SERVER-VARIABLE}/users/signup`, {
     username: String,
     email: String,
     password: String,
-})
+});
 ```
 
 Returns JSON
@@ -61,16 +77,10 @@ Returns JSON
 
 #### Delete Account
 ```
-axios.post(`{SERVER-VARIABLE}/users/{USER-ID}/delete-account`,
-{
+axios.post(`{SERVER-VARIABLE}/users/{USER-ID}/delete-account`, {
     username: String,
     password: String,
-}, 
-{
-    headers: {
-        Authorization: token
-    }
-})
+});
 ```
 
 Returns JSON
@@ -84,12 +94,7 @@ Returns JSON
 
 #### Get Projects
 ```
-axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects`,
-    {
-    headers: {
-        Authorization: token,
-    },
-});
+axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects`);
 ```
 
 Returns the project objects
@@ -110,12 +115,7 @@ Returns the project objects
 
 #### Get Project
 ```
-axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}`,
-    {
-    headers: {
-        Authorization: token,
-    },
-});
+axios.get(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}`);
 ```
 
 Returns the project object
@@ -137,19 +137,13 @@ Returns the project object
 
 #### Create Project
 ```
-axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/create`,
-{
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/create`, {
     title: String,
     link: String,
     image: String,
     repository: String,
     description: String,
-},
-{
-    headers: {
-        Authorization: token
-    }
-})
+});
 ```
 
 Returns
@@ -161,19 +155,13 @@ Returns
 
 #### Update Project
 ```
-axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/edit`,
-{
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/edit`, {
     title: String,
     link: String,
     image: String,
     repository: String,
     description: String,
-},
-{
-    headers: {
-        Authorization: token
-    }
-})
+});
 ```
 
 Returns the updated project object
@@ -194,12 +182,7 @@ Returns the updated project object
 
 #### Delete Project
 ```
-axios.delete(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/delete`,
-{
-    headers: {
-        Authorization: token
-    }
-})
+axios.delete(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/delete`);
 ```
 
 Returns
@@ -213,8 +196,7 @@ Returns
 
 #### Create Ticket
 ```
-axios.post(`{VARIABLE-ID}/{USER-ID}/projects/{PROJECT-ID}/tickets/create`,
-{
+axios.post(`{VARIABLE-ID}/{USER-ID}/projects/{PROJECT-ID}/tickets/create`, {
     title: String,
     description: String,
     status: String,
@@ -224,12 +206,7 @@ axios.post(`{VARIABLE-ID}/{USER-ID}/projects/{PROJECT-ID}/tickets/create`,
     sprint: String,
     images: Array,
     link: String
-},
-{
-    headers: {
-        Authorization: token
-    }
-})
+});
 ```
 
 *ticket author is created on the server*
@@ -243,23 +220,16 @@ Returns
 
 #### Update Ticket
 ```
-axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/tickets/{TICKET-ID}/update`,
-    {
-        description: String,
-        status: String,
-        tag: String,
-        priority: String,
-        assigned: String,
-        sprint: String,
-        images: Array,
-        link: String
-    },
-    {
-        headers: {
-            Authorization: token
-        }
-    }
-)
+axios.post(`{SERVER-VARIABLE}/{USER-ID}/projects/{PROJECT-ID}/tickets/{TICKET-ID}/update`, {
+    description: String,
+    status: String,
+    tag: String,
+    priority: String,
+    assigned: String,
+    sprint: String,
+    images: Array,
+    link: String
+});
 ```
 
 *titles can not be edited*

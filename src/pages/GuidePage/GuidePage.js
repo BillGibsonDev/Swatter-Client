@@ -7,10 +7,8 @@ import { MainNavbar } from "./components/GuideNavBar.js";
 // sections
 import { IntroSection } from "./sections/IntroSection.js";
 import { GettingStarted } from "./sections/GettingStarted.js";
-import { AccountSection } from "./sections/AccountSection.js";
 import { ProjectSection } from "./sections/ProjectSection.js";
-import { TicketSection } from "./sections/TicketSection.js";
-import { SprintSection } from "./sections/SprintSection.js";
+import { TicketSection } from "./sections/Tickets/TicketSection.js";
 
 export const GuidePage = () => {
   return (
@@ -23,10 +21,8 @@ export const GuidePage = () => {
         </header>
         <IntroSection />
         <GettingStarted />
-        <AccountSection />
         <ProjectSection />
         <TicketSection />
-        <SprintSection />
       </div>
     </StyledPage>
   )

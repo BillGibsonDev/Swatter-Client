@@ -10,6 +10,7 @@ import * as icons from '../../../assets/IconImports.js';
 
 // components
 import { Timer } from '../../../components/Timer.js';
+import { HandleIcons } from '../../../functions/handleIcons.js';
 
 // redux
 import { connect } from 'react-redux';
@@ -27,23 +28,6 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
 			} else {
 				return {};
 			}
-		}
-	}
-
-	const handleTagImage = (tag) => {
-		switch (tag) {
-		case "Bug":
-			return icons.TicketPicture;
-		case "Feature":
-			return icons.Feature;
-		case "Enhancement":
-			return icons.Enhancement;
-		case "Task":
-			return icons.Task;
-		case "Redesign":
-			return icons.Redesign;
-		default:
-			return '';
 		}
 	}
 
@@ -65,9 +49,9 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
 				<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
 				<div className="bottom-container">
 					<div className="status-icons-container">
-						<img src={handleTagImage(ticket.tag)} alt={ticket.tag} />
+						<HandleIcons tag={ticket.tag}/>
 						<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
-						<img src={handleTicketPriority(ticket.priority)} alt={ticket.priority} />
+						<img id="priority" src={handleTicketPriority(ticket.priority)} alt={ticket.priority} />
 					</div>
 					<h2 id={ticket.author} className='author'>{ticket.author}</h2>
 				</div>
@@ -138,7 +122,7 @@ const StyledTicket = styled.article`
 			#key {
 				margin: 0 10px;
 			}
-			img {
+			#priority {
 				width: 20px;
 			}
 		}

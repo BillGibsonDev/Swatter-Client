@@ -11,9 +11,15 @@ import { StyledButton } from '../../../styled/StyledButton.js';
 // functions
 import { handleImages } from '../../../functions/handleImages.js';
 
+//redux
+import { showAlert } from '../../../redux/actions/alert.js';
+import { useDispatch } from 'react-redux';
+
 export const UpdateAvatar =({ userData, user,  editAvatar, setEditingAvatar }) => {
 
     const [ avatar, setAvatar ] = useState('')
+
+    const dispatch = useDispatch();
 
     const handleAvatarUpdate = async () => {
         if(!avatar){ return; };
@@ -25,6 +31,12 @@ export const UpdateAvatar =({ userData, user,  editAvatar, setEditingAvatar }) =
             headers: {
                 Authorization: user.token
             }
+        })
+        .then((response) => {
+            dispatch(showAlert(response, 'success'));
+        })
+        .catch((error) => {
+            dispatch(showAlert(error.response.data, 'error'));
         })
     }
     

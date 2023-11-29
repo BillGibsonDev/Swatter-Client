@@ -12,11 +12,11 @@ const Alert = ({ alert, hideAlert }) => {
 
     const alertPrompts = {
         success: {
-            title: 'Success',
+            title: alert.message ? alert.message : 'Success',
             icon: icons.CircleCheckbox,
         },
         error: {
-            title: `${alert.message}`,
+            title: `Error: ${alert.message}`,
             icon: icons.ChatboxWarning,
         },
         warning: {

@@ -45,9 +45,13 @@ import { handleTokens } from "./functions/handleTokens";
 import useTokenRefresh from "./functions/useTokenRefresh";
 
 const App = ({ user, isLoggedIn }) => {
-
-  useTokenRefresh();
   
+  const tokenLogin = useTokenRefresh()
+
+  if(isLoggedIn && !user){
+    tokenLogin()
+  }
+
   const projectSideNavRef = useRef();
 
   const [ password, setPassword ] = useState("");
@@ -90,13 +94,37 @@ const App = ({ user, isLoggedIn }) => {
         console.log(error);
         localStorage.clear();
         setLoading(false);
-        dispatch(showAlert(error, 'error'));
+        dispatch(showAlert(error.response.data, 'error'));
       });
     })
     .catch((validationError) => {
 			dispatch(showAlert(validationError, 'error'));
 		});
   };
+
+    const handleGuestLogin = () => {
+      setLoading(true);
+      axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,
+        {
+          username: 'Guest',
+          password: 'Guest1',
+        }
+      )
+      .then((response) => {
+        if(response.status === 200){
+          handleTokens(response.data.token, response.data.username, response.data.id);
+          dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
+          setLoading(false);
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        localStorage.clear();
+        setLoading(false);
+        dispatch(showAlert(error, 'error'));
+      });
+    };
   
   if(!isLoggedIn){
     return (
@@ -109,6 +137,7 @@ const App = ({ user, isLoggedIn }) => {
               handleLogin={handleLogin}
               setUsername={setUsername}
               setPassword={setPassword}
+              handleGuestLogin={handleGuestLogin}
               isLoading={isLoading}
             /> 
           } />

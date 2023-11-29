@@ -8,11 +8,17 @@ import * as palette from '../../../styled/ThemeVariables.js';
 // components
 import { StyledButton } from '../../../styled/StyledButton.js';
 
+// redux
+import { useDispatch } from 'react-redux';
+import { showAlert } from '../../../redux/actions/alert.js';
+
 export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
 
     const [ password, setPassword ] = useState('');
     const [ newEmail, setNewEmail ] = useState('');
     const [ confirmEmail, setConfirmEmail ] = useState('');
+
+    const dispatch = useDispatch();
 
     const handleEmailUpdate = () => {
         if(!password){ return; };
@@ -27,6 +33,12 @@ export const UpdateEmail =({ userData, user,  editEmail, setEditingEmail }) => {
             headers: {
                 Authorization: user.token
             }
+        })
+        .then((response) => {
+            dispatch(showAlert(response, 'success'));
+        })
+        .catch((error) => {
+            dispatch(showAlert(error.response.data, 'error'));
         })
     }
     

@@ -33,7 +33,10 @@ export const DeleteAccount =({
 const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
-
+    h1 {
+        font-size: ${palette.titleSize};
+        color: ${palette.titleColor};
+    }
     label {
         font-weight: bold;
         font-size: ${palette.labelSize};

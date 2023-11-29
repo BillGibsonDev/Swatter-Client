@@ -45,9 +45,13 @@ import { handleTokens } from "./functions/handleTokens";
 import useTokenRefresh from "./functions/useTokenRefresh";
 
 const App = ({ user, isLoggedIn }) => {
-
-  useTokenRefresh();
   
+  const tokenLogin = useTokenRefresh()
+
+  if(isLoggedIn && !user){
+    tokenLogin()
+  }
+
   const projectSideNavRef = useRef();
 
   const [ password, setPassword ] = useState("");

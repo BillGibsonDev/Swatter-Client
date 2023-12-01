@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 // styled
 import styled from "styled-components";
 
+// icons
+import * as icons from '../../assets/IconImports.js';
+
 // components
 import TicketTable from "./components/TicketTable.js";
 import { Searchbar } from "../../components/Searchbar";
 import SearchTicketTable from "./components/SearchTicketTable.js";
+import ListTicketTable from "./components/ListTicketTable.js";
 
 // loaders
 import Loader from "../../loaders/Loader";
@@ -27,6 +31,7 @@ const ProjectPage = ({ user }) => {
   const [ project, setProject ] = useState({});
   const [ isLoading, setLoading ] = useState(true);
   const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
+  const [ listView, setListView ] = useState(true);
   const [ seeAssigned, setSeeAssigned ] = useState(true);
   const [ ticketTimeFrame, setTicketTimeFrame ] = useState(30);
 
@@ -59,7 +64,7 @@ const ProjectPage = ({ user }) => {
   return (
     <StyledPage>
       <div className="search-container">
-        <Searchbar setSearchPhrase={setTicketSearchPhrase} set/>
+        <Searchbar setSearchPhrase={setTicketSearchPhrase} />
         <label>Assigned
           <input type="checkbox" id="assigned" checked={seeAssigned} onChange={(e) => { handleSeeAssignedValue(e.target.checked)}} />
         </label> 
@@ -75,6 +80,10 @@ const ProjectPage = ({ user }) => {
             <option value="All">All</option>
           </select>
         </label>
+        <div className="view-button-container">
+          <button onClick={() => setListView(true)}><img src={icons.List} alt="List" /></button>
+          <button onClick={() => setListView(false)}><img src={icons.Columns} alt="Columns" /></button>
+        </div>
       </div>
       {
         ticketSearchPhrase ?
@@ -82,9 +91,15 @@ const ProjectPage = ({ user }) => {
             tickets={project.tickets}
             project={project}
             ticketSearchPhrase={ticketSearchPhrase}
+            seeAssigned={seeAssigned}
           />
-        :
-          <TicketTable
+        : listView ?
+          <ListTicketTable
+            project={project}
+            seeAssigned={seeAssigned}
+            ticketTimeFrame={ticketTimeFrame}
+          />
+        : <TicketTable
             project={project}
             seeAssigned={seeAssigned}
             ticketTimeFrame={ticketTimeFrame}
@@ -103,11 +118,10 @@ const StyledPage = styled.section`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 650px;
+    max-width: 750px;
     height: auto;
-    @media (max-width: 600px) {
-      flex-direction: column;
-    }
+    flex-wrap: wrap;
+    padding: 0 10px;
     label {
       display: flex;
       align-items: center;
@@ -122,6 +136,28 @@ const StyledPage = styled.section`
     #time-frame {
       padding: 0 10px;
       cursor: pointer;
+    }
+    .view-button-container {
+      display: flex;
+      margin-left: 6px;
+      @media (max-width: 800px) {
+        margin-top: 10px;
+      }
+      button {
+        width: 24px;
+        height: 24px;
+        background-color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
+        margin: 0 2px;
+        img {
+          width: 90%;
+          height: 90%;
+        }
+      }
     }
   }
 `;

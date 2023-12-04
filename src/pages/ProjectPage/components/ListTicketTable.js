@@ -32,7 +32,7 @@ export default function ListTicketTable({ project, seeAssigned, ticketTimeFrame 
         return (
             <StyledTicketTable>
                 <div className="undefined">
-                    <h1>You've haven't entered any tickets</h1>
+                    <h1 style={{ color: 'white'}}>You've haven't entered any tickets</h1>
                 </div>
             </StyledTicketTable>
         )

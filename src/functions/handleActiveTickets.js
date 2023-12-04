@@ -3,6 +3,7 @@ import moment from "moment/moment";
 export const handleActiveTickets = ( active, tickets, timeFrame ) => {
     let activeArray = [];
     let inactiveArray = [];
+    if(!tickets){ return activeArray };
     for ( let i = 0; tickets.length > i; i++ ){
         let ticketDate;
         if(tickets[i].lastUpdate){
@@ -25,4 +26,3 @@ export const handleActiveTickets = ( active, tickets, timeFrame ) => {
         return inactiveArray;
     }
 }
-

@@ -34,7 +34,7 @@ export default function TicketTable({ project, seeAssigned, ticketTimeFrame }) {
         return (
             <StyledTicketTable>
                 <div className="undefined">
-                    <h1>You've haven't entered any tickets</h1>
+                    <h1 style={{color: 'white'}}>You've haven't entered any tickets</h1>
                 </div>
             </StyledTicketTable>
         )
@@ -74,7 +74,7 @@ const StyledTicketTable = styled.section`
     grid-column-gap: 10px;
     height: 100%;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     /* scrollbar-width: none;
     &::-webkit-scrollbar {
         display: none;

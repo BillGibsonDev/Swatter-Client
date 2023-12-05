@@ -26,6 +26,9 @@ import ActivitiesIcon from './icons/wave.png';
 import TrashCanIcon from './icons/trashCan196ecf.png';
 import LinkIcon from './icons/linkWhite.png';
 
+import ListIcon from './icons/blackList.png';
+import ColumnIcon from './icons/blackColumns.png';
+
 import CircleCheckboxIcon from './icons/circleCheckFilled196ecf.png';
 import TriangleWarningIcon from './icons/triangleWarningFilled196ecf.png';
 import ChatboxWarningIcon from './icons/chatboxWarningFilled196ecf.png';
@@ -69,3 +72,5 @@ export const SprintWhite = SprintsWhiteIcon;
 export const Edit= EditIcon;
 export const Add = AddIcon;
 export const RoundDotMenu = RoundMenu;
+export const List = ListIcon;
+export const Columns = ColumnIcon;

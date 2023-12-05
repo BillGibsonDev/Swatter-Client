@@ -30,7 +30,7 @@ export const ProjectTable = ({ user, projects}) => {
 
 const StyledProjectTable = styled.section`
   width: 100%;
-  margin: 30px auto;
+  margin: 10px auto;
   display: flex;
   flex-wrap: wrap;
 `;

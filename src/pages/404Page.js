@@ -14,7 +14,7 @@ const UnknownPath = ({ isLoggedIn, user}) => {
 
     const navigate = useNavigate();
 
-    const [ counter, setCounter ] = useState(10); 
+    const [ counter, setCounter ] = useState(5); 
 
     useEffect(() => {
         const countdown = setInterval(() => {

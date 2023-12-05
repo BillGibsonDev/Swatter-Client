@@ -33,7 +33,7 @@ export default function Project({ user, project }) {
 const StyledProject = styled.article`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50%;
   max-width: 450px;
   position: relative;
   background: #5c5c5c73;
@@ -44,9 +44,9 @@ const StyledProject = styled.article`
     border: 1px solid white;
   }
   @media (max-width: 450px) {
-    flex-direction: row;
     align-items: center;
     padding: 6px;
+    width: 100%;
   }
   .project-image-link {
     display: flex;
@@ -57,10 +57,10 @@ const StyledProject = styled.article`
     height: 100%;
     margin-bottom: 8px;
     @media (max-width: 450px) {
-      height: 100px;
-      width: 150px;
-      min-height: 70px;
-      margin-bottom: 0;
+      height: 100%;
+      width: 100%;
+      min-height: 200px;
+      max-height: 200px;
     }
     .project-image {
       width: 100%;
@@ -79,6 +79,7 @@ const StyledProject = styled.article`
     @media (max-width: 450px){
       justify-content: center;
       margin-left: 8px;
+      height: auto;
     }
     a {
       font-size: ${palette.subtitleSize};

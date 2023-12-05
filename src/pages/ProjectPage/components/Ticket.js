@@ -50,7 +50,7 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
 				<div className="bottom-container">
 					<div className="status-icons-container">
 						<HandleIcons tag={ticket.tag}/>
-						<h2 id="key">{ticket.key ? `#${ticket.key}` : ''}</h2>
+						<h2 id="key">{ticket.key ? `${ticket.key}` : ''}</h2>
 						<img id="priority" src={handleTicketPriority(ticket.priority)} alt={ticket.priority} />
 					</div>
 					<h2 id={ticket.author} className='author'>{ticket.author}</h2>

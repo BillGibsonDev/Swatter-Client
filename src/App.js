@@ -86,8 +86,8 @@ const App = ({ user, isLoggedIn }) => {
         if(response.status === 200){
           handleTokens(response.data.token, response.data.username, response.data.id);
           dispatch(handleUser( response.data.token, response.data.username, response.data.id ));
-          setLoading(false);
           navigate("/");
+          setLoading(false);
         }
       })
       .catch((error) => {

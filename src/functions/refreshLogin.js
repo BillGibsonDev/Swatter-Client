@@ -1,5 +1,5 @@
 import axios from "axios"
-import { handleUser, } from "../redux/actions/user";
+import { handleLogout, handleUser, } from "../redux/actions/user";
 import { handleTokens } from "./handleTokens";
 
 export const refreshLogin = ( dispatch ) => {
@@ -19,5 +19,6 @@ export const refreshLogin = ( dispatch ) => {
     })
     .catch((error) => {
         console.log(error);
+        dispatch(handleLogout());
     })
 }

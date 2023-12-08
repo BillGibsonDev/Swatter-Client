@@ -82,7 +82,7 @@ const ProjectPage = ({ user }) => {
         </label>
         <div className="view-button-container">
           <button onClick={() => setListView(true)}><img src={icons.List} alt="List" /></button>
-          <button onClick={() => setListView(false)}><img src={icons.Columns} alt="Columns" /></button>
+          <button onClick={() => setListView(false)}><img id="columns-image" src={icons.List} alt="Columns" /></button>
         </div>
       </div>
       {
@@ -159,6 +159,9 @@ const StyledPage = styled.section`
         }
       }
     }
+  }
+  #columns-image {
+    transform: rotate(90deg);
   }
 `;
 

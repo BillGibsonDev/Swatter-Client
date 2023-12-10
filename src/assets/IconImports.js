@@ -32,6 +32,7 @@ import ColumnIcon from './icons/blackColumns.png';
 import CircleCheckboxIcon from './icons/circleCheckFilled196ecf.png';
 import TriangleWarningIcon from './icons/triangleWarningFilled196ecf.png';
 import ChatboxWarningIcon from './icons/chatboxWarningFilled196ecf.png';
+import ClockIcon from './icons/clock.png';
 
 // warning icons
 export const CircleCheckbox = CircleCheckboxIcon;
@@ -67,6 +68,7 @@ export const Menu = MenuIcon;
 export const Trash = TrashCanIcon;
 export const Link = LinkIcon;
 export const SprintWhite = SprintsWhiteIcon;
+export const ClockWhite = ClockIcon;
 
 // general icons
 export const Edit= EditIcon;

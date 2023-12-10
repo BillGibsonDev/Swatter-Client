@@ -10,7 +10,8 @@ export const Selector = ({
     setSprint, 
     sprintOptions,
     project,
-    setAssigned
+    setAssigned,
+    setAppraisal
 }) => {
 
     let sprints = [];
@@ -31,6 +32,8 @@ export const Selector = ({
             return "Sprint";
         } else if(label === 'Assigned User'){
             return "Assigned User";
+        } else if(label === 'Time Appraisal'){
+            return "Time Appraisal";
         }
     }
 
@@ -56,12 +59,15 @@ export const Selector = ({
                 ticketAssigned.unshift(project.owner);
                 return ticketAssigned;
             }
+        } else if(label === 'Time Appraisal'){
+            return ticketAppraisal;
         }
     }
 
     const ticketTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign'];
     const ticketPriority = [ 'High' ];
     const ticketStats = [ 'Open', 'Underway', 'Reviewing', 'Completed' ];
+    const ticketAppraisal = [ 'Unknown', 'Minor', 'Moderate', 'Major' ];
     const ticketAssigned = [];
 
     const handleStateFunction = (label, value) => {
@@ -75,6 +81,8 @@ export const Selector = ({
             setSprint(value);
         } else if(label === 'Assigned User'){
             setAssigned(value);
+        } else if(label === 'Time Appraisal'){
+            setAppraisal(value);
         }
     }
 
@@ -84,7 +92,10 @@ export const Selector = ({
   return (
     <StyledSelector>{Label}:
         <select onChange={(e) => { handleStateFunction(Label, e.target.value);}}>
-            <option value=''>None</option>
+            {
+                label === 'Time Appraisal' ? <></>
+                : <option value=''>None</option>
+            }
             {
                 Options.map((options, key) => {
                     return (

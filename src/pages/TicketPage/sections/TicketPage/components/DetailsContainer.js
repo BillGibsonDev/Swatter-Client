@@ -44,6 +44,7 @@ export const DetailsSection = ({ ticket, user, projectId, setEditing }) => {
             ticket.priority ? <h3><span><img src={handleTicketPriorityImage(ticket.priority)} alt="Priority" /></span> {ticket.priority}</h3>
             : <></>
         }
+        <h3><span><img src={icons.ClockWhite} alt="Appraisal" /></span> {ticket.appraisal ? ticket.appraisal : 'Unknown'}</h3>
         {
             ticket.sprint ? <Link id="sprint-link" to={`/${user.id}/projects/${projectId}/sprints`} ><img id="sprint-link-img" src={icons.SprintWhite} alt="" />{ticket.sprint}</Link>
             : <></>

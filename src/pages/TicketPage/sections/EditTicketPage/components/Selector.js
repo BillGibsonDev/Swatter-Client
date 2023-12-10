@@ -14,6 +14,8 @@ export const Selector = ({
     setStatus, 
     setSprint, 
     setAssigned,
+    setAppraisal,
+    appraisal,
     sprintOptions,
     project
 }) => {
@@ -36,6 +38,8 @@ export const Selector = ({
             return "Sprint";
         } else if(label === 'Assigned User'){
             return "Assigned User";
+        } else if(label === 'Time Appraisal'){
+            return "Time Appraisal";
         }
     }
 
@@ -50,12 +54,15 @@ export const Selector = ({
             return sprint;
         } else if(label === 'Assigned User'){
             return assigned;
+        } else if(label === 'Time Appraisal'){
+            return appraisal;
         }
     }
 
     const ticketTags = [ 'Bug', 'Feature', 'Enhancement', 'Task', 'Redesign'];
     const ticketPriority = [ 'High' ];
     const ticketStatus = [ 'Open', 'Underway', 'Reviewing', 'Completed' ];
+    const ticketAppraisal = [ 'Unknown', 'Minor', 'Moderate', 'Major' ];
     let ticketAssigned = [];
 
     const handleOptions = (label) => {
@@ -80,6 +87,8 @@ export const Selector = ({
                 ticketAssigned.unshift(project.owner);
                 return ticketAssigned;
             }
+        } else if(label === 'Time Appraisal'){
+            return ticketAppraisal;
         }
     }
 
@@ -94,6 +103,8 @@ export const Selector = ({
             setSprint(value);
         } else if(label === 'Assigned User'){
             setAssigned(value);
+        } else if(label === 'Time Appraisal'){
+            setAppraisal(value);
         }
     }
 
@@ -104,7 +115,9 @@ export const Selector = ({
     <StyledSelector>{Label}
         <select value={handleDefaultValue(Label)} onChange={(e) => { handleStateFunction(Label, e.target.value);}}>
         {
-            Label === 'Sprint' || 'Assigned User' ? <option value=''>None</option> : <></>
+            Label === 'Sprint' || 'Assigned User' ? <option value=''>None</option> ?
+            Label === 'Time Appraisal' && !appraisal: <option value='Unknown'>Unknown</option>
+            : <></>
         }
         {
             Options.map((options, key) => {

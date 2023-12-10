@@ -42,6 +42,7 @@ const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticket
   const [ sprint, setSprint ] = useState(ticket.sprint);
   const [ assigned, setAssigned ] = useState(ticket.assigned);
   const [ link, setLink ] = useState(ticket.link);
+  const [ appraisal, setAppraisal ] = useState(ticket.appraisal);
 
   useEffect(() => {
     const getSprints = async () => {
@@ -83,7 +84,8 @@ const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticket
           assigned: assigned,
           sprint: sprint,
           images: images,
-          link: link
+          link: link,
+          appraisal: appraisal
         },
         {
           headers: {
@@ -128,7 +130,7 @@ const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticket
     })
   };
 
-  const sections = [ 'Tag', 'Priority', 'Status', 'Sprint', 'Assigned User' ];
+  const sections = [ 'Tag', 'Status', 'Priority', 'Time Appraisal', 'Sprint', 'Assigned User' ];
 
   if(isLoading){
     return <TicketPageLoader />
@@ -158,6 +160,7 @@ const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticket
                   status={status}
                   priority={priority}
                   assigned={assigned}
+                  appraisal={appraisal}
                   tag={tag}
                   sprint={sprint}
                   setTag={setTag}
@@ -165,6 +168,7 @@ const EditTicketPage = ({ user, ticket, showAlert, setEditing, projectId, ticket
                   setStatus={setStatus}
                   setSprint={setSprint}
                   setAssigned={setAssigned}
+                  setAppraisal={setAppraisal}
                   sprintOptions={sprintOptions}
                   project={project}
                 />

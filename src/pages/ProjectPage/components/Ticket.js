@@ -5,8 +5,8 @@ import * as palette from '../../../styled/ThemeVariables.js';
 // router
 import { Link } from 'react-router-dom';
 
-// icons
-import * as icons from '../../../assets/IconImports.js';
+// functions
+import { handleTimeAppraisal, handleSprintColor, handleTicketPriority } from './TicketFunctions.js';
 
 // components
 import { Timer } from '../../../components/Timer.js';
@@ -17,35 +17,14 @@ import { connect } from 'react-redux';
 
 const Ticket = ({ user, project, ticket, seeAssigned }) => {
 
-	const handleSprintColor = (project) => {
-		if(project.sprints){
-			let sprintColor = project.sprints.find(sprint => sprint.title === ticket.sprint)
-			if(sprintColor){
-				let color = sprintColor.color;
-				if(color){
-					return { background: color, padding: '1px 4px' };
-				}
-			} else {
-				return {};
-			}
-		}
-	}
-
-	const handleTicketPriority = (priority) => {
-		switch (priority) {
-		case "High":
-			return icons.ArrowRed;
-		default:
-			return '';
-		};
-	}
-
-	// #ff000070
     return (
         <StyledTicket className={ticket.status} style={ seeAssigned ? { background: user.username === ticket.assigned ? '#8000ff6f': '' } : {}}>
 			<Link to={`/${user.id}/projects/${project._id}/tickets/${ticket._id}`}>
-				<h2 id="title">{ticket.title}</h2> 
-				<h2 id="sprint" style={handleSprintColor(project)}>{ticket.sprint}</h2>
+				<h2 id="title">
+					<span className="time-appraisal" style={{backgroundColor:handleTimeAppraisal(ticket.appraisal)}}></span>
+					{ticket.title}
+				</h2> 
+				<h2 id="sprint" style={handleSprintColor(project, ticket)}>{ticket.sprint}</h2>
 				<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
 				<div className="bottom-container">
 					<div className="status-icons-container">
@@ -81,6 +60,15 @@ const StyledTicket = styled.article`
 	#title {
 		color: #ffffff;
 		font-size: 1em;
+		display: flex;
+		align-items: center;
+		.time-appraisal {
+			display: inline-block;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			margin-right: 4px;
+		}
 	}
 	#date, .author, #key {
 		color: #c5c5c5;

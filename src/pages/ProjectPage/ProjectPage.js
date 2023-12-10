@@ -28,12 +28,16 @@ const ProjectPage = ({ user }) => {
 
   const { projectId } = useParams();
 
+  let viewPref = localStorage.getItem('viewPref');
+  let assignedPref = localStorage.getItem('assignedPref');
+  let timePref = localStorage.getItem('timePref');
+
   const [ project, setProject ] = useState({});
   const [ isLoading, setLoading ] = useState(true);
   const [ ticketSearchPhrase, setTicketSearchPhrase ] = useState('');
-  const [ listView, setListView ] = useState(true);
-  const [ seeAssigned, setSeeAssigned ] = useState(true);
-  const [ ticketTimeFrame, setTicketTimeFrame ] = useState(30);
+  const [ listView, setListView ] = useState(viewPref ? JSON.parse(viewPref) : true);
+  const [ seeAssigned, setSeeAssigned ] = useState(assignedPref ?  JSON.parse(assignedPref) : false);
+  const [ ticketTimeFrame, setTicketTimeFrame ] = useState( timePref ? JSON.parse(timePref) : 30);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -49,16 +53,23 @@ const ProjectPage = ({ user }) => {
     fetchProject();
   }, [ projectId, user, seeAssigned ]);
 
-  const handleSeeAssignedValue = (checked) => {
-    if(checked){
-      setSeeAssigned(true);
-    } else {
-      setSeeAssigned(false);
-    }
-  }
-
   if(isLoading){
     return <Loader />
+  }
+
+  const setTimePref = (pref) => {
+    localStorage.setItem('timePref', pref);
+    setTicketTimeFrame(pref);
+  }
+
+  const setViewPref = (pref) => {
+    localStorage.setItem('viewPref', pref);
+    setListView(pref);
+  }
+
+  const setAssignedPref = (pref) => {
+    localStorage.setItem('assignedPref', pref);
+    setSeeAssigned(pref);
   }
 
   return (
@@ -66,23 +77,29 @@ const ProjectPage = ({ user }) => {
       <div className="search-container">
         <Searchbar setSearchPhrase={setTicketSearchPhrase} />
         <label>Assigned
-          <input type="checkbox" id="assigned" checked={seeAssigned} onChange={(e) => { handleSeeAssignedValue(e.target.checked)}} />
+          <input type="checkbox" id="assigned" checked={seeAssigned} onChange={(e) => setAssignedPref(e.target.checked)} />
         </label> 
         <label>
           <select 
             name="time-frame" 
-            id="time-frame" 
-            onChange={(e) => setTicketTimeFrame(e.target.value)}
-          >
+            id="time-frame"
+            value={ticketTimeFrame}
+            onChange={(e) => setTimePref(e.target.value)}>
             <option value="30">30 days</option>
             <option value="60">60 days</option>
             <option value="90">90 days</option>
-            <option value="All">All</option>
+            <option value={0}>All</option>
           </select>
         </label>
         <div className="view-button-container">
-          <button onClick={() => setListView(true)}><img src={icons.List} alt="List" /></button>
-          <button onClick={() => setListView(false)}><img id="columns-image" src={icons.List} alt="Columns" /></button>
+          <button 
+            style={{ backgroundColor: listView ? 'grey': ''}} 
+            onClick={() => setViewPref(true)}><img src={icons.List} alt="List" />
+          </button>
+          <button 
+            style={{ backgroundColor: !listView ? 'grey': ''}}
+            onClick={() => setViewPref(false)}><img id="columns-image" src={icons.List} alt="Columns" />
+          </button>
         </div>
       </div>
       {
@@ -153,6 +170,7 @@ const StyledPage = styled.section`
         justify-content: center;
         padding: 2px;
         margin: 0 2px;
+        transition: 0.2s;
         img {
           width: 90%;
           height: 90%;

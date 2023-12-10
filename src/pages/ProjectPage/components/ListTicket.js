@@ -5,9 +5,6 @@ import * as palette from '../../../styled/ThemeVariables.js';
 // router
 import { Link } from 'react-router-dom';
 
-// icons
-import * as icons from '../../../assets/IconImports.js';
-
 // components
 import { Timer } from '../../../components/Timer.js';
 import { HandleIcons } from '../../../functions/handleIcons.js';
@@ -15,30 +12,10 @@ import { HandleIcons } from '../../../functions/handleIcons.js';
 // redux
 import { connect } from 'react-redux';
 
+// functions
+import { handleSprintColor, handleTimeAppraisal, handleTicketPriority } from './TicketFunctions.js';
+
 const Ticket = ({ user, project, ticket, seeAssigned }) => {
-
-	const handleSprintColor = (project) => {
-		if(project.sprints){
-			let sprintColor = project.sprints.find(sprint => sprint.title === ticket.sprint)
-			if(sprintColor){
-				let color = sprintColor.color;
-				if(color){
-					return { background: color, padding: '1px 4px' };
-				}
-			} else {
-				return {};
-			}
-		}
-	}
-
-	const handleTicketPriority = (priority) => {
-		switch (priority) {
-		case "High":
-			return icons.ArrowRed;
-		default:
-			return '';
-		};
-	}
 
 	// #ff000070
     return (
@@ -48,7 +25,8 @@ const Ticket = ({ user, project, ticket, seeAssigned }) => {
                     <img id="priority" src={handleTicketPriority(ticket.priority)} alt={ticket.priority} style={{ visibility: ticket.priority ? 'visible' : 'hidden' }}/>
                     <span id="key">{ticket.key ? `${ticket.key}` : ''}</span>
                     {ticket.title}
-                    <span id="sprint" style={handleSprintColor(project)}>{ticket.sprint ? ticket.sprint : ''}</span>
+                    <span className="time-appraisal" style={{backgroundColor:handleTimeAppraisal(ticket.appraisal)}}></span>
+                    <span id="sprint" style={handleSprintColor(project, ticket)}>{ticket.sprint ? ticket.sprint : ''}</span>
                 </h2> 
                 <h2 id="status">{ticket.status}</h2>
 				<Timer id="date" date={ ticket.lastUpdate ? ticket.lastUpdate : ticket.date } />
@@ -83,6 +61,12 @@ const StyledTicket = styled.article`
             flex-wrap: wrap;
             justify-content: space-between;
 		}
+        .time-appraisal {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 4px;
+        }
         h2 {
             font-size: .8em;
             font-weight: 400;

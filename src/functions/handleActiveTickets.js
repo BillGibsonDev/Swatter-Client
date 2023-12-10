@@ -14,7 +14,7 @@ export const handleActiveTickets = ( active, tickets, timeFrame ) => {
         const days = moment(ticketDate[0]).diff(moment(), 'days');
         if(days>-timeFrame){
             activeArray.push(tickets[i]);
-        } else if(timeFrame === 'All'){
+        } else if(Number(timeFrame) === 0){
             return tickets;
         } else {
             inactiveArray.push(tickets[i]);

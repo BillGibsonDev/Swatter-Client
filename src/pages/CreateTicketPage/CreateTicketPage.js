@@ -40,8 +40,9 @@ const CreateTicketPage = ({ user, showAlert }) => {
   const [ images, setImages ] = useState([]);
   const [ assigned, setAssigned ] = useState('');
   const [ link, setLink ] = useState('');
+  const [ appraisal, setApprasial ] = useState('Unknown');
 
-  const sections = [ 'Status', 'Tag', 'Priority', 'Sprint', 'Assigned User' ];
+  const sections = [ 'Status', 'Tag', 'Priority', 'Time Appraisal', 'Sprint', 'Assigned User' ];
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -97,7 +98,8 @@ const CreateTicketPage = ({ user, showAlert }) => {
           tag,
           sprint,
           images,
-          link
+          link,
+          appraisal
         },
         {
           headers: {
@@ -153,6 +155,7 @@ const CreateTicketPage = ({ user, showAlert }) => {
                 setStatus={setStatus}
                 setSprint={setSprint}
                 setAssigned={setAssigned}
+                setApprasial={setApprasial}
                 sprintOptions={sprintOptions}
                 project={project}
               />
@@ -189,6 +192,7 @@ const StyledPage = styled.section`
     color: white;
     font-size: 2em;
     margin: 10px 0;
+    margin-left: 10px;
   }
   .form-wrapper {
     width: 100%;

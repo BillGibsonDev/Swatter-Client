@@ -23,7 +23,7 @@ yup
 
 ### User Requests
 
-Requests require an Authorization header to be sent with most API calls, excluding login and sign up functions.
+Requests require an Authorization header with a valid token to be sent with most API calls, excluding login and sign up functions.
 
 #### A Sample Request May Look Like: 
 ```

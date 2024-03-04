@@ -72,7 +72,7 @@ const StyledPage = styled.section`
       .container {
         margin-bottom: 20px;
         h3 {
-          font-size: 1em;
+          font-size: 1.2em;
           font-weight: 400;
           color: white;
         }

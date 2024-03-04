@@ -92,14 +92,10 @@ const ProjectPage = ({ user }) => {
           </select>
         </label>
         <div className="view-button-container">
-          <button 
-            style={{ backgroundColor: listView ? 'grey': ''}} 
-            onClick={() => setViewPref(true)}><img src={icons.List} alt="List" />
-          </button>
-          <button 
-            style={{ backgroundColor: !listView ? 'grey': ''}}
-            onClick={() => setViewPref(false)}><img id="columns-image" src={icons.List} alt="Columns" />
-          </button>
+        {
+          listView ? <button onClick={() => setViewPref(false)}><img id="columns-image" src={icons.List} alt="Columns" /></button>
+          : <button onClick={() => setViewPref(true)}><img src={icons.List} alt="List" /></button>
+        }
         </div>
       </div>
       {
